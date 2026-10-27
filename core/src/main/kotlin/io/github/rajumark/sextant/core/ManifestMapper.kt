@@ -297,46 +297,17 @@ class ManifestMapper(
                 node.children("grant-uri-permission").mapNotNull {
                     it.android("path") ?: it.android("pathPrefix")?.let { p -> "$p*" } ?: it.android("pathPattern")
                 },
-            launchMode = launchMode(resources.resolve(node.android("launchMode"))),
+            launchMode = node.android("launchMode"),
             taskAffinity = node.android("taskAffinity"),
             excludeFromRecents = bool(node.android("excludeFromRecents")),
             allowTaskReparenting = bool(node.android("allowTaskReparenting")),
             screenOrientation = node.android("screenOrientation"),
-            theme = node.android("theme"),
-            configChanges = node.android("configChanges"),
-            windowSoftInputMode = node.android("windowSoftInputMode"),
-            documentLaunchMode = node.android("documentLaunchMode"),
-            lockTaskMode = node.android("lockTaskMode"),
-            parentActivityName = node.android("parentActivityName")?.let(::className),
-            noHistory = bool(node.android("noHistory")),
-            clearTaskOnLaunch = bool(node.android("clearTaskOnLaunch")),
-            finishOnTaskLaunch = bool(node.android("finishOnTaskLaunch")),
-            alwaysRetainTaskState = bool(node.android("alwaysRetainTaskState")),
-            autoRemoveFromRecents = bool(node.android("autoRemoveFromRecents")),
-            maxRecents = resources.resolve(node.android("maxRecents"))?.toIntOrNull(),
-            resizeableActivity = bool(node.android("resizeableActivity")),
-            supportsPictureInPicture = bool(node.android("supportsPictureInPicture")),
-            showWhenLocked = bool(node.android("showWhenLocked")),
-            turnScreenOn = bool(node.android("turnScreenOn")),
-            allowEmbedded = bool(node.android("allowEmbedded")),
-            hardwareAccelerated = bool(node.android("hardwareAccelerated")),
             foregroundServiceType = node.android("foregroundServiceType"),
             isolatedProcess = bool(node.android("isolatedProcess")),
             directBootAware = bool(node.android("directBootAware")),
             label = resources.resolve(node.android("label")),
         )
     }
-
-    /** launchMode as its name; an `@integer/…` resource resolves to the enum's number. */
-    private fun launchMode(raw: String?): String? =
-        when (raw) {
-            "0" -> "standard"
-            "1" -> "singleTop"
-            "2" -> "singleTask"
-            "3" -> "singleInstance"
-            "4" -> "singleInstancePerTask"
-            else -> raw
-        }
 
     private fun intentFilter(node: XmlNode) =
         IntentFilter(

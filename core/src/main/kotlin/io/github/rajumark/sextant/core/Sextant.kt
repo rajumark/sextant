@@ -7,7 +7,7 @@ object Sextant {
     const val NAME = "sextant"
 
     /** Output format version. Bumped only when the shape of the output files changes. */
-    const val SCHEMA_VERSION = 8
+    const val SCHEMA_VERSION = 7
 
     val version: String by lazy {
         val props = Properties()

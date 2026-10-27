@@ -3,7 +3,6 @@ package io.github.rajumark.sextant.core.output
 import io.github.rajumark.sextant.core.Extraction
 import io.github.rajumark.sextant.core.model.AppMeta
 import io.github.rajumark.sextant.core.model.Component
-import io.github.rajumark.sextant.core.model.IntentFilter
 import kotlinx.serialization.Serializable
 
 /** Compact overview of an extraction: what `info --json` prints and what summary.md is built from. */
@@ -64,28 +63,24 @@ object InfoReports {
     /** URL-like patterns a component answers to: `scheme://host/path*`. */
     fun deepLinks(component: Component): List<String> =
         component.intentFilters
-            .flatMap(::deepLinks)
-            .distinct()
+            .filter { "android.intent.action.VIEW" in it.actions }
+            .flatMap { filter ->
+                // Android combines every scheme/host/path declared in one filter.
+                val schemes = filter.data.mapNotNull { it.scheme }.distinct()
+                val hosts =
+                    filter.data
+                        .mapNotNull { it.host }
+                        .distinct()
+                        .ifEmpty { listOf(null) }
+                val paths =
+                    filter.data
+                        .mapNotNull { d ->
+                            d.path ?: d.pathPrefix?.let { "$it*" } ?: d.pathPattern ?: d.pathSuffix?.let { "*$it" } ?: d.pathAdvancedPattern
+                        }.distinct()
+                        .ifEmpty { listOf("") }
+                schemes.flatMap { s -> hosts.flatMap { h -> paths.map { p -> if (h == null) "$s:$p" else "$s://$h$p" } } }
+            }.distinct()
             .sorted()
-
-    /** URL-like patterns of one intent filter; empty unless it handles VIEW. */
-    fun deepLinks(filter: IntentFilter): List<String> {
-        if ("android.intent.action.VIEW" !in filter.actions) return emptyList()
-        // Android combines every scheme/host/path declared in one filter.
-        val schemes = filter.data.mapNotNull { it.scheme }.distinct()
-        val hosts =
-            filter.data
-                .mapNotNull { it.host }
-                .distinct()
-                .ifEmpty { listOf(null) }
-        val paths =
-            filter.data
-                .mapNotNull { d ->
-                    d.path ?: d.pathPrefix?.let { "$it*" } ?: d.pathPattern ?: d.pathSuffix?.let { "*$it" } ?: d.pathAdvancedPattern
-                }.distinct()
-                .ifEmpty { listOf("") }
-        return schemes.flatMap { s -> hosts.flatMap { h -> paths.map { p -> if (h == null) "$s:$p" else "$s://$h$p" } } }.distinct()
-    }
 
     val TYPES = listOf("activity", "activity-alias", "service", "receiver", "provider")
 }
