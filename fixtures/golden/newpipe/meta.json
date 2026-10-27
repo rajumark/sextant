@@ -1,0 +1,558 @@
+{
+  "schema_version": 7,
+  "tool": {
+    "name": "sextant",
+    "version": "<version>"
+  },
+  "file": {
+    "name": "newpipe.apk",
+    "size_bytes": 11507122,
+    "sha256": "1d66d19eedbab969b1be2e44e0ea35f5f8921cbe83b5c5ac810767ca1a84b7e8"
+  },
+  "package": "org.schabi.newpipe",
+  "version_name": "0.29.1",
+  "version_code": 1015,
+  "min_sdk": 23,
+  "target_sdk": 35,
+  "compile_sdk": 37,
+  "label": "NewPipe",
+  "application_class": "org.schabi.newpipe.App",
+  "flags": {
+    "debuggable": null,
+    "allow_backup": true,
+    "uses_cleartext_traffic": null,
+    "network_security_config": null,
+    "extract_native_libs": false,
+    "test_only": null,
+    "full_backup_content": null,
+    "data_extraction_rules": null,
+    "backup_agent": null,
+    "full_backup_only": null,
+    "has_fragile_user_data": null,
+    "request_legacy_external_storage": null,
+    "preserve_legacy_external_storage": null,
+    "large_heap": null,
+    "hardware_accelerated": null,
+    "supports_rtl": null,
+    "resizeable_activity": true,
+    "enable_on_back_invoked_callback": null,
+    "app_component_factory": "androidx.core.app.CoreComponentFactory",
+    "locale_config": "@xml/_generated_res_locale_config",
+    "app_category": null,
+    "is_game": null,
+    "memtag_mode": null,
+    "uses_non_sdk_api": null,
+    "manage_space_activity": null,
+    "task_affinity": null,
+    "process": null,
+    "theme": "@style/OpeningTheme",
+    "profileable_shell": null,
+    "install_location": "auto",
+    "shared_user_id": null,
+    "shared_user_max_sdk": null,
+    "target_sandbox_version": null,
+    "supports_screens": {}
+  },
+  "signing": {
+    "verified": true,
+    "schemes": [
+      "v1",
+      "v2",
+      "v3"
+    ],
+    "certificates": [
+      {
+        "sha256": "96:4D:FA:41:8E:66:39:01:10:B0:C0:61:A0:49:7C:BB:D7:39:5B:8B:25:26:BE:E4:DE:CE:95:59:7E:B5:E9:D4",
+        "sha1": "83:10:87:55:C1:3C:C6:D5:5D:46:86:53:C8:2F:CA:9E:25:46:8A:C9",
+        "subject": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "issuer": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "not_before": "2015-09-09T18:47:56Z",
+        "not_after": "2043-01-25T18:47:56Z"
+      }
+    ]
+  },
+  "layout": {
+    "dex_files": 3,
+    "native_abis": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86",
+      "x86_64"
+    ]
+  },
+  "code": {
+    "dex_files": [
+      "classes.dex",
+      "classes2.dex",
+      "classes3.dex"
+    ],
+    "classes": 10671,
+    "methods": 65538,
+    "fields": 41554,
+    "call_edges": 198555,
+    "call_sites": 283950,
+    "string_refs": 44162,
+    "distinct_strings": 21502,
+    "field_refs": 160989,
+    "type_refs": 57941,
+    "kotlin_classes": 0,
+    "duplicate_classes": 0,
+    "unreadable_methods": 0,
+    "top_packages": [
+      {
+        "package": "org.mozilla.javascript",
+        "classes": 290
+      },
+      {
+        "package": "j$.util.stream",
+        "classes": 284
+      },
+      {
+        "package": "com.google.android.exoplayer2",
+        "classes": 254
+      },
+      {
+        "package": "androidx.compose.material3",
+        "classes": 139
+      },
+      {
+        "package": "androidx.appcompat.widget",
+        "classes": 135
+      },
+      {
+        "package": "androidx.compose.ui.platform",
+        "classes": 129
+      },
+      {
+        "package": "com.google.android.exoplayer2.source",
+        "classes": 123
+      },
+      {
+        "package": "com.google.android.exoplayer2.upstream",
+        "classes": 122
+      },
+      {
+        "package": "com.google.android.exoplayer2.ui",
+        "classes": 120
+      },
+      {
+        "package": "org.jsoup.parser",
+        "classes": 120
+      },
+      {
+        "package": "androidx.compose.runtime",
+        "classes": 110
+      },
+      {
+        "package": "com.google.common.collect",
+        "classes": 107
+      },
+      {
+        "package": "com.google.android.exoplayer2.util",
+        "classes": 106
+      },
+      {
+        "package": "j$.util",
+        "classes": 103
+      },
+      {
+        "package": "androidx.compose.foundation.gestures",
+        "classes": 102
+      }
+    ]
+  },
+  "insights": {
+    "libraries": 100,
+    "frameworks": [
+      "Jetpack Compose"
+    ],
+    "sdks": 13,
+    "sdk_categories": {
+      "background-work": 1,
+      "crash-reporting": 1,
+      "database": 1,
+      "dependency-injection": 1,
+      "image-loading": 1,
+      "media": 1,
+      "networking": 1,
+      "reactive": 2,
+      "serialization": 2,
+      "ui": 2
+    },
+    "endpoints": 566,
+    "hosts": 119,
+    "top_hosts": [
+      {
+        "host": "www.youtube.com",
+        "urls": 48
+      },
+      {
+        "host": "music.youtube.com",
+        "urls": 31
+      },
+      {
+        "host": "m.youtube.com",
+        "urls": 22
+      },
+      {
+        "host": "youtube.com",
+        "urls": 22
+      },
+      {
+        "host": "framatube.org",
+        "urls": 15
+      },
+      {
+        "host": "eduvid.org",
+        "urls": 14
+      },
+      {
+        "host": "indymotion.fr",
+        "urls": 14
+      },
+      {
+        "host": "media.assassinate-you.net",
+        "urls": 14
+      },
+      {
+        "host": "media.ccc.de",
+        "urls": 14
+      },
+      {
+        "host": "media.fsfe.org",
+        "urls": 14
+      },
+      {
+        "host": "peertube.co.uk",
+        "urls": 14
+      },
+      {
+        "host": "peertube.cpy.re",
+        "urls": 14
+      },
+      {
+        "host": "peertube.fr",
+        "urls": 14
+      },
+      {
+        "host": "peertube.mastodon.host",
+        "urls": 14
+      },
+      {
+        "host": "peertube.stream",
+        "urls": 14
+      }
+    ],
+    "resource_values": 1765,
+    "locales": [
+      "ace",
+      "af",
+      "am",
+      "ar",
+      "ar-LY",
+      "as",
+      "ast",
+      "az",
+      "bar",
+      "be",
+      "ber",
+      "bg",
+      "bm",
+      "bn",
+      "bn-BD",
+      "bn-IN",
+      "br",
+      "bs",
+      "ca",
+      "ckb",
+      "cs",
+      "da",
+      "de",
+      "dum",
+      "el",
+      "en-AU",
+      "en-CA",
+      "en-GB",
+      "en-IN",
+      "en-XC",
+      "eo",
+      "es",
+      "es-419",
+      "es-US",
+      "et",
+      "eu",
+      "fa",
+      "fi",
+      "fil",
+      "fr",
+      "fr-CA",
+      "gl",
+      "gu",
+      "he",
+      "hi",
+      "hr",
+      "hu",
+      "hy",
+      "ia",
+      "in",
+      "is",
+      "it",
+      "iw",
+      "ja",
+      "jv",
+      "ka",
+      "kab",
+      "kk",
+      "km",
+      "kmr",
+      "kn",
+      "ko",
+      "ku",
+      "ky",
+      "la",
+      "lmo",
+      "lo",
+      "lt",
+      "lv",
+      "mk",
+      "ml",
+      "mn",
+      "mr",
+      "ms",
+      "my",
+      "nap",
+      "nb",
+      "nb-NO",
+      "ne",
+      "nl",
+      "nl-BE",
+      "nn",
+      "nqo",
+      "oc",
+      "or",
+      "pa",
+      "pa-PK",
+      "pl",
+      "pt",
+      "pt-BR",
+      "pt-PT",
+      "ro",
+      "ru",
+      "ryu",
+      "sat",
+      "sc",
+      "si",
+      "sk",
+      "sl",
+      "so",
+      "sq",
+      "sr",
+      "sr-Latn",
+      "sv",
+      "sw",
+      "ta",
+      "te",
+      "th",
+      "ti",
+      "tl",
+      "tok",
+      "tr",
+      "tt",
+      "tzm",
+      "uk",
+      "und",
+      "ur",
+      "uz",
+      "uz-Latn",
+      "vi",
+      "zh-CN",
+      "zh-HK",
+      "zh-TW",
+      "zu"
+    ],
+    "native_libraries": 4,
+    "jni_methods": 0,
+    "android_gradle_plugin": "9.2.1",
+    "findings": {
+      "info": 2,
+      "low": 2
+    }
+  },
+  "icons": {
+    "icon": {
+      "resource": "@mipmap/ic_launcher",
+      "best": "res/o-.png",
+      "files": [
+        {
+          "path": "res/BW.xml",
+          "config": "anydpi-v26",
+          "density": null,
+          "format": "xml",
+          "width": null,
+          "height": null,
+          "size_bytes": 548
+        },
+        {
+          "path": "res/yn.png",
+          "config": "hdpi",
+          "density": 240,
+          "format": "png",
+          "width": 75,
+          "height": 75,
+          "size_bytes": 3460
+        },
+        {
+          "path": "res/9w.png",
+          "config": "mdpi",
+          "density": 160,
+          "format": "png",
+          "width": 45,
+          "height": 45,
+          "size_bytes": 1808
+        },
+        {
+          "path": "res/FS.png",
+          "config": "xhdpi",
+          "density": 320,
+          "format": "png",
+          "width": 96,
+          "height": 96,
+          "size_bytes": 4709
+        },
+        {
+          "path": "res/RJ.png",
+          "config": "xxhdpi",
+          "density": 480,
+          "format": "png",
+          "width": 144,
+          "height": 144,
+          "size_bytes": 7792
+        },
+        {
+          "path": "res/o-.png",
+          "config": "xxxhdpi",
+          "density": 640,
+          "format": "png",
+          "width": 192,
+          "height": 192,
+          "size_bytes": 10887
+        }
+      ],
+      "adaptive": {
+        "path": "res/BW.xml",
+        "background": {
+          "resource": "@color/ic_launcher_background",
+          "color": "#cd201f",
+          "best": null,
+          "files": []
+        },
+        "foreground": {
+          "resource": "@mipmap/ic_launcher_foreground",
+          "color": null,
+          "best": "res/as.png",
+          "files": [
+            {
+              "path": "res/zr.png",
+              "config": "hdpi",
+              "density": 240,
+              "format": "png",
+              "width": 162,
+              "height": 162,
+              "size_bytes": 980
+            },
+            {
+              "path": "res/QZ.png",
+              "config": "mdpi",
+              "density": 160,
+              "format": "png",
+              "width": 108,
+              "height": 108,
+              "size_bytes": 585
+            },
+            {
+              "path": "res/Em.png",
+              "config": "xhdpi",
+              "density": 320,
+              "format": "png",
+              "width": 216,
+              "height": 216,
+              "size_bytes": 1303
+            },
+            {
+              "path": "res/Lf.png",
+              "config": "xxhdpi",
+              "density": 480,
+              "format": "png",
+              "width": 324,
+              "height": 324,
+              "size_bytes": 3015
+            },
+            {
+              "path": "res/as.png",
+              "config": "xxxhdpi",
+              "density": 640,
+              "format": "png",
+              "width": 432,
+              "height": 432,
+              "size_bytes": 3764
+            }
+          ]
+        },
+        "monochrome": {
+          "resource": "@mipmap/ic_launcher_foreground",
+          "color": null,
+          "best": "res/as.png",
+          "files": [
+            {
+              "path": "res/zr.png",
+              "config": "hdpi",
+              "density": 240,
+              "format": "png",
+              "width": 162,
+              "height": 162,
+              "size_bytes": 980
+            },
+            {
+              "path": "res/QZ.png",
+              "config": "mdpi",
+              "density": 160,
+              "format": "png",
+              "width": 108,
+              "height": 108,
+              "size_bytes": 585
+            },
+            {
+              "path": "res/Em.png",
+              "config": "xhdpi",
+              "density": 320,
+              "format": "png",
+              "width": 216,
+              "height": 216,
+              "size_bytes": 1303
+            },
+            {
+              "path": "res/Lf.png",
+              "config": "xxhdpi",
+              "density": 480,
+              "format": "png",
+              "width": 324,
+              "height": 324,
+              "size_bytes": 3015
+            },
+            {
+              "path": "res/as.png",
+              "config": "xxxhdpi",
+              "density": 640,
+              "format": "png",
+              "width": 432,
+              "height": 432,
+              "size_bytes": 3764
+            }
+          ]
+        }
+      }
+    },
+    "round_icon": null
+  },
+  "warnings": []
+}

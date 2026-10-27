@@ -1,0 +1,1 @@
+{"name":"Flutter","evidence":["file lib/arm64-v8a/libflutter.so","file assets/flutter_assets/AssetManifest.bin (+28 more)","22 classes in io.flutter.embedding"]}

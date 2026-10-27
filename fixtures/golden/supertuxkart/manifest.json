@@ -1,0 +1,188 @@
+{
+  "tag": "manifest",
+  "attributes": {
+    "android:compileSdkVersion": "33",
+    "android:compileSdkVersionCodename": "13",
+    "android:installLocation": "auto",
+    "android:versionCode": "312",
+    "android:versionName": "1.4",
+    "package": "org.supertuxkart.stk",
+    "platformBuildVersionCode": "33",
+    "platformBuildVersionName": "13"
+  },
+  "children": [
+    {
+      "tag": "uses-sdk",
+      "attributes": {
+        "android:minSdkVersion": "16",
+        "android:targetSdkVersion": "30"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:glEsVersion": "0x20000"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.software.leanback",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.software.input_methods",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.touchscreen",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.bluetooth",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.gamepad",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.usb.host",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.type.pc",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.READ_EXTERNAL_STORAGE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.INTERNET"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.WRITE_EXTERNAL_STORAGE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.BLUETOOTH"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.VIBRATE"
+      },
+      "children": []
+    },
+    {
+      "tag": "application",
+      "attributes": {
+        "android:banner": "@drawable/banner",
+        "android:hardwareAccelerated": "true",
+        "android:hasCode": "true",
+        "android:icon": "@drawable/icon",
+        "android:isGame": "true",
+        "android:label": "@string/app_name",
+        "android:resizeableActivity": "true",
+        "android:theme": "@style/Theme.STKSplashScreen"
+      },
+      "children": [
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "fontScale|screenSize|uiMode|screenLayout|orientation|navigation|keyboardHidden|keyboard|locale|mnc|mcc",
+            "android:label": "@string/app_name",
+            "android:launchMode": "singleTask",
+            "android:name": "org.supertuxkart.stk.SuperTuxKartActivity",
+            "android:screenOrientation": "sensorLandscape"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MAIN"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.LAUNCHER"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.LEANBACK_LAUNCHER"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.hardware.usb.action.USB_DEVICE_ATTACHED"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

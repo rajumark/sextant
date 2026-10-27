@@ -1,0 +1,3812 @@
+{
+  "tag": "manifest",
+  "attributes": {
+    "android:compileSdkVersion": "37",
+    "android:compileSdkVersionCodename": "17",
+    "android:versionCode": "24228",
+    "android:versionName": "2026.8.4-minimal",
+    "package": "io.homeassistant.companion.android.minimal",
+    "platformBuildVersionCode": "37",
+    "platformBuildVersionName": "17"
+  },
+  "children": [
+    {
+      "tag": "uses-sdk",
+      "attributes": {
+        "android:minSdkVersion": "23",
+        "android:targetSdkVersion": "37"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.ACCESS_NETWORK_STATE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.ACCESS_WIFI_STATE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.ACCESS_LOCAL_NETWORK"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.CHANGE_WIFI_MULTICAST_STATE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:maxSdkVersion": "30",
+        "android:name": "android.permission.BLUETOOTH",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:maxSdkVersion": "30",
+        "android:name": "android.permission.BLUETOOTH_ADMIN",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.BLUETOOTH_ADVERTISE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.BLUETOOTH_CONNECT"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.BLUETOOTH_SCAN"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.INTERNET"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.VIBRATE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.RECEIVE_BOOT_COMPLETED"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.ACCESS_FINE_LOCATION"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.ACCESS_COARSE_LOCATION"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.ACCESS_BACKGROUND_LOCATION"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.CAMERA"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.CALL_PHONE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.RECORD_AUDIO"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.MODIFY_AUDIO_SETTINGS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.NFC"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.ACTIVITY_RECOGNITION"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "com.google.android.gms.permission.ACTIVITY_RECOGNITION"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.ACCESS_NOTIFICATION_POLICY"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.QUERY_ALL_PACKAGES"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "com.android.alarm.permission.SET_ALARM"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.FOREGROUND_SERVICE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.FOREGROUND_SERVICE_DATA_SYNC"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.FOREGROUND_SERVICE_LOCATION"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.FOREGROUND_SERVICE_MICROPHONE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.FOREGROUND_SERVICE_REMOTE_MESSAGING"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.SYSTEM_ALERT_WINDOW"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.MANAGE_ASSISTANT_AUDIO"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:maxSdkVersion": "28",
+        "android:name": "android.permission.WRITE_EXTERNAL_STORAGE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.WAKE_LOCK"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.SCHEDULE_EXACT_ALARM"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.PACKAGE_USAGE_STATS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.POST_NOTIFICATIONS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.POST_PROMOTED_NOTIFICATIONS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.WRITE_SETTINGS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_HEALTH_DATA_IN_BACKGROUND"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_ACTIVE_CALORIES_BURNED"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_BASAL_BODY_TEMPERATURE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_BASAL_METABOLIC_RATE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_BLOOD_GLUCOSE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_BLOOD_PRESSURE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_BODY_FAT"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_BODY_TEMPERATURE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_BODY_WATER_MASS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_BONE_MASS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_DISTANCE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_ELEVATION_GAINED"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_FLOORS_CLIMBED"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_HEART_RATE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_HEART_RATE_VARIABILITY"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_HEIGHT"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_HYDRATION"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_LEAN_BODY_MASS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_OXYGEN_SATURATION"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_RESPIRATORY_RATE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_RESTING_HEART_RATE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_SLEEP"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_STEPS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_TOTAL_CALORIES_BURNED"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_VO2_MAX"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.health.READ_WEIGHT"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.touchscreen",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.telephony",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.camera",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.nfc",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.location.gps",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.sensor",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.microphone",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.software.leanback",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.bluetooth",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.READ_PHONE_STATE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.USE_BIOMETRIC"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.USE_FINGERPRINT"
+      },
+      "children": []
+    },
+    {
+      "tag": "queries",
+      "attributes": {},
+      "children": [
+        {
+          "tag": "provider",
+          "attributes": {
+            "android:authorities": "androidx.car.app.connection",
+            "android:name": "androidx.car.app.connection.provider"
+          },
+          "children": []
+        }
+      ]
+    },
+    {
+      "tag": "permission",
+      "attributes": {
+        "android:name": "io.homeassistant.companion.android.minimal.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+        "android:protectionLevel": "signature"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "io.homeassistant.companion.android.minimal.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.bluetooth_le",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.camera.front",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.camera.autofocus",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.camera.flash",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.screen.landscape",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.wifi",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "application",
+      "attributes": {
+        "android:allowBackup": "true",
+        "android:appComponentFactory": "androidx.core.app.CoreComponentFactory",
+        "android:banner": "@mipmap/ic_banner",
+        "android:dataExtractionRules": "@xml/backup_rules_android12",
+        "android:enableOnBackInvokedCallback": "true",
+        "android:extractNativeLibs": "true",
+        "android:fullBackupContent": "@xml/backup_rules",
+        "android:icon": "@mipmap/ic_launcher",
+        "android:intentMatchingFlags": "enforceIntentFilter",
+        "android:label": "@string/app_name",
+        "android:localeConfig": "@xml/locales_config",
+        "android:name": "io.homeassistant.companion.android.HomeAssistantApplication",
+        "android:networkSecurityConfig": "@xml/network_security_config",
+        "android:roundIcon": "@mipmap/ic_launcher_round",
+        "android:supportsRtl": "true",
+        "android:theme": "@style/Theme.HomeAssistant"
+      },
+      "children": [
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "smallestScreenSize|screenSize|uiMode|screenLayout|orientation|navigation|keyboardHidden|keyboard",
+            "android:exported": "true",
+            "android:name": "io.homeassistant.companion.android.launch.LaunchActivity",
+            "android:supportsPictureInPicture": "true",
+            "android:theme": "@style/Theme.LaunchScreen",
+            "android:windowSoftInputMode": "adjustResize"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MAIN"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.LAUNCHER"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MAIN"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.LEANBACK_LAUNCHER"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity-alias",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "io.homeassistant.companion.android.launch.LaunchOverLockScreen",
+            "android:targetActivity": "io.homeassistant.companion.android.launch.LaunchActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity-alias",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:name": "io.homeassistant.companion.android.launch.LauncherAlias",
+            "android:targetActivity": "io.homeassistant.companion.android.launch.LaunchActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MAIN"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.HOME"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "io.homeassistant.companion.android.websocket.WebsocketBroadcastReceiver"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.BOOT_COMPLETED"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MY_PACKAGE_REPLACED"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MY_PACKAGE_SUSPENDED"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MY_PACKAGE_UNSUSPENDED"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.QUICKBOOT_POWERON"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "com.htc.intent.action.QUICKBOOT_POWERON"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.app.action.NEXT_ALARM_CLOCK_CHANGED"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.bluetooth.device.action.ACL_CONNECTED"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.bluetooth.device.action.ACL_DISCONNECTED"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "io.homeassistant.companion.android.sensors.SensorReceiver"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.BOOT_COMPLETED"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MY_PACKAGE_REPLACED"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MY_PACKAGE_SUSPENDED"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MY_PACKAGE_UNSUSPENDED"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.QUICKBOOT_POWERON"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "com.htc.intent.action.QUICKBOOT_POWERON"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.app.action.NEXT_ALARM_CLOCK_CHANGED"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.bluetooth.device.action.ACL_CONNECTED"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.bluetooth.device.action.ACL_DISCONNECTED"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "io.homeassistant.companion.android.UPDATE_SENSORS"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/widget_button_image_description",
+            "android:name": "io.homeassistant.companion.android.widgets.button.ButtonWidget"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.appwidget.action.APPWIDGET_UPDATE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "io.homeassistant.companion.android.widgets.ButtonWidget.CALL_SERVICE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "io.homeassistant.companion.android.widgets.ButtonWidget.CALL_SERVICE_AUTH"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.appwidget.provider",
+                "android:resource": "@xml/button_widget_info"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/widget_camera_description",
+            "android:name": "io.homeassistant.companion.android.widgets.camera.CameraWidget"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.appwidget.action.APPWIDGET_UPDATE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "io.homeassistant.companion.android.widgets.camera.CameraWidget.UPDATE_IMAGE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.appwidget.provider",
+                "android:resource": "@xml/camera_widget_info"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/widget_static_image_description",
+            "android:name": "io.homeassistant.companion.android.widgets.entity.EntityWidget"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.appwidget.action.APPWIDGET_UPDATE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.appwidget.provider",
+                "android:resource": "@xml/entity_widget_info"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/widget_todo_label",
+            "android:name": "io.homeassistant.companion.android.widgets.todo.TodoWidget"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.appwidget.action.APPWIDGET_UPDATE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.appwidget.provider",
+                "android:resource": "@xml/todo_widget_info"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/widget_media_player_description",
+            "android:name": "io.homeassistant.companion.android.widgets.mediaplayer.MediaPlayerControlsWidget"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.appwidget.action.APPWIDGET_UPDATE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "io.homeassistant.companion.android.widgets.media_player_controls.MediaPlayerControlsWidget.UPDATE_MEDIA_IMAGE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "io.homeassistant.companion.android.widgets.media_player_controls.MediaPlayerControlsWidget.CALL_PREV_TRACK"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "io.homeassistant.companion.android.widgets.media_player_controls.MediaPlayerControlsWidget.CALL_REWIND"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "io.homeassistant.companion.android.widgets.media_player_controls.MediaPlayerControlsWidget.CALL_PLAYPAUSE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "io.homeassistant.companion.android.widgets.media_player_controls.MediaPlayerControlsWidget.CALL_FASTFORWARD"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "io.homeassistant.companion.android.widgets.media_player_controls.MediaPlayerControlsWidget.CALL_NEXT_TRACK"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.appwidget.provider",
+                "android:resource": "@xml/media_player_control_widget_info"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "true",
+            "android:label": "@string/template_widget",
+            "android:name": "io.homeassistant.companion.android.widgets.template.TemplateWidget"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.BOOT_COMPLETED"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.QUICKBOOT_POWERON"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "com.htc.intent.action.QUICKBOOT_POWERON"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.app.action.NEXT_ALARM_CLOCK_CHANGED"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.bluetooth.device.action.ACL_CONNECTED"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.bluetooth.device.action.ACL_DISCONNECTED"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "io.homeassistant.companion.android.background.REQUEST_SENSORS_UPDATE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.appwidget.action.APPWIDGET_UPDATE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.appwidget.provider",
+                "android:resource": "@xml/template_widget_info"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:exported": "true",
+            "android:name": "io.homeassistant.companion.android.widgets.button.ButtonWidgetConfigureActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.appwidget.action.APPWIDGET_CONFIGURE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:exported": "true",
+            "android:name": "io.homeassistant.companion.android.widgets.common.WidgetAuthenticationActivity",
+            "android:theme": "@style/Theme.Transparent"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:exported": "true",
+            "android:name": "io.homeassistant.companion.android.widgets.camera.CameraWidgetConfigureActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.appwidget.action.APPWIDGET_CONFIGURE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:exported": "true",
+            "android:name": "io.homeassistant.companion.android.widgets.entity.EntityWidgetConfigureActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.appwidget.action.APPWIDGET_CONFIGURE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:exported": "true",
+            "android:name": "io.homeassistant.companion.android.widgets.todo.TodoWidgetConfigureActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.appwidget.action.APPWIDGET_CONFIGURE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:exported": "true",
+            "android:name": "io.homeassistant.companion.android.widgets.mediaplayer.MediaPlayerControlsWidgetConfigureActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.appwidget.action.APPWIDGET_CONFIGURE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "io.homeassistant.companion.android.widgets.template.TemplateWidgetConfigureActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.appwidget.action.APPWIDGET_CONFIGURE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "io.homeassistant.companion.android.sensors.NotificationSensorManager",
+            "android:permission": "android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.notification.NotificationListenerService"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "io.homeassistant.companion.android.controls.HaControlsProviderService",
+            "android:permission": "android.permission.BIND_CONTROLS"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.service.controls.META_DATA_PANEL_ACTIVITY",
+                "android:value": "io.homeassistant.companion.android.minimal/io.homeassistant.companion.android.controls.HaControlsPanelActivity"
+              },
+              "children": []
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.controls.ControlsProviderService"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:name": "io.homeassistant.companion.android.controls.HaControlsPanelActivity",
+            "android:permission": "android.permission.BIND_CONTROLS",
+            "android:resizeableActivity": "true",
+            "android:taskAffinity": "io.homeassistant.companion.android.controls"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:name": "io.homeassistant.companion.android.sensors.LocationSensorReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "true",
+            "android:name": "io.homeassistant.companion.android.sensors.RequestAccurateLocationReceiver"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "io.homeassistant.companion.android.background.REQUEST_ACCURATE_UPDATE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:name": "io.homeassistant.companion.android.sensors.ActivitySensorReceiver"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "io.homeassistant.companion.android.background.REQUEST_ACTIVITY_UPDATES"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "true",
+            "android:launchMode": "singleTask",
+            "android:name": "io.homeassistant.companion.android.launch.link.LinkActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {
+                "android:autoVerify": "true"
+              },
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.VIEW"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.BROWSABLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:host": "my.home-assistant.io",
+                    "android:pathPrefix": "/redirect/",
+                    "android:scheme": "https"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {
+                "android:autoVerify": "true"
+              },
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.VIEW"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.BROWSABLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:host": "my.home-assistant.io",
+                    "android:pathPrefix": "/invite/",
+                    "android:scheme": "https"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.VIEW"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.BROWSABLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:host": "invite",
+                    "android:scheme": "homeassistant"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.VIEW"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.BROWSABLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:host": "navigate",
+                    "android:scheme": "homeassistant"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:exported": "true",
+            "android:name": "io.homeassistant.companion.android.settings.wear.SettingsWearActivity",
+            "android:parentActivityName": "io.homeassistant.companion.android.settings.SettingsActivity",
+            "android:theme": "@style/Theme.HomeAssistant.Config"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.VIEW"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.BROWSABLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:host": "wear-phone-signin",
+                    "android:scheme": "homeassistant"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:name": "io.homeassistant.companion.android.settings.wear.views.SettingsWearMainView",
+            "android:parentActivityName": "io.homeassistant.companion.android.settings.SettingsActivity",
+            "android:theme": "@style/Theme.HomeAssistant.Config"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "io.homeassistant.companion.android.onboarding.WearOnboardingListener"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "com.google.android.gms.wearable.MESSAGE_RECEIVED"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "com.google.android.gms.wearable.DATA_CHANGED"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:host": "*",
+                    "android:path": "/request_home_assistant_instance",
+                    "android:scheme": "wear"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "io.homeassistant.companion.android.settings.sensor.HealthConnectPermissionActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity-alias",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "io.homeassistant.companion.android.ViewHealthConnectPermissionUsageActivity",
+            "android:permission": "android.permission.START_VIEW_PERMISSION_USAGE",
+            "android:targetActivity": "io.homeassistant.companion.android.settings.sensor.HealthConnectPermissionActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.VIEW_PERMISSION_USAGE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.HEALTH_PERMISSIONS"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "io.homeassistant.companion.android.webview.WebViewActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:exported": "false",
+            "android:name": "io.homeassistant.companion.android.settings.SettingsActivity",
+            "android:parentActivityName": "io.homeassistant.companion.android.launch.LaunchActivity",
+            "android:theme": "@style/Theme.HomeAssistant.Config"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:autoRemoveFromRecents": "true",
+            "android:exported": "true",
+            "android:label": "@string/tag_reader_title",
+            "android:launchMode": "singleTask",
+            "android:name": "io.homeassistant.companion.android.nfc.TagReaderActivity",
+            "android:taskAffinity": "io.homeassistant.companion.android.tag.reader",
+            "android:theme": "@style/Theme.HomeAssistant.TranslucentOverlay"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {
+                "android:autoVerify": "true"
+              },
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.VIEW"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.BROWSABLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:host": "www.home-assistant.io",
+                    "android:pathPrefix": "/tag/",
+                    "android:scheme": "https"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity-alias",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "io.homeassistant.companion.android.nfc.TagScannedActivity",
+            "android:permission": "android.permission.DISPATCH_NFC_MESSAGE",
+            "android:targetActivity": "io.homeassistant.companion.android.nfc.TagReaderActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.nfc.action.NDEF_DISCOVERED"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.BROWSABLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:host": "www.home-assistant.io",
+                    "android:pathPrefix": "/tag/",
+                    "android:scheme": "https"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/nfc_title_nfc_setup",
+            "android:name": "io.homeassistant.companion.android.nfc.NfcSetupActivity",
+            "android:theme": "@style/Theme.HomeAssistant.Config"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "io.homeassistant.companion.android.share.ShareActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.SEND"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "text/*"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:autoRemoveFromRecents": "true",
+            "android:exported": "true",
+            "android:launchMode": "singleTask",
+            "android:name": "io.homeassistant.companion.android.assist.AssistActivity",
+            "android:showWhenLocked": "true",
+            "android:taskAffinity": "io.homeassistant.companion.android.assist",
+            "android:theme": "@style/Theme.HomeAssistant.TranslucentOverlay",
+            "android:windowSoftInputMode": "adjustResize"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.ASSIST"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity-alias",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "io.homeassistant.companion.android.assist.VoiceCommandIntentActivity",
+            "android:targetActivity": "io.homeassistant.companion.android.assist.AssistActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.VOICE_COMMAND"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:excludeFromRecents": "true",
+            "android:exported": "true",
+            "android:icon": "@mipmap/ic_assist_launcher",
+            "android:label": "@string/assist_shortcut",
+            "android:name": "io.homeassistant.companion.android.widgets.assist.AssistShortcutActivity",
+            "android:theme": "@style/Theme.HomeAssistant.Config"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.CREATE_SHORTCUT"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:foregroundServiceType": "microphone",
+            "android:name": "io.homeassistant.companion.android.assist.service.AssistVoiceInteractionService",
+            "android:permission": "android.permission.BIND_VOICE_INTERACTION"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.voice_interaction",
+                "android:resource": "@xml/voice_interaction_service"
+              },
+              "children": []
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.voice.VoiceInteractionService"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "io.homeassistant.companion.android.assist.service.AssistVoiceInteractionSessionService",
+            "android:permission": "android.permission.BIND_VOICE_INTERACTION"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "io.homeassistant.companion.android.assist.service.AssistRecognitionService",
+            "android:permission": "android.permission.BIND_VOICE_INTERACTION"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.speech.RecognitionService"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.speech",
+                "android:resource": "@xml/recognition_service"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "provider",
+          "attributes": {
+            "android:authorities": "io.homeassistant.companion.android.minimal.provider",
+            "android:exported": "false",
+            "android:grantUriPermissions": "true",
+            "android:name": "androidx.core.content.FileProvider"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.support.FILE_PROVIDER_PATHS",
+                "android:resource": "@xml/provider_paths"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "io.homeassistant.companion.android.qs.TilePreferenceActivity",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE_PREFERENCES"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_1",
+            "android:name": "io.homeassistant.companion.android.qs.Tile1Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_2",
+            "android:name": "io.homeassistant.companion.android.qs.Tile2Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_3",
+            "android:name": "io.homeassistant.companion.android.qs.Tile3Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_4",
+            "android:name": "io.homeassistant.companion.android.qs.Tile4Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_5",
+            "android:name": "io.homeassistant.companion.android.qs.Tile5Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_6",
+            "android:name": "io.homeassistant.companion.android.qs.Tile6Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_7",
+            "android:name": "io.homeassistant.companion.android.qs.Tile7Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_8",
+            "android:name": "io.homeassistant.companion.android.qs.Tile8Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_9",
+            "android:name": "io.homeassistant.companion.android.qs.Tile9Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_10",
+            "android:name": "io.homeassistant.companion.android.qs.Tile10Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_11",
+            "android:name": "io.homeassistant.companion.android.qs.Tile11Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_12",
+            "android:name": "io.homeassistant.companion.android.qs.Tile12Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_13",
+            "android:name": "io.homeassistant.companion.android.qs.Tile13Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_14",
+            "android:name": "io.homeassistant.companion.android.qs.Tile14Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_15",
+            "android:name": "io.homeassistant.companion.android.qs.Tile15Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_16",
+            "android:name": "io.homeassistant.companion.android.qs.Tile16Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_17",
+            "android:name": "io.homeassistant.companion.android.qs.Tile17Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_18",
+            "android:name": "io.homeassistant.companion.android.qs.Tile18Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_19",
+            "android:name": "io.homeassistant.companion.android.qs.Tile19Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_20",
+            "android:name": "io.homeassistant.companion.android.qs.Tile20Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_21",
+            "android:name": "io.homeassistant.companion.android.qs.Tile21Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_22",
+            "android:name": "io.homeassistant.companion.android.qs.Tile22Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_23",
+            "android:name": "io.homeassistant.companion.android.qs.Tile23Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_24",
+            "android:name": "io.homeassistant.companion.android.qs.Tile24Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_25",
+            "android:name": "io.homeassistant.companion.android.qs.Tile25Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_26",
+            "android:name": "io.homeassistant.companion.android.qs.Tile26Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_27",
+            "android:name": "io.homeassistant.companion.android.qs.Tile27Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_28",
+            "android:name": "io.homeassistant.companion.android.qs.Tile28Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_29",
+            "android:name": "io.homeassistant.companion.android.qs.Tile29Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_30",
+            "android:name": "io.homeassistant.companion.android.qs.Tile30Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_31",
+            "android:name": "io.homeassistant.companion.android.qs.Tile31Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_32",
+            "android:name": "io.homeassistant.companion.android.qs.Tile32Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_33",
+            "android:name": "io.homeassistant.companion.android.qs.Tile33Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_34",
+            "android:name": "io.homeassistant.companion.android.qs.Tile34Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_35",
+            "android:name": "io.homeassistant.companion.android.qs.Tile35Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_36",
+            "android:name": "io.homeassistant.companion.android.qs.Tile36Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_37",
+            "android:name": "io.homeassistant.companion.android.qs.Tile37Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_38",
+            "android:name": "io.homeassistant.companion.android.qs.Tile38Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_39",
+            "android:name": "io.homeassistant.companion.android.qs.Tile39Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_stat_ic_notification",
+            "android:label": "@string/tile_40",
+            "android:name": "io.homeassistant.companion.android.qs.Tile40Service",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "false",
+            "android:name": "androidx.appcompat.app.AppLocalesMetadataHolderService"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "autoStoreLocales",
+                "android:value": "true"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:name": "io.homeassistant.companion.android.notifications.NotificationActionReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "@bool/enable_system_foreground_service_default",
+            "android:exported": "false",
+            "android:foregroundServiceType": "remoteMessaging|dataSync",
+            "android:name": "androidx.work.impl.foreground.SystemForegroundService"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "io.homeassistant.companion.android.common.sensors.StopBeaconScanningReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:name": "io.homeassistant.companion.android.common.notifications.NotificationDeleteReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:excludeFromRecents": "true",
+            "android:exported": "true",
+            "android:name": "androidx.media3.session.BluetoothValidationActivity",
+            "android:noHistory": "true",
+            "android:permission": "android.permission.BLUETOOTH_PRIVILEGED",
+            "android:theme": "@android:style/Theme.NoDisplay"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.VIEW"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:scheme": "content"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:host": "media"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:pathPrefix": "/internal/audio/media/"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "audio/*"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "true",
+            "android:name": "androidx.health.platform.client.impl.sdkservice.HealthDataSdkService"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.health.platform.client.ACTION_BIND_SDK_SERVICE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "provider",
+          "attributes": {
+            "android:authorities": "io.homeassistant.companion.android.minimal.androidx-startup",
+            "android:exported": "false",
+            "android:name": "androidx.startup.InitializationProvider"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "com.mikepenz.iconics.animation.SpinProcessor",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "com.mikepenz.iconics.animation.BlinkAlphaProcessor",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "com.mikepenz.iconics.animation.BlinkScaleProcessor",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "androidx.work.WorkManagerInitializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "com.mikepenz.iconics.typeface.library.community.material.Initializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "androidx.emoji2.text.EmojiCompatInitializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "androidx.lifecycle.ProcessLifecycleInitializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "androidx.profileinstaller.ProfileInstallerInitializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "okhttp3.internal.platform.PlatformInitializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "org.altbeacon.beacon.startup.StartupBroadcastReceiver"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.BOOT_COMPLETED"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.ACTION_POWER_CONNECTED"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.ACTION_POWER_DISCONNECTED"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:foregroundServiceType": "location",
+            "android:isolatedProcess": "false",
+            "android:label": "beacon",
+            "android:name": "org.altbeacon.beacon.service.BeaconService"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:name": "org.altbeacon.beacon.BeaconIntentProcessor"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "org.altbeacon.beacon.service.ScanJob",
+            "android:permission": "android.permission.BIND_JOB_SERVICE"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "immediateScanJobId",
+                "android:value": "208352939"
+              },
+              "children": []
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "periodicScanJobId",
+                "android:value": "208352940"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "org.altbeacon.bluetooth.BluetoothTestJob",
+            "android:permission": "android.permission.BIND_JOB_SERVICE"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "jobId",
+                "android:value": "1799803768"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "androidx.car.app.CarAppPermissionActivity",
+            "android:theme": "@android:style/Theme.Translucent.NoTitleBar"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "androidx.car.app.notification.CarAppNotificationBroadcastReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:enabled": "true",
+            "android:excludeFromRecents": "true",
+            "android:exported": "false",
+            "android:name": "androidx.glance.appwidget.action.ActionTrampolineActivity",
+            "android:theme": "@android:style/Theme.NoDisplay"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:launchMode": "singleInstance",
+            "android:name": "androidx.glance.appwidget.action.InvisibleActionTrampolineActivity",
+            "android:noHistory": "true",
+            "android:taskAffinity": "androidx.glance.appwidget.ListAdapterCallbackTrampoline",
+            "android:theme": "@style/Widget.Glance.AppWidget.CallbackTrampoline"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:name": "androidx.glance.appwidget.action.ActionCallbackBroadcastReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:name": "androidx.glance.appwidget.UnmanagedSessionReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:name": "androidx.glance.appwidget.MyPackageReplacedReceiver"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MY_PACKAGE_REPLACED"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "androidx.glance.appwidget.GlanceRemoteViewsService",
+            "android:permission": "android.permission.BIND_REMOTEVIEWS"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "@bool/enable_system_job_service_default",
+            "android:exported": "true",
+            "android:name": "androidx.work.impl.background.systemjob.SystemJobService",
+            "android:permission": "android.permission.BIND_JOB_SERVICE"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:name": "androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "false",
+            "android:exported": "false",
+            "android:name": "androidx.work.impl.background.systemalarm.RescheduleReceiver"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.BOOT_COMPLETED"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "true",
+            "android:exported": "true",
+            "android:name": "androidx.work.impl.diagnostics.DiagnosticsReceiver",
+            "android:permission": "android.permission.DUMP"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.work.diagnostics.REQUEST_DIAGNOSTICS"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:directBootAware": "true",
+            "android:exported": "false",
+            "android:name": "androidx.room.MultiInstanceInvalidationService"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:name": "androidx.core.widget.RemoteViewsCompatService",
+            "android:permission": "android.permission.BIND_REMOTEVIEWS"
+          },
+          "children": []
+        },
+        {
+          "tag": "uses-library",
+          "attributes": {
+            "android:name": "androidx.window.extensions",
+            "android:required": "false"
+          },
+          "children": []
+        },
+        {
+          "tag": "uses-library",
+          "attributes": {
+            "android:name": "androidx.window.sidecar",
+            "android:required": "false"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "androidx.compose.ui.tooling.PreviewActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "true",
+            "android:exported": "true",
+            "android:name": "androidx.profileinstaller.ProfileInstallReceiver",
+            "android:permission": "android.permission.DUMP"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.profileinstaller.action.INSTALL_PROFILE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.profileinstaller.action.SKIP_FILE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.profileinstaller.action.SAVE_PROFILE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.profileinstaller.action.BENCHMARK_OPERATION"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:clearTaskOnLaunch": "true",
+            "android:name": "com.journeyapps.barcodescanner.CaptureActivity",
+            "android:screenOrientation": "sensorLandscape",
+            "android:stateNotNeeded": "true",
+            "android:theme": "@style/zxing_CaptureTheme",
+            "android:windowSoftInputMode": "stateAlwaysHidden"
+          },
+          "children": []
+        }
+      ]
+    }
+  ]
+}

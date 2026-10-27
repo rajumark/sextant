@@ -1,0 +1,2 @@
+{"name":"Kotlin","evidence":["1941 classes with kotlin.Metadata"]}
+{"name":"SDL","evidence":["file lib/arm64-v8a/libSDL2.so","52 classes in org.libsdl.app"]}

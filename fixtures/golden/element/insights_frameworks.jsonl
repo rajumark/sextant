@@ -1,0 +1,3 @@
+{"name":"Hermes (JS engine)","evidence":["file lib/x86_64/libhermes.so"]}
+{"name":"Jetpack Compose","evidence":["649 classes in androidx.compose.runtime"]}
+{"name":"React Native","evidence":["file lib/x86_64/libreactnative.so","file assets/index.android.bundle","1827 classes in com.facebook.react"]}

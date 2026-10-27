@@ -1,0 +1,3013 @@
+{
+  "tag": "manifest",
+  "attributes": {
+    "android:compileSdkVersion": "36",
+    "android:compileSdkVersionCodename": "16",
+    "android:versionCode": "52971000",
+    "android:versionName": "5.297.1",
+    "package": "com.duckduckgo.mobile.android",
+    "platformBuildVersionCode": "36",
+    "platformBuildVersionName": "16"
+  },
+  "children": [
+    {
+      "tag": "uses-sdk",
+      "attributes": {
+        "android:minSdkVersion": "28",
+        "android:targetSdkVersion": "36"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.INTERNET"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.RECEIVE_BOOT_COMPLETED"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:maxSdkVersion": "29",
+        "android:name": "android.permission.WRITE_EXTERNAL_STORAGE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "com.android.launcher.permission.INSTALL_SHORTCUT"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.REQUEST_INSTALL_PACKAGES"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.ACCESS_FINE_LOCATION"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.ACCESS_COARSE_LOCATION"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.QUERY_ALL_PACKAGES"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.RECORD_AUDIO"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.MODIFY_AUDIO_SETTINGS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.CAMERA"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.POST_NOTIFICATIONS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.camera.any",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.camera",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.camera.autofocus",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.camera.flash",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "queries",
+      "attributes": {},
+      "children": [
+        {
+          "tag": "intent",
+          "attributes": {},
+          "children": [
+            {
+              "tag": "action",
+              "attributes": {
+                "android:name": "android.speech.RecognitionService"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "intent",
+          "attributes": {},
+          "children": [
+            {
+              "tag": "action",
+              "attributes": {
+                "android:name": "android.intent.action.VIEW"
+              },
+              "children": []
+            },
+            {
+              "tag": "category",
+              "attributes": {
+                "android:name": "android.intent.category.BROWSABLE"
+              },
+              "children": []
+            },
+            {
+              "tag": "data",
+              "attributes": {
+                "android:scheme": "https"
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.FOREGROUND_SERVICE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.FOREGROUND_SERVICE_MICROPHONE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.ACCESS_NETWORK_STATE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.CREDENTIAL_MANAGER_SET_ORIGIN"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.FOREGROUND_SERVICE_SPECIAL_USE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.READ_PHONE_STATE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.USE_BIOMETRIC"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.USE_FINGERPRINT"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.WAKE_LOCK"
+      },
+      "children": []
+    },
+    {
+      "tag": "permission",
+      "attributes": {
+        "android:name": "com.duckduckgo.mobile.android.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+        "android:protectionLevel": "signature"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "com.duckduckgo.mobile.android.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.camera.front",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.screen.landscape",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.wifi",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "application",
+      "attributes": {
+        "android:allowBackup": "false",
+        "android:appComponentFactory": "androidx.core.app.CoreComponentFactory",
+        "android:dataExtractionRules": "@xml/backup_rules_android_12_upwards",
+        "android:enableOnBackInvokedCallback": "false",
+        "android:extractNativeLibs": "true",
+        "android:fullBackupContent": "@xml/backup_rules_android_11_and_older",
+        "android:icon": "@mipmap/ic_launcher_red",
+        "android:label": "@string/appName",
+        "android:largeHeap": "true",
+        "android:name": "com.duckduckgo.app.global.DuckDuckGoApplication",
+        "android:networkSecurityConfig": "@xml/network_security_config",
+        "android:requestLegacyExternalStorage": "true",
+        "android:roundIcon": "@mipmap/ic_launcher_red_round",
+        "android:theme": "@style/Theme.DuckDuckGo.App"
+      },
+      "children": [
+        {
+          "tag": "property",
+          "attributes": {
+            "android:name": "android.window.PROPERTY_COMPAT_ALLOW_RESTRICTED_RESIZABILITY",
+            "android:value": "true"
+          },
+          "children": []
+        },
+        {
+          "tag": "meta-data",
+          "attributes": {
+            "android:name": "android.webkit.WebView.MetricsOptOut",
+            "android:value": "true"
+          },
+          "children": []
+        },
+        {
+          "tag": "meta-data",
+          "attributes": {
+            "android:name": "asset_statements",
+            "android:resource": "@string/asset_statements"
+          },
+          "children": []
+        },
+        {
+          "tag": "provider",
+          "attributes": {
+            "android:authorities": "com.duckduckgo.mobile.android.androidx-startup",
+            "android:exported": "false",
+            "android:name": "androidx.startup.InitializationProvider"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "androidx.emoji2.text.EmojiCompatInitializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "androidx.lifecycle.ProcessLifecycleInitializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "androidx.profileinstaller.ProfileInstallerInitializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "provider",
+          "attributes": {
+            "android:authorities": "com.duckduckgo.mobile.android.provider",
+            "android:exported": "false",
+            "android:grantUriPermissions": "true",
+            "android:name": "androidx.core.content.FileProvider"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.support.FILE_PROVIDER_PATHS",
+                "android:resource": "@xml/provider_paths"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "meta-data",
+          "attributes": {
+            "android:name": "android.webkit.WebView.EnableSafeBrowsing",
+            "android:value": "false"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "true",
+            "android:icon": "@mipmap/ic_launcher_red",
+            "android:label": "@string/appName",
+            "android:name": "com.duckduckgo.app.launch.LaunchBridgeActivity",
+            "android:roundIcon": "@mipmap/ic_launcher_red_round",
+            "android:theme": "@style/Theme.DuckDuckGo.SplashScreen"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MAIN"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity-alias",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@mipmap/ic_launcher_silhouette",
+            "android:label": "@string/appName",
+            "android:name": "com.duckduckgo.app.launch.LauncherSilhoutte",
+            "android:roundIcon": "@mipmap/ic_launcher_silhouette_round",
+            "android:targetActivity": "com.duckduckgo.app.launch.LaunchBridgeActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MAIN"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.LAUNCHER"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.APP_BROWSER"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity-alias",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@mipmap/ic_launcher_purple",
+            "android:name": "com.duckduckgo.app.launch.LauncherPurple",
+            "android:roundIcon": "@mipmap/ic_launcher_purple_round",
+            "android:targetActivity": "com.duckduckgo.app.launch.LaunchBridgeActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MAIN"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.LAUNCHER"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.APP_BROWSER"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity-alias",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@mipmap/ic_launcher_green",
+            "android:name": "com.duckduckgo.app.launch.LauncherGreen",
+            "android:roundIcon": "@mipmap/ic_launcher_green_round",
+            "android:targetActivity": "com.duckduckgo.app.launch.LaunchBridgeActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MAIN"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.LAUNCHER"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.APP_BROWSER"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity-alias",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@mipmap/ic_launcher_gold",
+            "android:name": "com.duckduckgo.app.launch.LauncherGold",
+            "android:roundIcon": "@mipmap/ic_launcher_gold_round",
+            "android:targetActivity": "com.duckduckgo.app.launch.LaunchBridgeActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MAIN"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.LAUNCHER"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.APP_BROWSER"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity-alias",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@mipmap/ic_launcher_black",
+            "android:name": "com.duckduckgo.app.launch.LauncherBlack",
+            "android:roundIcon": "@mipmap/ic_launcher_black_round",
+            "android:targetActivity": "com.duckduckgo.app.launch.LaunchBridgeActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MAIN"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.LAUNCHER"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.APP_BROWSER"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity-alias",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@mipmap/ic_launcher_blue",
+            "android:name": "com.duckduckgo.app.launch.LauncherBlue",
+            "android:roundIcon": "@mipmap/ic_launcher_blue_round",
+            "android:targetActivity": "com.duckduckgo.app.launch.LaunchBridgeActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MAIN"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.LAUNCHER"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.APP_BROWSER"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity-alias",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@mipmap/ic_launcher_pink",
+            "android:name": "com.duckduckgo.app.launch.LauncherPink",
+            "android:roundIcon": "@mipmap/ic_launcher_pink_round",
+            "android:targetActivity": "com.duckduckgo.app.launch.LaunchBridgeActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MAIN"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.LAUNCHER"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.APP_BROWSER"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity-alias",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "true",
+            "android:icon": "@mipmap/ic_launcher_red",
+            "android:name": "com.duckduckgo.app.launch.Launcher",
+            "android:roundIcon": "@mipmap/ic_launcher_red_round",
+            "android:targetActivity": "com.duckduckgo.app.launch.LaunchBridgeActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MAIN"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.LAUNCHER"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.APP_BROWSER"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:autoRemoveFromRecents": "true",
+            "android:documentLaunchMode": "intoExisting",
+            "android:exported": "true",
+            "android:label": "@string/appName",
+            "android:launchMode": "singleTask",
+            "android:name": "com.duckduckgo.app.systemsearch.SystemSearchActivity",
+            "android:roundIcon": "@mipmap/ic_launcher_red_round",
+            "android:stateNotNeeded": "true",
+            "android:theme": "@style/Theme.DuckDuckGo.SplashScreen.EdgeToEdge",
+            "android:windowSoftInputMode": "adjustResize"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.ASSIST"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "com.duckduckgo.mobile.android.NEW_SEARCH"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/appName",
+            "android:name": "com.duckduckgo.app.onboarding.ui.OnboardingActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "smallestScreenSize|screenSize|screenLayout|orientation",
+            "android:excludeFromRecents": "true",
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.app.browser.customtabs.CustomTabActivity",
+            "android:persistableMode": "persistNever",
+            "android:resizeableActivity": "true",
+            "android:windowSoftInputMode": "adjustResize|stateAlwaysHidden"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "true",
+            "android:icon": "@drawable/duckai_64",
+            "android:label": "@string/duckAiOnlyPinShortcutLabel",
+            "android:launchMode": "singleTask",
+            "android:name": "com.duckduckgo.widget.DuckAiPinShortcutActivity",
+            "android:theme": "@style/Theme.AppCompat.Transparent.NoActionBar"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.CREATE_SHORTCUT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "com.duckduckgo.app.dispatchers.IntentDispatcherActivity",
+            "android:theme": "@style/Theme.AppCompat.Transparent.NoActionBar"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.VIEW"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.BROWSABLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:scheme": "https"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:scheme": "http"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:scheme": "duck"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.VIEW"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.BROWSABLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:scheme": "https"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:scheme": "http"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:scheme": "duck"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "text/html"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "text/plain"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "application/xhtml+xml"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.SEND"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "text/plain"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.nfc.action.NDEF_DISCOVERED"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.BROWSABLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:scheme": "https"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:scheme": "http"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:scheme": "duck"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity-alias",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:name": "com.duckduckgo.app.dispatchers.PdfViewerHandler",
+            "android:targetActivity": "com.duckduckgo.app.dispatchers.IntentDispatcherActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.VIEW"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.BROWSABLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:scheme": "content"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "application/pdf"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "smallestScreenSize|screenSize|screenLayout|orientation|navigation|keyboardHidden|keyboard",
+            "android:exported": "true",
+            "android:label": "@string/appDescription",
+            "android:launchMode": "singleTask",
+            "android:name": "com.duckduckgo.app.browser.BrowserActivity",
+            "android:windowSoftInputMode": "adjustResize|stateHidden"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "true",
+            "android:label": "@string/systemTextSearchMessage",
+            "android:launchMode": "singleTask",
+            "android:name": "com.duckduckgo.app.SelectedTextSearchActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.PROCESS_TEXT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "text/plain"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.WEB_SEARCH"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/tabActivityTitle",
+            "android:name": "com.duckduckgo.app.tabs.ui.TabSwitcherActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "true",
+            "android:label": "@string/settingsActivityTitle",
+            "android:name": "com.duckduckgo.app.settings.SettingsActivity",
+            "android:parentActivityName": "com.duckduckgo.app.browser.BrowserActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE_PREFERENCES"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "smallestScreenSize|screenSize|screenLayout|orientation|navigation|keyboardHidden|keyboard",
+            "android:exported": "false",
+            "android:label": "@string/surveyActivityTitle",
+            "android:name": "com.duckduckgo.app.survey.ui.SurveyActivity",
+            "android:parentActivityName": "com.duckduckgo.app.browser.BrowserActivity",
+            "android:theme": "@style/Theme.DuckDuckGo.Survey"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/addWidgetInstructionsActivityTitle",
+            "android:name": "com.duckduckgo.app.widget.ui.AddWidgetInstructionsActivity",
+            "android:theme": "@style/Theme.DuckDuckGo.Survey"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/aboutActivityTitle",
+            "android:name": "com.duckduckgo.app.about.AboutDuckDuckGoActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/fireproofWebsitesActivityTitle",
+            "android:name": "com.duckduckgo.app.fire.fireproofwebsite.ui.FireproofWebsitesActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.app.fire.FireActivity",
+            "android:process": "@string/fireProcessName",
+            "android:theme": "@style/Theme.DuckDuckGo.Dark"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:excludeFromRecents": "true",
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.app.global.shortcut.FireShortcutTrampolineActivity",
+            "android:noHistory": "true",
+            "android:theme": "@android:style/Theme.Translucent.NoTitleBar"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/changeIconActivityTitle",
+            "android:name": "com.duckduckgo.app.icon.ui.ChangeIconActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/allowlistActivityTitle",
+            "android:name": "com.duckduckgo.app.privacy.ui.AllowListActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/globalPrivacyControlActivityTitle",
+            "android:name": "com.duckduckgo.app.globalprivacycontrol.ui.GlobalPrivacyControlActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/accessibilityActivityTitle",
+            "android:name": "com.duckduckgo.app.accessibility.AccessibilityActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/emailProtectionActivityTitle",
+            "android:name": "com.duckduckgo.app.email.ui.EmailProtectionUnsupportedActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity",
+            "android:screenOrientation": "portrait"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.app.settings.FireAnimationActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity",
+            "android:theme": "@style/Theme.AppCompat.Transparent.NoActionBar"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.app.browser.webview.WebViewActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/privateSearchActivityTitle",
+            "android:name": "com.duckduckgo.app.privatesearch.PrivateSearchActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/generalSettingsActivityTitle",
+            "android:name": "com.duckduckgo.app.generalsettings.GeneralSettingsActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/showOnAppLaunchOptionTitle",
+            "android:name": "com.duckduckgo.app.generalsettings.showonapplaunch.ShowOnAppLaunchActivity",
+            "android:parentActivityName": "com.duckduckgo.app.generalsettings.GeneralSettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/webTrackingProtectionActivityTitle",
+            "android:name": "com.duckduckgo.app.webtrackingprotection.WebTrackingProtectionActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/dataClearingAutomaticDataClearing",
+            "android:name": "com.duckduckgo.app.firebutton.AutomaticDataClearingSettingsActivity",
+            "android:parentActivityName": "com.duckduckgo.app.firebutton.DataClearingSettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/dataClearingActivityTitle",
+            "android:name": "com.duckduckgo.app.firebutton.DataClearingSettingsActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/permissionsActivityTitle",
+            "android:name": "com.duckduckgo.app.permissions.PermissionsActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/appearanceActivityTitle",
+            "android:name": "com.duckduckgo.app.appearance.AppearanceActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/widgetConfigurationActivityTitle",
+            "android:name": "com.duckduckgo.app.WidgetThemeConfiguration",
+            "android:roundIcon": "@mipmap/ic_launcher_red_round",
+            "android:theme": "@style/Theme.DuckDuckGo.SplashScreen.EdgeToEdge"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.appwidget.action.APPWIDGET_CONFIGURE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/voiceSearchTitle",
+            "android:name": "com.duckduckgo.voice.impl.listeningmode.VoiceSearchActivity",
+            "android:parentActivityName": "com.duckduckgo.app.browser.BrowserActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.app.browser.pdf.PdfViewerActivity",
+            "android:parentActivityName": "com.duckduckgo.app.browser.BrowserActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "Threat protection",
+            "android:name": "com.duckduckgo.app.browser.threatprotection.ThreatProtectionSettingsActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "com.duckduckgo.customtabs.impl.service.DuckDuckGoCustomTabService"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.support.customtabs.action.CustomTabsService"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:name": "com.duckduckgo.app.notification.NotificationHandlerService"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.app.browser.shortcut.ShortcutReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/searchWidgetLabel",
+            "android:name": "com.duckduckgo.widget.SearchWidget"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.appwidget.action.APPWIDGET_UPDATE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.appwidget.provider",
+                "android:resource": "@xml/search_widget_info"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/searchWidgetLabel",
+            "android:name": "com.duckduckgo.widget.SearchWidgetLight"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.appwidget.action.APPWIDGET_UPDATE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.appwidget.provider",
+                "android:resource": "@xml/search_widget_info_light"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/searchOnlyWidgetLabel",
+            "android:name": "com.duckduckgo.widget.SearchOnlyWidget"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.appwidget.action.APPWIDGET_UPDATE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.appwidget.provider",
+                "android:resource": "@xml/search_only_widget_info"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/favoritesWidgetLabel",
+            "android:name": "com.duckduckgo.widget.SearchAndFavoritesWidget"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.appwidget.action.APPWIDGET_UPDATE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.appwidget.provider",
+                "android:resource": "@xml/search_favorites_widget_info"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.widget.VoiceSearchWidgetUpdaterReceiver"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.LOCALE_CHANGED"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.widget.DuckAiSearchWidgetUpdaterReceiver"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.appwidget.action.APPWIDGET_UPDATE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/duck_chat_ai_features_title",
+            "android:name": "com.duckduckgo.duckchat.impl.ui.settings.DuckChatSettingsActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/duck_ai_shortcut_settings_title",
+            "android:name": "com.duckduckgo.duckchat.impl.ui.settings.DuckAiShortcutSettingsActivity",
+            "android:parentActivityName": "com.duckduckgo.duckchat.impl.ui.settings.DuckChatSettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/duck_ai_chat_history_title",
+            "android:name": "com.duckduckgo.duckchat.impl.history.ChatHistoryActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/duck_ai_paid_settings_title",
+            "android:name": "com.duckduckgo.duckchat.impl.subscription.DuckAiPaidSettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "smallestScreenSize|screenSize|screenLayout|orientation|keyboardHidden",
+            "android:exported": "false",
+            "android:label": "@string/duck_ai_edit_prompt_title",
+            "android:name": "com.duckduckgo.duckchat.impl.ui.nativeinput.edit.EditPromptActivity",
+            "android:windowSoftInputMode": "adjustResize|stateVisible"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:label": "@string/duckAiTextSelectionMenuItem",
+            "android:launchMode": "singleTask",
+            "android:name": "com.duckduckgo.duckchat.impl.ui.nativeinput.textselection.SelectedTextDuckAiActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.PROCESS_TEXT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "text/plain"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "false",
+            "android:foregroundServiceType": "microphone",
+            "android:name": "com.duckduckgo.duckchat.impl.ui.DuckChatVoiceMicrophoneService"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "true",
+            "android:label": "@string/newTabPageSettingsTitle",
+            "android:name": "com.duckduckgo.newtabpage.impl.settings.NewTabSettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.voice.impl.language.LocaleChangeReceiver"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.LOCALE_CHANGED"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/settingsSitePermissions",
+            "android:name": "com.duckduckgo.site.permissions.impl.ui.SitePermissionsActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.site.permissions.impl.ui.permissionsperwebsite.PermissionsPerWebsiteActivity",
+            "android:parentActivityName": "com.duckduckgo.site.permissions.impl.ui.SitePermissionsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/syncGetAppsOnOtherPlatformsActivityTitle",
+            "android:name": "com.duckduckgo.sync.impl.promotion.SyncGetOnOtherPlatformsActivity",
+            "android:parentActivityName": "com.duckduckgo.sync.impl.ui.dashboard.SyncActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/sync_screen_title",
+            "android:name": "com.duckduckgo.sync.impl.ui.DeviceUnsupportedActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity",
+            "android:screenOrientation": "portrait"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:clearTaskOnLaunch": "true",
+            "android:name": "com.journeyapps.barcodescanner.CaptureActivity",
+            "android:screenOrientation": "portrait",
+            "android:stateNotNeeded": "true",
+            "android:theme": "@style/zxing_CaptureTheme",
+            "android:windowSoftInputMode": "stateAlwaysHidden"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/sync_screen_title",
+            "android:name": "com.duckduckgo.sync.impl.ui.dashboard.SyncActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity",
+            "android:screenOrientation": "portrait"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/sync_screen_title",
+            "android:name": "com.duckduckgo.sync.impl.ui.setup.SyncThisDeviceActivity",
+            "android:parentActivityName": "com.duckduckgo.sync.impl.ui.dashboard.SyncActivity",
+            "android:screenOrientation": "portrait"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/sync_screen_title",
+            "android:name": "com.duckduckgo.sync.impl.ui.recoverycode.RecoveryCodeActivity",
+            "android:parentActivityName": "com.duckduckgo.sync.impl.ui.dashboard.SyncActivity",
+            "android:screenOrientation": "portrait"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/sync_screen_title",
+            "android:name": "com.duckduckgo.sync.impl.ui.devices.EditDeviceActivity",
+            "android:parentActivityName": "com.duckduckgo.sync.impl.ui.dashboard.SyncActivity",
+            "android:screenOrientation": "portrait"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/sync_screen_title",
+            "android:name": "com.duckduckgo.sync.impl.ui.pairing.read.ReadSyncCodeActivity",
+            "android:parentActivityName": "com.duckduckgo.sync.impl.ui.dashboard.SyncActivity",
+            "android:screenOrientation": "portrait",
+            "android:theme": "@style/Theme.DuckDuckGo.Dark"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/sync_simplified_qr_code_screen_title",
+            "android:name": "com.duckduckgo.sync.impl.ui.pairing.show.DisplayQrCodeActivity",
+            "android:parentActivityName": "com.duckduckgo.sync.impl.ui.pairing.read.ReadSyncCodeActivity",
+            "android:screenOrientation": "portrait",
+            "android:theme": "@style/Theme.DuckDuckGo.Dark"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/sync_screen_title",
+            "android:name": "com.duckduckgo.sync.impl.ui.pairing.process.ProcessSyncCodeActivity",
+            "android:parentActivityName": "com.duckduckgo.sync.impl.ui.pairing.read.ReadSyncCodeActivity",
+            "android:screenOrientation": "portrait"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/sync_screen_title",
+            "android:name": "com.duckduckgo.sync.impl.ui.pairing.recover.RecoverSyncedDataActivity",
+            "android:parentActivityName": "com.duckduckgo.sync.impl.ui.dashboard.SyncActivity",
+            "android:screenOrientation": "portrait"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/sync_screen_title",
+            "android:name": "com.duckduckgo.sync.impl.ui.setup.PreviousSessionReadyActivity",
+            "android:parentActivityName": "com.duckduckgo.sync.impl.ui.dashboard.SyncActivity",
+            "android:screenOrientation": "portrait"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.settings.impl.SettingsWebViewActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/duck_player_settings_activity_title",
+            "android:name": "com.duckduckgo.adblocking.impl.duckplayer.DuckPlayerSettingsActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/ad_blocking_settings_title",
+            "android:name": "com.duckduckgo.adblocking.impl.ui.AdBlockingSettingsActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/ad_blocking_settings_title_v2",
+            "android:name": "com.duckduckgo.adblocking.impl.ui.AdBlockingSettingsV2Activity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/autoconsentTitle",
+            "android:name": "com.duckduckgo.autoconsent.impl.ui.AutoconsentSettingsActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.autoconsent.impl.prompt.CookiePopupOptInActivity",
+            "android:theme": "@style/Theme.DuckDuckGo.CookiePopupOptIn"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/autofillManagementHowToSyncDesktopPasswords",
+            "android:name": "com.duckduckgo.autofill.impl.ui.credential.management.importpassword.ImportPasswordsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "smallestScreenSize|screenSize|screenLayout|orientation|navigation|keyboardHidden|keyboard",
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.autofill.impl.email.incontext.EmailProtectionInContextSignupActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "smallestScreenSize|screenSize|screenLayout|orientation|navigation|keyboardHidden|keyboard",
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.autofill.impl.importing.gpm.webflow.ImportGooglePasswordsWebFlowActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "smallestScreenSize|screenSize|screenLayout|orientation|navigation|keyboardHidden|keyboard",
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.autofill.impl.importing.takeout.webflow.ImportGoogleBookmarksWebFlowActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.autofill.impl.ui.credential.management.AutofillManagementActivity",
+            "android:windowSoftInputMode": "adjustResize"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.autofill.impl.ui.settings.AutofillSettingsActivity",
+            "android:windowSoftInputMode": "adjustResize"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.autofill.impl.service.AutofillProviderFillSuggestionActivity",
+            "android:process": ":autofill",
+            "android:theme": "@style/Theme.AppCompat.Transparent.NoActionBar",
+            "android:windowSoftInputMode": "adjustResize"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.autofill.impl.service.AutofillProviderChooseActivity",
+            "android:process": ":autofill",
+            "android:windowSoftInputMode": "adjustResize"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:label": "@string/serviceName",
+            "android:name": "com.duckduckgo.autofill.impl.service.RealAutofillService",
+            "android:permission": "android.permission.BIND_AUTOFILL_SERVICE",
+            "android:process": ":autofill"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.autofill.AutofillService"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.autofill",
+                "android:resource": "@xml/service_configuration"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.mobile.android.vpn.worker.VpnRemoteWorkerService",
+            "android:process": ":vpn"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.mobile.android.vpn.service.VpnPermissionRequesterActivity",
+            "android:screenOrientation": "portrait"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.mobile.android.vpn.ui.onboarding.VpnOnboardingActivity",
+            "android:screenOrientation": "portrait"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/atp_ProfilingActivityTitle",
+            "android:name": "com.duckduckgo.mobile.android.vpn.ui.privacyreport.DeviceShieldAppTrackersInfo",
+            "android:parentActivityName": "com.duckduckgo.mobile.android.vpn.ui.tracker_activity.DeviceShieldTrackerActivity",
+            "android:screenOrientation": "portrait"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/atp_ActivityTitle",
+            "android:name": "com.duckduckgo.mobile.android.vpn.ui.tracker_activity.DeviceShieldTrackerActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity",
+            "android:screenOrientation": "portrait"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/atp_MostRecentActivityTitle",
+            "android:name": "com.duckduckgo.mobile.android.vpn.ui.tracker_activity.DeviceShieldMostRecentActivity",
+            "android:parentActivityName": "com.duckduckgo.mobile.android.vpn.ui.tracker_activity.DeviceShieldTrackerActivity",
+            "android:screenOrientation": "portrait"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/atp_ManageRecentAppsProtectionActivityTitle",
+            "android:name": "com.duckduckgo.mobile.android.vpn.apps.ui.ManageRecentAppsProtectionActivity",
+            "android:parentActivityName": "com.duckduckgo.mobile.android.vpn.ui.tracker_activity.DeviceShieldTrackerActivity",
+            "android:screenOrientation": "portrait"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/atp_TrackingProtectionExclusionListActivityTitle",
+            "android:name": "com.duckduckgo.mobile.android.vpn.apps.ui.TrackingProtectionExclusionListActivity",
+            "android:parentActivityName": "com.duckduckgo.mobile.android.vpn.apps.ui.ManageRecentAppsProtectionActivity",
+            "android:screenOrientation": "portrait"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/atp_ReportBreakageAppListActivityTitle",
+            "android:name": "com.duckduckgo.mobile.android.vpn.breakage.ReportBreakageAppListActivity",
+            "android:parentActivityName": "com.duckduckgo.mobile.android.vpn.ui.tracker_activity.DeviceShieldTrackerActivity",
+            "android:screenOrientation": "portrait"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/atp_ReportBreakageAppListActivityTitle",
+            "android:name": "com.duckduckgo.mobile.android.vpn.breakage.ReportBreakageCategorySingleChoiceActivity",
+            "android:parentActivityName": "com.duckduckgo.mobile.android.vpn.breakage.ReportBreakageAppListActivity",
+            "android:screenOrientation": "portrait"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.mobile.android.vpn.ui.tracker_activity.AppTPCompanyTrackersActivity",
+            "android:parentActivityName": "com.duckduckgo.mobile.android.vpn.ui.tracker_activity.DeviceShieldTrackerActivity",
+            "android:screenOrientation": "portrait"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.mobile.android.vpn.service.state.VpnStateMonitorService"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "false",
+            "android:foregroundServiceType": "specialUse",
+            "android:name": "com.duckduckgo.mobile.android.vpn.service.TrackerBlockingVpnService",
+            "android:permission": "android.permission.BIND_VPN_SERVICE",
+            "android:process": ":vpn"
+          },
+          "children": [
+            {
+              "tag": "property",
+              "attributes": {
+                "android:name": "android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE",
+                "android:value": "VPN"
+              },
+              "children": []
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.net.VpnService"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.net.VpnService.SUPPORTS_ALWAYS_ON",
+                "android:value": "true"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_device_shield_tile",
+            "android:label": "@string/atp_name",
+            "android:name": "com.duckduckgo.mobile.android.vpn.service.DeviceShieldTileService",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "androidx.work.multiprocess.RemoteWorkerService",
+            "android:process": ":vpn"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.mobile.android.vpn.service.VpnReminderReceiver",
+            "android:process": ":vpn"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "com.duckduckgo.vpn.internaltesters.reminder"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.mobile.android.vpn.heartbeat.VpnHeartbeatDeviceBootMonitor",
+            "android:process": ":vpn"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {
+                "android:priority": "999"
+              },
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.BOOT_COMPLETED"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.REBOOT"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.mobile.android.vpn.appupdates.AppUpdateReceiver"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MY_PACKAGE_REPLACED"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.mobile.android.vpn.service.VpnActionReceiver",
+            "android:process": ":vpn"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "com.duckduckgo.vpn.ACTION_VPN_SNOOZE_END"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "com.duckduckgo.vpn.ACTION_VPN_DISABLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "com.duckduckgo.vpn.ACTION_VPN_SNOOZE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.mobile.android.vpn.service.notification.PersistentNotificationDismissedReceiver",
+            "android:process": ":vpn"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "com.duckduckgo.vpn.ACTION_VPN_PERSISTENT_NOTIF_DISMISSED"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:label": "@string/activityPirDashboard",
+            "android:name": "com.duckduckgo.pir.impl.dashboard.PirDashboardWebViewActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.pir.impl.onboarding.SubscriptionOnboardingPirStepActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:foregroundServiceType": "specialUse",
+            "android:name": "com.duckduckgo.pir.impl.scan.PirForegroundScanService",
+            "android:process": ":pir"
+          },
+          "children": [
+            {
+              "tag": "property",
+              "attributes": {
+                "android:name": "android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE",
+                "android:value": "Executing operations for the Personal Information Removal feature"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:foregroundServiceType": "specialUse",
+            "android:name": "com.duckduckgo.pir.impl.optout.PirForegroundOptOutService",
+            "android:process": ":pir"
+          },
+          "children": [
+            {
+              "tag": "property",
+              "attributes": {
+                "android:name": "android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE",
+                "android:value": "Executing debug operations for the Personal Information Removal feature. Only used as a debug tool."
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.pir.impl.scan.PirRemoteWorkerService",
+            "android:permission": "android.permission.BIND_JOB_SERVICE",
+            "android:process": ":pir"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.remote.messaging.impl.modal.ModalSurfaceActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.remote.messaging.impl.newtab.SharePromoLinkBroadCastReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/downloadsActivityTitle",
+            "android:name": "com.duckduckgo.downloads.impl.DownloadsActivity",
+            "android:parentActivityName": "com.duckduckgo.app.browser.BrowserActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:excludeFromRecents": "true",
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.downloads.impl.OpenDownloadedFileActivity",
+            "android:noHistory": "true",
+            "android:theme": "@android:style/Theme.Translucent.NoTitleBar"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.networkprotection.impl.management.NetworkProtectionManagementActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/netpExclusionListTitle",
+            "android:name": "com.duckduckgo.networkprotection.impl.exclusion.ui.NetpAppExclusionListActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/netpVpnSettingsTitle",
+            "android:name": "com.duckduckgo.networkprotection.impl.settings.NetPVpnSettingsActivity",
+            "android:parentActivityName": "com.duckduckgo.networkprotection.impl.management.NetworkProtectionManagementActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:exported": "false",
+            "android:label": "@string/netpGeoswitchingTitle",
+            "android:name": "com.duckduckgo.networkprotection.impl.settings.geoswitching.NetpGeoswitchingActivity",
+            "android:parentActivityName": "settings.NetPVpnSettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/netpCustomDnsSettingText",
+            "android:name": "com.duckduckgo.networkprotection.impl.settings.custom_dns.VpnCustomDnsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.networkprotection.impl.notification.NetPEnableReceiver",
+            "android:process": ":vpn"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "com.duckduckgo.networkprotection.notification.ACTION_NETP_ENABLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "com.duckduckgo.vpn.ACTION_VPN_SNOOZE_CANCEL"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:icon": "@drawable/ic_quick_tile",
+            "android:label": "@string/netp_name",
+            "android:name": "com.duckduckgo.networkprotection.impl.quickaccess.VpnTileService",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/bookmarksActivityTitle",
+            "android:name": "com.duckduckgo.savedsites.impl.bookmarks.BookmarksActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/folderLocationTitle",
+            "android:name": "com.duckduckgo.savedsites.impl.folders.BookmarkFoldersActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/dax_prompt_browser_comparison_title",
+            "android:name": "com.duckduckgo.daxprompts.impl.ui.DaxPromptBrowserComparisonActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/macos_app",
+            "android:name": "com.duckduckgo.macos.impl.MacOsActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.macos.impl.MacOsLinkShareBroadcastReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|screenLayout|orientation|keyboardHidden",
+            "android:exported": "false",
+            "android:label": "@string/privacyDashboardActivityTitle",
+            "android:name": "com.duckduckgo.privacy.dashboard.impl.ui.PrivacyDashboardHybridActivity",
+            "android:parentActivityName": "com.duckduckgo.privacy.dashboard.impl.BrowserActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/windows_app",
+            "android:name": "com.duckduckgo.windows.impl.ui.WindowsActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.windows.impl.WindowsLinkShareBroadcastReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.desktopapppromotion.impl.DesktopAppPromotionActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.duckduckgo.desktopapppromotion.impl.DesktopAppPromotionShareBroadcastReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/feedbackActivityTitle",
+            "android:name": "com.duckduckgo.feedback.impl.ui.common.FeedbackActivity",
+            "android:parentActivityName": "com.duckduckgo.app.settings.SettingsActivity",
+            "android:windowSoftInputMode": "adjustResize"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "com.duckduckgo.serp.logos.impl.ui.SerpEasterEggLogoActivity",
+            "android:theme": "@style/Theme.DuckDuckGo.DynamicLogo"
+          },
+          "children": []
+        },
+        {
+          "tag": "meta-data",
+          "attributes": {
+            "android:name": "preloaded_fonts",
+            "android:resource": "@array/preloaded_fonts"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:name": "androidx.core.widget.RemoteViewsCompatService",
+            "android:permission": "android.permission.BIND_REMOTEVIEWS"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "false",
+            "android:isolatedProcess": "true",
+            "android:name": "androidx.pdf.service.PdfDocumentService"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "false",
+            "android:isolatedProcess": "true",
+            "android:name": "androidx.pdf.service.PdfDocumentServiceImpl"
+          },
+          "children": []
+        },
+        {
+          "tag": "meta-data",
+          "attributes": {
+            "android:name": "com.bumptech.glide.integration.okhttp3.OkHttpGlideModule",
+            "android:value": "GlideModule"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "androidx.compose.ui.tooling.PreviewActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "@bool/enable_system_job_service_default",
+            "android:exported": "true",
+            "android:name": "androidx.work.impl.background.systemjob.SystemJobService",
+            "android:permission": "android.permission.BIND_JOB_SERVICE"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "@bool/enable_system_foreground_service_default",
+            "android:exported": "false",
+            "android:name": "androidx.work.impl.foreground.SystemForegroundService"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:name": "androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "false",
+            "android:exported": "false",
+            "android:name": "androidx.work.impl.background.systemalarm.RescheduleReceiver"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.BOOT_COMPLETED"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "true",
+            "android:exported": "true",
+            "android:name": "androidx.work.impl.diagnostics.DiagnosticsReceiver",
+            "android:permission": "android.permission.DUMP"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.work.diagnostics.REQUEST_DIAGNOSTICS"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "androidx.work.multiprocess.RemoteWorkManagerService"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:directBootAware": "true",
+            "android:exported": "false",
+            "android:name": "androidx.room.MultiInstanceInvalidationService"
+          },
+          "children": []
+        },
+        {
+          "tag": "uses-library",
+          "attributes": {
+            "android:name": "androidx.window.extensions",
+            "android:required": "false"
+          },
+          "children": []
+        },
+        {
+          "tag": "uses-library",
+          "attributes": {
+            "android:name": "androidx.window.sidecar",
+            "android:required": "false"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "true",
+            "android:exported": "true",
+            "android:name": "androidx.profileinstaller.ProfileInstallReceiver",
+            "android:permission": "android.permission.DUMP"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.profileinstaller.action.INSTALL_PROFILE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.profileinstaller.action.SKIP_FILE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.profileinstaller.action.SAVE_PROFILE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.profileinstaller.action.BENCHMARK_OPERATION"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

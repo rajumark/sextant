@@ -1,0 +1,92 @@
+{
+  "tag": "manifest",
+  "attributes": {
+    "android:compileSdkVersion": "35",
+    "android:compileSdkVersionCodename": "15",
+    "android:installLocation": "auto",
+    "android:versionCode": "158",
+    "android:versionName": "1.58",
+    "package": "org.billthefarmer.tuner",
+    "platformBuildVersionCode": "35",
+    "platformBuildVersionName": "15"
+  },
+  "children": [
+    {
+      "tag": "uses-sdk",
+      "attributes": {
+        "android:minSdkVersion": "23",
+        "android:targetSdkVersion": "35"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.RECORD_AUDIO"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.READ_EXTERNAL_STORAGE"
+      },
+      "children": []
+    },
+    {
+      "tag": "application",
+      "attributes": {
+        "android:allowBackup": "true",
+        "android:extractNativeLibs": "false",
+        "android:icon": "@drawable/ic_launcher",
+        "android:label": "@string/app_name",
+        "android:theme": "@style/AppDarkTheme"
+      },
+      "children": [
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "org.billthefarmer.tuner.Tuner"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MAIN"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.LAUNCHER"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.billthefarmer.tuner.Help"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.billthefarmer.tuner.Settings"
+          },
+          "children": []
+        }
+      ]
+    }
+  ]
+}

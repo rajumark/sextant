@@ -1,0 +1,3 @@
+{"name":"Hermes (JS engine)","evidence":["file lib/arm64-v8a/libhermes.so (+3 more)"]}
+{"name":"Kotlin","evidence":["4679 classes with kotlin.Metadata"]}
+{"name":"React Native","evidence":["file lib/arm64-v8a/libreactnative.so (+3 more)","file assets/index.android.bundle","1625 classes in com.facebook.react"]}

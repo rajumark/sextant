@@ -1,0 +1,326 @@
+{
+  "schema_version": 7,
+  "tool": {
+    "name": "sextant",
+    "version": "<version>"
+  },
+  "file": {
+    "name": "minetest.apk",
+    "size_bytes": 43074578,
+    "sha256": "87a136d408ed560d3d56e55ca2ac780deb7a8941635b16960c88831fb33f9233"
+  },
+  "package": "net.minetest.minetest",
+  "version_name": "5.17.0",
+  "version_code": 5170000,
+  "min_sdk": 21,
+  "target_sdk": 35,
+  "compile_sdk": 34,
+  "label": "Luanti",
+  "application_class": null,
+  "flags": {
+    "debuggable": null,
+    "allow_backup": false,
+    "uses_cleartext_traffic": null,
+    "network_security_config": null,
+    "extract_native_libs": true,
+    "test_only": null,
+    "full_backup_content": null,
+    "data_extraction_rules": null,
+    "backup_agent": null,
+    "full_backup_only": null,
+    "has_fragile_user_data": null,
+    "request_legacy_external_storage": null,
+    "preserve_legacy_external_storage": null,
+    "large_heap": null,
+    "hardware_accelerated": null,
+    "supports_rtl": null,
+    "resizeable_activity": false,
+    "enable_on_back_invoked_callback": null,
+    "app_component_factory": "androidx.core.app.CoreComponentFactory",
+    "locale_config": null,
+    "app_category": "game",
+    "is_game": null,
+    "memtag_mode": null,
+    "uses_non_sdk_api": null,
+    "manage_space_activity": null,
+    "task_affinity": null,
+    "process": null,
+    "theme": null,
+    "profileable_shell": null,
+    "install_location": "auto",
+    "shared_user_id": null,
+    "shared_user_max_sdk": null,
+    "target_sandbox_version": null,
+    "supports_screens": {}
+  },
+  "signing": {
+    "verified": true,
+    "schemes": [
+      "v1",
+      "v2",
+      "v3"
+    ],
+    "certificates": [
+      {
+        "sha256": "E7:D6:04:7C:1D:75:71:98:11:B3:17:96:4A:4A:B1:C0:AD:3B:00:3B:C3:B8:B3:D7:29:25:B4:D6:05:CA:45:EE",
+        "sha1": "15:CF:AE:49:5E:57:10:80:C5:25:BF:EB:B9:EC:6D:AD:A4:69:7B:90",
+        "subject": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "issuer": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "not_before": "2015-03-23T08:56:20Z",
+        "not_after": "2042-08-08T08:56:20Z"
+      }
+    ]
+  },
+  "layout": {
+    "dex_files": 1,
+    "native_abis": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86",
+      "x86_64"
+    ]
+  },
+  "code": {
+    "dex_files": [
+      "classes.dex"
+    ],
+    "classes": 4193,
+    "methods": 30998,
+    "fields": 12358,
+    "call_edges": 79887,
+    "call_sites": 97127,
+    "string_refs": 15910,
+    "distinct_strings": 4378,
+    "field_refs": 32738,
+    "type_refs": 20655,
+    "kotlin_classes": 1941,
+    "duplicate_classes": 0,
+    "unreadable_methods": 0,
+    "top_packages": [
+      {
+        "package": "kotlinx.coroutines.flow",
+        "classes": 290
+      },
+      {
+        "package": "androidx.appcompat.widget",
+        "classes": 246
+      },
+      {
+        "package": "androidx.core.view",
+        "classes": 198
+      },
+      {
+        "package": "kotlinx.coroutines",
+        "classes": 179
+      },
+      {
+        "package": "androidx.core.app",
+        "classes": 152
+      },
+      {
+        "package": "androidx.fragment.app",
+        "classes": 142
+      },
+      {
+        "package": "kotlinx.coroutines.channels",
+        "classes": 136
+      },
+      {
+        "package": "kotlin.collections",
+        "classes": 134
+      },
+      {
+        "package": "kotlin",
+        "classes": 113
+      },
+      {
+        "package": "androidx.appcompat.app",
+        "classes": 106
+      },
+      {
+        "package": "androidx.lifecycle",
+        "classes": 100
+      },
+      {
+        "package": "kotlin.jvm.internal",
+        "classes": 91
+      },
+      {
+        "package": "kotlin.sequences",
+        "classes": 84
+      },
+      {
+        "package": "kotlinx.coroutines.internal",
+        "classes": 79
+      },
+      {
+        "package": "androidx.core.content",
+        "classes": 74
+      }
+    ]
+  },
+  "insights": {
+    "libraries": 30,
+    "frameworks": [
+      "Kotlin",
+      "SDL"
+    ],
+    "sdks": 1,
+    "sdk_categories": {
+      "reactive": 1
+    },
+    "endpoints": 7,
+    "hosts": 7,
+    "top_hosts": [
+      {
+        "host": "android.googlesource.com",
+        "urls": 1
+      },
+      {
+        "host": "bford.info",
+        "urls": 1
+      },
+      {
+        "host": "content.luanti.org",
+        "urls": 1
+      },
+      {
+        "host": "curl.se",
+        "urls": 1
+      },
+      {
+        "host": "docs.luanti.org",
+        "urls": 1
+      },
+      {
+        "host": "schemas.android.com",
+        "urls": 1
+      },
+      {
+        "host": "servers.luanti.org",
+        "urls": 1
+      }
+    ],
+    "resource_values": 253,
+    "locales": [
+      "af",
+      "am",
+      "ar",
+      "as",
+      "az",
+      "be",
+      "bg",
+      "bn",
+      "br",
+      "bs",
+      "ca",
+      "cs",
+      "da",
+      "de",
+      "el",
+      "en-AU",
+      "en-CA",
+      "en-GB",
+      "en-IN",
+      "en-XC",
+      "es",
+      "es-US",
+      "et",
+      "eu",
+      "fa",
+      "fi",
+      "fil",
+      "fr",
+      "fr-CA",
+      "gl",
+      "gu",
+      "hi",
+      "hr",
+      "hu",
+      "hy",
+      "in",
+      "io",
+      "is",
+      "isv",
+      "it",
+      "iw",
+      "ja",
+      "ka",
+      "kk",
+      "km",
+      "kmr",
+      "kn",
+      "ko",
+      "ky",
+      "lo",
+      "lt",
+      "lv",
+      "mk",
+      "ml",
+      "mn",
+      "mr",
+      "ms",
+      "my",
+      "nb",
+      "nb-NO",
+      "ne",
+      "nl",
+      "or",
+      "pa",
+      "pl",
+      "pt",
+      "pt-BR",
+      "pt-PT",
+      "ro",
+      "ru",
+      "si",
+      "sk",
+      "sl",
+      "sq",
+      "sr",
+      "sr-Latn",
+      "sv",
+      "sw",
+      "ta",
+      "te",
+      "th",
+      "tl",
+      "tr",
+      "uk",
+      "ur",
+      "uz",
+      "vi",
+      "zh-CN",
+      "zh-HK",
+      "zh-TW",
+      "zu"
+    ],
+    "native_libraries": 8,
+    "jni_methods": 212,
+    "android_gradle_plugin": "8.13.2",
+    "findings": {
+      "info": 1,
+      "low": 1
+    }
+  },
+  "icons": {
+    "icon": {
+      "resource": "@mipmap/ic_launcher",
+      "best": "res/GX.png",
+      "files": [
+        {
+          "path": "res/GX.png",
+          "config": "",
+          "density": 160,
+          "format": "png",
+          "width": 96,
+          "height": 96,
+          "size_bytes": 5780
+        }
+      ],
+      "adaptive": null
+    },
+    "round_icon": null
+  },
+  "warnings": []
+}

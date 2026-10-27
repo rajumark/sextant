@@ -1,0 +1,14 @@
+{"kind":"feature","name":"android.hardware.bluetooth","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.camera","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.camera.autofocus","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.camera2","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.camera2.full","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.location","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.location.gps","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.location.network","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.microphone","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.telephony","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.wifi","required":false,"version":null}
+{"kind":"feature","name":"glEsVersion","required":true,"version":"2.0"}
+{"kind":"library","name":"com.sec.android.app.multiwindow","required":false,"version":null}
+{"kind":"library","name":"org.apache.http.legacy","required":false,"version":null}

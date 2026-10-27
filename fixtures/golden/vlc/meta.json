@@ -1,0 +1,575 @@
+{
+  "schema_version": 7,
+  "tool": {
+    "name": "sextant",
+    "version": "<version>"
+  },
+  "file": {
+    "name": "vlc.apk",
+    "size_bytes": 51460280,
+    "sha256": "727693d59c4d678c046386812a103209a25423460c9d22e38e12460f12402ab6"
+  },
+  "package": "org.videolan.vlc",
+  "version_name": "3.7.2",
+  "version_code": 13070208,
+  "min_sdk": 17,
+  "target_sdk": 36,
+  "compile_sdk": 36,
+  "label": "VLC",
+  "application_class": "org.videolan.mobile.app.VLCApplication",
+  "flags": {
+    "debuggable": null,
+    "allow_backup": true,
+    "uses_cleartext_traffic": true,
+    "network_security_config": null,
+    "extract_native_libs": true,
+    "test_only": null,
+    "full_backup_content": "@xml/backup_rules",
+    "data_extraction_rules": null,
+    "backup_agent": null,
+    "full_backup_only": null,
+    "has_fragile_user_data": null,
+    "request_legacy_external_storage": true,
+    "preserve_legacy_external_storage": null,
+    "large_heap": true,
+    "hardware_accelerated": true,
+    "supports_rtl": true,
+    "resizeable_activity": null,
+    "enable_on_back_invoked_callback": null,
+    "app_component_factory": "androidx.core.app.CoreComponentFactory",
+    "locale_config": null,
+    "app_category": "audio",
+    "is_game": null,
+    "memtag_mode": null,
+    "uses_non_sdk_api": null,
+    "manage_space_activity": null,
+    "task_affinity": null,
+    "process": null,
+    "theme": "@style/Theme.VLC.Transparent",
+    "profileable_shell": null,
+    "install_location": "auto",
+    "shared_user_id": null,
+    "shared_user_max_sdk": null,
+    "target_sandbox_version": null,
+    "supports_screens": {}
+  },
+  "signing": {
+    "verified": true,
+    "schemes": [
+      "v1",
+      "v2",
+      "v3"
+    ],
+    "certificates": [
+      {
+        "sha256": "80:53:5B:E6:1E:ED:B9:A0:3B:04:76:A6:F4:93:D4:96:C3:49:87:70:40:43:39:EA:7A:80:00:F5:E6:1D:22:C0",
+        "sha1": "40:80:86:F9:AE:A6:52:A8:61:44:70:4F:11:79:9A:CA:BA:31:C7:A0",
+        "subject": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "issuer": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "not_before": "2013-03-22T15:48:10Z",
+        "not_after": "2040-08-07T15:48:10Z"
+      }
+    ]
+  },
+  "layout": {
+    "dex_files": 6,
+    "native_abis": [
+      "x86_64"
+    ]
+  },
+  "code": {
+    "dex_files": [
+      "classes.dex",
+      "classes2.dex",
+      "classes3.dex",
+      "classes4.dex",
+      "classes5.dex",
+      "classes6.dex"
+    ],
+    "classes": 33388,
+    "methods": 224212,
+    "fields": 208587,
+    "call_edges": 551766,
+    "call_sites": 736471,
+    "string_refs": 100625,
+    "distinct_strings": 39314,
+    "field_refs": 307218,
+    "type_refs": 162449,
+    "kotlin_classes": 10213,
+    "duplicate_classes": 0,
+    "unreadable_methods": 0,
+    "top_packages": [
+      {
+        "package": "com.google.common.collect",
+        "classes": 844
+      },
+      {
+        "package": "org.bouncycastle.jcajce.provider.symmetric",
+        "classes": 501
+      },
+      {
+        "package": "j$.util.stream",
+        "classes": 495
+      },
+      {
+        "package": "androidx.paging",
+        "classes": 461
+      },
+      {
+        "package": "androidx.leanback.widget",
+        "classes": 378
+      },
+      {
+        "package": "org.videolan.vlc",
+        "classes": 358
+      },
+      {
+        "package": "org.videolan.vlc.gui",
+        "classes": 318
+      },
+      {
+        "package": "com.google.common.util.concurrent",
+        "classes": 311
+      },
+      {
+        "package": "org.videolan.vlc.gui.dialogs",
+        "classes": 298
+      },
+      {
+        "package": "kotlinx.coroutines.flow",
+        "classes": 296
+      },
+      {
+        "package": "io.netty.handler.codec.http2",
+        "classes": 281
+      },
+      {
+        "package": "androidx.leanback.app",
+        "classes": 275
+      },
+      {
+        "package": "org.videolan.vlc.databinding",
+        "classes": 260
+      },
+      {
+        "package": "org.videolan.vlc.remoteaccessserver.routing",
+        "classes": 258
+      },
+      {
+        "package": "org.bouncycastle.jcajce.provider.digest",
+        "classes": 253
+      }
+    ]
+  },
+  "insights": {
+    "libraries": 0,
+    "frameworks": [
+      "Kotlin"
+    ],
+    "sdks": 10,
+    "sdk_categories": {
+      "barcode": 1,
+      "cryptography": 1,
+      "database": 1,
+      "networking": 3,
+      "reactive": 1,
+      "serialization": 2,
+      "ui": 1
+    },
+    "endpoints": 4264,
+    "hosts": 402,
+    "top_hosts": [
+      {
+        "host": "*.*.3g2",
+        "urls": 12
+      },
+      {
+        "host": "*.*.3ga",
+        "urls": 12
+      },
+      {
+        "host": "*.*.3gp",
+        "urls": 12
+      },
+      {
+        "host": "*.*.3gp2",
+        "urls": 12
+      },
+      {
+        "host": "*.*.3gpp",
+        "urls": 12
+      },
+      {
+        "host": "*.*.a52",
+        "urls": 12
+      },
+      {
+        "host": "*.*.aac",
+        "urls": 12
+      },
+      {
+        "host": "*.*.ac3",
+        "urls": 12
+      },
+      {
+        "host": "*.*.adt",
+        "urls": 12
+      },
+      {
+        "host": "*.*.adts",
+        "urls": 12
+      },
+      {
+        "host": "*.*.aif",
+        "urls": 12
+      },
+      {
+        "host": "*.*.aifc",
+        "urls": 12
+      },
+      {
+        "host": "*.*.aiff",
+        "urls": 12
+      },
+      {
+        "host": "*.*.amr",
+        "urls": 12
+      },
+      {
+        "host": "*.*.amv",
+        "urls": 12
+      }
+    ],
+    "resource_values": 3776,
+    "locales": [
+      "af",
+      "am",
+      "ar",
+      "as",
+      "ast",
+      "az",
+      "be",
+      "bg",
+      "bn",
+      "bn-BD",
+      "br",
+      "bs",
+      "ca",
+      "co",
+      "cs",
+      "cy",
+      "da",
+      "de",
+      "el",
+      "en-AU",
+      "en-CA",
+      "en-GB",
+      "en-IN",
+      "en-XC",
+      "es",
+      "es-419",
+      "es-MX",
+      "es-US",
+      "et",
+      "eu",
+      "fa",
+      "fi",
+      "fo",
+      "fr",
+      "fr-CA",
+      "fr-FR",
+      "fy",
+      "ga",
+      "gd",
+      "gl",
+      "gu",
+      "gu-IN",
+      "he",
+      "hi",
+      "hr",
+      "hu",
+      "hy",
+      "id",
+      "in",
+      "is",
+      "it",
+      "it-IT",
+      "iw",
+      "ja",
+      "ka",
+      "kab",
+      "kk",
+      "km",
+      "kn",
+      "ko",
+      "ku",
+      "ky",
+      "lo",
+      "lt",
+      "lv",
+      "mk",
+      "ml",
+      "mn",
+      "mr",
+      "ms",
+      "my",
+      "nb",
+      "ne",
+      "ne-NP",
+      "nl",
+      "nl-NL",
+      "nn",
+      "or",
+      "pa",
+      "pl",
+      "pt",
+      "pt-BR",
+      "pt-PT",
+      "ro",
+      "ru",
+      "sat",
+      "sc",
+      "si",
+      "sk",
+      "sl",
+      "sq",
+      "sr",
+      "sr-Latn",
+      "sv",
+      "sw",
+      "ta",
+      "te",
+      "th",
+      "tl",
+      "tr",
+      "tt",
+      "ug",
+      "uk",
+      "ur",
+      "uz",
+      "vi",
+      "wa",
+      "zh",
+      "zh-CN",
+      "zh-HK",
+      "zh-TW",
+      "zu"
+    ],
+    "native_libraries": 4,
+    "jni_methods": 121,
+    "android_gradle_plugin": "9.1.1",
+    "findings": {
+      "high": 2,
+      "info": 3,
+      "low": 5,
+      "medium": 2
+    }
+  },
+  "icons": {
+    "icon": {
+      "resource": "@mipmap/ic_launcher",
+      "best": "res/RJ.png",
+      "files": [
+        {
+          "path": "res/BW.xml",
+          "config": "anydpi-v26",
+          "density": null,
+          "format": "xml",
+          "width": null,
+          "height": null,
+          "size_bytes": 548
+        },
+        {
+          "path": "res/yn.png",
+          "config": "hdpi",
+          "density": 240,
+          "format": "png",
+          "width": 120,
+          "height": 120,
+          "size_bytes": 1312
+        },
+        {
+          "path": "res/9w.png",
+          "config": "mdpi",
+          "density": 160,
+          "format": "png",
+          "width": 80,
+          "height": 80,
+          "size_bytes": 1033
+        },
+        {
+          "path": "res/FS.png",
+          "config": "xhdpi",
+          "density": 320,
+          "format": "png",
+          "width": 160,
+          "height": 160,
+          "size_bytes": 1639
+        },
+        {
+          "path": "res/RJ.png",
+          "config": "xxhdpi",
+          "density": 480,
+          "format": "png",
+          "width": 240,
+          "height": 240,
+          "size_bytes": 2347
+        }
+      ],
+      "adaptive": {
+        "path": "res/BW.xml",
+        "background": {
+          "resource": "@drawable/ic_launcher_background",
+          "color": null,
+          "best": "res/0w.xml",
+          "files": [
+            {
+              "path": "res/0w.xml",
+              "config": "",
+              "density": 160,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 664
+            }
+          ]
+        },
+        "foreground": {
+          "resource": "@drawable/ic_launcher_foreground",
+          "color": null,
+          "best": "res/Qr.xml",
+          "files": [
+            {
+              "path": "res/Qr.xml",
+              "config": "",
+              "density": 160,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 2280
+            }
+          ]
+        },
+        "monochrome": {
+          "resource": "@drawable/ic_launcher_monochrome",
+          "color": null,
+          "best": "res/Vy.xml",
+          "files": [
+            {
+              "path": "res/Vy.xml",
+              "config": "",
+              "density": 160,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 1292
+            }
+          ]
+        }
+      }
+    },
+    "round_icon": {
+      "resource": "@mipmap/ic_launcher",
+      "best": "res/RJ.png",
+      "files": [
+        {
+          "path": "res/BW.xml",
+          "config": "anydpi-v26",
+          "density": null,
+          "format": "xml",
+          "width": null,
+          "height": null,
+          "size_bytes": 548
+        },
+        {
+          "path": "res/yn.png",
+          "config": "hdpi",
+          "density": 240,
+          "format": "png",
+          "width": 120,
+          "height": 120,
+          "size_bytes": 1312
+        },
+        {
+          "path": "res/9w.png",
+          "config": "mdpi",
+          "density": 160,
+          "format": "png",
+          "width": 80,
+          "height": 80,
+          "size_bytes": 1033
+        },
+        {
+          "path": "res/FS.png",
+          "config": "xhdpi",
+          "density": 320,
+          "format": "png",
+          "width": 160,
+          "height": 160,
+          "size_bytes": 1639
+        },
+        {
+          "path": "res/RJ.png",
+          "config": "xxhdpi",
+          "density": 480,
+          "format": "png",
+          "width": 240,
+          "height": 240,
+          "size_bytes": 2347
+        }
+      ],
+      "adaptive": {
+        "path": "res/BW.xml",
+        "background": {
+          "resource": "@drawable/ic_launcher_background",
+          "color": null,
+          "best": "res/0w.xml",
+          "files": [
+            {
+              "path": "res/0w.xml",
+              "config": "",
+              "density": 160,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 664
+            }
+          ]
+        },
+        "foreground": {
+          "resource": "@drawable/ic_launcher_foreground",
+          "color": null,
+          "best": "res/Qr.xml",
+          "files": [
+            {
+              "path": "res/Qr.xml",
+              "config": "",
+              "density": 160,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 2280
+            }
+          ]
+        },
+        "monochrome": {
+          "resource": "@drawable/ic_launcher_monochrome",
+          "color": null,
+          "best": "res/Vy.xml",
+          "files": [
+            {
+              "path": "res/Vy.xml",
+              "config": "",
+              "density": 160,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 1292
+            }
+          ]
+        }
+      }
+    }
+  },
+  "warnings": []
+}

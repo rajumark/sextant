@@ -1,0 +1,19 @@
+{"scope":"application","kind":"meta-data","name":"android.webkit.WebView.EnableSafeBrowsing","value":"false","resource":null}
+{"scope":"application","kind":"meta-data","name":"android.webkit.WebView.MetricsOptOut","value":"true","resource":null}
+{"scope":"application","kind":"property","name":"android.window.PROPERTY_COMPAT_ALLOW_RESTRICTED_RESIZABILITY","value":"true","resource":null}
+{"scope":"application","kind":"meta-data","name":"asset_statements","value":null,"resource":"@string/asset_statements"}
+{"scope":"application","kind":"meta-data","name":"com.bumptech.glide.integration.okhttp3.OkHttpGlideModule","value":"GlideModule","resource":null}
+{"scope":"application","kind":"meta-data","name":"preloaded_fonts","value":null,"resource":"@array/preloaded_fonts"}
+{"scope":"androidx.core.content.FileProvider","kind":"meta-data","name":"android.support.FILE_PROVIDER_PATHS","value":null,"resource":"@xml/provider_paths"}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.emoji2.text.EmojiCompatInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.lifecycle.ProcessLifecycleInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.profileinstaller.ProfileInstallerInitializer","value":"androidx.startup","resource":null}
+{"scope":"com.duckduckgo.autofill.impl.service.RealAutofillService","kind":"meta-data","name":"android.autofill","value":null,"resource":"@xml/service_configuration"}
+{"scope":"com.duckduckgo.mobile.android.vpn.service.TrackerBlockingVpnService","kind":"property","name":"android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE","value":"VPN","resource":null}
+{"scope":"com.duckduckgo.mobile.android.vpn.service.TrackerBlockingVpnService","kind":"meta-data","name":"android.net.VpnService.SUPPORTS_ALWAYS_ON","value":"true","resource":null}
+{"scope":"com.duckduckgo.pir.impl.optout.PirForegroundOptOutService","kind":"property","name":"android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE","value":"Executing debug operations for the Personal Information Removal feature. Only used as a debug tool.","resource":null}
+{"scope":"com.duckduckgo.pir.impl.scan.PirForegroundScanService","kind":"property","name":"android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE","value":"Executing operations for the Personal Information Removal feature","resource":null}
+{"scope":"com.duckduckgo.widget.SearchAndFavoritesWidget","kind":"meta-data","name":"android.appwidget.provider","value":null,"resource":"@xml/search_favorites_widget_info"}
+{"scope":"com.duckduckgo.widget.SearchOnlyWidget","kind":"meta-data","name":"android.appwidget.provider","value":null,"resource":"@xml/search_only_widget_info"}
+{"scope":"com.duckduckgo.widget.SearchWidget","kind":"meta-data","name":"android.appwidget.provider","value":null,"resource":"@xml/search_widget_info"}
+{"scope":"com.duckduckgo.widget.SearchWidgetLight","kind":"meta-data","name":"android.appwidget.provider","value":null,"resource":"@xml/search_widget_info_light"}

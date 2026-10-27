@@ -1,0 +1,7 @@
+{"kind":"feature","name":"android.hardware.location","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.location.gps","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.location.network","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.wifi","required":false,"version":null}
+{"kind":"feature","name":"glEsVersion","required":true,"version":"3.0"}
+{"kind":"library","name":"androidx.window.extensions","required":false,"version":null}
+{"kind":"library","name":"androidx.window.sidecar","required":false,"version":null}

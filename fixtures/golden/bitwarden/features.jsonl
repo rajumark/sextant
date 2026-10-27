@@ -1,0 +1,5 @@
+{"kind":"feature","name":"android.hardware.camera","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.camera.autofocus","required":false,"version":null}
+{"kind":"library","name":"androidx.window.extensions","required":false,"version":null}
+{"kind":"library","name":"androidx.window.sidecar","required":false,"version":null}
+{"kind":"library","name":"org.apache.http.legacy","required":false,"version":null}

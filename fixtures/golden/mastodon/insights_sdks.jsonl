@@ -1,0 +1,4 @@
+{"name":"ZXing","category":"barcode","classes":5,"packages":["com.google.zxing","com.google.zxing.qrcode.decoder","com.google.zxing.common"],"manifest":[]}
+{"name":"OkHttp","category":"networking","classes":5,"packages":["okhttp3","okhttp3.internal.http2","okhttp3.internal.publicsuffix"],"manifest":[]}
+{"name":"Google Play Services Base","category":"platform","classes":13,"packages":["com.google.android.gms.common.internal","com.google.android.gms.common.moduleinstall","com.google.android.gms.common.api","com.google.android.gms.common","com.google.android.gms.common.moduleinstall.internal"],"manifest":[]}
+{"name":"Gson","category":"serialization","classes":5,"packages":["com.google.gson","com.google.gson.reflect","com.google.gson.stream"],"manifest":[]}

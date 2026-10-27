@@ -1,0 +1,14 @@
+{"scope":"application","kind":"meta-data","name":"@string/preference_key_app_channel","value":"F-Droid","resource":null}
+{"scope":"application","kind":"meta-data","name":"android.webkit.WebView.MetricsOptOut","value":"true","resource":null}
+{"scope":"application","kind":"meta-data","name":"com.sec.android.support.multiwindow","value":"true","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.emoji2.text.EmojiCompatInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.lifecycle.ProcessLifecycleInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.profileinstaller.ProfileInstallerInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.work.WorkManagerInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"okhttp3.internal.platform.PlatformInitializer","value":"androidx.startup","resource":null}
+{"scope":"org.wikipedia.WikipediaFileProvider","kind":"meta-data","name":"android.support.FILE_PROVIDER_PATHS","value":null,"resource":"@xml/file_paths"}
+{"scope":"org.wikipedia.auth.AuthenticatorService","kind":"meta-data","name":"android.accounts.AccountAuthenticator","value":null,"resource":"@xml/wikimedia_authenticator"}
+{"scope":"org.wikipedia.page.PageActivity","kind":"meta-data","name":"android.support.PARENT_ACTIVITY","value":".main.MainActivity","resource":null}
+{"scope":"org.wikipedia.widgets.WidgetProviderFeaturedPage","kind":"meta-data","name":"android.appwidget.provider","value":null,"resource":"@xml/widget_featured_page"}
+{"scope":"org.wikipedia.widgets.WidgetProviderSearch","kind":"meta-data","name":"android.appwidget.provider","value":null,"resource":"@xml/widget_search"}
+{"scope":"org.wikipedia.widgets.readingchallenge.ReadingChallengeWidgetReceiver","kind":"meta-data","name":"android.appwidget.provider","value":null,"resource":"@xml/reading_challenge_widget_info"}

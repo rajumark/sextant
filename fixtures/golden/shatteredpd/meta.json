@@ -1,0 +1,471 @@
+{
+  "schema_version": 7,
+  "tool": {
+    "name": "sextant",
+    "version": "<version>"
+  },
+  "file": {
+    "name": "shatteredpd.apk",
+    "size_bytes": 30275058,
+    "sha256": "ceef4cdd4beddcb3d85379ac004cb4ab5d918b89dc7366b4ce9c4a3585a5e78e"
+  },
+  "package": "com.shatteredpixel.shatteredpixeldungeon",
+  "version_name": "4.0.2",
+  "version_code": 922,
+  "min_sdk": 21,
+  "target_sdk": 36,
+  "compile_sdk": 36,
+  "label": "Shattered Pixel Dungeon",
+  "application_class": null,
+  "flags": {
+    "debuggable": null,
+    "allow_backup": true,
+    "uses_cleartext_traffic": null,
+    "network_security_config": null,
+    "extract_native_libs": true,
+    "test_only": null,
+    "full_backup_content": null,
+    "data_extraction_rules": null,
+    "backup_agent": "com.shatteredpixel.shatteredpixeldungeon.android.AndroidBackupHandler",
+    "full_backup_only": true,
+    "has_fragile_user_data": null,
+    "request_legacy_external_storage": null,
+    "preserve_legacy_external_storage": null,
+    "large_heap": null,
+    "hardware_accelerated": null,
+    "supports_rtl": null,
+    "resizeable_activity": true,
+    "enable_on_back_invoked_callback": null,
+    "app_component_factory": "androidx.core.app.CoreComponentFactory",
+    "locale_config": null,
+    "app_category": "game",
+    "is_game": true,
+    "memtag_mode": null,
+    "uses_non_sdk_api": null,
+    "manage_space_activity": null,
+    "task_affinity": null,
+    "process": null,
+    "theme": "@style/GameTheme",
+    "profileable_shell": null,
+    "install_location": "auto",
+    "shared_user_id": null,
+    "shared_user_max_sdk": null,
+    "target_sandbox_version": 2,
+    "supports_screens": {
+      "largeScreens": "true",
+      "normalScreens": "true",
+      "smallScreens": "true",
+      "xlargeScreens": "true"
+    }
+  },
+  "signing": {
+    "verified": true,
+    "schemes": [
+      "v1",
+      "v2",
+      "v3"
+    ],
+    "certificates": [
+      {
+        "sha256": "D4:5F:76:0B:89:60:8B:4B:25:3A:3B:16:0D:C2:70:7F:1F:F4:E8:DD:8C:A4:D2:E8:E1:B8:1C:2C:72:D8:17:53",
+        "sha1": "71:BC:D5:0D:AB:06:05:F8:DE:A9:3B:44:88:F3:4F:8D:3A:7E:CD:0A",
+        "subject": "CN=Evan Debenham,O=Shattered Pixel,L=London,ST=Ontario,C=CA",
+        "issuer": "CN=Evan Debenham,O=Shattered Pixel,L=London,ST=Ontario,C=CA",
+        "not_before": "2014-08-05T02:42:32Z",
+        "not_after": "2039-07-30T02:42:32Z"
+      }
+    ]
+  },
+  "layout": {
+    "dex_files": 1,
+    "native_abis": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86",
+      "x86_64"
+    ]
+  },
+  "code": {
+    "dex_files": [
+      "classes.dex"
+    ],
+    "classes": 3215,
+    "methods": 17014,
+    "fields": 8956,
+    "call_edges": 56311,
+    "call_sites": 85229,
+    "string_refs": 10727,
+    "distinct_strings": 6201,
+    "field_refs": 50588,
+    "type_refs": 17479,
+    "kotlin_classes": 0,
+    "duplicate_classes": 0,
+    "unreadable_methods": 0,
+    "top_packages": [
+      {
+        "package": "",
+        "classes": 324
+      },
+      {
+        "package": "com.shatteredpixel.shatteredpixeldungeon.windows",
+        "classes": 281
+      },
+      {
+        "package": "com.shatteredpixel.shatteredpixeldungeon.actors.mobs",
+        "classes": 194
+      },
+      {
+        "package": "com.shatteredpixel.shatteredpixeldungeon.sprites",
+        "classes": 157
+      },
+      {
+        "package": "com.shatteredpixel.shatteredpixeldungeon.ui",
+        "classes": 149
+      },
+      {
+        "package": "com.shatteredpixel.shatteredpixeldungeon.scenes",
+        "classes": 140
+      },
+      {
+        "package": "com.shatteredpixel.shatteredpixeldungeon.actors.buffs",
+        "classes": 130
+      },
+      {
+        "package": "com.shatteredpixel.shatteredpixeldungeon.levels",
+        "classes": 87
+      },
+      {
+        "package": "com.shatteredpixel.shatteredpixeldungeon.effects",
+        "classes": 81
+      },
+      {
+        "package": "com.shatteredpixel.shatteredpixeldungeon.items.artifacts",
+        "classes": 80
+      },
+      {
+        "package": "com.shatteredpixel.shatteredpixeldungeon.items.wands",
+        "classes": 77
+      },
+      {
+        "package": "com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells",
+        "classes": 64
+      },
+      {
+        "package": "com.shatteredpixel.shatteredpixeldungeon.effects.particles",
+        "classes": 62
+      },
+      {
+        "package": "com.shatteredpixel.shatteredpixeldungeon.actors.hero",
+        "classes": 61
+      },
+      {
+        "package": "com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee",
+        "classes": 61
+      }
+    ]
+  },
+  "insights": {
+    "libraries": 9,
+    "frameworks": [
+      "libGDX"
+    ],
+    "sdks": 0,
+    "sdk_categories": {},
+    "endpoints": 15,
+    "hosts": 13,
+    "top_hosts": [
+      {
+        "host": "shatteredpixel.com",
+        "urls": 3
+      },
+      {
+        "host": "android.googlesource.com",
+        "urls": 1
+      },
+      {
+        "host": "api.github.com",
+        "urls": 1
+      },
+      {
+        "host": "celesti-whispers.itch.io",
+        "urls": 1
+      },
+      {
+        "host": "explore.transifex.com",
+        "urls": 1
+      },
+      {
+        "host": "github.com",
+        "urls": 1
+      },
+      {
+        "host": "libgdx.com",
+        "urls": 1
+      },
+      {
+        "host": "mastodon.gamedev.place",
+        "urls": 1
+      },
+      {
+        "host": "watabou.itch.io",
+        "urls": 1
+      },
+      {
+        "host": "www.alekskomitov.com",
+        "urls": 1
+      },
+      {
+        "host": "www.freesound.org",
+        "urls": 1
+      },
+      {
+        "host": "www.patreon.com",
+        "urls": 1
+      },
+      {
+        "host": "www.youtube.com",
+        "urls": 1
+      }
+    ],
+    "resource_values": 1,
+    "locales": [],
+    "native_libraries": 8,
+    "jni_methods": 508,
+    "android_gradle_plugin": "9.2.0",
+    "findings": {
+      "info": 1
+    }
+  },
+  "icons": {
+    "icon": {
+      "resource": "@mipmap/ic_launcher",
+      "best": "res/o-.png",
+      "files": [
+        {
+          "path": "res/BW.xml",
+          "config": "anydpi-v26",
+          "density": null,
+          "format": "xml",
+          "width": null,
+          "height": null,
+          "size_bytes": 548
+        },
+        {
+          "path": "res/yn.png",
+          "config": "hdpi",
+          "density": 240,
+          "format": "png",
+          "width": 72,
+          "height": 72,
+          "size_bytes": 1631
+        },
+        {
+          "path": "res/N3.png",
+          "config": "ldpi",
+          "density": 120,
+          "format": "png",
+          "width": 36,
+          "height": 36,
+          "size_bytes": 828
+        },
+        {
+          "path": "res/9w.png",
+          "config": "mdpi",
+          "density": 160,
+          "format": "png",
+          "width": 48,
+          "height": 48,
+          "size_bytes": 1279
+        },
+        {
+          "path": "res/FS.png",
+          "config": "xhdpi",
+          "density": 320,
+          "format": "png",
+          "width": 96,
+          "height": 96,
+          "size_bytes": 2569
+        },
+        {
+          "path": "res/RJ.png",
+          "config": "xxhdpi",
+          "density": 480,
+          "format": "png",
+          "width": 144,
+          "height": 144,
+          "size_bytes": 3581
+        },
+        {
+          "path": "res/o-.png",
+          "config": "xxxhdpi",
+          "density": 640,
+          "format": "png",
+          "width": 192,
+          "height": 192,
+          "size_bytes": 5252
+        }
+      ],
+      "adaptive": {
+        "path": "res/BW.xml",
+        "background": {
+          "resource": "@mipmap/ic_launcher_background",
+          "color": null,
+          "best": "res/Gx.png",
+          "files": [
+            {
+              "path": "res/I2.png",
+              "config": "hdpi",
+              "density": 240,
+              "format": "png",
+              "width": 162,
+              "height": 162,
+              "size_bytes": 470
+            },
+            {
+              "path": "res/3z.png",
+              "config": "mdpi",
+              "density": 160,
+              "format": "png",
+              "width": 108,
+              "height": 108,
+              "size_bytes": 351
+            },
+            {
+              "path": "res/6h.png",
+              "config": "xhdpi",
+              "density": 320,
+              "format": "png",
+              "width": 216,
+              "height": 216,
+              "size_bytes": 468
+            },
+            {
+              "path": "res/cV.png",
+              "config": "xxhdpi",
+              "density": 480,
+              "format": "png",
+              "width": 324,
+              "height": 324,
+              "size_bytes": 619
+            },
+            {
+              "path": "res/Gx.png",
+              "config": "xxxhdpi",
+              "density": 640,
+              "format": "png",
+              "width": 432,
+              "height": 432,
+              "size_bytes": 953
+            }
+          ]
+        },
+        "foreground": {
+          "resource": "@mipmap/ic_launcher_foreground",
+          "color": null,
+          "best": "res/as.png",
+          "files": [
+            {
+              "path": "res/zr.png",
+              "config": "hdpi",
+              "density": 240,
+              "format": "png",
+              "width": 162,
+              "height": 162,
+              "size_bytes": 393
+            },
+            {
+              "path": "res/QZ.png",
+              "config": "mdpi",
+              "density": 160,
+              "format": "png",
+              "width": 108,
+              "height": 108,
+              "size_bytes": 285
+            },
+            {
+              "path": "res/Em.png",
+              "config": "xhdpi",
+              "density": 320,
+              "format": "png",
+              "width": 216,
+              "height": 216,
+              "size_bytes": 357
+            },
+            {
+              "path": "res/Lf.png",
+              "config": "xxhdpi",
+              "density": 480,
+              "format": "png",
+              "width": 324,
+              "height": 324,
+              "size_bytes": 448
+            },
+            {
+              "path": "res/as.png",
+              "config": "xxxhdpi",
+              "density": 640,
+              "format": "png",
+              "width": 432,
+              "height": 432,
+              "size_bytes": 548
+            }
+          ]
+        },
+        "monochrome": {
+          "resource": "@mipmap/ic_launcher_monochrome",
+          "color": null,
+          "best": "res/_q.png",
+          "files": [
+            {
+              "path": "res/Yt.png",
+              "config": "hdpi",
+              "density": 240,
+              "format": "png",
+              "width": 162,
+              "height": 162,
+              "size_bytes": 536
+            },
+            {
+              "path": "res/Me.png",
+              "config": "mdpi",
+              "density": 160,
+              "format": "png",
+              "width": 108,
+              "height": 108,
+              "size_bytes": 444
+            },
+            {
+              "path": "res/Ul.png",
+              "config": "xhdpi",
+              "density": 320,
+              "format": "png",
+              "width": 216,
+              "height": 216,
+              "size_bytes": 736
+            },
+            {
+              "path": "res/mU.png",
+              "config": "xxhdpi",
+              "density": 480,
+              "format": "png",
+              "width": 324,
+              "height": 324,
+              "size_bytes": 1000
+            },
+            {
+              "path": "res/_q.png",
+              "config": "xxxhdpi",
+              "density": 640,
+              "format": "png",
+              "width": 432,
+              "height": 432,
+              "size_bytes": 1035
+            }
+          ]
+        }
+      }
+    },
+    "round_icon": null
+  },
+  "warnings": []
+}

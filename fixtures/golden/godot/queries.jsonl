@@ -1,0 +1,4 @@
+{"kind":"package","name":"org.godotengine.godot_gradle_build_environment","actions":[],"categories":[],"data":[]}
+{"kind":"intent","name":"OpenXRApiLayerService","actions":["org.khronos.openxr.OpenXRApiLayerService"],"categories":[],"data":[]}
+{"kind":"intent","name":"OpenXRRuntimeService","actions":["org.khronos.openxr.OpenXRRuntimeService"],"categories":[],"data":[]}
+{"kind":"provider","name":"org.khronos.openxr.runtime_broker;org.khronos.openxr.system_runtime_broker","actions":[],"categories":[],"data":[]}

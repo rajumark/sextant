@@ -1,0 +1,540 @@
+{
+  "schema_version": 7,
+  "tool": {
+    "name": "sextant",
+    "version": "<version>"
+  },
+  "file": {
+    "name": "godot.apk",
+    "size_bytes": 165687190,
+    "sha256": "1458a57a3fae0ed94e9d756024ed14edc560a00235aab1ad8400454ba9f53f9b"
+  },
+  "package": "org.godotengine.editor.v4",
+  "version_name": "4.7.2.stable",
+  "version_code": 407025003,
+  "min_sdk": 24,
+  "target_sdk": 36,
+  "compile_sdk": 36,
+  "label": "Godot Engine 4 (release)",
+  "application_class": null,
+  "flags": {
+    "debuggable": null,
+    "allow_backup": false,
+    "uses_cleartext_traffic": null,
+    "network_security_config": null,
+    "extract_native_libs": false,
+    "test_only": null,
+    "full_backup_content": null,
+    "data_extraction_rules": null,
+    "backup_agent": null,
+    "full_backup_only": null,
+    "has_fragile_user_data": null,
+    "request_legacy_external_storage": true,
+    "preserve_legacy_external_storage": null,
+    "large_heap": null,
+    "hardware_accelerated": null,
+    "supports_rtl": null,
+    "resizeable_activity": null,
+    "enable_on_back_invoked_callback": null,
+    "app_component_factory": "androidx.core.app.CoreComponentFactory",
+    "locale_config": null,
+    "app_category": null,
+    "is_game": null,
+    "memtag_mode": null,
+    "uses_non_sdk_api": null,
+    "manage_space_activity": null,
+    "task_affinity": null,
+    "process": null,
+    "theme": "@style/GodotEditorSplashScreenTheme",
+    "profileable_shell": true,
+    "install_location": "auto",
+    "shared_user_id": null,
+    "shared_user_max_sdk": null,
+    "target_sandbox_version": null,
+    "supports_screens": {
+      "largeScreens": "true",
+      "normalScreens": "true",
+      "smallScreens": "false",
+      "xlargeScreens": "true"
+    }
+  },
+  "signing": {
+    "verified": true,
+    "schemes": [
+      "v2",
+      "v3"
+    ],
+    "certificates": [
+      {
+        "sha256": "A8:80:B9:17:E0:6F:45:42:7D:72:A1:16:00:80:6C:46:A2:B2:DC:30:E8:C3:B2:FE:10:66:8D:62:31:DB:4C:8E",
+        "sha1": "2A:08:B9:83:FE:A7:44:1F:30:A0:AD:18:5F:61:2E:91:69:6F:64:8C",
+        "subject": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "issuer": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "not_before": "2023-02-09T14:44:03Z",
+        "not_after": "2050-06-27T14:44:03Z"
+      }
+    ]
+  },
+  "layout": {
+    "dex_files": 2,
+    "native_abis": [
+      "arm64-v8a"
+    ]
+  },
+  "code": {
+    "dex_files": [
+      "classes.dex",
+      "classes2.dex"
+    ],
+    "classes": 9761,
+    "methods": 64740,
+    "fields": 32550,
+    "call_edges": 174057,
+    "call_sites": 249850,
+    "string_refs": 37400,
+    "distinct_strings": 15836,
+    "field_refs": 96360,
+    "type_refs": 49880,
+    "kotlin_classes": 2604,
+    "duplicate_classes": 0,
+    "unreadable_methods": 0,
+    "top_packages": [
+      {
+        "package": "org.bouncycastle.jcajce.provider.symmetric",
+        "classes": 501
+      },
+      {
+        "package": "kotlinx.coroutines.flow",
+        "classes": 296
+      },
+      {
+        "package": "org.bouncycastle.jcajce.provider.digest",
+        "classes": 253
+      },
+      {
+        "package": "androidx.appcompat.widget",
+        "classes": 199
+      },
+      {
+        "package": "androidx.core.view",
+        "classes": 193
+      },
+      {
+        "package": "kotlinx.coroutines",
+        "classes": 183
+      },
+      {
+        "package": "androidx.fragment.app",
+        "classes": 156
+      },
+      {
+        "package": "androidx.core.app",
+        "classes": 146
+      },
+      {
+        "package": "org.bouncycastle.asn1",
+        "classes": 146
+      },
+      {
+        "package": "org.bouncycastle.jcajce.provider.asymmetric.ec",
+        "classes": 146
+      },
+      {
+        "package": "kotlin.collections",
+        "classes": 133
+      },
+      {
+        "package": "org.bouncycastle.math.ec.custom.sec",
+        "classes": 130
+      },
+      {
+        "package": "kotlinx.coroutines.channels",
+        "classes": 125
+      },
+      {
+        "package": "androidx.lifecycle",
+        "classes": 116
+      },
+      {
+        "package": "kotlin",
+        "classes": 115
+      }
+    ]
+  },
+  "insights": {
+    "libraries": 27,
+    "frameworks": [
+      "Godot",
+      "Kotlin"
+    ],
+    "sdks": 2,
+    "sdk_categories": {
+      "cryptography": 1,
+      "reactive": 1
+    },
+    "endpoints": 108,
+    "hosts": 103,
+    "top_hosts": [
+      {
+        "host": "*.*\\\\.godot",
+        "urls": 2
+      },
+      {
+        "host": "godotengine.org",
+        "urls": 2
+      },
+      {
+        "host": "schemas.android.com",
+        "urls": 2
+      },
+      {
+        "host": "www.iryoku.com",
+        "urls": 2
+      },
+      {
+        "host": "www.unicode.org",
+        "urls": 2
+      },
+      {
+        "host": "adriaan.games",
+        "urls": 1
+      },
+      {
+        "host": "allenwp.com",
+        "urls": 1
+      },
+      {
+        "host": "android.googlesource.com",
+        "urls": 1
+      },
+      {
+        "host": "azerkail.github.io",
+        "urls": 1
+      },
+      {
+        "host": "benedikt-bitterli.me",
+        "urls": 1
+      },
+      {
+        "host": "bippinbits.com",
+        "urls": 1
+      },
+      {
+        "host": "brokenrul.es",
+        "urls": 1
+      },
+      {
+        "host": "cbloomrants.blogspot.com",
+        "urls": 1
+      },
+      {
+        "host": "central.sonatype.com",
+        "urls": 1
+      },
+      {
+        "host": "chilliant.blogspot.com",
+        "urls": 1
+      }
+    ],
+    "resource_values": 298,
+    "locales": [
+      "af",
+      "am",
+      "ar",
+      "as",
+      "az",
+      "be",
+      "bg",
+      "bn",
+      "bs",
+      "ca",
+      "cs",
+      "da",
+      "de",
+      "el",
+      "en-AU",
+      "en-CA",
+      "en-GB",
+      "en-IN",
+      "en-XC",
+      "es",
+      "es-US",
+      "et",
+      "eu",
+      "fa",
+      "fi",
+      "fr",
+      "fr-CA",
+      "gl",
+      "gu",
+      "hi",
+      "hr",
+      "hu",
+      "hy",
+      "in",
+      "is",
+      "it",
+      "iw",
+      "ja",
+      "ka",
+      "kk",
+      "km",
+      "kn",
+      "ko",
+      "ky",
+      "lo",
+      "lt",
+      "lv",
+      "mk",
+      "ml",
+      "mn",
+      "mr",
+      "ms",
+      "my",
+      "nb",
+      "ne",
+      "nl",
+      "or",
+      "pa",
+      "pl",
+      "pt",
+      "pt-BR",
+      "pt-PT",
+      "ro",
+      "ru",
+      "si",
+      "sk",
+      "sl",
+      "sq",
+      "sr",
+      "sr-Latn",
+      "sv",
+      "sw",
+      "ta",
+      "te",
+      "th",
+      "tl",
+      "tr",
+      "uk",
+      "ur",
+      "uz",
+      "vi",
+      "zh-CN",
+      "zh-HK",
+      "zh-TW",
+      "zu"
+    ],
+    "native_libraries": 4,
+    "jni_methods": 68,
+    "android_gradle_plugin": "8.6.1",
+    "findings": {
+      "info": 2,
+      "low": 3
+    }
+  },
+  "icons": {
+    "icon": {
+      "resource": "@mipmap/themed_icon",
+      "best": "res/mipmap-anydpi-v26/themed_icon.xml",
+      "files": [
+        {
+          "path": "res/mipmap-anydpi-v26/themed_icon.xml",
+          "config": "anydpi-v26",
+          "density": null,
+          "format": "xml",
+          "width": null,
+          "height": null,
+          "size_bytes": 548
+        }
+      ],
+      "adaptive": {
+        "path": "res/mipmap-anydpi-v26/themed_icon.xml",
+        "background": {
+          "resource": "@mipmap/icon_background",
+          "color": null,
+          "best": "res/mipmap-xxxhdpi-v4/icon_background.webp",
+          "files": [
+            {
+              "path": "res/mipmap/icon_background.webp",
+              "config": "",
+              "density": 160,
+              "format": "webp",
+              "width": 108,
+              "height": 108,
+              "size_bytes": 44
+            },
+            {
+              "path": "res/mipmap-hdpi-v4/icon_background.webp",
+              "config": "hdpi",
+              "density": 240,
+              "format": "webp",
+              "width": 162,
+              "height": 162,
+              "size_bytes": 44
+            },
+            {
+              "path": "res/mipmap-mdpi-v4/icon_background.webp",
+              "config": "mdpi",
+              "density": 160,
+              "format": "webp",
+              "width": 108,
+              "height": 108,
+              "size_bytes": 44
+            },
+            {
+              "path": "res/mipmap-xhdpi-v4/icon_background.webp",
+              "config": "xhdpi",
+              "density": 320,
+              "format": "webp",
+              "width": 216,
+              "height": 216,
+              "size_bytes": 46
+            },
+            {
+              "path": "res/mipmap-xxhdpi-v4/icon_background.webp",
+              "config": "xxhdpi",
+              "density": 480,
+              "format": "webp",
+              "width": 324,
+              "height": 324,
+              "size_bytes": 52
+            },
+            {
+              "path": "res/mipmap-xxxhdpi-v4/icon_background.webp",
+              "config": "xxxhdpi",
+              "density": 640,
+              "format": "webp",
+              "width": 432,
+              "height": 432,
+              "size_bytes": 52
+            }
+          ]
+        },
+        "foreground": {
+          "resource": "@mipmap/icon_foreground",
+          "color": null,
+          "best": "res/mipmap-xxxhdpi-v4/icon_foreground.webp",
+          "files": [
+            {
+              "path": "res/mipmap/icon_foreground.webp",
+              "config": "",
+              "density": 160,
+              "format": "webp",
+              "width": 108,
+              "height": 108,
+              "size_bytes": 1394
+            },
+            {
+              "path": "res/mipmap-hdpi-v4/icon_foreground.webp",
+              "config": "hdpi",
+              "density": 240,
+              "format": "webp",
+              "width": 162,
+              "height": 162,
+              "size_bytes": 2080
+            },
+            {
+              "path": "res/mipmap-mdpi-v4/icon_foreground.webp",
+              "config": "mdpi",
+              "density": 160,
+              "format": "webp",
+              "width": 108,
+              "height": 108,
+              "size_bytes": 1394
+            },
+            {
+              "path": "res/mipmap-xhdpi-v4/icon_foreground.webp",
+              "config": "xhdpi",
+              "density": 320,
+              "format": "webp",
+              "width": 216,
+              "height": 216,
+              "size_bytes": 2966
+            },
+            {
+              "path": "res/mipmap-xxhdpi-v4/icon_foreground.webp",
+              "config": "xxhdpi",
+              "density": 480,
+              "format": "webp",
+              "width": 324,
+              "height": 324,
+              "size_bytes": 4782
+            },
+            {
+              "path": "res/mipmap-xxxhdpi-v4/icon_foreground.webp",
+              "config": "xxxhdpi",
+              "density": 640,
+              "format": "webp",
+              "width": 432,
+              "height": 432,
+              "size_bytes": 6698
+            }
+          ]
+        },
+        "monochrome": {
+          "resource": "@mipmap/icon_monochrome",
+          "color": null,
+          "best": "res/mipmap-xxxhdpi-v4/icon_monochrome.webp",
+          "files": [
+            {
+              "path": "res/mipmap/icon_monochrome.webp",
+              "config": "",
+              "density": 160,
+              "format": "webp",
+              "width": 108,
+              "height": 108,
+              "size_bytes": 736
+            },
+            {
+              "path": "res/mipmap-hdpi-v4/icon_monochrome.webp",
+              "config": "hdpi",
+              "density": 240,
+              "format": "webp",
+              "width": 162,
+              "height": 162,
+              "size_bytes": 1122
+            },
+            {
+              "path": "res/mipmap-mdpi-v4/icon_monochrome.webp",
+              "config": "mdpi",
+              "density": 160,
+              "format": "webp",
+              "width": 108,
+              "height": 108,
+              "size_bytes": 736
+            },
+            {
+              "path": "res/mipmap-xhdpi-v4/icon_monochrome.webp",
+              "config": "xhdpi",
+              "density": 320,
+              "format": "webp",
+              "width": 216,
+              "height": 216,
+              "size_bytes": 1516
+            },
+            {
+              "path": "res/mipmap-xxhdpi-v4/icon_monochrome.webp",
+              "config": "xxhdpi",
+              "density": 480,
+              "format": "webp",
+              "width": 324,
+              "height": 324,
+              "size_bytes": 2242
+            },
+            {
+              "path": "res/mipmap-xxxhdpi-v4/icon_monochrome.webp",
+              "config": "xxxhdpi",
+              "density": 640,
+              "format": "webp",
+              "width": 432,
+              "height": 432,
+              "size_bytes": 3024
+            }
+          ]
+        }
+      }
+    },
+    "round_icon": null
+  },
+  "warnings": []
+}

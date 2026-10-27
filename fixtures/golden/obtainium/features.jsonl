@@ -1,0 +1,5 @@
+{"kind":"feature","name":"android.hardware.touchscreen","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.touchscreen.multitouch","required":false,"version":null}
+{"kind":"feature","name":"android.software.leanback","required":false,"version":null}
+{"kind":"library","name":"androidx.window.extensions","required":false,"version":null}
+{"kind":"library","name":"androidx.window.sidecar","required":false,"version":null}

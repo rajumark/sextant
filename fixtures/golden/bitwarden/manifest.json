@@ -1,0 +1,1025 @@
+{
+  "tag": "manifest",
+  "attributes": {
+    "android:compileSdkVersion": "34",
+    "android:compileSdkVersionCodename": "14",
+    "android:installLocation": "internalOnly",
+    "android:versionCode": "11270",
+    "android:versionName": "2024.10.0",
+    "package": "com.x8bit.bitwarden",
+    "platformBuildVersionCode": "34",
+    "platformBuildVersionName": "14"
+  },
+  "children": [
+    {
+      "tag": "uses-sdk",
+      "attributes": {
+        "android:minSdkVersion": "21",
+        "android:targetSdkVersion": "34"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.INTERNET"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.NFC"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.WRITE_EXTERNAL_STORAGE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.CAMERA"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.USE_FINGERPRINT"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.USE_BIOMETRIC"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.ACCESS_NETWORK_STATE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.SYSTEM_ALERT_WINDOW"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.VIBRATE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.camera",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.camera.autofocus",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "queries",
+      "attributes": {},
+      "children": [
+        {
+          "tag": "intent",
+          "attributes": {},
+          "children": [
+            {
+              "tag": "action",
+              "attributes": {
+                "android:name": "android.support.customtabs.action.CustomTabsService"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "intent",
+          "attributes": {},
+          "children": [
+            {
+              "tag": "action",
+              "attributes": {
+                "android:name": "android.intent.action.VIEW"
+              },
+              "children": []
+            },
+            {
+              "tag": "data",
+              "attributes": {
+                "android:scheme": "http"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "intent",
+          "attributes": {},
+          "children": [
+            {
+              "tag": "action",
+              "attributes": {
+                "android:name": "android.intent.action.VIEW"
+              },
+              "children": []
+            },
+            {
+              "tag": "data",
+              "attributes": {
+                "android:scheme": "https"
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "permission",
+      "attributes": {
+        "android:name": "com.x8bit.bitwarden.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+        "android:protectionLevel": "signature"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "com.x8bit.bitwarden.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.POST_NOTIFICATIONS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.WAKE_LOCK"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "com.google.android.c2dm.permission.RECEIVE"
+      },
+      "children": []
+    },
+    {
+      "tag": "application",
+      "attributes": {
+        "android:allowBackup": "false",
+        "android:appComponentFactory": "androidx.core.app.CoreComponentFactory",
+        "android:debuggable": "false",
+        "android:extractNativeLibs": "true",
+        "android:icon": "@mipmap/ic_launcher",
+        "android:label": "Bitwarden",
+        "android:name": "com.x8bit.bitwarden.MainApplication",
+        "android:networkSecurityConfig": "@xml/network_security_config",
+        "android:roundIcon": "@mipmap/ic_launcher_round",
+        "android:theme": "@style/LaunchTheme"
+      },
+      "children": [
+        {
+          "tag": "provider",
+          "attributes": {
+            "android:authorities": "com.x8bit.bitwarden.fileprovider",
+            "android:exported": "false",
+            "android:grantUriPermissions": "true",
+            "android:name": "androidx.core.content.FileProvider"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.support.FILE_PROVIDER_PATHS",
+                "android:resource": "@xml/filepaths"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "meta-data",
+          "attributes": {
+            "android:name": "android.max_aspect",
+            "android:value": "2.1"
+          },
+          "children": []
+        },
+        {
+          "tag": "meta-data",
+          "attributes": {
+            "android:name": "android.content.APP_RESTRICTIONS",
+            "android:resource": "@xml/app_restrictions"
+          },
+          "children": []
+        },
+        {
+          "tag": "meta-data",
+          "attributes": {
+            "android:name": "com.samsung.android.sdk.multiwindow.enable",
+            "android:value": "true"
+          },
+          "children": []
+        },
+        {
+          "tag": "meta-data",
+          "attributes": {
+            "android:name": "com.samsung.android.sdk.multiwindow.penwindow.enable",
+            "android:value": "true"
+          },
+          "children": []
+        },
+        {
+          "tag": "meta-data",
+          "attributes": {
+            "android:name": "com.lge.support.SPLIT_WINDOW",
+            "android:value": "true"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|uiMode|orientation|navigation|keyboardHidden|keyboard",
+            "android:exported": "true",
+            "android:icon": "@mipmap/ic_launcher",
+            "android:label": "Bitwarden",
+            "android:launchMode": "@integer/launchModeAPIlevel",
+            "android:name": "com.x8bit.bitwarden.MainActivity",
+            "android:theme": "@style/LaunchTheme"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MAIN"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.LAUNCHER"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.SEND"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "application/*"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "image/*"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "video/*"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "text/*"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "uses-library",
+          "attributes": {
+            "android:name": "org.apache.http.legacy",
+            "android:required": "false"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:exported": "true",
+            "android:name": "crc6468b6408a11370c2f.WebAuthenticatorIntermediateActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:exported": "true",
+            "android:name": "crc64ba438d8f48cf7e75.IntermediateActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:label": "Essentials Energy Saver Broadcast Receiver",
+            "android:name": "crc640a8d9a12ddbf2cf2.EnergySaverBroadcastReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "true",
+            "android:launchMode": "singleTop",
+            "android:name": "crc641b016c64ce400e42.WebAuthCallbackActivity",
+            "android:noHistory": "true"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.VIEW"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.BROWSABLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:scheme": "bitwarden"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:icon": "@drawable/shield",
+            "android:label": "@string/AutoFillTile",
+            "android:name": "com.x8bit.bitwarden.AutofillTileService",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:icon": "@drawable/generate",
+            "android:label": "@string/PasswordGenerator",
+            "android:name": "com.x8bit.bitwarden.GeneratorTileService",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:icon": "@drawable/shield",
+            "android:label": "@string/MyVault",
+            "android:name": "com.x8bit.bitwarden.MyVaultTileService",
+            "android:permission": "android.permission.BIND_QUICK_SETTINGS_TILE"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.quicksettings.action.QS_TILE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.x8bit.bitwarden.ClearClipboardAlarmReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.x8bit.bitwarden.EventUploadReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.x8bit.bitwarden.NotificationDismissReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.x8bit.bitwarden.PackageReplacedReceiver"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MY_PACKAGE_REPLACED"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.x8bit.bitwarden.RestrictionsChangedReceiver"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.APPLICATION_RESTRICTIONS_CHANGED"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "crc64a3d52eae9383cf1b.FirebaseMessagingService"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "com.google.firebase.MESSAGING_EVENT"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:launchMode": "singleTop",
+            "android:name": "crc649a84d592765d068b.AutofillExternalSelectionActivity",
+            "android:noHistory": "true"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:label": "Bitwarden",
+            "android:name": "com.x8bit.bitwarden.Autofill.AutofillService",
+            "android:permission": "android.permission.BIND_AUTOFILL_SERVICE"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.autofill",
+                "android:resource": "@xml/autofillservice"
+              },
+              "children": []
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.autofill.AutofillService"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:launchMode": "singleTop",
+            "android:name": "crc649a84d592765d068b.CredentialProviderSelectionActivity",
+            "android:noHistory": "true"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:label": "Bitwarden",
+            "android:name": "com.x8bit.bitwarden.Autofill.CredentialProviderService",
+            "android:permission": "android.permission.BIND_CREDENTIAL_PROVIDER_SERVICE"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.credentials.provider",
+                "android:resource": "@xml/provider"
+              },
+              "children": []
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.service.credentials.CredentialProviderService"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "crc64ad60f58489142600.AccessibilityActivity",
+            "android:theme": "@style/BaseTheme",
+            "android:windowSoftInputMode": "stateHidden"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:label": "Bitwarden",
+            "android:name": "com.x8bit.bitwarden.Accessibility.AccessibilityService",
+            "android:permission": "android.permission.BIND_ACCESSIBILITY_SERVICE"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.accessibilityservice",
+                "android:resource": "@xml/accessibilityservice"
+              },
+              "children": []
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.accessibilityservice.AccessibilityService"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "provider",
+          "attributes": {
+            "android:authorities": "com.x8bit.bitwarden.mono.android.MultiDexLoader.__mono_init__",
+            "android:exported": "false",
+            "android:initOrder": "1999999999",
+            "android:name": "mono.android.MultiDexLoader"
+          },
+          "children": []
+        },
+        {
+          "tag": "provider",
+          "attributes": {
+            "android:authorities": "com.x8bit.bitwarden.mono.MonoRuntimeProvider.__mono_init__",
+            "android:exported": "false",
+            "android:initOrder": "1999999998",
+            "android:name": "mono.MonoRuntimeProvider"
+          },
+          "children": []
+        },
+        {
+          "tag": "provider",
+          "attributes": {
+            "android:authorities": "com.x8bit.bitwarden.androidx-startup",
+            "android:exported": "false",
+            "android:name": "androidx.startup.InitializationProvider"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "androidx.profileinstaller.ProfileInstallerInitializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "androidx.lifecycle.ProcessLifecycleInitializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "androidx.emoji2.text.EmojiCompatInitializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "true",
+            "android:exported": "true",
+            "android:name": "androidx.profileinstaller.ProfileInstallReceiver",
+            "android:permission": "android.permission.DUMP"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.profileinstaller.action.INSTALL_PROFILE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.profileinstaller.action.SKIP_FILE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.profileinstaller.action.SAVE_PROFILE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.profileinstaller.action.BENCHMARK_OPERATION"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "uses-library",
+          "attributes": {
+            "android:name": "androidx.window.extensions",
+            "android:required": "false"
+          },
+          "children": []
+        },
+        {
+          "tag": "uses-library",
+          "attributes": {
+            "android:name": "androidx.window.sidecar",
+            "android:required": "false"
+          },
+          "children": []
+        },
+        {
+          "tag": "provider",
+          "attributes": {
+            "android:authorities": "com.x8bit.bitwarden.firebaseinitprovider",
+            "android:directBootAware": "true",
+            "android:exported": "false",
+            "android:initOrder": "100",
+            "android:name": "com.google.firebase.provider.FirebaseInitProvider"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:directBootAware": "true",
+            "android:exported": "false",
+            "android:name": "com.google.firebase.components.ComponentDiscoveryService"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar",
+                "android:value": "com.google.firebase.components.ComponentRegistrar"
+              },
+              "children": []
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar",
+                "android:value": "com.google.firebase.components.ComponentRegistrar"
+              },
+              "children": []
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar",
+                "android:value": "com.google.firebase.components.ComponentRegistrar"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "com.google.firebase.iid.FirebaseInstanceIdReceiver",
+            "android:permission": "com.google.android.c2dm.permission.SEND"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "com.google.android.c2dm.intent.RECEIVE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:directBootAware": "true",
+            "android:exported": "false",
+            "android:name": "com.google.firebase.messaging.FirebaseMessagingService"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {
+                "android:priority": "-500"
+              },
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "com.google.firebase.MESSAGING_EVENT"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "backend:com.google.android.datatransport.cct.CctBackendFactory",
+                "android:value": "cct"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService",
+            "android:permission": "android.permission.BIND_JOB_SERVICE"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "com.google.android.gms.common.api.GoogleApiActivity",
+            "android:theme": "@android:style/Theme.Translucent.NoTitleBar"
+          },
+          "children": []
+        },
+        {
+          "tag": "meta-data",
+          "attributes": {
+            "android:name": "com.google.android.gms.version",
+            "android:value": "@integer/google_play_services_version"
+          },
+          "children": []
+        },
+        {
+          "tag": "meta-data",
+          "attributes": {
+            "android:name": "com.android.dynamic.apk.fused.modules",
+            "android:value": "base"
+          },
+          "children": []
+        },
+        {
+          "tag": "meta-data",
+          "attributes": {
+            "android:name": "com.android.vending.splits",
+            "android:resource": "@xml/splits0"
+          },
+          "children": []
+        }
+      ]
+    }
+  ]
+}

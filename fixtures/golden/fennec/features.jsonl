@@ -1,0 +1,12 @@
+{"kind":"feature","name":"android.hardware.audio.low_latency","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.camera","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.camera.any","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.camera.autofocus","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.location","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.location.gps","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.microphone","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.touchscreen","required":false,"version":null}
+{"kind":"feature","name":"glEsVersion","required":true,"version":"2.0"}
+{"kind":"library","name":"android.car","required":false,"version":null}
+{"kind":"library","name":"androidx.window.extensions","required":false,"version":null}
+{"kind":"library","name":"androidx.window.sidecar","required":false,"version":null}

@@ -1,0 +1,9 @@
+{"scope":"application","kind":"meta-data","name":"asset_statements","value":null,"resource":"@string/asset_statements"}
+{"scope":"application","kind":"meta-data","name":"com.facebook.soloader.enabled","value":"false","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.emoji2.text.EmojiCompatInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.lifecycle.ProcessLifecycleInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.profileinstaller.ProfileInstallerInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.work.WorkManagerInitializer","value":"androidx.startup","resource":null}
+{"scope":"cl.json.RNShareFileProvider","kind":"meta-data","name":"android.support.FILE_PROVIDER_PATHS","value":null,"resource":"@xml/share_download_paths"}
+{"scope":"com.reactnativecommunity.webview.RNCWebViewFileProvider","kind":"meta-data","name":"android.support.FILE_PROVIDER_PATHS","value":null,"resource":"@xml/file_provider_paths"}
+{"scope":"com.vinzscam.reactnativefileviewer.FileProvider","kind":"meta-data","name":"android.support.FILE_PROVIDER_PATHS","value":null,"resource":"@xml/file_viewer_provider_paths"}

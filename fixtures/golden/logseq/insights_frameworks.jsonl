@@ -1,0 +1,4 @@
+{"name":"Capacitor","evidence":["file assets/capacitor.config.json","145 classes in com.getcapacitor"]}
+{"name":"Cordova","evidence":["102 classes in org.apache.cordova"]}
+{"name":"Jetpack Compose","evidence":["659 classes in androidx.compose.runtime"]}
+{"name":"Kotlin","evidence":["22503 classes with kotlin.Metadata"]}

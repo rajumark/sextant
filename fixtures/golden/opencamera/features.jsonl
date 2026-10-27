@@ -1,0 +1,3 @@
+{"kind":"feature","name":"android.hardware.bluetooth_le","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.camera","required":null,"version":null}
+{"kind":"feature","name":"android.hardware.microphone","required":null,"version":null}

@@ -1,0 +1,5 @@
+{"scope":"application","kind":"meta-data","name":"com.google.android.backup.api_key","value":"unused","resource":null}
+{"scope":"androidx.appcompat.app.AppLocalesMetadataHolderService","kind":"meta-data","name":"autoStoreLocales","value":"true","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.emoji2.text.EmojiCompatInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.lifecycle.ProcessLifecycleInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.profileinstaller.ProfileInstallerInitializer","value":"androidx.startup","resource":null}

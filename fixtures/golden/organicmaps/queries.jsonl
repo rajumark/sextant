@@ -1,0 +1,4 @@
+{"kind":"intent","name":"OPEN_DOCUMENT_TREE","actions":["android.intent.action.OPEN_DOCUMENT_TREE"],"categories":[],"data":[]}
+{"kind":"intent","name":"TTS_SERVICE","actions":["android.intent.action.TTS_SERVICE"],"categories":[],"data":[]}
+{"kind":"intent","name":"VIEW https:","actions":["android.intent.action.VIEW"],"categories":["android.intent.category.BROWSABLE"],"data":[{"scheme":"https","host":null,"port":null,"path":null,"path_prefix":null,"path_pattern":null,"path_suffix":null,"path_advanced_pattern":null,"mime_type":null,"ssp":null,"ssp_prefix":null,"ssp_pattern":null}]}
+{"kind":"provider","name":"androidx.car.app.connection","actions":[],"categories":[],"data":[]}

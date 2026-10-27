@@ -1,0 +1,221 @@
+{
+  "tag": "manifest",
+  "attributes": {
+    "android:compileSdkVersion": "34",
+    "android:compileSdkVersionCodename": "14",
+    "android:installLocation": "auto",
+    "android:versionCode": "5170000",
+    "android:versionName": "5.17.0",
+    "package": "net.minetest.minetest",
+    "platformBuildVersionCode": "34",
+    "platformBuildVersionName": "14"
+  },
+  "children": [
+    {
+      "tag": "uses-sdk",
+      "attributes": {
+        "android:minSdkVersion": "21",
+        "android:targetSdkVersion": "35"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.INTERNET"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.POST_NOTIFICATIONS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:glEsVersion": "0x20000"
+      },
+      "children": []
+    },
+    {
+      "tag": "permission",
+      "attributes": {
+        "android:name": "net.minetest.minetest.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+        "android:protectionLevel": "signature"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "net.minetest.minetest.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+      },
+      "children": []
+    },
+    {
+      "tag": "application",
+      "attributes": {
+        "android:allowBackup": "false",
+        "android:appCategory": "game",
+        "android:appComponentFactory": "androidx.core.app.CoreComponentFactory",
+        "android:extractNativeLibs": "true",
+        "android:icon": "@mipmap/ic_launcher",
+        "android:label": "@string/label",
+        "android:resizeableActivity": "false"
+      },
+      "children": [
+        {
+          "tag": "meta-data",
+          "attributes": {
+            "android:name": "android.max_aspect",
+            "android:value": "3"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation|navigation|keyboardHidden",
+            "android:exported": "true",
+            "android:maxAspectRatio": "3",
+            "android:name": "net.minetest.minetest.MainActivity",
+            "android:screenOrientation": "sensorLandscape",
+            "android:theme": "@style/AppTheme"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MAIN"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.LAUNCHER"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "smallestScreenSize|screenSize|orientation|navigation|keyboardHidden|keyboard",
+            "android:exported": "true",
+            "android:hardwareAccelerated": "true",
+            "android:launchMode": "singleTask",
+            "android:maxAspectRatio": "3",
+            "android:name": "net.minetest.minetest.GameActivity",
+            "android:screenOrientation": "sensorLandscape",
+            "android:theme": "@style/AppTheme"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MAIN"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:name": "net.minetest.minetest.UnzipService"
+          },
+          "children": []
+        },
+        {
+          "tag": "provider",
+          "attributes": {
+            "android:authorities": "net.minetest.minetest.fileprovider",
+            "android:exported": "false",
+            "android:grantUriPermissions": "true",
+            "android:name": "androidx.core.content.FileProvider"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.support.FILE_PROVIDER_PATHS",
+                "android:resource": "@xml/filepaths"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "provider",
+          "attributes": {
+            "android:authorities": "net.minetest.minetest.documents",
+            "android:exported": "true",
+            "android:grantUriPermissions": "true",
+            "android:name": "net.minetest.minetest.LuantiDocumentsProvider",
+            "android:permission": "android.permission.MANAGE_DOCUMENTS"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.content.action.DOCUMENTS_PROVIDER"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "provider",
+          "attributes": {
+            "android:authorities": "net.minetest.minetest.androidx-startup",
+            "android:exported": "false",
+            "android:name": "androidx.startup.InitializationProvider"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "androidx.emoji2.text.EmojiCompatInitializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "androidx.lifecycle.ProcessLifecycleInitializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

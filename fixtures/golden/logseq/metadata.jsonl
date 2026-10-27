@@ -1,0 +1,6 @@
+{"scope":"androidx.core.content.FileProvider","kind":"meta-data","name":"android.support.FILE_PROVIDER_PATHS","value":null,"resource":"@xml/file_paths"}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.emoji2.text.EmojiCompatInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.lifecycle.ProcessLifecycleInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.profileinstaller.ProfileInstallerInitializer","value":"androidx.startup","resource":null}
+{"scope":"com.google.android.gms.metadata.ModuleDependencies","kind":"meta-data","name":"photopicker_activity:0:required","value":"","resource":null}
+{"scope":"io.ionic.libs.ioncameralib.IONCAMRFileProvider","kind":"meta-data","name":"android.support.FILE_PROVIDER_PATHS","value":null,"resource":"@xml/ioncamera_paths"}

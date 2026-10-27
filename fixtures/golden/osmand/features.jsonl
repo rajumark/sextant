@@ -1,0 +1,17 @@
+{"kind":"feature","name":"android.hardware.bluetooth","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.camera","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.camera.autofocus","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.location","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.location.gps","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.location.network","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.microphone","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.sensor.accelerometer","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.sensor.compass","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.sensor.gyroscope","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.sensor.light","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.touchscreen","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.wifi","required":false,"version":null}
+{"kind":"feature","name":"com.sec.feature.spen_usp","required":false,"version":null}
+{"kind":"feature","name":"glEsVersion","required":true,"version":"2.0"}
+{"kind":"library","name":"androidx.window.extensions","required":false,"version":null}
+{"kind":"library","name":"androidx.window.sidecar","required":false,"version":null}

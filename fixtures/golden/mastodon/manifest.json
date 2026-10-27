@@ -1,0 +1,555 @@
+{
+  "tag": "manifest",
+  "attributes": {
+    "android:compileSdkVersion": "37",
+    "android:compileSdkVersionCodename": "17",
+    "android:versionCode": "191",
+    "android:versionName": "2.13.4",
+    "package": "org.joinmastodon.android",
+    "platformBuildVersionCode": "37",
+    "platformBuildVersionName": "17"
+  },
+  "children": [
+    {
+      "tag": "uses-sdk",
+      "attributes": {
+        "android:minSdkVersion": "23",
+        "android:targetSdkVersion": "37"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.INTERNET"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.FOREGROUND_SERVICE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.VIBRATE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:maxSdkVersion": "28",
+        "android:name": "android.permission.WRITE_EXTERNAL_STORAGE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "org.joinmastodon.android.permission.C2D_MESSAGE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "com.google.android.c2dm.permission.RECEIVE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.POST_NOTIFICATIONS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.ACCESS_LOCAL_NETWORK"
+      },
+      "children": []
+    },
+    {
+      "tag": "permission",
+      "attributes": {
+        "android:name": "org.joinmastodon.android.permission.C2D_MESSAGE",
+        "android:protectionLevel": "signature"
+      },
+      "children": []
+    },
+    {
+      "tag": "queries",
+      "attributes": {},
+      "children": [
+        {
+          "tag": "intent",
+          "attributes": {},
+          "children": [
+            {
+              "tag": "action",
+              "attributes": {
+                "android:name": "android.intent.action.PROCESS_TEXT"
+              },
+              "children": []
+            },
+            {
+              "tag": "data",
+              "attributes": {
+                "android:mimeType": "text/plain"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "intent",
+          "attributes": {},
+          "children": [
+            {
+              "tag": "action",
+              "attributes": {
+                "android:name": "android.intent.action.TRANSLATE"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "intent",
+          "attributes": {},
+          "children": [
+            {
+              "tag": "action",
+              "attributes": {
+                "android:name": "android.intent.action.VIEW"
+              },
+              "children": []
+            },
+            {
+              "tag": "data",
+              "attributes": {
+                "android:host": "*",
+                "android:scheme": "http"
+              },
+              "children": []
+            },
+            {
+              "tag": "category",
+              "attributes": {
+                "android:name": "android.intent.category.BROWSABLE"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "intent",
+          "attributes": {},
+          "children": [
+            {
+              "tag": "action",
+              "attributes": {
+                "android:name": "android.intent.action.VIEW"
+              },
+              "children": []
+            },
+            {
+              "tag": "data",
+              "attributes": {
+                "android:host": "*",
+                "android:scheme": "https"
+              },
+              "children": []
+            },
+            {
+              "tag": "category",
+              "attributes": {
+                "android:name": "android.intent.category.BROWSABLE"
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "application",
+      "attributes": {
+        "android:allowBackup": "true",
+        "android:enableOnBackInvokedCallback": "true",
+        "android:extractNativeLibs": "false",
+        "android:icon": "@mipmap/ic_launcher",
+        "android:label": "@string/app_name",
+        "android:largeHeap": "true",
+        "android:localeConfig": "@xml/_generated_res_locale_config",
+        "android:name": "org.joinmastodon.android.MastodonApp",
+        "android:networkSecurityConfig": "@xml/network_security_config",
+        "android:supportsRtl": "true",
+        "android:theme": "@style/Theme.Mastodon.AutoLightDark"
+      },
+      "children": [
+        {
+          "tag": "meta-data",
+          "attributes": {
+            "android:name": "com.google.mlkit.vision.DEPENDENCIES",
+            "android:value": "barcode_ui"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:exported": "true",
+            "android:launchMode": "singleTask",
+            "android:name": "org.joinmastodon.android.MainActivity",
+            "android:windowSoftInputMode": "adjustResize"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MAIN"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.LAUNCHER"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {
+                "android:autoVerify": "true"
+              },
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.VIEW"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.BROWSABLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:host": "mastodon.social"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:host": "mastodon.online"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:scheme": "https"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:pathPrefix": "/@"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:pathPrefix": "/collections/"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:exported": "true",
+            "android:launchMode": "singleTask",
+            "android:name": "org.joinmastodon.android.OAuthActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.VIEW"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.BROWSABLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:host": "callback",
+                    "android:scheme": "org.joinmastodon.android-auth"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:exported": "true",
+            "android:name": "org.joinmastodon.android.ExternalShareActivity",
+            "android:windowSoftInputMode": "adjustResize"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.SEND"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "*/*"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.SEND_MULTIPLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "*/*"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.VIEW"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.BROWSABLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:host": "share",
+                    "android:scheme": "mastodon"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:exported": "false",
+            "android:name": "org.joinmastodon.android.DonationFragmentActivity",
+            "android:windowSoftInputMode": "adjustResize"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:foregroundServiceType": "mediaPlayback",
+            "android:name": "org.joinmastodon.android.AudioPlayerService"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "org.joinmastodon.android.NotificationActionHandlerService"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "org.joinmastodon.android.PushNotificationReceiver",
+            "android:permission": "com.google.android.c2dm.permission.SEND"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "com.google.android.c2dm.intent.RECEIVE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "org.joinmastodon.android.api.PushSubscriptionManager$RegistrationReceiver",
+            "android:permission": "com.google.android.c2dm.permission.SEND"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "com.google.android.c2dm.intent.REGISTRATION"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "me.grishka.fcmtest"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "provider",
+          "attributes": {
+            "android:authorities": "org.joinmastodon.android.fileprovider",
+            "android:exported": "false",
+            "android:grantUriPermissions": "true",
+            "android:name": "org.joinmastodon.android.TweakedFileProvider"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.support.FILE_PROVIDER_PATHS",
+                "android:resource": "@xml/fileprovider_paths"
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

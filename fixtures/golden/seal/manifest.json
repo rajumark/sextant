@@ -1,0 +1,558 @@
+{
+  "tag": "manifest",
+  "attributes": {
+    "android:compileSdkVersion": "34",
+    "android:compileSdkVersionCodename": "14",
+    "android:versionCode": "11314",
+    "android:versionName": "1.13.1-(F-Droid)",
+    "package": "com.junkfood.seal",
+    "platformBuildVersionCode": "34",
+    "platformBuildVersionName": "14"
+  },
+  "children": [
+    {
+      "tag": "uses-sdk",
+      "attributes": {
+        "android:minSdkVersion": "21",
+        "android:targetSdkVersion": "34"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.ACCESS_NETWORK_STATE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:maxSdkVersion": "29",
+        "android:name": "android.permission.WRITE_EXTERNAL_STORAGE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.INTERNET"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.FOREGROUND_SERVICE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:minSdkVersion": "33",
+        "android:name": "android.permission.POST_NOTIFICATIONS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.REQUEST_INSTALL_PACKAGES"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.MANAGE_EXTERNAL_STORAGE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.FOREGROUND_SERVICE_SPECIAL_USE"
+      },
+      "children": []
+    },
+    {
+      "tag": "queries",
+      "attributes": {},
+      "children": [
+        {
+          "tag": "intent",
+          "attributes": {},
+          "children": [
+            {
+              "tag": "action",
+              "attributes": {
+                "android:name": "android.intent.action.VIEW"
+              },
+              "children": []
+            },
+            {
+              "tag": "category",
+              "attributes": {
+                "android:name": "android.intent.category.BROWSABLE"
+              },
+              "children": []
+            },
+            {
+              "tag": "data",
+              "attributes": {
+                "android:scheme": "https"
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "permission",
+      "attributes": {
+        "android:name": "com.junkfood.seal.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+        "android:protectionLevel": "signature"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "com.junkfood.seal.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+      },
+      "children": []
+    },
+    {
+      "tag": "application",
+      "attributes": {
+        "android:allowBackup": "true",
+        "android:appComponentFactory": "androidx.core.app.CoreComponentFactory",
+        "android:enableOnBackInvokedCallback": "true",
+        "android:extractNativeLibs": "true",
+        "android:icon": "@mipmap/ic_launcher",
+        "android:label": "@string/app_name",
+        "android:localeConfig": "@xml/_generated_res_locale_config",
+        "android:name": "com.junkfood.seal.App",
+        "android:requestLegacyExternalStorage": "true",
+        "android:roundIcon": "@mipmap/ic_launcher_round",
+        "android:supportsRtl": "true"
+      },
+      "children": [
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "CrashReportActivity",
+            "android:name": "com.junkfood.seal.CrashReportActivity",
+            "android:theme": "@style/Theme.Seal"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:excludeFromRecents": "true",
+            "android:exported": "true",
+            "android:label": "@string/title_activity_share",
+            "android:launchMode": "singleInstance",
+            "android:name": "com.junkfood.seal.QuickDownloadActivity",
+            "android:theme": "@style/Theme.Seal.Dialog"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.SEND"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "text/plain"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.VIEW"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.BROWSABLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:scheme": "http"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:scheme": "https"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "video/*"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "audio/*"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:foregroundServiceType": "specialUse",
+            "android:name": "com.junkfood.seal.DownloadService"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "orientation",
+            "android:exported": "true",
+            "android:launchMode": "singleTask",
+            "android:name": "com.junkfood.seal.MainActivity",
+            "android:screenOrientation": "unspecified",
+            "android:theme": "@style/Theme.Seal.Splashscreen"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MAIN"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.LAUNCHER"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.SEND"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "text/plain"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.VIEW"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.BROWSABLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:scheme": "http"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:scheme": "https"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "video/*"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "audio/*"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "false",
+            "android:name": "androidx.appcompat.app.AppLocalesMetadataHolderService"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "autoStoreLocales",
+                "android:value": "true"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "provider",
+          "attributes": {
+            "android:authorities": "com.junkfood.seal.provider",
+            "android:exported": "false",
+            "android:grantUriPermissions": "true",
+            "android:name": "androidx.core.content.FileProvider"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.support.FILE_PROVIDER_PATHS",
+                "android:resource": "@xml/provider_paths"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:name": "com.junkfood.seal.NotificationActionReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "androidx.compose.ui.tooling.PreviewActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "provider",
+          "attributes": {
+            "android:authorities": "com.junkfood.seal.androidx-startup",
+            "android:exported": "false",
+            "android:name": "androidx.startup.InitializationProvider"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "androidx.emoji2.text.EmojiCompatInitializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "androidx.lifecycle.ProcessLifecycleInitializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "androidx.profileinstaller.ProfileInstallerInitializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "uses-library",
+          "attributes": {
+            "android:name": "androidx.window.extensions",
+            "android:required": "false"
+          },
+          "children": []
+        },
+        {
+          "tag": "uses-library",
+          "attributes": {
+            "android:name": "androidx.window.sidecar",
+            "android:required": "false"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:directBootAware": "true",
+            "android:exported": "false",
+            "android:name": "androidx.room.MultiInstanceInvalidationService"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "true",
+            "android:exported": "true",
+            "android:name": "androidx.profileinstaller.ProfileInstallReceiver",
+            "android:permission": "android.permission.DUMP"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.profileinstaller.action.INSTALL_PROFILE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.profileinstaller.action.SKIP_FILE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.profileinstaller.action.SAVE_PROFILE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.profileinstaller.action.BENCHMARK_OPERATION"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

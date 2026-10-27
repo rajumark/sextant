@@ -1,0 +1,1619 @@
+{
+  "tag": "manifest",
+  "attributes": {
+    "android:compileSdkVersion": "37",
+    "android:compileSdkVersionCodename": "17",
+    "android:installLocation": "auto",
+    "android:versionCode": "50610",
+    "android:versionName": "r/50610-r-2026-10-06",
+    "package": "org.wikipedia",
+    "platformBuildVersionCode": "37",
+    "platformBuildVersionName": "17"
+  },
+  "children": [
+    {
+      "tag": "uses-sdk",
+      "attributes": {
+        "android:minSdkVersion": "24",
+        "android:targetSdkVersion": "37"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.INTERNET"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.WRITE_EXTERNAL_STORAGE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.ACCESS_NETWORK_STATE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:maxSdkVersion": "22",
+        "android:name": "android.permission.GET_ACCOUNTS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:maxSdkVersion": "22",
+        "android:name": "android.permission.AUTHENTICATE_ACCOUNTS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:maxSdkVersion": "22",
+        "android:name": "android.permission.MANAGE_ACCOUNTS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.VIBRATE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.RECEIVE_BOOT_COMPLETED"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.POST_NOTIFICATIONS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.wifi",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.location",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.location.gps",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.touchscreen",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.WAKE_LOCK"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.ACCESS_COARSE_LOCATION",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.ACCESS_FINE_LOCATION",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "queries",
+      "attributes": {},
+      "children": [
+        {
+          "tag": "intent",
+          "attributes": {},
+          "children": [
+            {
+              "tag": "action",
+              "attributes": {
+                "android:name": "android.intent.action.VIEW"
+              },
+              "children": []
+            },
+            {
+              "tag": "data",
+              "attributes": {
+                "android:scheme": "https"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "intent",
+          "attributes": {},
+          "children": [
+            {
+              "tag": "action",
+              "attributes": {
+                "android:name": "android.speech.action.RECOGNIZE_SPEECH"
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.READ_PHONE_STATE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.READ_EXTERNAL_STORAGE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.FOREGROUND_SERVICE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.vulkan.version",
+        "android:required": "true",
+        "android:version": "0x400003"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.ACCESS_WIFI_STATE"
+      },
+      "children": []
+    },
+    {
+      "tag": "permission",
+      "attributes": {
+        "android:name": "org.wikipedia.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+        "android:protectionLevel": "signature"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "org.wikipedia.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+      },
+      "children": []
+    },
+    {
+      "tag": "application",
+      "attributes": {
+        "android:allowBackup": "true",
+        "android:appComponentFactory": "androidx.core.app.CoreComponentFactory",
+        "android:extractNativeLibs": "false",
+        "android:fullBackupContent": "@xml/full_backup_rules",
+        "android:icon": "@mipmap/launcher",
+        "android:label": "@string/app_name",
+        "android:localeConfig": "@xml/_generated_res_locale_config",
+        "android:name": "org.wikipedia.WikipediaApp",
+        "android:networkSecurityConfig": "@xml/network_security_config",
+        "android:supportsRtl": "true",
+        "android:theme": "@style/AppTheme",
+        "android:usesCleartextTraffic": "false"
+      },
+      "children": [
+        {
+          "tag": "meta-data",
+          "attributes": {
+            "android:name": "@string/preference_key_app_channel",
+            "android:value": "F-Droid"
+          },
+          "children": []
+        },
+        {
+          "tag": "uses-library",
+          "attributes": {
+            "android:name": "com.sec.android.app.multiwindow",
+            "android:required": "false"
+          },
+          "children": []
+        },
+        {
+          "tag": "meta-data",
+          "attributes": {
+            "android:name": "com.sec.android.support.multiwindow",
+            "android:value": "true"
+          },
+          "children": []
+        },
+        {
+          "tag": "meta-data",
+          "attributes": {
+            "android:name": "android.webkit.WebView.MetricsOptOut",
+            "android:value": "true"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "org.wikipedia.main.MainActivity",
+            "android:theme": "@style/AppTheme.Splash",
+            "android:windowSoftInputMode": "adjustResize"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity-alias",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "true",
+            "android:icon": "@mipmap/launcher_yir25",
+            "android:name": "org.wikipedia.YIR25Icon",
+            "android:targetActivity": "org.wikipedia.main.MainActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MAIN"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.LAUNCHER"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.MULTIWINDOW_LAUNCHER"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity-alias",
+          "attributes": {
+            "android:exported": "true",
+            "android:icon": "@mipmap/launcher",
+            "android:name": "org.wikipedia.DefaultIcon",
+            "android:targetActivity": "org.wikipedia.main.MainActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MAIN"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.LAUNCHER"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.MULTIWINDOW_LAUNCHER"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:exported": "true",
+            "android:launchMode": "singleTask",
+            "android:name": "org.wikipedia.page.PageActivity",
+            "android:parentActivityName": "org.wikipedia.main.MainActivity",
+            "android:windowSoftInputMode": "adjustPan|stateAlwaysHidden"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.support.PARENT_ACTIVITY",
+                "android:value": ".main.MainActivity"
+              },
+              "children": []
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {
+                "android:autoVerify": "true"
+              },
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.VIEW"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.BROWSABLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:scheme": "http"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:scheme": "https"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:host": "*.wikipedia.org",
+                    "android:pathPrefix": "/wiki/"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:host": "*.wikipedia.org",
+                    "android:pathPattern": "/zh.*"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:host": "*.wikipedia.org",
+                    "android:pathPattern": "/sr.*"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.VIEW"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.BROWSABLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:scheme": "wikipedia"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:host": "*.wikipedia.org"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation|keyboardHidden|keyboard",
+            "android:name": "org.wikipedia.settings.SettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation|keyboardHidden|keyboard",
+            "android:name": "org.wikipedia.settings.dev.DeveloperSettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.settings.NotificationSettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:label": "@string/wikipedia_languages_title",
+            "android:name": "org.wikipedia.settings.languages.WikipediaLanguagesActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation|keyboardHidden|keyboard",
+            "android:name": "org.wikipedia.language.LangLinksActivity",
+            "android:windowSoftInputMode": "adjustResize"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation|keyboardHidden|keyboard",
+            "android:name": "org.wikipedia.language.addlanguages.AddLanguagesListActivity",
+            "android:windowSoftInputMode": "adjustResize"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:launchMode": "singleTask",
+            "android:name": "org.wikipedia.suggestededits.SuggestionsActivity",
+            "android:windowSoftInputMode": "adjustPan"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:label": "@string/suggested_edits_activity_title",
+            "android:name": "org.wikipedia.suggestededits.SuggestedEditsTasksActivity",
+            "android:theme": "@style/AppTheme.ActionBar"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation|keyboardHidden|keyboard",
+            "android:name": "org.wikipedia.edit.EditSectionActivity",
+            "android:windowSoftInputMode": "adjustResize|stateVisible"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation|keyboardHidden|keyboard",
+            "android:name": "org.wikipedia.login.LoginActivity",
+            "android:theme": "@style/AppTheme",
+            "android:windowSoftInputMode": "adjustResize|stateAlwaysHidden"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation|keyboardHidden|keyboard",
+            "android:name": "org.wikipedia.createaccount.CreateAccountActivity",
+            "android:theme": "@style/AppTheme",
+            "android:windowSoftInputMode": "adjustResize|stateAlwaysHidden"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.createaccount.CreateAccountEncourageActivity",
+            "android:screenOrientation": "portrait"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation|keyboardHidden|keyboard",
+            "android:name": "org.wikipedia.login.ResetPasswordActivity",
+            "android:theme": "@style/AppTheme",
+            "android:windowSoftInputMode": "adjustResize|stateAlwaysHidden"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:name": "org.wikipedia.gallery.GalleryActivity",
+            "android:theme": "@style/AppTheme.FullScreen"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.settings.LicenseActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:label": "@string/view_card_news_title",
+            "android:name": "org.wikipedia.feed.news.NewsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:name": "org.wikipedia.descriptions.DescriptionEditActivity",
+            "android:windowSoftInputMode": "adjustResize"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:exported": "true",
+            "android:name": "org.wikipedia.search.SearchActivity",
+            "android:theme": "@style/AppTheme.Splash",
+            "android:windowSoftInputMode": "adjustResize"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {
+                "android:label": "@string/search_hint"
+              },
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.SEND"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "text/plain"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {
+                "android:label": "@string/search_hint"
+              },
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.PROCESS_TEXT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "text/plain"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.descriptions.DescriptionEditSuccessActivity",
+            "android:theme": "@style/AppTheme.FullScreen.Translucent",
+            "android:windowSoftInputMode": "stateAlwaysHidden"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.descriptions.DescriptionEditTutorialActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.readinglist.ReadingListActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.onboarding.InitialOnboardingActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.feed.topread.TopReadArticlesActivity",
+            "android:theme": "@style/AppTheme.ActionBar"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.feed.didyouknow.DidYouKnowActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:name": "org.wikipedia.feed.onthisday.OnThisDayActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:label": "@string/view_random_card_title",
+            "android:name": "org.wikipedia.random.RandomActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:label": "@string/preference_title_app_theme",
+            "android:name": "org.wikipedia.theme.ThemeFittingRoomActivity",
+            "android:theme": "@style/AppTheme.ActionBar"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation|keyboardHidden|keyboard",
+            "android:label": "@string/notifications_activity_title",
+            "android:name": "org.wikipedia.notifications.NotificationActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:label": "@string/tabs_activity_title",
+            "android:name": "org.wikipedia.page.tabs.TabActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.categories.CategoryActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.suggestededits.SuggestedEditsImageTagsOnboardingActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.suggestededits.SuggestedEditsImageRecsOnboardingActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.suggestededits.SuggestedEditsRecentEditsOnboardingActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:label": "@string/watchlist_title",
+            "android:name": "org.wikipedia.watchlist.WatchlistActivity",
+            "android:theme": "@style/AppTheme.ActionBar"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:label": "@string/watchlist_filter_title",
+            "android:name": "org.wikipedia.watchlist.WatchlistFilterActivity",
+            "android:theme": "@style/AppTheme.ActionBar"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.suggestededits.SuggestedEditsImageTagEditActivity",
+            "android:theme": "@style/AppTheme.ActionBar"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.suggestededits.SuggestedEditsRecentEditsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:label": "@string/patroller_tasks_filters_title",
+            "android:name": "org.wikipedia.suggestededits.SuggestedEditsRecentEditsFilterActivity",
+            "android:theme": "@style/AppTheme.ActionBar"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:label": "",
+            "android:name": "org.wikipedia.commons.FilePageActivity",
+            "android:theme": "@style/AppTheme"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:label": "",
+            "android:name": "org.wikipedia.talk.TalkTopicsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.talk.TalkTopicActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:name": "org.wikipedia.talk.TalkReplyActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.talk.ArchivedTalkPagesActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.diff.ArticleEditDetailsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation",
+            "android:name": "org.wikipedia.activity.SingleWebViewActivity",
+            "android:theme": "@style/AppTheme"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:label": "@string/customize_toolbar_title",
+            "android:name": "org.wikipedia.page.customize.CustomizeToolbarActivity",
+            "android:theme": "@style/AppTheme.ActionBar"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation|keyboardHidden|keyboard",
+            "android:label": "@string/notifications_filter_label",
+            "android:name": "org.wikipedia.notifications.NotificationFilterActivity",
+            "android:theme": "@style/AppTheme.ActionBar"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.page.edithistory.EditHistoryListActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.usercontrib.UserContribListActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:label": "@string/user_contrib_filter_activity_title",
+            "android:name": "org.wikipedia.usercontrib.UserContribFilterActivity",
+            "android:theme": "@style/AppTheme.ActionBar"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation|keyboardHidden|keyboard",
+            "android:label": "@string/insert_media_title",
+            "android:name": "org.wikipedia.edit.insertmedia.InsertMediaActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation|keyboardHidden|keyboard",
+            "android:label": "@string/templates_search_hint",
+            "android:name": "org.wikipedia.edit.templates.TemplatesSearchActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.places.PlacesActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.places.PlacesFilterActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.talk.template.TalkTemplatesActivity",
+            "android:theme": "@style/AppTheme"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.settings.AboutActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.games.onthisday.OnThisDayGameActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.games.GamesHubActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.readinglist.recommended.RecommendedReadingListOnboardingActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.settings.dev.playground.CategoryDeveloperPlayGround"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.yearinreview.YearInReviewOnboardingActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.yearinreview.YearInReviewActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.readinglist.recommended.RecommendedReadingListSettingsActivity",
+            "android:windowSoftInputMode": "adjustResize"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.activitytab.ActivityTabCustomizationActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.activitytab.ActivityTabOnboardingActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.donate.donationreminder.DonationReminderActivity",
+            "android:screenOrientation": "portrait",
+            "android:windowSoftInputMode": "adjustResize"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.widgets.readingchallenge.ReadingChallengeOnboardingActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.feed.onboarding.ExploreFeedUpdatePromptActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.feed.onboarding.ExploreFeedBuildingActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.feed.personalization.PersonalizationActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.wikipedia.settings.homefeed.HomeFeedSettingsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "provider",
+          "attributes": {
+            "android:authorities": "org.wikipedia.fileprovider",
+            "android:exported": "false",
+            "android:grantUriPermissions": "true",
+            "android:name": "org.wikipedia.WikipediaFileProvider"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.support.FILE_PROVIDER_PATHS",
+                "android:resource": "@xml/file_paths"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "true",
+            "android:icon": "@mipmap/launcher",
+            "android:label": "@string/widget_name_search",
+            "android:name": "org.wikipedia.widgets.WidgetProviderSearch"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.appwidget.action.APPWIDGET_UPDATE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.appwidget.provider",
+                "android:resource": "@xml/widget_search"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "true",
+            "android:icon": "@mipmap/launcher",
+            "android:label": "@string/widget_name_featured_page",
+            "android:name": "org.wikipedia.widgets.WidgetProviderFeaturedPage"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.appwidget.action.APPWIDGET_UPDATE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.appwidget.provider",
+                "android:resource": "@xml/widget_featured_page"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "true",
+            "android:label": "@string/random_article_widget_name",
+            "android:name": "org.wikipedia.widgets.readingchallenge.ReadingChallengeWidgetReceiver"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.appwidget.action.APPWIDGET_UPDATE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.appwidget.provider",
+                "android:resource": "@xml/reading_challenge_widget_info"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "org.wikipedia.notifications.NotificationPollBroadcastReceiver"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.BOOT_COMPLETED"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": ".notifications.NotificationPollBroadcastReceiver.ACTION_POLL"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "org.wikipedia.auth.AuthenticatorService"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.accounts.AccountAuthenticator"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.accounts.AccountAuthenticator",
+                "android:resource": "@xml/wikimedia_authenticator"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:name": "org.wikipedia.savedpages.SavedPageSyncNotification"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:enabled": "true",
+            "android:excludeFromRecents": "true",
+            "android:exported": "false",
+            "android:name": "androidx.glance.appwidget.action.ActionTrampolineActivity",
+            "android:theme": "@android:style/Theme.NoDisplay"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:launchMode": "singleInstance",
+            "android:name": "androidx.glance.appwidget.action.InvisibleActionTrampolineActivity",
+            "android:noHistory": "true",
+            "android:taskAffinity": "androidx.glance.appwidget.ListAdapterCallbackTrampoline",
+            "android:theme": "@style/Widget.Glance.AppWidget.CallbackTrampoline"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:name": "androidx.glance.appwidget.action.ActionCallbackBroadcastReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:name": "androidx.glance.appwidget.UnmanagedSessionReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:name": "androidx.glance.appwidget.MyPackageReplacedReceiver"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MY_PACKAGE_REPLACED"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "androidx.glance.appwidget.GlanceRemoteViewsService",
+            "android:permission": "android.permission.BIND_REMOTEVIEWS"
+          },
+          "children": []
+        },
+        {
+          "tag": "provider",
+          "attributes": {
+            "android:authorities": "org.wikipedia.androidx-startup",
+            "android:exported": "false",
+            "android:name": "androidx.startup.InitializationProvider"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "androidx.work.WorkManagerInitializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "androidx.emoji2.text.EmojiCompatInitializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "androidx.lifecycle.ProcessLifecycleInitializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "okhttp3.internal.platform.PlatformInitializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "androidx.profileinstaller.ProfileInstallerInitializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "@bool/enable_system_job_service_default",
+            "android:exported": "true",
+            "android:name": "androidx.work.impl.background.systemjob.SystemJobService",
+            "android:permission": "android.permission.BIND_JOB_SERVICE"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "@bool/enable_system_foreground_service_default",
+            "android:exported": "false",
+            "android:name": "androidx.work.impl.foreground.SystemForegroundService"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:name": "androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "false",
+            "android:exported": "false",
+            "android:name": "androidx.work.impl.background.systemalarm.RescheduleReceiver"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.BOOT_COMPLETED"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "true",
+            "android:exported": "true",
+            "android:name": "androidx.work.impl.diagnostics.DiagnosticsReceiver",
+            "android:permission": "android.permission.DUMP"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.work.diagnostics.REQUEST_DIAGNOSTICS"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:directBootAware": "true",
+            "android:exported": "false",
+            "android:name": "androidx.room.MultiInstanceInvalidationService"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:name": "androidx.core.widget.RemoteViewsCompatService",
+            "android:permission": "android.permission.BIND_REMOTEVIEWS"
+          },
+          "children": []
+        },
+        {
+          "tag": "uses-library",
+          "attributes": {
+            "android:name": "androidx.window.extensions",
+            "android:required": "false"
+          },
+          "children": []
+        },
+        {
+          "tag": "uses-library",
+          "attributes": {
+            "android:name": "androidx.window.sidecar",
+            "android:required": "false"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "true",
+            "android:exported": "true",
+            "android:name": "androidx.profileinstaller.ProfileInstallReceiver",
+            "android:permission": "android.permission.DUMP"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.profileinstaller.action.INSTALL_PROFILE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.profileinstaller.action.SKIP_FILE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.profileinstaller.action.SAVE_PROFILE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.profileinstaller.action.BENCHMARK_OPERATION"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "provider",
+          "attributes": {
+            "android:authorities": "org.wikipedia.plumber-installer",
+            "android:enabled": "@bool/leak_canary_plumber_auto_install",
+            "android:exported": "false",
+            "android:name": "leakcanary.internal.PlumberInstaller"
+          },
+          "children": []
+        }
+      ]
+    }
+  ]
+}

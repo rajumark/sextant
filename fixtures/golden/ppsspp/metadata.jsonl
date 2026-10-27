@@ -1,0 +1,3 @@
+{"scope":"application","kind":"meta-data","name":"android.max_aspect","value":"2.4","resource":null}
+{"scope":"application","kind":"meta-data","name":"isGame","value":"true","resource":null}
+{"scope":"application","kind":"meta-data","name":"xperiaplayoptimized_content","value":null,"resource":"@mipmap/ic_launcher"}

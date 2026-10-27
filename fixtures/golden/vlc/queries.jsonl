@@ -1,0 +1,2 @@
+{"kind":"intent","name":"SENDTO mailto:","actions":["android.intent.action.SENDTO"],"categories":[],"data":[{"scheme":"mailto","host":null,"port":null,"path":null,"path_prefix":null,"path_pattern":null,"path_suffix":null,"path_advanced_pattern":null,"mime_type":null,"ssp":null,"ssp_prefix":null,"ssp_pattern":null}]}
+{"kind":"provider","name":"androidx.car.app.connection","actions":[],"categories":[],"data":[]}

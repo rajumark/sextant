@@ -1,0 +1,7 @@
+{"scope":"application","kind":"meta-data","name":"moe.shizuku.client.V3_SUPPORT","value":"true","resource":null}
+{"scope":"androidx.core.content.FileProvider","kind":"meta-data","name":"android.support.FILE_PROVIDER_PATHS","value":null,"resource":"@xml/paths"}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.emoji2.text.EmojiCompatInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.lifecycle.ProcessLifecycleInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.profileinstaller.ProfileInstallerInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"okhttp3.internal.platform.PlatformInitializer","value":"androidx.startup","resource":null}
+{"scope":"com.aurora.store.data.receiver.DeviceOwnerReceiver","kind":"meta-data","name":"android.app.device_admin","value":null,"resource":"@xml/device_owner_receiver"}

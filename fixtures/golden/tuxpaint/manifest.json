@@ -1,0 +1,223 @@
+{
+  "tag": "manifest",
+  "attributes": {
+    "android:compileSdkVersion": "34",
+    "android:compileSdkVersionCodename": "14",
+    "android:installLocation": "auto",
+    "android:versionCode": "9350",
+    "android:versionName": "0.9.35",
+    "package": "org.tuxpaint",
+    "platformBuildVersionCode": "34",
+    "platformBuildVersionName": "14"
+  },
+  "children": [
+    {
+      "tag": "uses-sdk",
+      "attributes": {
+        "android:minSdkVersion": "21",
+        "android:targetSdkVersion": "34"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:glEsVersion": "0x20000"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.READ_MEDIA_IMAGES"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.BLUETOOTH_CONNECT"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:maxSdkVersion": "30",
+        "android:name": "android.permission.BLUETOOTH"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.WRITE_EXTERNAL_STORAGE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.READ_EXTERNAL_STORAGE"
+      },
+      "children": []
+    },
+    {
+      "tag": "permission",
+      "attributes": {
+        "android:name": "org.tuxpaint.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+        "android:protectionLevel": "signature"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "org.tuxpaint.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+      },
+      "children": []
+    },
+    {
+      "tag": "application",
+      "attributes": {
+        "android:allowBackup": "true",
+        "android:appComponentFactory": "androidx.core.app.CoreComponentFactory",
+        "android:extractNativeLibs": "true",
+        "android:hardwareAccelerated": "true",
+        "android:hasFragileUserData": "true",
+        "android:icon": "@mipmap/ic_launcher",
+        "android:label": "@string/app_name",
+        "android:requestLegacyExternalStorage": "true",
+        "android:roundIcon": "@mipmap/ic_launcher_round",
+        "android:theme": "@android:style/Theme.NoTitleBar.Fullscreen"
+      },
+      "children": [
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "false",
+            "android:label": "@string/title_activity_import_data",
+            "android:name": "org.tuxpaint.ImportData",
+            "android:theme": "@style/Theme.AppCompat"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "screenSize|orientation|keyboardHidden",
+            "android:exported": "true",
+            "android:name": "org.tuxpaint.tuxpaintActivity"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MAIN"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.LAUNCHER"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.hardware.usb.action.USB_DEVICE_ATTACHED"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:exported": "true",
+            "android:icon": "@mipmap/ic_settings_launcher",
+            "android:label": "@string/app_config",
+            "android:name": "org.tuxpaint.ConfigActivity",
+            "android:roundIcon": "@mipmap/ic_settings_launcher_round"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MAIN"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.LAUNCHER"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.tuxpaint.reqpermsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:name": "org.tuxpaint.reqBTpermsActivity"
+          },
+          "children": []
+        },
+        {
+          "tag": "provider",
+          "attributes": {
+            "android:authorities": "org.tuxpaint.androidx-startup",
+            "android:exported": "false",
+            "android:name": "androidx.startup.InitializationProvider"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "androidx.emoji2.text.EmojiCompatInitializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "androidx.lifecycle.ProcessLifecycleInitializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+{"name":"android.permission.READ_EXTERNAL_STORAGE","kind":"uses-permission","max_sdk":null,"dangerous":true,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.RECORD_AUDIO","kind":"uses-permission","max_sdk":null,"dangerous":true,"protection_level":null,"custom":false,"implied_by":null}

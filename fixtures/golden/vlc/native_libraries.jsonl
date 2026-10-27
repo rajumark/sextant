@@ -1,0 +1,4 @@
+{"path":"lib/x86_64/libc++_shared.so","abi":"x86_64","name":"libc++_shared.so","size_bytes":1337488,"sha256":"683a1c7cd2f6829fd40bf805739166c5fce35235bf60d2c4e4a95e9f65a342ef","elf_class":"ELF64","exported_symbols":1583,"jni_methods":0}
+{"path":"lib/x86_64/libmla.so","abi":"x86_64","name":"libmla.so","size_bytes":5280096,"sha256":"533946d720125c03cf13245111ad678de2443e9d33ca8f9cba06b64fada87ed8","elf_class":"ELF64","exported_symbols":4586,"jni_methods":0}
+{"path":"lib/x86_64/libvlc.so","abi":"x86_64","name":"libvlc.so","size_bytes":54389392,"sha256":"345d0030ed9568d2138fda86dd2a6df548be02149dd29dc977a29d2a482f0801","elf_class":"ELF64","exported_symbols":24887,"jni_methods":0}
+{"path":"lib/x86_64/libvlcjni.so","abi":"x86_64","name":"libvlcjni.so","size_bytes":93768,"sha256":"4ecfc592a1226345056cd94805acbee9d8020fafb10ab8ebc37bcad3d79a2102","elf_class":"ELF64","exported_symbols":132,"jni_methods":121}

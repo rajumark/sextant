@@ -1,0 +1,5 @@
+{"name":"Expo","evidence":["file lib/arm64-v8a/libexpo-modules-core.so (+3 more)","2393 classes in expo.modules"]}
+{"name":"Hermes (JS engine)","evidence":["file lib/arm64-v8a/libhermesvm.so (+3 more)"]}
+{"name":"Jetpack Compose","evidence":["48 classes in androidx.compose.runtime"]}
+{"name":"Kotlin","evidence":["1888 classes with kotlin.Metadata"]}
+{"name":"React Native","evidence":["file lib/arm64-v8a/libreactnative.so (+3 more)","file assets/index.android.bundle","1167 classes in com.facebook.react"]}

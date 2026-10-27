@@ -1,0 +1,10 @@
+{"name":"android.permission.ACCESS_COARSE_LOCATION","kind":"uses-permission","max_sdk":null,"dangerous":true,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.ACCESS_FINE_LOCATION","kind":"uses-permission","max_sdk":null,"dangerous":true,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.BLUETOOTH_CONNECT","kind":"uses-permission","max_sdk":null,"dangerous":true,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.BLUETOOTH_SCAN","kind":"uses-permission","max_sdk":null,"dangerous":true,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.CAMERA","kind":"uses-permission","max_sdk":null,"dangerous":true,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.RECORD_AUDIO","kind":"uses-permission","max_sdk":null,"dangerous":true,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.WRITE_EXTERNAL_STORAGE","kind":"uses-permission","max_sdk":28,"dangerous":true,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"net.sourceforge.opencamera.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":true,"implied_by":null}
+{"name":"android.permission.READ_EXTERNAL_STORAGE","kind":"implied","max_sdk":28,"dangerous":true,"protection_level":null,"custom":false,"implied_by":"android.permission.WRITE_EXTERNAL_STORAGE"}
+{"name":"net.sourceforge.opencamera.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION","kind":"declared","max_sdk":null,"dangerous":false,"protection_level":"signature","custom":true,"implied_by":null}

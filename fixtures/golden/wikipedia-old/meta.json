@@ -1,0 +1,540 @@
+{
+  "schema_version": 6,
+  "tool": {
+    "name": "sextant",
+    "version": "<version>"
+  },
+  "file": {
+    "name": "wikipedia-old.apk",
+    "size_bytes": 83177256,
+    "sha256": "4602977099bff12bf24afbbe5a516c0979cb6e5122a4fbbf21569c3fe46a7040"
+  },
+  "package": "org.wikipedia",
+  "version_name": "r/50610-r-2026-10-06",
+  "version_code": 50610,
+  "min_sdk": 24,
+  "target_sdk": 37,
+  "compile_sdk": 37,
+  "label": "Wikipedia",
+  "application_class": "org.wikipedia.WikipediaApp",
+  "flags": {
+    "debuggable": null,
+    "allow_backup": true,
+    "uses_cleartext_traffic": false,
+    "network_security_config": "@xml/network_security_config",
+    "extract_native_libs": false
+  },
+  "signing": {
+    "verified": true,
+    "schemes": [
+      "v2",
+      "v3"
+    ],
+    "certificates": [
+      {
+        "sha256": "1C:3D:DB:0E:8F:32:58:B0:FF:3B:7B:6A:60:8D:19:E7:CD:EE:D3:8A:58:97:BB:DA:23:BA:C1:55:92:3B:12:67",
+        "sha1": "0A:2E:D9:FA:D0:A1:57:8B:95:31:E4:E6:1F:9C:01:69:15:97:33:AA",
+        "subject": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "issuer": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "not_before": "2012-01-26T15:48:19Z",
+        "not_after": "2039-06-13T15:48:19Z"
+      }
+    ]
+  },
+  "layout": {
+    "dex_files": 2,
+    "native_abis": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86",
+      "x86_64"
+    ]
+  },
+  "code": {
+    "dex_files": [
+      "classes.dex",
+      "classes2.dex"
+    ],
+    "classes": 11545,
+    "methods": 55073,
+    "fields": 42282,
+    "call_edges": 222930,
+    "call_sites": 366563,
+    "string_refs": 41927,
+    "distinct_strings": 22541,
+    "field_refs": 201382,
+    "type_refs": 77952,
+    "kotlin_classes": 0,
+    "duplicate_classes": 0,
+    "unreadable_methods": 0,
+    "top_packages": [
+      {
+        "package": "androidx.compose.material3",
+        "classes": 225
+      },
+      {
+        "package": "org.wikipedia.feed",
+        "classes": 184
+      },
+      {
+        "package": "org.wikipedia.dataclient.mwapi",
+        "classes": 147
+      },
+      {
+        "package": "org.wikipedia.readinglist",
+        "classes": 142
+      },
+      {
+        "package": "androidx.appcompat.widget",
+        "classes": 131
+      },
+      {
+        "package": "org.wikipedia.views",
+        "classes": 125
+      },
+      {
+        "package": "androidx.paging",
+        "classes": 123
+      },
+      {
+        "package": "org.jsoup.parser",
+        "classes": 117
+      },
+      {
+        "package": "androidx.compose.foundation.gestures",
+        "classes": 106
+      },
+      {
+        "package": "androidx.compose.ui.platform",
+        "classes": 106
+      },
+      {
+        "package": "org.wikipedia.suggestededits",
+        "classes": 104
+      },
+      {
+        "package": "androidx.compose.runtime",
+        "classes": 98
+      },
+      {
+        "package": "androidx.compose.foundation.layout",
+        "classes": 95
+      },
+      {
+        "package": "org.wikipedia.analytics.eventplatform",
+        "classes": 94
+      },
+      {
+        "package": "com.caverock.androidsvg",
+        "classes": 91
+      }
+    ]
+  },
+  "insights": {
+    "libraries": 110,
+    "frameworks": [
+      "Jetpack Compose"
+    ],
+    "sdks": 16,
+    "sdk_categories": {
+      "background-work": 1,
+      "database": 1,
+      "debugging": 1,
+      "image-loading": 1,
+      "logging": 1,
+      "maps": 1,
+      "media": 1,
+      "networking": 2,
+      "reactive": 1,
+      "serialization": 3,
+      "ui": 3
+    },
+    "endpoints": 144,
+    "hosts": 51,
+    "top_hosts": [
+      {
+        "host": "www.mediawiki.org",
+        "urls": 30
+      },
+      {
+        "host": "thumb.wikimedia.org",
+        "urls": 10
+      },
+      {
+        "host": "*.wikipedia.org",
+        "urls": 7
+      },
+      {
+        "host": "donate.wikimedia.org",
+        "urls": 7
+      },
+      {
+        "host": "en.wikipedia.org",
+        "urls": 7
+      },
+      {
+        "host": "www.w3.org",
+        "urls": 6
+      },
+      {
+        "host": "foundation.wikimedia.org",
+        "urls": 5
+      },
+      {
+        "host": "github.com",
+        "urls": 5
+      },
+      {
+        "host": "mediawiki.org",
+        "urls": 4
+      },
+      {
+        "host": "creativecommons.org",
+        "urls": 3
+      },
+      {
+        "host": "developer.android.com",
+        "urls": 3
+      },
+      {
+        "host": "www.mapbox.com",
+        "urls": 3
+      },
+      {
+        "host": "xml.org",
+        "urls": 3
+      },
+      {
+        "host": "apps.mapbox.com",
+        "urls": 2
+      },
+      {
+        "host": "assets-hcaptcha.wikimedia.org",
+        "urls": 2
+      }
+    ],
+    "resource_values": 5163,
+    "locales": [
+      "af",
+      "am",
+      "anp",
+      "ar",
+      "ary",
+      "as",
+      "ast",
+      "av",
+      "az",
+      "azb",
+      "ba",
+      "ban",
+      "be",
+      "bew",
+      "bg",
+      "bho",
+      "blk",
+      "bn",
+      "br",
+      "bs",
+      "btm",
+      "ca",
+      "ce",
+      "ceb",
+      "ckb",
+      "cnh",
+      "co",
+      "cs",
+      "cu",
+      "cv",
+      "cy",
+      "da",
+      "dag",
+      "de",
+      "dga",
+      "diq",
+      "el",
+      "en-AU",
+      "en-CA",
+      "en-GB",
+      "en-IN",
+      "en-XC",
+      "eo",
+      "es",
+      "es-419",
+      "es-US",
+      "et",
+      "eu",
+      "fa",
+      "fi",
+      "fo",
+      "fr",
+      "fr-CA",
+      "fy",
+      "ga",
+      "gd",
+      "gl",
+      "gn",
+      "gu",
+      "ha",
+      "haw",
+      "he",
+      "hi",
+      "hmn",
+      "hr",
+      "hsb",
+      "ht",
+      "hu",
+      "hy",
+      "ia",
+      "ig",
+      "in",
+      "inh",
+      "io",
+      "is",
+      "isv-Latn",
+      "it",
+      "iw",
+      "ja",
+      "ji",
+      "jv",
+      "jw",
+      "ka",
+      "kab",
+      "kcg",
+      "kk",
+      "kk-Cyrl",
+      "km",
+      "kn",
+      "ko",
+      "krc",
+      "ks",
+      "ksh",
+      "ku",
+      "kum",
+      "kus",
+      "kw",
+      "ky",
+      "la",
+      "lb",
+      "li",
+      "lkt",
+      "lmo",
+      "lo",
+      "lt",
+      "lv",
+      "mag",
+      "mg",
+      "mhr",
+      "mi",
+      "min",
+      "mk",
+      "ml",
+      "mn",
+      "mni",
+      "mnw",
+      "mr",
+      "ms",
+      "mt",
+      "my",
+      "nb",
+      "ne",
+      "nia",
+      "nl",
+      "no",
+      "nqo",
+      "ny",
+      "oc",
+      "olo",
+      "om",
+      "or",
+      "pa",
+      "pl",
+      "pnb",
+      "ps",
+      "pt",
+      "pt-BR",
+      "pt-PT",
+      "qq",
+      "rki",
+      "ro",
+      "ru",
+      "rw",
+      "sa",
+      "sah",
+      "scn",
+      "sd",
+      "sdc",
+      "sdh",
+      "se",
+      "sh",
+      "shn",
+      "si",
+      "sk",
+      "skr",
+      "sl",
+      "sm",
+      "smn",
+      "sms",
+      "sn",
+      "so",
+      "sq",
+      "sr",
+      "sr-Latn",
+      "sro",
+      "st",
+      "su",
+      "sv",
+      "sw",
+      "ta",
+      "tcy",
+      "te",
+      "tg",
+      "tg-Cyrl",
+      "th",
+      "ti",
+      "tk",
+      "tl",
+      "tly",
+      "tr",
+      "tt",
+      "tt-Cyrl",
+      "ug",
+      "uk",
+      "ur",
+      "uz",
+      "vi",
+      "xh",
+      "xmf",
+      "yo",
+      "yrl",
+      "zgh",
+      "zh",
+      "zh-CN",
+      "zh-HK",
+      "zh-TW",
+      "zu"
+    ],
+    "native_libraries": 8,
+    "jni_methods": 0,
+    "android_gradle_plugin": "9.4.1",
+    "findings": {
+      "info": 2,
+      "low": 3,
+      "medium": 1
+    }
+  },
+  "icons": {
+    "icon": {
+      "resource": "@mipmap/launcher",
+      "best": "res/M6.png",
+      "files": [
+        {
+          "path": "res/dT.xml",
+          "config": "anydpi-v26",
+          "density": null,
+          "format": "xml",
+          "width": null,
+          "height": null,
+          "size_bytes": 548
+        },
+        {
+          "path": "res/WK.png",
+          "config": "hdpi",
+          "density": 240,
+          "format": "png",
+          "width": 72,
+          "height": 72,
+          "size_bytes": 1108
+        },
+        {
+          "path": "res/ET.png",
+          "config": "mdpi",
+          "density": 160,
+          "format": "png",
+          "width": 48,
+          "height": 48,
+          "size_bytes": 726
+        },
+        {
+          "path": "res/Kp.png",
+          "config": "xhdpi",
+          "density": 320,
+          "format": "png",
+          "width": 96,
+          "height": 96,
+          "size_bytes": 1522
+        },
+        {
+          "path": "res/Jg.png",
+          "config": "xxhdpi",
+          "density": 480,
+          "format": "png",
+          "width": 144,
+          "height": 144,
+          "size_bytes": 2391
+        },
+        {
+          "path": "res/M6.png",
+          "config": "xxxhdpi",
+          "density": 640,
+          "format": "png",
+          "width": 192,
+          "height": 192,
+          "size_bytes": 3347
+        }
+      ],
+      "adaptive": {
+        "path": "res/dT.xml",
+        "background": {
+          "resource": "@drawable/launcher_background",
+          "color": null,
+          "best": "res/DW.xml",
+          "files": [
+            {
+              "path": "res/DW.xml",
+              "config": "",
+              "density": 160,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 456
+            }
+          ]
+        },
+        "foreground": {
+          "resource": "@drawable/launcher_foreground",
+          "color": null,
+          "best": "res/z21.xml",
+          "files": [
+            {
+              "path": "res/z21.xml",
+              "config": "",
+              "density": 160,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 4156
+            }
+          ]
+        },
+        "monochrome": {
+          "resource": "@drawable/launcher_foreground",
+          "color": null,
+          "best": "res/z21.xml",
+          "files": [
+            {
+              "path": "res/z21.xml",
+              "config": "",
+              "density": 160,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 4156
+            }
+          ]
+        }
+      }
+    },
+    "round_icon": null
+  },
+  "warnings": []
+}

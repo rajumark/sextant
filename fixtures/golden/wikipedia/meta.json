@@ -1,0 +1,569 @@
+{
+  "schema_version": 7,
+  "tool": {
+    "name": "sextant",
+    "version": "<version>"
+  },
+  "file": {
+    "name": "wikipedia.apk",
+    "size_bytes": 83369768,
+    "sha256": "18835ae29ad7543fe64d3cebe993885ef38e8631cd762ebbcae2f31f19c3d9e7"
+  },
+  "package": "org.wikipedia",
+  "version_name": "r/50612-r-2026-10-19",
+  "version_code": 50612,
+  "min_sdk": 24,
+  "target_sdk": 37,
+  "compile_sdk": 37,
+  "label": "Wikipedia",
+  "application_class": "org.wikipedia.WikipediaApp",
+  "flags": {
+    "debuggable": null,
+    "allow_backup": true,
+    "uses_cleartext_traffic": false,
+    "network_security_config": "@xml/network_security_config",
+    "extract_native_libs": false,
+    "test_only": null,
+    "full_backup_content": "@xml/full_backup_rules",
+    "data_extraction_rules": null,
+    "backup_agent": null,
+    "full_backup_only": null,
+    "has_fragile_user_data": null,
+    "request_legacy_external_storage": null,
+    "preserve_legacy_external_storage": null,
+    "large_heap": null,
+    "hardware_accelerated": null,
+    "supports_rtl": true,
+    "resizeable_activity": null,
+    "enable_on_back_invoked_callback": null,
+    "app_component_factory": "androidx.core.app.CoreComponentFactory",
+    "locale_config": "@xml/_generated_res_locale_config",
+    "app_category": null,
+    "is_game": null,
+    "memtag_mode": null,
+    "uses_non_sdk_api": null,
+    "manage_space_activity": null,
+    "task_affinity": null,
+    "process": null,
+    "theme": "@style/AppTheme",
+    "profileable_shell": null,
+    "install_location": "auto",
+    "shared_user_id": null,
+    "shared_user_max_sdk": null,
+    "target_sandbox_version": null,
+    "supports_screens": {}
+  },
+  "signing": {
+    "verified": true,
+    "schemes": [
+      "v2",
+      "v3"
+    ],
+    "certificates": [
+      {
+        "sha256": "1C:3D:DB:0E:8F:32:58:B0:FF:3B:7B:6A:60:8D:19:E7:CD:EE:D3:8A:58:97:BB:DA:23:BA:C1:55:92:3B:12:67",
+        "sha1": "0A:2E:D9:FA:D0:A1:57:8B:95:31:E4:E6:1F:9C:01:69:15:97:33:AA",
+        "subject": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "issuer": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "not_before": "2012-01-26T15:48:19Z",
+        "not_after": "2039-06-13T15:48:19Z"
+      }
+    ]
+  },
+  "layout": {
+    "dex_files": 2,
+    "native_abis": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86",
+      "x86_64"
+    ]
+  },
+  "code": {
+    "dex_files": [
+      "classes.dex",
+      "classes2.dex"
+    ],
+    "classes": 11545,
+    "methods": 55072,
+    "fields": 42282,
+    "call_edges": 222931,
+    "call_sites": 366579,
+    "string_refs": 41928,
+    "distinct_strings": 22542,
+    "field_refs": 201380,
+    "type_refs": 77949,
+    "kotlin_classes": 0,
+    "duplicate_classes": 0,
+    "unreadable_methods": 0,
+    "top_packages": [
+      {
+        "package": "androidx.compose.material3",
+        "classes": 225
+      },
+      {
+        "package": "org.wikipedia.feed",
+        "classes": 184
+      },
+      {
+        "package": "org.wikipedia.dataclient.mwapi",
+        "classes": 147
+      },
+      {
+        "package": "org.wikipedia.readinglist",
+        "classes": 142
+      },
+      {
+        "package": "androidx.appcompat.widget",
+        "classes": 131
+      },
+      {
+        "package": "org.wikipedia.views",
+        "classes": 125
+      },
+      {
+        "package": "androidx.paging",
+        "classes": 123
+      },
+      {
+        "package": "org.jsoup.parser",
+        "classes": 117
+      },
+      {
+        "package": "androidx.compose.foundation.gestures",
+        "classes": 106
+      },
+      {
+        "package": "androidx.compose.ui.platform",
+        "classes": 106
+      },
+      {
+        "package": "org.wikipedia.suggestededits",
+        "classes": 104
+      },
+      {
+        "package": "androidx.compose.runtime",
+        "classes": 98
+      },
+      {
+        "package": "androidx.compose.foundation.layout",
+        "classes": 95
+      },
+      {
+        "package": "org.wikipedia.analytics.eventplatform",
+        "classes": 94
+      },
+      {
+        "package": "com.caverock.androidsvg",
+        "classes": 91
+      }
+    ]
+  },
+  "insights": {
+    "libraries": 110,
+    "frameworks": [
+      "Jetpack Compose"
+    ],
+    "sdks": 16,
+    "sdk_categories": {
+      "background-work": 1,
+      "database": 1,
+      "debugging": 1,
+      "image-loading": 1,
+      "logging": 1,
+      "maps": 1,
+      "media": 1,
+      "networking": 2,
+      "reactive": 1,
+      "serialization": 3,
+      "ui": 3
+    },
+    "endpoints": 144,
+    "hosts": 51,
+    "top_hosts": [
+      {
+        "host": "www.mediawiki.org",
+        "urls": 30
+      },
+      {
+        "host": "thumb.wikimedia.org",
+        "urls": 10
+      },
+      {
+        "host": "*.wikipedia.org",
+        "urls": 7
+      },
+      {
+        "host": "donate.wikimedia.org",
+        "urls": 7
+      },
+      {
+        "host": "en.wikipedia.org",
+        "urls": 7
+      },
+      {
+        "host": "www.w3.org",
+        "urls": 6
+      },
+      {
+        "host": "foundation.wikimedia.org",
+        "urls": 5
+      },
+      {
+        "host": "github.com",
+        "urls": 5
+      },
+      {
+        "host": "mediawiki.org",
+        "urls": 4
+      },
+      {
+        "host": "creativecommons.org",
+        "urls": 3
+      },
+      {
+        "host": "developer.android.com",
+        "urls": 3
+      },
+      {
+        "host": "www.mapbox.com",
+        "urls": 3
+      },
+      {
+        "host": "xml.org",
+        "urls": 3
+      },
+      {
+        "host": "apps.mapbox.com",
+        "urls": 2
+      },
+      {
+        "host": "assets-hcaptcha.wikimedia.org",
+        "urls": 2
+      }
+    ],
+    "resource_values": 5291,
+    "locales": [
+      "af",
+      "am",
+      "anp",
+      "ar",
+      "ary",
+      "as",
+      "ast",
+      "av",
+      "az",
+      "azb",
+      "ba",
+      "ban",
+      "be",
+      "bew",
+      "bg",
+      "bho",
+      "blk",
+      "bn",
+      "br",
+      "bs",
+      "btm",
+      "ca",
+      "ce",
+      "ceb",
+      "ckb",
+      "cnh",
+      "co",
+      "cs",
+      "cu",
+      "cv",
+      "cy",
+      "da",
+      "dag",
+      "de",
+      "dga",
+      "diq",
+      "el",
+      "en-AU",
+      "en-CA",
+      "en-GB",
+      "en-IN",
+      "en-XC",
+      "eo",
+      "es",
+      "es-419",
+      "es-US",
+      "et",
+      "eu",
+      "fa",
+      "fi",
+      "fo",
+      "fr",
+      "fr-CA",
+      "fy",
+      "ga",
+      "gd",
+      "gl",
+      "gn",
+      "gu",
+      "ha",
+      "haw",
+      "he",
+      "hi",
+      "hmn",
+      "hr",
+      "hsb",
+      "ht",
+      "hu",
+      "hy",
+      "ia",
+      "ig",
+      "in",
+      "inh",
+      "io",
+      "is",
+      "isv-Latn",
+      "it",
+      "iw",
+      "ja",
+      "ji",
+      "jv",
+      "jw",
+      "ka",
+      "kab",
+      "kcg",
+      "kk",
+      "kk-Cyrl",
+      "km",
+      "kn",
+      "ko",
+      "krc",
+      "ks",
+      "ksh",
+      "ku",
+      "kum",
+      "kus",
+      "kw",
+      "ky",
+      "la",
+      "lb",
+      "li",
+      "lkt",
+      "lmo",
+      "lo",
+      "lt",
+      "lv",
+      "mag",
+      "mg",
+      "mhr",
+      "mi",
+      "min",
+      "mk",
+      "ml",
+      "mn",
+      "mni",
+      "mnw",
+      "mr",
+      "ms",
+      "mt",
+      "my",
+      "nb",
+      "ne",
+      "nia",
+      "nl",
+      "no",
+      "nqo",
+      "ny",
+      "oc",
+      "olo",
+      "om",
+      "or",
+      "pa",
+      "pl",
+      "pnb",
+      "ps",
+      "pt",
+      "pt-BR",
+      "pt-PT",
+      "qq",
+      "rki",
+      "ro",
+      "ru",
+      "rw",
+      "sa",
+      "sah",
+      "scn",
+      "sd",
+      "sdc",
+      "sdh",
+      "se",
+      "sh",
+      "shn",
+      "si",
+      "sk",
+      "skr",
+      "sl",
+      "sm",
+      "smn",
+      "sms",
+      "sn",
+      "so",
+      "sq",
+      "sr",
+      "sr-Latn",
+      "sro",
+      "st",
+      "su",
+      "sv",
+      "sw",
+      "ta",
+      "tcy",
+      "te",
+      "tg",
+      "tg-Cyrl",
+      "th",
+      "ti",
+      "tk",
+      "tl",
+      "tly",
+      "tr",
+      "tt",
+      "tt-Cyrl",
+      "ug",
+      "uk",
+      "ur",
+      "uz",
+      "vi",
+      "xh",
+      "xmf",
+      "yo",
+      "yrl",
+      "zgh",
+      "zh",
+      "zh-CN",
+      "zh-HK",
+      "zh-TW",
+      "zu"
+    ],
+    "native_libraries": 8,
+    "jni_methods": 0,
+    "android_gradle_plugin": "9.4.1",
+    "findings": {
+      "info": 3,
+      "low": 3,
+      "medium": 1
+    }
+  },
+  "icons": {
+    "icon": {
+      "resource": "@mipmap/launcher",
+      "best": "res/M6.png",
+      "files": [
+        {
+          "path": "res/dT.xml",
+          "config": "anydpi-v26",
+          "density": null,
+          "format": "xml",
+          "width": null,
+          "height": null,
+          "size_bytes": 548
+        },
+        {
+          "path": "res/WK.png",
+          "config": "hdpi",
+          "density": 240,
+          "format": "png",
+          "width": 72,
+          "height": 72,
+          "size_bytes": 1108
+        },
+        {
+          "path": "res/ET.png",
+          "config": "mdpi",
+          "density": 160,
+          "format": "png",
+          "width": 48,
+          "height": 48,
+          "size_bytes": 726
+        },
+        {
+          "path": "res/Kp.png",
+          "config": "xhdpi",
+          "density": 320,
+          "format": "png",
+          "width": 96,
+          "height": 96,
+          "size_bytes": 1522
+        },
+        {
+          "path": "res/Jg.png",
+          "config": "xxhdpi",
+          "density": 480,
+          "format": "png",
+          "width": 144,
+          "height": 144,
+          "size_bytes": 2391
+        },
+        {
+          "path": "res/M6.png",
+          "config": "xxxhdpi",
+          "density": 640,
+          "format": "png",
+          "width": 192,
+          "height": 192,
+          "size_bytes": 3347
+        }
+      ],
+      "adaptive": {
+        "path": "res/dT.xml",
+        "background": {
+          "resource": "@drawable/launcher_background",
+          "color": null,
+          "best": "res/DW.xml",
+          "files": [
+            {
+              "path": "res/DW.xml",
+              "config": "",
+              "density": 160,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 456
+            }
+          ]
+        },
+        "foreground": {
+          "resource": "@drawable/launcher_foreground",
+          "color": null,
+          "best": "res/z21.xml",
+          "files": [
+            {
+              "path": "res/z21.xml",
+              "config": "",
+              "density": 160,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 4156
+            }
+          ]
+        },
+        "monochrome": {
+          "resource": "@drawable/launcher_foreground",
+          "color": null,
+          "best": "res/z21.xml",
+          "files": [
+            {
+              "path": "res/z21.xml",
+              "config": "",
+              "density": 160,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 4156
+            }
+          ]
+        }
+      }
+    },
+    "round_icon": null
+  },
+  "warnings": []
+}

@@ -1,0 +1,7 @@
+{"kind":"package","name":"com.google.android.gms","actions":[],"categories":[],"data":[]}
+{"kind":"intent","name":"CHALLENGE_RESPONSE","actions":["android.yubikey.intent.action.CHALLENGE_RESPONSE"],"categories":[],"data":[]}
+{"kind":"intent","name":"CREATE_DOCUMENT application/octet-stream","actions":["android.intent.action.CREATE_DOCUMENT"],"categories":[],"data":[{"scheme":null,"host":null,"port":null,"path":null,"path_prefix":null,"path_pattern":null,"path_suffix":null,"path_advanced_pattern":null,"mime_type":"application/octet-stream","ssp":null,"ssp_prefix":null,"ssp_pattern":null}]}
+{"kind":"intent","name":"MAIN","actions":["android.intent.action.MAIN"],"categories":["android.intent.category.LAUNCHER"],"data":[]}
+{"kind":"intent","name":"SWITCH_KEYBOARD","actions":["com.android.keyboard.SWITCH_KEYBOARD"],"categories":[],"data":[]}
+{"kind":"intent","name":"VIEW http:","actions":["android.intent.action.VIEW"],"categories":["android.intent.category.BROWSABLE"],"data":[{"scheme":"http","host":null,"port":null,"path":null,"path_prefix":null,"path_pattern":null,"path_suffix":null,"path_advanced_pattern":null,"mime_type":null,"ssp":null,"ssp_prefix":null,"ssp_pattern":null}]}
+{"kind":"intent","name":"VIEW https:","actions":["android.intent.action.VIEW"],"categories":["android.intent.category.BROWSABLE"],"data":[{"scheme":"https","host":null,"port":null,"path":null,"path_prefix":null,"path_pattern":null,"path_suffix":null,"path_advanced_pattern":null,"mime_type":null,"ssp":null,"ssp_prefix":null,"ssp_pattern":null}]}

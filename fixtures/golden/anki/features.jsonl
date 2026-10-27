@@ -1,0 +1,7 @@
+{"kind":"feature","name":"android.hardware.audio.output","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.microphone","required":false,"version":null}
+{"kind":"feature","name":"android.software.app_widgets","required":false,"version":null}
+{"kind":"feature","name":"androidx.draganddrop","required":false,"version":null}
+{"kind":"library","name":"androidx.window.extensions","required":false,"version":null}
+{"kind":"library","name":"androidx.window.sidecar","required":false,"version":null}
+{"kind":"library","name":"com.sec.android.app.multiwindow","required":false,"version":null}

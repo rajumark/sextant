@@ -1,0 +1,7 @@
+{"scope":"application","kind":"meta-data","name":"android.app.searchable","value":null,"resource":"@xml/searchable"}
+{"scope":"androidx.camera.core.impl.MetadataHolderService","kind":"meta-data","name":"androidx.camera.core.impl.MetadataHolderService.DEFAULT_CONFIG_PROVIDER","value":"androidx.camera.camera2.Camera2Config$DefaultProvider","resource":null}
+{"scope":"androidx.core.content.FileProvider","kind":"meta-data","name":"android.support.FILE_PROVIDER_PATHS","value":null,"resource":"@xml/file_paths"}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.emoji2.text.EmojiCompatInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.lifecycle.ProcessLifecycleInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.profileinstaller.ProfileInstallerInitializer","value":"androidx.startup","resource":null}
+{"scope":"de.markusfisch.android.binaryeye.activity.SplashActivity","kind":"meta-data","name":"android.app.shortcuts","value":null,"resource":"@xml/shortcuts"}

@@ -1,0 +1,437 @@
+{
+  "schema_version": 7,
+  "tool": {
+    "name": "sextant",
+    "version": "<version>"
+  },
+  "file": {
+    "name": "binaryeye.apk",
+    "size_bytes": 8676688,
+    "sha256": "568cec6598dbf42fbde9071af8747071ffea798473016a3d77b6ddb3bff944f1"
+  },
+  "package": "de.markusfisch.android.binaryeye",
+  "version_name": "1.75.5",
+  "version_code": 180,
+  "min_sdk": 21,
+  "target_sdk": 37,
+  "compile_sdk": 37,
+  "label": "Binary Eye",
+  "application_class": "de.markusfisch.android.binaryeye.app.BinaryEyeApp",
+  "flags": {
+    "debuggable": null,
+    "allow_backup": true,
+    "uses_cleartext_traffic": true,
+    "network_security_config": null,
+    "extract_native_libs": true,
+    "test_only": null,
+    "full_backup_content": "@xml/backup_rules",
+    "data_extraction_rules": "@xml/extraction_rules",
+    "backup_agent": null,
+    "full_backup_only": null,
+    "has_fragile_user_data": null,
+    "request_legacy_external_storage": null,
+    "preserve_legacy_external_storage": null,
+    "large_heap": null,
+    "hardware_accelerated": null,
+    "supports_rtl": true,
+    "resizeable_activity": true,
+    "enable_on_back_invoked_callback": null,
+    "app_component_factory": "androidx.core.app.CoreComponentFactory",
+    "locale_config": null,
+    "app_category": null,
+    "is_game": null,
+    "memtag_mode": null,
+    "uses_non_sdk_api": null,
+    "manage_space_activity": null,
+    "task_affinity": null,
+    "process": null,
+    "theme": "@style/AppTheme",
+    "profileable_shell": null,
+    "install_location": "auto",
+    "shared_user_id": null,
+    "shared_user_max_sdk": null,
+    "target_sandbox_version": null,
+    "supports_screens": {
+      "largeScreens": "true",
+      "xlargeScreens": "true"
+    }
+  },
+  "signing": {
+    "verified": true,
+    "schemes": [
+      "v1",
+      "v2",
+      "v3"
+    ],
+    "certificates": [
+      {
+        "sha256": "9E:CD:BF:06:77:DD:50:60:9C:76:C2:BA:05:DB:E3:62:23:23:27:B1:0A:1C:37:CD:58:72:29:93:D9:FE:5D:57",
+        "sha1": "48:7B:A7:FD:C9:EF:D0:03:06:D5:8C:EA:54:FF:1D:1A:B1:B5:A4:AE",
+        "subject": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "issuer": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "not_before": "2019-02-21T18:14:46Z",
+        "not_after": "2046-07-09T18:14:46Z"
+      }
+    ]
+  },
+  "layout": {
+    "dex_files": 1,
+    "native_abis": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86",
+      "x86_64"
+    ]
+  },
+  "code": {
+    "dex_files": [
+      "classes.dex"
+    ],
+    "classes": 2936,
+    "methods": 16824,
+    "fields": 9584,
+    "call_edges": 55703,
+    "call_sites": 89433,
+    "string_refs": 11297,
+    "distinct_strings": 7571,
+    "field_refs": 44456,
+    "type_refs": 18234,
+    "kotlin_classes": 0,
+    "duplicate_classes": 0,
+    "unreadable_methods": 0,
+    "top_packages": [
+      {
+        "package": "",
+        "classes": 2606
+      },
+      {
+        "package": "androidx.camera.camera2.internal.compat.quirk",
+        "classes": 48
+      },
+      {
+        "package": "de.tsenger.vdstools",
+        "classes": 25
+      },
+      {
+        "package": "de.tsenger.vdstools.generic",
+        "classes": 24
+      },
+      {
+        "package": "androidx.appcompat.widget",
+        "classes": 19
+      },
+      {
+        "package": "de.tsenger.vdstools.idb",
+        "classes": 17
+      },
+      {
+        "package": "androidx.preference",
+        "classes": 15
+      },
+      {
+        "package": "androidx.lifecycle",
+        "classes": 14
+      },
+      {
+        "package": "de.markusfisch.android.zxingcpp",
+        "classes": 14
+      },
+      {
+        "package": "de.markusfisch.android.binaryeye.activity",
+        "classes": 13
+      },
+      {
+        "package": "de.tsenger.vdstools.vds",
+        "classes": 11
+      },
+      {
+        "package": "de.tsenger.vdstools.idb.dto",
+        "classes": 9
+      },
+      {
+        "package": "de.tsenger.vdstools.vds.dto",
+        "classes": 9
+      },
+      {
+        "package": "androidx.activity",
+        "classes": 8
+      },
+      {
+        "package": "androidx.camera.core.internal.compat.quirk",
+        "classes": 8
+      }
+    ]
+  },
+  "insights": {
+    "libraries": 46,
+    "frameworks": [],
+    "sdks": 1,
+    "sdk_categories": {
+      "ui": 1
+    },
+    "endpoints": 24,
+    "hosts": 12,
+    "top_hosts": [
+      {
+        "host": "markusfisch.de",
+        "urls": 8
+      },
+      {
+        "host": "www.w3.org",
+        "urls": 4
+      },
+      {
+        "host": "example.com",
+        "urls": 3
+      },
+      {
+        "host": "android.googlesource.com",
+        "urls": 1
+      },
+      {
+        "host": "details*id=com.xiaomi.scanner",
+        "urls": 1
+      },
+      {
+        "host": "encode",
+        "urls": 1
+      },
+      {
+        "host": "github.com",
+        "urls": 1
+      },
+      {
+        "host": "issuetracker.google.com",
+        "urls": 1
+      },
+      {
+        "host": "scan",
+        "urls": 1
+      },
+      {
+        "host": "schemas.android.com",
+        "urls": 1
+      },
+      {
+        "host": "www.deutschepost.de",
+        "urls": 1
+      },
+      {
+        "host": "www.google.com",
+        "urls": 1
+      }
+    ],
+    "resource_values": 1568,
+    "locales": [
+      "af",
+      "am",
+      "ar",
+      "as",
+      "az",
+      "be",
+      "bg",
+      "bn",
+      "bs",
+      "ca",
+      "cs",
+      "da",
+      "de",
+      "el",
+      "en-AU",
+      "en-CA",
+      "en-GB",
+      "en-IN",
+      "en-XC",
+      "es",
+      "es-419",
+      "es-US",
+      "et",
+      "eu",
+      "fa",
+      "fi",
+      "fr",
+      "fr-CA",
+      "gl",
+      "gu",
+      "hi",
+      "hr",
+      "hu",
+      "hy",
+      "in",
+      "is",
+      "it",
+      "iw",
+      "ja",
+      "ka",
+      "kk",
+      "km",
+      "kn",
+      "ko",
+      "ky",
+      "lo",
+      "lt",
+      "lv",
+      "mk",
+      "ml",
+      "mn",
+      "mr",
+      "ms",
+      "my",
+      "nb",
+      "ne",
+      "nl",
+      "or",
+      "pa",
+      "pl",
+      "pt",
+      "pt-BR",
+      "pt-PT",
+      "ro",
+      "ru",
+      "ru-RU",
+      "si",
+      "sk",
+      "sl",
+      "sq",
+      "sr",
+      "sr-Latn",
+      "sv",
+      "sw",
+      "ta",
+      "te",
+      "th",
+      "tl",
+      "tr",
+      "uk",
+      "ur",
+      "uz",
+      "vi",
+      "zh-CN",
+      "zh-HK",
+      "zh-TW",
+      "zu"
+    ],
+    "native_libraries": 12,
+    "jni_methods": 56,
+    "android_gradle_plugin": "9.4.1",
+    "findings": {
+      "info": 1,
+      "low": 2,
+      "medium": 1
+    }
+  },
+  "icons": {
+    "icon": {
+      "resource": "@mipmap/ic_launcher",
+      "best": "res/o-.png",
+      "files": [
+        {
+          "path": "res/BW.xml",
+          "config": "anydpi-v26",
+          "density": null,
+          "format": "xml",
+          "width": null,
+          "height": null,
+          "size_bytes": 548
+        },
+        {
+          "path": "res/yn.png",
+          "config": "hdpi",
+          "density": 240,
+          "format": "png",
+          "width": 72,
+          "height": 72,
+          "size_bytes": 2567
+        },
+        {
+          "path": "res/N3.png",
+          "config": "ldpi",
+          "density": 120,
+          "format": "png",
+          "width": 36,
+          "height": 36,
+          "size_bytes": 1319
+        },
+        {
+          "path": "res/9w.png",
+          "config": "mdpi",
+          "density": 160,
+          "format": "png",
+          "width": 48,
+          "height": 48,
+          "size_bytes": 1710
+        },
+        {
+          "path": "res/FS.png",
+          "config": "xhdpi",
+          "density": 320,
+          "format": "png",
+          "width": 96,
+          "height": 96,
+          "size_bytes": 3363
+        },
+        {
+          "path": "res/RJ.png",
+          "config": "xxhdpi",
+          "density": 480,
+          "format": "png",
+          "width": 144,
+          "height": 144,
+          "size_bytes": 5145
+        },
+        {
+          "path": "res/o-.png",
+          "config": "xxxhdpi",
+          "density": 640,
+          "format": "png",
+          "width": 192,
+          "height": 192,
+          "size_bytes": 6982
+        }
+      ],
+      "adaptive": {
+        "path": "res/BW.xml",
+        "background": {
+          "resource": "@color/accent",
+          "color": "#b6d46f",
+          "best": null,
+          "files": []
+        },
+        "foreground": {
+          "resource": "@drawable/ic_launcher_foreground",
+          "color": null,
+          "best": "res/Qr.xml",
+          "files": [
+            {
+              "path": "res/Qr.xml",
+              "config": "",
+              "density": 160,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 1644
+            }
+          ]
+        },
+        "monochrome": {
+          "resource": "@drawable/ic_launcher_monochrome",
+          "color": null,
+          "best": "res/Vy.xml",
+          "files": [
+            {
+              "path": "res/Vy.xml",
+              "config": "",
+              "density": 160,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 1464
+            }
+          ]
+        }
+      }
+    },
+    "round_icon": null
+  },
+  "warnings": []
+}

@@ -1,0 +1,7 @@
+{"kind":"intent","name":"APP_STATES","actions":["androidx.enterprise.feedback.action.APP_STATES"],"categories":[],"data":[]}
+{"kind":"intent","name":"CustomTabsService","actions":["android.support.customtabs.action.CustomTabsService"],"categories":[],"data":[]}
+{"kind":"intent","name":"GET_CONTENT */*","actions":["android.intent.action.GET_CONTENT"],"categories":[],"data":[{"scheme":null,"host":null,"port":null,"path":null,"path_prefix":null,"path_pattern":null,"path_suffix":null,"path_advanced_pattern":null,"mime_type":"*/*","ssp":null,"ssp_prefix":null,"ssp_pattern":null}]}
+{"kind":"intent","name":"LINK","actions":["org.unifiedpush.android.distributor.LINK"],"categories":[],"data":[]}
+{"kind":"intent","name":"REGISTER","actions":["org.unifiedpush.android.distributor.REGISTER"],"categories":[],"data":[]}
+{"kind":"intent","name":"UNREGISTER","actions":["org.unifiedpush.android.distributor.UNREGISTER"],"categories":[],"data":[]}
+{"kind":"intent","name":"VIEW https:","actions":["android.intent.action.VIEW"],"categories":[],"data":[{"scheme":"https","host":null,"port":null,"path":null,"path_prefix":null,"path_pattern":null,"path_suffix":null,"path_advanced_pattern":null,"mime_type":null,"ssp":null,"ssp_prefix":null,"ssp_pattern":null}]}

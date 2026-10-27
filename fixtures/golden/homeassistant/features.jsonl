@@ -1,0 +1,17 @@
+{"kind":"feature","name":"android.hardware.bluetooth","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.bluetooth_le","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.camera","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.camera.autofocus","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.camera.flash","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.camera.front","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.location.gps","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.microphone","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.nfc","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.screen.landscape","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.sensor","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.telephony","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.touchscreen","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.wifi","required":false,"version":null}
+{"kind":"feature","name":"android.software.leanback","required":false,"version":null}
+{"kind":"library","name":"androidx.window.extensions","required":false,"version":null}
+{"kind":"library","name":"androidx.window.sidecar","required":false,"version":null}

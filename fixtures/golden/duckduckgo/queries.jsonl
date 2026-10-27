@@ -1,0 +1,2 @@
+{"kind":"intent","name":"RecognitionService","actions":["android.speech.RecognitionService"],"categories":[],"data":[]}
+{"kind":"intent","name":"VIEW https:","actions":["android.intent.action.VIEW"],"categories":["android.intent.category.BROWSABLE"],"data":[{"scheme":"https","host":null,"port":null,"path":null,"path_prefix":null,"path_pattern":null,"path_suffix":null,"path_advanced_pattern":null,"mime_type":null,"ssp":null,"ssp_prefix":null,"ssp_pattern":null}]}

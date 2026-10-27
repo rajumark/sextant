@@ -1,0 +1,323 @@
+{
+  "schema_version": 7,
+  "tool": {
+    "name": "sextant",
+    "version": "<version>"
+  },
+  "file": {
+    "name": "termuxapi.apk",
+    "size_bytes": 3956196,
+    "sha256": "4497dbbf81906df52e59ed387a5223d225aa0de3aca817cc557a621e4dadda44"
+  },
+  "package": "com.termux.api",
+  "version_name": "0.53.0",
+  "version_code": 1002,
+  "min_sdk": 24,
+  "target_sdk": 28,
+  "compile_sdk": 35,
+  "label": "Termux:API",
+  "application_class": "com.termux.api.TermuxAPIApplication",
+  "flags": {
+    "debuggable": null,
+    "allow_backup": true,
+    "uses_cleartext_traffic": null,
+    "network_security_config": null,
+    "extract_native_libs": false,
+    "test_only": null,
+    "full_backup_content": null,
+    "data_extraction_rules": null,
+    "backup_agent": null,
+    "full_backup_only": null,
+    "has_fragile_user_data": null,
+    "request_legacy_external_storage": null,
+    "preserve_legacy_external_storage": null,
+    "large_heap": null,
+    "hardware_accelerated": null,
+    "supports_rtl": true,
+    "resizeable_activity": null,
+    "enable_on_back_invoked_callback": null,
+    "app_component_factory": "androidx.core.app.CoreComponentFactory",
+    "locale_config": null,
+    "app_category": null,
+    "is_game": null,
+    "memtag_mode": null,
+    "uses_non_sdk_api": null,
+    "manage_space_activity": null,
+    "task_affinity": null,
+    "process": null,
+    "theme": "@android:style/Theme.Material.Light",
+    "profileable_shell": null,
+    "install_location": null,
+    "shared_user_id": "com.termux",
+    "shared_user_max_sdk": null,
+    "target_sandbox_version": null,
+    "supports_screens": {}
+  },
+  "signing": {
+    "verified": true,
+    "schemes": [
+      "v2",
+      "v3"
+    ],
+    "certificates": [
+      {
+        "sha256": "22:8F:B2:CF:E9:08:31:C1:49:9E:C3:CC:AF:61:E9:6E:8E:1C:E7:07:66:B9:47:46:72:CE:42:73:34:D4:1C:42",
+        "sha1": "E8:75:4A:2C:61:43:92:07:1D:27:02:1B:BC:DF:B8:DD:A7:E0:71:1C",
+        "subject": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "issuer": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "not_before": "2015-10-26T07:35:59Z",
+        "not_after": "2043-03-13T07:35:59Z"
+      }
+    ]
+  },
+  "layout": {
+    "dex_files": 2,
+    "native_abis": []
+  },
+  "code": {
+    "dex_files": [
+      "classes.dex",
+      "classes2.dex"
+    ],
+    "classes": 3327,
+    "methods": 20075,
+    "fields": 9729,
+    "call_edges": 52326,
+    "call_sites": 67750,
+    "string_refs": 6940,
+    "distinct_strings": 4585,
+    "field_refs": 34720,
+    "type_refs": 9676,
+    "kotlin_classes": 0,
+    "duplicate_classes": 0,
+    "unreadable_methods": 0,
+    "top_packages": [
+      {
+        "package": "com.termux.api.apis",
+        "classes": 238
+      },
+      {
+        "package": "androidx.appcompat.widget",
+        "classes": 205
+      },
+      {
+        "package": "androidx.core.view",
+        "classes": 170
+      },
+      {
+        "package": "androidx.fragment.app",
+        "classes": 123
+      },
+      {
+        "package": "androidx.recyclerview.widget",
+        "classes": 108
+      },
+      {
+        "package": "androidx.lifecycle",
+        "classes": 92
+      },
+      {
+        "package": "androidx.appcompat.app",
+        "classes": 84
+      },
+      {
+        "package": "androidx.preference",
+        "classes": 84
+      },
+      {
+        "package": "kotlinx.coroutines",
+        "classes": 81
+      },
+      {
+        "package": "androidx.transition",
+        "classes": 76
+      },
+      {
+        "package": "com.google.common.collect",
+        "classes": 75
+      },
+      {
+        "package": "androidx.biometric",
+        "classes": 74
+      },
+      {
+        "package": "androidx.core.app",
+        "classes": 59
+      },
+      {
+        "package": "com.google.android.material.textfield",
+        "classes": 59
+      },
+      {
+        "package": "androidx.emoji2.text",
+        "classes": 51
+      }
+    ]
+  },
+  "insights": {
+    "libraries": 43,
+    "frameworks": [],
+    "sdks": 2,
+    "sdk_categories": {
+      "reactive": 1,
+      "ui": 1
+    },
+    "endpoints": 28,
+    "hosts": 7,
+    "top_hosts": [
+      {
+        "host": "github.com",
+        "urls": 19
+      },
+      {
+        "host": "developer.android.com",
+        "urls": 3
+      },
+      {
+        "host": "schemas.android.com",
+        "urls": 2
+      },
+      {
+        "host": "dontkillmyapp.com",
+        "urls": 1
+      },
+      {
+        "host": "termux.dev",
+        "urls": 1
+      },
+      {
+        "host": "wiki.termux.com",
+        "urls": 1
+      },
+      {
+        "host": "www.reddit.com",
+        "urls": 1
+      }
+    ],
+    "resource_values": 1967,
+    "locales": [
+      "af",
+      "am",
+      "ar",
+      "as",
+      "az",
+      "be",
+      "bg",
+      "bn",
+      "bs",
+      "ca",
+      "cs",
+      "da",
+      "de",
+      "el",
+      "en-AU",
+      "en-CA",
+      "en-GB",
+      "en-IN",
+      "en-XC",
+      "es",
+      "es-419",
+      "es-US",
+      "et",
+      "eu",
+      "fa",
+      "fi",
+      "fr",
+      "fr-CA",
+      "gl",
+      "gu",
+      "hi",
+      "hr",
+      "hu",
+      "hy",
+      "in",
+      "is",
+      "it",
+      "iw",
+      "ja",
+      "ka",
+      "kk",
+      "km",
+      "kn",
+      "ko",
+      "ky",
+      "lo",
+      "lt",
+      "lv",
+      "mk",
+      "ml",
+      "mn",
+      "mr",
+      "ms",
+      "my",
+      "nb",
+      "ne",
+      "nl",
+      "or",
+      "pa",
+      "pl",
+      "pt",
+      "pt-BR",
+      "pt-PT",
+      "ro",
+      "ru",
+      "si",
+      "sk",
+      "sl",
+      "sq",
+      "sr",
+      "sr-Latn",
+      "sv",
+      "sw",
+      "ta",
+      "te",
+      "th",
+      "tl",
+      "tr",
+      "uk",
+      "ur",
+      "uz",
+      "vi",
+      "zh-CN",
+      "zh-HK",
+      "zh-TW",
+      "zu"
+    ],
+    "native_libraries": 0,
+    "jni_methods": 0,
+    "android_gradle_plugin": "8.7.3",
+    "findings": {
+      "info": 2,
+      "low": 4
+    }
+  },
+  "icons": {
+    "icon": {
+      "resource": "@drawable/ic_launcher",
+      "best": "res/r2.xml",
+      "files": [
+        {
+          "path": "res/r2.xml",
+          "config": "",
+          "density": 160,
+          "format": "xml",
+          "width": null,
+          "height": null,
+          "size_bytes": 1180
+        },
+        {
+          "path": "res/vX.xml",
+          "config": "anydpi-v26",
+          "density": null,
+          "format": "xml",
+          "width": null,
+          "height": null,
+          "size_bytes": 548
+        }
+      ],
+      "adaptive": null
+    },
+    "round_icon": null
+  },
+  "warnings": []
+}

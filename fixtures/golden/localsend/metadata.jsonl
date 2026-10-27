@@ -1,0 +1,8 @@
+{"scope":"application","kind":"meta-data","name":"flutterEmbedding","value":"2","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.emoji2.text.EmojiCompatInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.lifecycle.ProcessLifecycleInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.profileinstaller.ProfileInstallerInitializer","value":"androidx.startup","resource":null}
+{"scope":"com.crazecoder.openfile.FileProvider","kind":"meta-data","name":"android.support.FILE_PROVIDER_PATHS","value":null,"resource":"@xml/filepaths"}
+{"scope":"com.google.android.gms.metadata.ModuleDependencies","kind":"meta-data","name":"photopicker_activity:0:required","value":"","resource":null}
+{"scope":"io.flutter.plugins.imagepicker.ImagePickerFileProvider","kind":"meta-data","name":"android.support.FILE_PROVIDER_PATHS","value":null,"resource":"@xml/flutter_image_picker_file_paths"}
+{"scope":"org.localsend.localsend_app.MainActivity","kind":"meta-data","name":"io.flutter.embedding.android.NormalTheme","value":null,"resource":"@style/NormalTheme"}

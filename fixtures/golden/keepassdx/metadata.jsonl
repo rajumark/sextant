@@ -1,0 +1,10 @@
+{"scope":"application","kind":"meta-data","name":"com.google.android.backup.api_key","value":"unused","resource":null}
+{"scope":"application","kind":"meta-data","name":"com.sec.android.support.multiwindow","value":"true","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.emoji2.text.EmojiCompatInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.lifecycle.ProcessLifecycleInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.profileinstaller.ProfileInstallerInitializer","value":"androidx.startup","resource":null}
+{"scope":"com.kunzisoft.keepass.activities.GroupActivity","kind":"meta-data","name":"android.app.default_searchable","value":"com.kunzisoft.keepass.search.SearchResults","resource":null}
+{"scope":"com.kunzisoft.keepass.activities.GroupActivity","kind":"meta-data","name":"android.app.searchable","value":null,"resource":"@xml/searchable"}
+{"scope":"com.kunzisoft.keepass.credentialprovider.autofill.KeeAutofillService","kind":"meta-data","name":"android.autofill","value":null,"resource":"@xml/dataset_service"}
+{"scope":"com.kunzisoft.keepass.credentialprovider.magikeyboard.MagikeyboardService","kind":"meta-data","name":"android.view.im","value":null,"resource":"@xml/keyboard_method"}
+{"scope":"com.kunzisoft.keepass.credentialprovider.passkey.PasskeyProviderService","kind":"meta-data","name":"android.credentials.provider","value":null,"resource":"@xml/provider"}

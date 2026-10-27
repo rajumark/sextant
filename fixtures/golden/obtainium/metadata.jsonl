@@ -1,0 +1,11 @@
+{"scope":"application","kind":"meta-data","name":"dev.imranr.obtainium.service.NOTIFICATION_ICON","value":null,"resource":"@drawable/ic_notification"}
+{"scope":"application","kind":"meta-data","name":"flutterEmbedding","value":"2","resource":null}
+{"scope":"application","kind":"meta-data","name":"moe.shizuku.client.V3_SUPPORT","value":"true","resource":null}
+{"scope":"androidx.core.content.FileProvider","kind":"meta-data","name":"android.support.FILE_PROVIDER_PATHS","value":null,"resource":"@xml/file_paths"}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.emoji2.text.EmojiCompatInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.lifecycle.ProcessLifecycleInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.profileinstaller.ProfileInstallerInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.work.WorkManagerInitializer","value":"androidx.startup","resource":null}
+{"scope":"dev.fluttercommunity.plus.share.ShareFileProvider","kind":"meta-data","name":"android.support.FILE_PROVIDER_PATHS","value":null,"resource":"@xml/flutter_share_file_paths"}
+{"scope":"dev.imranr.obtainium.MainActivity","kind":"meta-data","name":"flutter_deeplinking_enabled","value":"false","resource":null}
+{"scope":"dev.imranr.obtainium.MainActivity","kind":"meta-data","name":"io.flutter.embedding.android.NormalTheme","value":null,"resource":"@style/NormalTheme"}

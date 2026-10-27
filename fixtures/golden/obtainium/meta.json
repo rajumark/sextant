@@ -1,0 +1,434 @@
+{
+  "schema_version": 7,
+  "tool": {
+    "name": "sextant",
+    "version": "<version>"
+  },
+  "file": {
+    "name": "obtainium.apk",
+    "size_bytes": 27194505,
+    "sha256": "78f330b9e23c94bd3d5958bd707606821af9ad332face5d90e9d9e5d1fe0cd07"
+  },
+  "package": "dev.imranr.obtainium.fdroid",
+  "version_name": "1.7.1",
+  "version_code": 23593,
+  "min_sdk": 26,
+  "target_sdk": 36,
+  "compile_sdk": 37,
+  "label": "Obtainium",
+  "application_class": "android.app.Application",
+  "flags": {
+    "debuggable": null,
+    "allow_backup": null,
+    "uses_cleartext_traffic": true,
+    "network_security_config": null,
+    "extract_native_libs": false,
+    "test_only": null,
+    "full_backup_content": null,
+    "data_extraction_rules": null,
+    "backup_agent": null,
+    "full_backup_only": null,
+    "has_fragile_user_data": null,
+    "request_legacy_external_storage": true,
+    "preserve_legacy_external_storage": null,
+    "large_heap": null,
+    "hardware_accelerated": null,
+    "supports_rtl": true,
+    "resizeable_activity": null,
+    "enable_on_back_invoked_callback": null,
+    "app_component_factory": "androidx.core.app.CoreComponentFactory",
+    "locale_config": "@xml/locales_config",
+    "app_category": null,
+    "is_game": null,
+    "memtag_mode": "async",
+    "uses_non_sdk_api": null,
+    "manage_space_activity": null,
+    "task_affinity": null,
+    "process": null,
+    "theme": null,
+    "profileable_shell": null,
+    "install_location": null,
+    "shared_user_id": null,
+    "shared_user_max_sdk": null,
+    "target_sandbox_version": null,
+    "supports_screens": {}
+  },
+  "signing": {
+    "verified": true,
+    "schemes": [
+      "v2",
+      "v3"
+    ],
+    "certificates": [
+      {
+        "sha256": "B3:53:60:1F:6A:1D:5F:D6:60:3A:E2:F5:0B:E8:0C:F3:01:36:7B:86:B6:AB:8B:1F:66:24:3D:A9:6C:D5:73:62",
+        "sha1": "2A:92:AD:B6:E9:E1:BB:C0:D4:5A:8A:BA:BE:C9:44:D5:D6:D2:E0:BF",
+        "subject": "CN=Imran Remtulla,OU=Unknown,O=Unknown,L=Toronto,ST=Ontario,C=CA",
+        "issuer": "CN=Imran Remtulla,OU=Unknown,O=Unknown,L=Toronto,ST=Ontario,C=CA",
+        "not_before": "2020-07-24T19:57:26Z",
+        "not_after": "2047-12-10T19:57:26Z"
+      }
+    ]
+  },
+  "layout": {
+    "dex_files": 1,
+    "native_abis": [
+      "arm64-v8a"
+    ]
+  },
+  "code": {
+    "dex_files": [
+      "classes.dex"
+    ],
+    "classes": 2029,
+    "methods": 8673,
+    "fields": 6032,
+    "call_edges": 34129,
+    "call_sites": 59210,
+    "string_refs": 9037,
+    "distinct_strings": 5928,
+    "field_refs": 23895,
+    "type_refs": 12234,
+    "kotlin_classes": 0,
+    "duplicate_classes": 0,
+    "unreadable_methods": 0,
+    "top_packages": [
+      {
+        "package": "",
+        "classes": 1759
+      },
+      {
+        "package": "org.chromium.support_lib_boundary",
+        "classes": 58
+      },
+      {
+        "package": "dev.re7gog.shizuku_apk_installer",
+        "classes": 19
+      },
+      {
+        "package": "com.dexterous.flutterlocalnotifications.models",
+        "classes": 17
+      },
+      {
+        "package": "androidx.preference",
+        "classes": 14
+      },
+      {
+        "package": "android.support.v4.media",
+        "classes": 11
+      },
+      {
+        "package": "com.github.dart_lang.jni",
+        "classes": 10
+      },
+      {
+        "package": "androidx.media",
+        "classes": 9
+      },
+      {
+        "package": "android.support.v4.media.session",
+        "classes": 8
+      },
+      {
+        "package": "io.flutter.embedding.engine.renderer",
+        "classes": 8
+      },
+      {
+        "package": "io.flutter.view",
+        "classes": 8
+      },
+      {
+        "package": "com.dexterous.flutterlocalnotifications",
+        "classes": 7
+      },
+      {
+        "package": "androidx.appcompat.widget",
+        "classes": 6
+      },
+      {
+        "package": "com.dexterous.flutterlocalnotifications.models.styles",
+        "classes": 6
+      },
+      {
+        "package": "com.google.android.material.transformation",
+        "classes": 5
+      }
+    ]
+  },
+  "insights": {
+    "libraries": 67,
+    "frameworks": [
+      "Flutter"
+    ],
+    "sdks": 3,
+    "sdk_categories": {
+      "background-work": 1,
+      "database": 1,
+      "ui": 1
+    },
+    "endpoints": 36,
+    "hosts": 28,
+    "top_hosts": [
+      {
+        "host": "github.com",
+        "urls": 4
+      },
+      {
+        "host": "developer.android.com",
+        "urls": 3
+      },
+      {
+        "host": "docs.flutter.dev",
+        "urls": 2
+      },
+      {
+        "host": "issuetracker.google.com",
+        "urls": 2
+      },
+      {
+        "host": "www.w3.org",
+        "urls": 2
+      },
+      {
+        "host": "android.googlesource.com",
+        "urls": 1
+      },
+      {
+        "host": "api.flutter.dev",
+        "urls": 1
+      },
+      {
+        "host": "api2.coolapk.com",
+        "urls": 1
+      },
+      {
+        "host": "buitandoideopen.org",
+        "urls": 1
+      },
+      {
+        "host": "cloudflare.f-droid.org",
+        "urls": 1
+      },
+      {
+        "host": "crbug.com",
+        "urls": 1
+      },
+      {
+        "host": "dartbug.com",
+        "urls": 1
+      },
+      {
+        "host": "docs.github.com",
+        "urls": 1
+      },
+      {
+        "host": "docs.gitlab.com",
+        "urls": 1
+      },
+      {
+        "host": "h5-api.appstore.vivo.com.cn",
+        "urls": 1
+      }
+    ],
+    "resource_values": 131,
+    "locales": [
+      "af",
+      "am",
+      "ar",
+      "as",
+      "az",
+      "be",
+      "bg",
+      "bn",
+      "bs",
+      "ca",
+      "cs",
+      "da",
+      "de",
+      "el",
+      "en-AU",
+      "en-CA",
+      "en-GB",
+      "en-IN",
+      "en-XC",
+      "es",
+      "es-US",
+      "et",
+      "eu",
+      "fa",
+      "fi",
+      "fr",
+      "fr-CA",
+      "gl",
+      "gu",
+      "hi",
+      "hr",
+      "hu",
+      "hy",
+      "in",
+      "is",
+      "it",
+      "iw",
+      "ja",
+      "ka",
+      "kk",
+      "km",
+      "kn",
+      "ko",
+      "ky",
+      "lo",
+      "lt",
+      "lv",
+      "mk",
+      "ml",
+      "mn",
+      "mr",
+      "ms",
+      "my",
+      "nb",
+      "ne",
+      "nl",
+      "or",
+      "pa",
+      "pl",
+      "pt",
+      "pt-BR",
+      "pt-PT",
+      "ro",
+      "ru",
+      "si",
+      "sk",
+      "sl",
+      "sq",
+      "sr",
+      "sr-Latn",
+      "sv",
+      "sw",
+      "ta",
+      "te",
+      "th",
+      "tl",
+      "tr",
+      "uk",
+      "ur",
+      "uz",
+      "vi",
+      "zh-CN",
+      "zh-HK",
+      "zh-TW",
+      "zu"
+    ],
+    "native_libraries": 4,
+    "jni_methods": 10,
+    "android_gradle_plugin": "9.2.1",
+    "findings": {
+      "info": 2,
+      "medium": 2
+    }
+  },
+  "icons": {
+    "icon": {
+      "resource": "@mipmap/ic_launcher",
+      "best": "res/o-.png",
+      "files": [
+        {
+          "path": "res/BW.xml",
+          "config": "anydpi",
+          "density": null,
+          "format": "xml",
+          "width": null,
+          "height": null,
+          "size_bytes": 548
+        },
+        {
+          "path": "res/yn.png",
+          "config": "hdpi",
+          "density": 240,
+          "format": "png",
+          "width": 72,
+          "height": 72,
+          "size_bytes": 2494
+        },
+        {
+          "path": "res/9w.png",
+          "config": "mdpi",
+          "density": 160,
+          "format": "png",
+          "width": 48,
+          "height": 48,
+          "size_bytes": 1635
+        },
+        {
+          "path": "res/FS.png",
+          "config": "xhdpi",
+          "density": 320,
+          "format": "png",
+          "width": 96,
+          "height": 96,
+          "size_bytes": 3443
+        },
+        {
+          "path": "res/RJ.png",
+          "config": "xxhdpi",
+          "density": 480,
+          "format": "png",
+          "width": 144,
+          "height": 144,
+          "size_bytes": 5547
+        },
+        {
+          "path": "res/o-.png",
+          "config": "xxxhdpi",
+          "density": 640,
+          "format": "png",
+          "width": 192,
+          "height": 192,
+          "size_bytes": 7891
+        }
+      ],
+      "adaptive": {
+        "path": "res/BW.xml",
+        "background": {
+          "resource": "@color/ic_launcher_background",
+          "color": "#ffffff",
+          "best": null,
+          "files": []
+        },
+        "foreground": {
+          "resource": "@drawable/ic_launcher_foreground",
+          "color": null,
+          "best": "res/Qr.xml",
+          "files": [
+            {
+              "path": "res/Qr.xml",
+              "config": "",
+              "density": 160,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 2360
+            }
+          ]
+        },
+        "monochrome": {
+          "resource": "@drawable/ic_launcher_foreground",
+          "color": null,
+          "best": "res/Qr.xml",
+          "files": [
+            {
+              "path": "res/Qr.xml",
+              "config": "",
+              "density": 160,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 2360
+            }
+          ]
+        }
+      }
+    },
+    "round_icon": null
+  },
+  "warnings": []
+}

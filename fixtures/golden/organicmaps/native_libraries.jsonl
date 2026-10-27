@@ -1,0 +1,4 @@
+{"path":"lib/arm64-v8a/liborganicmaps.so","abi":"arm64-v8a","name":"liborganicmaps.so","size_bytes":15634944,"sha256":"6232f0543a32f3a86d86b5ab9302c35f4b257d79a6e41025397be748b4ccd818","elf_class":"ELF64","exported_symbols":2127,"jni_methods":442}
+{"path":"lib/armeabi-v7a/liborganicmaps.so","abi":"armeabi-v7a","name":"liborganicmaps.so","size_bytes":10923272,"sha256":"18c0b061881917e1a885068e1dfc8e6fb704e191f5ae9565443c1623d04e6de5","elf_class":"ELF32","exported_symbols":2129,"jni_methods":442}
+{"path":"lib/x86/liborganicmaps.so","abi":"x86","name":"liborganicmaps.so","size_bytes":16891160,"sha256":"d38c212374bc8a58d9938c67ffe1f8eca08fbccddb2a53c9a45d01ae472b30d3","elf_class":"ELF32","exported_symbols":2127,"jni_methods":442}
+{"path":"lib/x86_64/liborganicmaps.so","abi":"x86_64","name":"liborganicmaps.so","size_bytes":16385664,"sha256":"877d63940b6151615cef8959a7da5c0e423bb1e08b8b6f30d6b5b3085a381f72","elf_class":"ELF64","exported_symbols":2127,"jni_methods":442}

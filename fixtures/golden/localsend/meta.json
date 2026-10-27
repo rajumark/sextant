@@ -1,0 +1,507 @@
+{
+  "schema_version": 7,
+  "tool": {
+    "name": "sextant",
+    "version": "<version>"
+  },
+  "file": {
+    "name": "localsend.apk",
+    "size_bytes": 46558706,
+    "sha256": "82ec3568fba2aa5295b9aae8b76f701d7a4703d86b9f8bad749472038fbaeab3"
+  },
+  "package": "org.localsend.localsend_app",
+  "version_name": "1.18.2",
+  "version_code": 643,
+  "min_sdk": 24,
+  "target_sdk": 37,
+  "compile_sdk": 36,
+  "label": "LocalSend",
+  "application_class": "android.app.Application",
+  "flags": {
+    "debuggable": null,
+    "allow_backup": null,
+    "uses_cleartext_traffic": true,
+    "network_security_config": null,
+    "extract_native_libs": false,
+    "test_only": null,
+    "full_backup_content": null,
+    "data_extraction_rules": null,
+    "backup_agent": null,
+    "full_backup_only": null,
+    "has_fragile_user_data": null,
+    "request_legacy_external_storage": true,
+    "preserve_legacy_external_storage": null,
+    "large_heap": null,
+    "hardware_accelerated": null,
+    "supports_rtl": null,
+    "resizeable_activity": null,
+    "enable_on_back_invoked_callback": null,
+    "app_component_factory": "androidx.core.app.CoreComponentFactory",
+    "locale_config": null,
+    "app_category": null,
+    "is_game": null,
+    "memtag_mode": null,
+    "uses_non_sdk_api": null,
+    "manage_space_activity": null,
+    "task_affinity": null,
+    "process": null,
+    "theme": null,
+    "profileable_shell": null,
+    "install_location": null,
+    "shared_user_id": null,
+    "shared_user_max_sdk": null,
+    "target_sandbox_version": null,
+    "supports_screens": {}
+  },
+  "signing": {
+    "verified": true,
+    "schemes": [
+      "v2"
+    ],
+    "certificates": [
+      {
+        "sha256": "32:20:C3:53:A7:3C:FB:D0:C2:F3:05:24:71:C4:45:32:4C:F4:52:BC:BA:26:DE:1C:47:3A:52:FE:5C:44:E1:D6",
+        "sha1": "FD:CD:F5:3F:FD:C0:9F:93:F0:30:13:F6:6A:BB:67:A4:2E:6A:F7:08",
+        "subject": "O=LocalSend",
+        "issuer": "O=LocalSend",
+        "not_before": "2022-12-28T02:00:58Z",
+        "not_after": "2047-12-22T02:00:58Z"
+      }
+    ]
+  },
+  "layout": {
+    "dex_files": 1,
+    "native_abis": [
+      "arm64-v8a"
+    ]
+  },
+  "code": {
+    "dex_files": [
+      "classes.dex"
+    ],
+    "classes": 3022,
+    "methods": 16233,
+    "fields": 12095,
+    "call_edges": 61557,
+    "call_sites": 98209,
+    "string_refs": 14139,
+    "distinct_strings": 8846,
+    "field_refs": 56435,
+    "type_refs": 18921,
+    "kotlin_classes": 0,
+    "duplicate_classes": 0,
+    "unreadable_methods": 0,
+    "top_packages": [
+      {
+        "package": "k",
+        "classes": 107
+      },
+      {
+        "package": "B0",
+        "classes": 79
+      },
+      {
+        "package": "androidx.datastore.preferences.protobuf",
+        "classes": 69
+      },
+      {
+        "package": "W2",
+        "classes": 67
+      },
+      {
+        "package": "K",
+        "classes": 64
+      },
+      {
+        "package": "l0",
+        "classes": 64
+      },
+      {
+        "package": "k4",
+        "classes": 62
+      },
+      {
+        "package": "e0",
+        "classes": 54
+      },
+      {
+        "package": "R",
+        "classes": 53
+      },
+      {
+        "package": "J0",
+        "classes": 42
+      },
+      {
+        "package": "H0",
+        "classes": 41
+      },
+      {
+        "package": "n0",
+        "classes": 40
+      },
+      {
+        "package": "w1",
+        "classes": 38
+      },
+      {
+        "package": "h0",
+        "classes": 36
+      },
+      {
+        "package": "androidx.lifecycle",
+        "classes": 35
+      }
+    ]
+  },
+  "insights": {
+    "libraries": 62,
+    "frameworks": [
+      "Flutter"
+    ],
+    "sdks": 3,
+    "sdk_categories": {
+      "image-loading": 1,
+      "media": 1,
+      "ui": 1
+    },
+    "endpoints": 35,
+    "hosts": 21,
+    "top_hosts": [
+      {
+        "host": "developer.android.com",
+        "urls": 5
+      },
+      {
+        "host": "dashif.org",
+        "urls": 4
+      },
+      {
+        "host": "github.com",
+        "urls": 3
+      },
+      {
+        "host": "www.w3.org",
+        "urls": 3
+      },
+      {
+        "host": "docs.flutter.dev",
+        "urls": 2
+      },
+      {
+        "host": "issuetracker.google.com",
+        "urls": 2
+      },
+      {
+        "host": "schemas.android.com",
+        "urls": 2
+      },
+      {
+        "host": "android.googlesource.com",
+        "urls": 1
+      },
+      {
+        "host": "aomedia.org",
+        "urls": 1
+      },
+      {
+        "host": "api.flutter.dev",
+        "urls": 1
+      },
+      {
+        "host": "dartbug.com",
+        "urls": 1
+      },
+      {
+        "host": "developer.apple.com",
+        "urls": 1
+      },
+      {
+        "host": "docs.rs",
+        "urls": 1
+      },
+      {
+        "host": "g.co",
+        "urls": 1
+      },
+      {
+        "host": "ko-fi.com",
+        "urls": 1
+      }
+    ],
+    "resource_values": 572,
+    "locales": [
+      "af",
+      "am",
+      "ar",
+      "as",
+      "az",
+      "be",
+      "bg",
+      "bn",
+      "bs",
+      "ca",
+      "cs",
+      "da",
+      "de",
+      "el",
+      "en-AU",
+      "en-CA",
+      "en-GB",
+      "en-IN",
+      "en-XC",
+      "es",
+      "es-419",
+      "es-US",
+      "et",
+      "eu",
+      "fa",
+      "fi",
+      "fr",
+      "fr-CA",
+      "gl",
+      "gu",
+      "hi",
+      "hr",
+      "hu",
+      "hy",
+      "in",
+      "is",
+      "it",
+      "iw",
+      "ja",
+      "ka",
+      "kk",
+      "km",
+      "kn",
+      "ko",
+      "ky",
+      "lo",
+      "lt",
+      "lv",
+      "mk",
+      "ml",
+      "mn",
+      "mr",
+      "ms",
+      "my",
+      "nb",
+      "ne",
+      "nl",
+      "or",
+      "pa",
+      "pl",
+      "pt",
+      "pt-BR",
+      "pt-PT",
+      "ro",
+      "ru",
+      "si",
+      "sk",
+      "sl",
+      "sq",
+      "sr",
+      "sr-Latn",
+      "sv",
+      "sw",
+      "ta",
+      "te",
+      "th",
+      "tl",
+      "tr",
+      "uk",
+      "ur",
+      "uz",
+      "vi",
+      "zh-CN",
+      "zh-HK",
+      "zh-TW",
+      "zu"
+    ],
+    "native_libraries": 5,
+    "jni_methods": 10,
+    "android_gradle_plugin": "8.12.1",
+    "findings": {
+      "info": 2,
+      "low": 3,
+      "medium": 1
+    }
+  },
+  "icons": {
+    "icon": {
+      "resource": "@mipmap/ic_launcher",
+      "best": "res/o-.png",
+      "files": [
+        {
+          "path": "res/BW.xml",
+          "config": "anydpi-v26",
+          "density": null,
+          "format": "xml",
+          "width": null,
+          "height": null,
+          "size_bytes": 548
+        },
+        {
+          "path": "res/yn.png",
+          "config": "hdpi",
+          "density": 240,
+          "format": "png",
+          "width": 72,
+          "height": 72,
+          "size_bytes": 4080
+        },
+        {
+          "path": "res/9w.png",
+          "config": "mdpi",
+          "density": 160,
+          "format": "png",
+          "width": 48,
+          "height": 48,
+          "size_bytes": 2120
+        },
+        {
+          "path": "res/FS.png",
+          "config": "xhdpi",
+          "density": 320,
+          "format": "png",
+          "width": 96,
+          "height": 96,
+          "size_bytes": 5757
+        },
+        {
+          "path": "res/RJ.png",
+          "config": "xxhdpi",
+          "density": 480,
+          "format": "png",
+          "width": 144,
+          "height": 144,
+          "size_bytes": 9022
+        },
+        {
+          "path": "res/o-.png",
+          "config": "xxxhdpi",
+          "density": 640,
+          "format": "png",
+          "width": 192,
+          "height": 192,
+          "size_bytes": 13034
+        }
+      ],
+      "adaptive": {
+        "path": "res/BW.xml",
+        "background": {
+          "resource": "@color/ic_launcher_background",
+          "color": "#ffffff",
+          "best": null,
+          "files": []
+        },
+        "foreground": {
+          "resource": "@mipmap/ic_launcher_foreground",
+          "color": null,
+          "best": "res/as.png",
+          "files": [
+            {
+              "path": "res/zr.png",
+              "config": "hdpi",
+              "density": 240,
+              "format": "png",
+              "width": 162,
+              "height": 162,
+              "size_bytes": 1235
+            },
+            {
+              "path": "res/QZ.png",
+              "config": "mdpi",
+              "density": 160,
+              "format": "png",
+              "width": 108,
+              "height": 108,
+              "size_bytes": 844
+            },
+            {
+              "path": "res/Em.png",
+              "config": "xhdpi",
+              "density": 320,
+              "format": "png",
+              "width": 216,
+              "height": 216,
+              "size_bytes": 1683
+            },
+            {
+              "path": "res/Lf.png",
+              "config": "xxhdpi",
+              "density": 480,
+              "format": "png",
+              "width": 324,
+              "height": 324,
+              "size_bytes": 3028
+            },
+            {
+              "path": "res/as.png",
+              "config": "xxxhdpi",
+              "density": 640,
+              "format": "png",
+              "width": 432,
+              "height": 432,
+              "size_bytes": 4365
+            }
+          ]
+        },
+        "monochrome": {
+          "resource": "@mipmap/ic_launcher_monochrome",
+          "color": null,
+          "best": "res/_q.png",
+          "files": [
+            {
+              "path": "res/Yt.png",
+              "config": "hdpi",
+              "density": 240,
+              "format": "png",
+              "width": 162,
+              "height": 162,
+              "size_bytes": 1363
+            },
+            {
+              "path": "res/Me.png",
+              "config": "mdpi",
+              "density": 160,
+              "format": "png",
+              "width": 108,
+              "height": 108,
+              "size_bytes": 911
+            },
+            {
+              "path": "res/Ul.png",
+              "config": "xhdpi",
+              "density": 320,
+              "format": "png",
+              "width": 216,
+              "height": 216,
+              "size_bytes": 1887
+            },
+            {
+              "path": "res/mU.png",
+              "config": "xxhdpi",
+              "density": 480,
+              "format": "png",
+              "width": 324,
+              "height": 324,
+              "size_bytes": 3497
+            },
+            {
+              "path": "res/_q.png",
+              "config": "xxxhdpi",
+              "density": 640,
+              "format": "png",
+              "width": 432,
+              "height": 432,
+              "size_bytes": 5098
+            }
+          ]
+        }
+      }
+    },
+    "round_icon": null
+  },
+  "warnings": []
+}

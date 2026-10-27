@@ -1,0 +1,9 @@
+4cdce64300880670cadb615d3bba040875f5d67b987f88e58f82b8d145ea5300      16451  code/classes.jsonl
+2d5e54bea9708f2aef97417583f6044461dccd9ad31efb70e4948a19f226fc57      99878  code/methods.jsonl
+6ee4eb9ef6738c5281d7aac95e6c9e7360a5265a7518bbee539c84ce0e6c79b2      48275  code/fields.jsonl
+200b5ea1d2a011d4203c8d66e98d74e7cffa115eac54c551ea16d9ed36605181     234974  code/calls.jsonl
+eb9f43bfec8abc5b041211c26d7e7355cbc798333594e4b9afe1322fe05e33e7      22993  code/strings.jsonl
+9ca5a09fcf5d62eb2b22e94d67d804d55794af33a270b7f3b9c9dc1f5f4f8a01     180232  code/field_refs.jsonl
+ad4dae36cdc5a1d352f2446a7b4596c2ba6f5c9667a711f99b06a1a82d40567d      72013  code/type_refs.jsonl
+42c1441e6cc59f535154e943922fe7ad2ae081bb5d45d89173dce1b5a56c2f09       2120  resources/values.jsonl
+0c132e469cb85ed906de18a9064d4ae03fab0b87c6c2b59693d03fdc82cdaeca          4  native/symbols.jsonl

@@ -1,0 +1,17 @@
+{"scope":"application","kind":"meta-data","name":"android.webkit.WebView.MetricsOptOut","value":"true","resource":null}
+{"scope":"application","kind":"property","name":"android.window.PROPERTY_COMPAT_ALLOW_RESTRICTED_RESIZABILITY","value":"true","resource":null}
+{"scope":"application","kind":"meta-data","name":"androidx.car.app.minCarApiLevel","value":"1","resource":null}
+{"scope":"application","kind":"meta-data","name":"com.google.android.backup.api_key","value":"AEdPqrEAAAAIqF3tNGT66etVBn_vgzpfAY1wmIzKV1Ss6Ku-2A","resource":null}
+{"scope":"application","kind":"meta-data","name":"com.google.android.gms.car.application","value":null,"resource":"@xml/car_app_desc"}
+{"scope":"application","kind":"meta-data","name":"com.sec.android.multiwindow.DEFAULT_SIZE_H","value":"","resource":"@dimen/app_defaultsize_h"}
+{"scope":"application","kind":"meta-data","name":"com.sec.android.multiwindow.DEFAULT_SIZE_W","value":"","resource":"@dimen/app_defaultsize_w"}
+{"scope":"application","kind":"meta-data","name":"com.sec.android.multiwindow.MINIMUM_SIZE_H","value":"","resource":"@dimen/app_minimumsize_h"}
+{"scope":"application","kind":"meta-data","name":"com.sec.android.multiwindow.MINIMUM_SIZE_W","value":"","resource":"@dimen/app_minimumsize_w"}
+{"scope":"application","kind":"meta-data","name":"com.sec.android.support.multiwindow","value":"true","resource":null}
+{"scope":"application","kind":"meta-data","name":"com.sec.minimode.icon.landscape.normal","value":"","resource":"@mipmap/icon"}
+{"scope":"application","kind":"meta-data","name":"com.sec.minimode.icon.portrait.normal","value":"","resource":"@mipmap/icon"}
+{"scope":"androidx.car.app.CarAppMetadataHolderService","kind":"meta-data","name":"androidx.car.app.CarAppMetadataHolderService.CAR_HARDWARE_MANAGER","value":"androidx.car.app.hardware.ProjectedCarHardwareManager","resource":null}
+{"scope":"androidx.core.content.FileProvider","kind":"meta-data","name":"android.support.FILE_PROVIDER_PATHS","value":null,"resource":"@xml/paths"}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.emoji2.text.EmojiCompatInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.lifecycle.ProcessLifecycleInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.profileinstaller.ProfileInstallerInitializer","value":"androidx.startup","resource":null}

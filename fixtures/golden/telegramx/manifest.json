@@ -1,0 +1,1598 @@
+{
+  "tag": "manifest",
+  "attributes": {
+    "android:compileSdkVersion": "37",
+    "android:compileSdkVersionCodename": "17",
+    "android:installLocation": "auto",
+    "android:versionCode": "1800202",
+    "android:versionName": "0.28.11.1800",
+    "package": "org.thunderdog.challegram",
+    "platformBuildVersionCode": "37",
+    "platformBuildVersionName": "17"
+  },
+  "children": [
+    {
+      "tag": "uses-sdk",
+      "attributes": {
+        "android:minSdkVersion": "23",
+        "android:targetSdkVersion": "37"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:glEsVersion": "0x20000",
+        "android:required": "true"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.microphone",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.camera",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.camera.autofocus",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.camera2",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.camera2.full",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.location.gps",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.location",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.location.network",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.telephony",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.bluetooth",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "supports-screens",
+      "attributes": {
+        "android:anyDensity": "true",
+        "android:largeScreens": "true",
+        "android:normalScreens": "true",
+        "android:resizeable": "true",
+        "android:smallScreens": "true",
+        "android:xlargeScreens": "true"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.CAMERA"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.FLASHLIGHT"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.INTERNET"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.ACCESS_NETWORK_STATE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.ACCESS_FINE_LOCATION"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.ACCESS_COARSE_LOCATION"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.ACCESS_BACKGROUND_LOCATION"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.READ_EXTERNAL_STORAGE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.WRITE_EXTERNAL_STORAGE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.RECORD_AUDIO"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.MODIFY_AUDIO_SETTINGS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.WAKE_LOCK"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.VIBRATE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.READ_CONTACTS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.USE_FINGERPRINT"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.USE_BIOMETRIC"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.FOREGROUND_SERVICE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.FOREGROUND_SERVICE_LOCATION"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.FOREGROUND_SERVICE_PHONE_CALL"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.FOREGROUND_SERVICE_MICROPHONE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.FOREGROUND_SERVICE_SPECIAL_USE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.MANAGE_OWN_CALLS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.CHANGE_CONFIGURATION"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.READ_PHONE_STATE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.RECEIVE_BOOT_COMPLETED"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.SYSTEM_ALERT_WINDOW"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.WRITE_SETTINGS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.BLUETOOTH"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.REQUEST_INSTALL_PACKAGES"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.POST_NOTIFICATIONS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.READ_MEDIA_IMAGES"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.READ_MEDIA_VIDEO"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.READ_MEDIA_AUDIO"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "com.sec.android.provider.badge.permission.READ"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "com.sec.android.provider.badge.permission.WRITE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "com.htc.launcher.permission.READ_SETTINGS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "com.htc.launcher.permission.UPDATE_SHORTCUT"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "com.sonyericsson.home.permission.BROADCAST_BADGE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "com.sonymobile.home.permission.PROVIDER_INSERT_BADGE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "com.anddoes.launcher.permission.UPDATE_COUNT"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "com.majeur.launcher.permission.UPDATE_BADGE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "com.huawei.android.launcher.permission.CHANGE_BADGE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "com.huawei.android.launcher.permission.READ_SETTINGS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "com.huawei.android.launcher.permission.WRITE_SETTINGS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.READ_APP_BADGE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "com.oppo.launcher.permission.READ_SETTINGS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "com.oppo.launcher.permission.WRITE_SETTINGS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.READ_SYNC_SETTINGS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.WRITE_SYNC_SETTINGS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.GET_ACCOUNTS"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "android.permission.AUTHENTICATE_ACCOUNTS"
+      },
+      "children": []
+    },
+    {
+      "tag": "queries",
+      "attributes": {},
+      "children": [
+        {
+          "tag": "package",
+          "attributes": {
+            "android:name": "com.google.android.apps.maps"
+          },
+          "children": []
+        },
+        {
+          "tag": "package",
+          "attributes": {
+            "android:name": "com.google.android.launcher.layouts.genymotion"
+          },
+          "children": []
+        },
+        {
+          "tag": "package",
+          "attributes": {
+            "android:name": "com.bluestacks"
+          },
+          "children": []
+        },
+        {
+          "tag": "package",
+          "attributes": {
+            "android:name": "com.bignox.app"
+          },
+          "children": []
+        },
+        {
+          "tag": "package",
+          "attributes": {
+            "android:name": "com.vphone.launcher"
+          },
+          "children": []
+        },
+        {
+          "tag": "intent",
+          "attributes": {},
+          "children": [
+            {
+              "tag": "action",
+              "attributes": {
+                "android:name": "com.google.android.youtube.api.service.START"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "intent",
+          "attributes": {},
+          "children": [
+            {
+              "tag": "action",
+              "attributes": {
+                "android:name": "android.intent.action.VIEW"
+              },
+              "children": []
+            },
+            {
+              "tag": "data",
+              "attributes": {
+                "android:scheme": "*"
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "permission",
+      "attributes": {
+        "android:name": "org.thunderdog.challegram.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+        "android:protectionLevel": "signature"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "org.thunderdog.challegram.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "me.everything.badger.permission.BADGE_COUNT_READ"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-permission",
+      "attributes": {
+        "android:name": "me.everything.badger.permission.BADGE_COUNT_WRITE"
+      },
+      "children": []
+    },
+    {
+      "tag": "uses-feature",
+      "attributes": {
+        "android:name": "android.hardware.wifi",
+        "android:required": "false"
+      },
+      "children": []
+    },
+    {
+      "tag": "application",
+      "attributes": {
+        "android:allowBackup": "false",
+        "android:appComponentFactory": "androidx.core.app.CoreComponentFactory",
+        "android:enableOnBackInvokedCallback": "true",
+        "android:extractNativeLibs": "false",
+        "android:fullBackupContent": "false",
+        "android:hardwareAccelerated": "true",
+        "android:icon": "@mipmap/app_launcher",
+        "android:label": "@string/AppName",
+        "android:largeHeap": "true",
+        "android:name": "org.thunderdog.challegram.BaseApplication",
+        "android:preserveLegacyExternalStorage": "true",
+        "android:requestLegacyExternalStorage": "true",
+        "android:roundIcon": "@mipmap/app_launcher_round",
+        "android:supportsRtl": "true",
+        "android:theme": "@style/AppTheme"
+      },
+      "children": [
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:name": "org.thunderdog.challegram.service.NetworkListenerService",
+            "android:stopWithTask": "false"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:foregroundServiceType": "specialUse",
+            "android:name": "org.thunderdog.challegram.service.ForegroundService",
+            "android:stopWithTask": "false"
+          },
+          "children": [
+            {
+              "tag": "property",
+              "attributes": {
+                "android:name": "android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE",
+                "android:value": "Telegram X is a messaging app. Users expect to receive instant new message notifications, and the app to be auto-started. A foreground service is required for push messages that require one-time end-to-end encryption key exchange (such as when users receive the first message from a new Secret Chat), for which there is no Firebase Cloud Messaging integration. Other foreground service types do not fit this use case, or can't be used on Android 15 because there are time limits or auto-starting on boot is not allowed. Using the Android work manager isn't an option either."
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "@bool/bootServiceEnabled",
+            "android:exported": "false",
+            "android:name": "org.thunderdog.challegram.service.BootListenerService",
+            "android:stopWithTask": "false"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "org.thunderdog.challegram.start"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.BOOT_COMPLETED"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "provider",
+          "attributes": {
+            "android:authorities": "org.thunderdog.challegram.sync.provider",
+            "android:exported": "false",
+            "android:name": "org.thunderdog.challegram.sync.StubProvider",
+            "android:syncable": "true"
+          },
+          "children": []
+        },
+        {
+          "tag": "provider",
+          "attributes": {
+            "android:authorities": "org.thunderdog.challegram.androidx-startup",
+            "android:exported": "false",
+            "android:name": "androidx.startup.InitializationProvider"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "okhttp3.internal.platform.PlatformInitializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "androidx.profileinstaller.ProfileInstallerInitializer",
+                "android:value": "androidx.startup"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "org.thunderdog.challegram.sync.StubAuthenticatorService"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.accounts.AccountAuthenticator"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.accounts.AccountAuthenticator",
+                "android:resource": "@xml/authenticator"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "true",
+            "android:name": "org.thunderdog.challegram.sync.SyncService"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.content.SyncAdapter"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.content.SyncAdapter",
+                "android:resource": "@xml/syncadapter"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "uses-library",
+          "attributes": {
+            "android:name": "org.apache.http.legacy",
+            "android:required": "false"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:enabled": "true",
+            "android:name": "org.thunderdog.challegram.receiver.TGShareBroadcastReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "org.thunderdog.challegram.receiver.TGRemoveReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "org.thunderdog.challegram.receiver.TGRemoveAllReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "smallestScreenSize|screenSize|screenLayout|orientation|keyboardHidden|keyboard",
+            "android:excludeFromRecents": "true",
+            "android:exported": "false",
+            "android:name": "org.thunderdog.challegram.voip.gui.VoIPFeedbackActivity",
+            "android:taskAffinity": "org.thunderdog.challegram.voip",
+            "android:theme": "@style/TransparentTheme"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "false",
+            "android:foregroundServiceType": "microphone|phoneCall|mediaPlayback",
+            "android:name": "org.thunderdog.challegram.service.TGCallService"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "org.thunderdog.challegram.receiver.VoIPMediaButtonReceiver"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MEDIA_BUTTON"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:exported": "false",
+            "android:name": "org.thunderdog.challegram.receiver.TGAutoMessageReceiver"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "org.thunderdog.challegram.ACTION_MESSAGE_REPLY"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "org.thunderdog.challegram.ACTION_MESSAGE_HEARD"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:name": "org.thunderdog.challegram.receiver.TGWearReplyReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:name": "org.thunderdog.challegram.receiver.TGMessageReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:name": "org.thunderdog.challegram.receiver.CallBroadcastReceiver"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "org.thunderdog.challegram.END_CALL"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "org.thunderdog.challegram.DECLINE_CALL"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "org.thunderdog.challegram.ANSWER_CALL"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:name": "org.thunderdog.challegram.receiver.AudioMediaReceiver"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "org.thunderdog.challegram.ACTION_PLAY_SKIP_PREVIOUS"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "org.thunderdog.challegram.ACTION_PLAY_SKIP_NEXT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "org.thunderdog.challegram.ACTION_PLAY_STOP"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "org.thunderdog.challegram.ACTION_PLAY_PLAY"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "org.thunderdog.challegram.ACTION_PLAY_PAUSE"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "false",
+            "android:foregroundServiceType": "mediaPlayback",
+            "android:name": "org.thunderdog.challegram.service.AudioService"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:exported": "false",
+            "android:foregroundServiceType": "location",
+            "android:name": "org.thunderdog.challegram.service.LiveLocationService"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:name": "org.thunderdog.challegram.receiver.LiveLocationReceiver"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "org.thunderdog.challegram.ACTION_STOP_LOCATION"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "layoutDirection|smallestScreenSize|screenSize|uiMode|screenLayout|orientation|keyboardHidden|keyboard|locale",
+            "android:exported": "true",
+            "android:launchMode": "singleTask",
+            "android:name": "org.thunderdog.challegram.ManageSpaceActivity",
+            "android:windowSoftInputMode": "adjustPan"
+          },
+          "children": []
+        },
+        {
+          "tag": "activity",
+          "attributes": {
+            "android:configChanges": "layoutDirection|smallestScreenSize|screenSize|uiMode|screenLayout|orientation|keyboardHidden|keyboard|locale",
+            "android:exported": "true",
+            "android:launchMode": "singleTask",
+            "android:name": "org.thunderdog.challegram.MainActivity",
+            "android:windowSoftInputMode": "adjustPan|stateHidden"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {
+                "android:label": "@string/AppName"
+              },
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.MAIN"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.LAUNCHER"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.SEND"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "text/plain"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.SEND"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "image/*"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.SEND"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "video/*"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.SEND_MULTIPLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "image/*"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.SEND"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "*/*"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.SEND_MULTIPLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:mimeType": "*/*"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {
+                "android:autoVerify": "true"
+              },
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.VIEW"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.BROWSABLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:scheme": "http"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:scheme": "https"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:host": "t.me"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:host": "tx.me"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:host": "telegram.me"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:host": "telegram.dog"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {
+                "android:icon": "@mipmap/app_launcher_round",
+                "android:priority": "1",
+                "android:roundIcon": "@mipmap/app_launcher_round"
+              },
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.VIEW"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.BROWSABLE"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "category",
+                  "attributes": {
+                    "android:name": "android.intent.category.DEFAULT"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "data",
+                  "attributes": {
+                    "android:scheme": "tg"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "provider",
+          "attributes": {
+            "android:authorities": "org.thunderdog.challegram.provider",
+            "android:exported": "false",
+            "android:grantUriPermissions": "true",
+            "android:name": "org.thunderdog.challegram.FileProvider"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "android.support.FILE_PROVIDER_PATHS",
+                "android:resource": "@xml/provider_paths"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "uses-library",
+          "attributes": {
+            "android:name": "com.sec.android.app.multiwindow",
+            "android:required": "false"
+          },
+          "children": []
+        },
+        {
+          "tag": "meta-data",
+          "attributes": {
+            "android:name": "com.sec.android.support.multiwindow",
+            "android:value": "true"
+          },
+          "children": []
+        },
+        {
+          "tag": "meta-data",
+          "attributes": {
+            "android:name": "com.sec.android.multiwindow.DEFAULT_SIZE_W",
+            "android:value": "632dp"
+          },
+          "children": []
+        },
+        {
+          "tag": "meta-data",
+          "attributes": {
+            "android:name": "com.sec.android.multiwindow.DEFAULT_SIZE_H",
+            "android:value": "598dp"
+          },
+          "children": []
+        },
+        {
+          "tag": "meta-data",
+          "attributes": {
+            "android:name": "com.sec.android.multiwindow.MINIMUM_SIZE_W",
+            "android:value": "632dp"
+          },
+          "children": []
+        },
+        {
+          "tag": "meta-data",
+          "attributes": {
+            "android:name": "com.sec.android.multiwindow.MINIMUM_SIZE_H",
+            "android:value": "598dp"
+          },
+          "children": []
+        },
+        {
+          "tag": "meta-data",
+          "attributes": {
+            "android:name": "com.samsung.android.icon_container.has_icon_container",
+            "android:value": "@bool/com_samsung_android_icon_container_has_icon_container"
+          },
+          "children": []
+        },
+        {
+          "tag": "meta-data",
+          "attributes": {
+            "android:name": "com.google.android.gms.car.application",
+            "android:resource": "@xml/automotive_app_desc"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:enabled": "false",
+            "android:exported": "false",
+            "android:name": "androidx.camera.core.impl.MetadataHolderService"
+          },
+          "children": [
+            {
+              "tag": "meta-data",
+              "attributes": {
+                "android:name": "androidx.camera.core.impl.MetadataHolderService.DEFAULT_CONFIG_PROVIDER",
+                "android:value": "androidx.camera.camera2.Camera2Config$DefaultProvider"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "@bool/enable_system_job_service_default",
+            "android:exported": "true",
+            "android:name": "androidx.work.impl.background.systemjob.SystemJobService",
+            "android:permission": "android.permission.BIND_JOB_SERVICE"
+          },
+          "children": []
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "@bool/enable_system_foreground_service_default",
+            "android:exported": "false",
+            "android:name": "androidx.work.impl.foreground.SystemForegroundService"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "true",
+            "android:exported": "false",
+            "android:name": "androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "false",
+            "android:exported": "false",
+            "android:name": "androidx.work.impl.background.systemalarm.RescheduleReceiver"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "android.intent.action.BOOT_COMPLETED"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "true",
+            "android:exported": "true",
+            "android:name": "androidx.work.impl.diagnostics.DiagnosticsReceiver",
+            "android:permission": "android.permission.DUMP"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.work.diagnostics.REQUEST_DIAGNOSTICS"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "service",
+          "attributes": {
+            "android:directBootAware": "true",
+            "android:exported": "false",
+            "android:name": "androidx.room.MultiInstanceInvalidationService"
+          },
+          "children": []
+        },
+        {
+          "tag": "receiver",
+          "attributes": {
+            "android:directBootAware": "false",
+            "android:enabled": "true",
+            "android:exported": "true",
+            "android:name": "androidx.profileinstaller.ProfileInstallReceiver",
+            "android:permission": "android.permission.DUMP"
+          },
+          "children": [
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.profileinstaller.action.INSTALL_PROFILE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.profileinstaller.action.SKIP_FILE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.profileinstaller.action.SAVE_PROFILE"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "intent-filter",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "action",
+                  "attributes": {
+                    "android:name": "androidx.profileinstaller.action.BENCHMARK_OPERATION"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

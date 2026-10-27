@@ -1,0 +1,22 @@
+{"scope":"application","kind":"meta-data","name":"android.allow_multiple_resumed_activities","value":"true","resource":null}
+{"scope":"application","kind":"meta-data","name":"android.max_aspect","value":"3","resource":null}
+{"scope":"application","kind":"meta-data","name":"androidx.car.app.TintableAttributionIcon","value":null,"resource":"@drawable/ic_auto_notif_audio"}
+{"scope":"application","kind":"meta-data","name":"androidx.car.app.minCarApiLevel","value":"3","resource":null}
+{"scope":"application","kind":"meta-data","name":"com.google.android.gms.car.application","value":null,"resource":"@xml/automotive_app_desc"}
+{"scope":"application","kind":"meta-data","name":"com.google.android.gms.car.notification.SmallIcon","value":null,"resource":"@drawable/icon"}
+{"scope":"application","kind":"meta-data","name":"com.lge.support.SPLIT_WINDOW","value":"true","resource":null}
+{"scope":"application","kind":"meta-data","name":"com.samsung.android.sdk.multiwindow.enable","value":"true","resource":null}
+{"scope":"androidx.core.content.FileProvider","kind":"meta-data","name":"android.support.FILE_PROVIDER_PATHS","value":null,"resource":"@xml/provider_paths"}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.emoji2.text.EmojiCompatInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.lifecycle.ProcessLifecycleInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.profileinstaller.ProfileInstallerInitializer","value":"androidx.startup","resource":null}
+{"scope":"org.videolan.vlc.DebugLogService","kind":"property","name":"android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE","value":"Collecting logs for debugging purposes","resource":null}
+{"scope":"org.videolan.vlc.PreviewVideoInputService","kind":"meta-data","name":"android.media.tv.input","value":null,"resource":"@xml/previewinputservice"}
+{"scope":"org.videolan.vlc.StartActivity","kind":"meta-data","name":"android.app.searchable","value":null,"resource":"@xml/searchable"}
+{"scope":"org.videolan.vlc.StartActivity","kind":"meta-data","name":"android.app.shortcuts","value":null,"resource":"@xml/shortcuts"}
+{"scope":"org.videolan.vlc.gui.MainActivity","kind":"meta-data","name":"android.app.searchable","value":null,"resource":"@xml/searchable"}
+{"scope":"org.videolan.vlc.gui.video.VideoPlayerActivity","kind":"meta-data","name":"com.samsung.android.support.REMOTE_ACTION","value":null,"resource":"@xml/air_actions"}
+{"scope":"org.videolan.vlc.remoteaccessserver.RemoteAccessService","kind":"property","name":"android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE","value":"HTTP server","resource":null}
+{"scope":"org.videolan.vlc.widget.MiniPlayerAppWidgetProvider","kind":"meta-data","name":"android.appwidget.provider","value":null,"resource":"@xml/widget_provider_mini"}
+{"scope":"org.videolan.vlc.widget.VLCAppWidgetProviderBlack","kind":"meta-data","name":"android.appwidget.provider","value":null,"resource":"@xml/widget_provider_b"}
+{"scope":"org.videolan.vlc.widget.VLCAppWidgetProviderWhite","kind":"meta-data","name":"android.appwidget.provider","value":null,"resource":"@xml/widget_provider_w"}

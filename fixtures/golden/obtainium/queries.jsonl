@@ -1,0 +1,4 @@
+{"kind":"intent","name":"GET_CONTENT */*","actions":["android.intent.action.GET_CONTENT"],"categories":[],"data":[{"scheme":null,"host":null,"port":null,"path":null,"path_prefix":null,"path_pattern":null,"path_suffix":null,"path_advanced_pattern":null,"mime_type":"*/*","ssp":null,"ssp_prefix":null,"ssp_pattern":null}]}
+{"kind":"intent","name":"PROCESS_TEXT text/plain","actions":["android.intent.action.PROCESS_TEXT"],"categories":[],"data":[{"scheme":null,"host":null,"port":null,"path":null,"path_prefix":null,"path_pattern":null,"path_suffix":null,"path_advanced_pattern":null,"mime_type":"text/plain","ssp":null,"ssp_prefix":null,"ssp_pattern":null}]}
+{"kind":"intent","name":"provider","actions":["com.rosan.dhizuku.server.provider"],"categories":[],"data":[]}
+{"kind":"provider","name":"com.rosan.dhizuku.server.provider","actions":[],"categories":[],"data":[]}

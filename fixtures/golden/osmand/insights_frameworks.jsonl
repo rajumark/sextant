@@ -1,0 +1,3 @@
+{"name":"Jetpack Compose","evidence":["627 classes in androidx.compose.runtime"]}
+{"name":"Kotlin","evidence":["8101 classes with kotlin.Metadata"]}
+{"name":"Qt","evidence":["file lib/arm64-v8a/libQt5Core.so"]}

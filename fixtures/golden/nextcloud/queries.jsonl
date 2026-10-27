@@ -1,0 +1,14 @@
+{"kind":"package","name":"at.bitfire.davdroid","actions":[],"categories":[],"data":[]}
+{"kind":"package","name":"it.niedermann.nextcloud.deck","actions":[],"categories":[],"data":[]}
+{"kind":"package","name":"it.niedermann.nextcloud.deck.dev","actions":[],"categories":[],"data":[]}
+{"kind":"package","name":"it.niedermann.nextcloud.deck.play","actions":[],"categories":[],"data":[]}
+{"kind":"package","name":"org.fairscan.app","actions":[],"categories":[],"data":[]}
+{"kind":"intent","name":"GET_CONTENT","actions":["android.intent.action.GET_CONTENT"],"categories":[],"data":[]}
+{"kind":"intent","name":"GET_CONTENT */*","actions":["android.intent.action.GET_CONTENT"],"categories":["android.intent.category.OPENABLE"],"data":[{"scheme":null,"host":null,"port":null,"path":null,"path_prefix":null,"path_pattern":null,"path_suffix":null,"path_advanced_pattern":null,"mime_type":"*/*","ssp":null,"ssp_prefix":null,"ssp_pattern":null}]}
+{"kind":"intent","name":"IMAGE_CAPTURE","actions":["android.media.action.IMAGE_CAPTURE"],"categories":[],"data":[]}
+{"kind":"intent","name":"IMAGE_CAPTURE_SECURE","actions":["android.media.action.IMAGE_CAPTURE_SECURE"],"categories":[],"data":[]}
+{"kind":"intent","name":"PICK */*","actions":["android.intent.action.PICK"],"categories":[],"data":[{"scheme":null,"host":null,"port":null,"path":null,"path_prefix":null,"path_pattern":null,"path_suffix":null,"path_advanced_pattern":null,"mime_type":"*/*","ssp":null,"ssp_prefix":null,"ssp_pattern":null}]}
+{"kind":"intent","name":"SEND */*","actions":["android.intent.action.SEND"],"categories":[],"data":[{"scheme":null,"host":null,"port":null,"path":null,"path_prefix":null,"path_pattern":null,"path_suffix":null,"path_advanced_pattern":null,"mime_type":"*/*","ssp":null,"ssp_prefix":null,"ssp_pattern":null}]}
+{"kind":"intent","name":"SEND_MULTIPLE */*","actions":["android.intent.action.SEND_MULTIPLE"],"categories":[],"data":[{"scheme":null,"host":null,"port":null,"path":null,"path_prefix":null,"path_pattern":null,"path_suffix":null,"path_advanced_pattern":null,"mime_type":"*/*","ssp":null,"ssp_prefix":null,"ssp_pattern":null}]}
+{"kind":"intent","name":"VIDEO_CAPTURE","actions":["android.media.action.VIDEO_CAPTURE"],"categories":[],"data":[]}
+{"kind":"intent","name":"VIEW */*","actions":["android.intent.action.VIEW"],"categories":[],"data":[{"scheme":null,"host":null,"port":null,"path":null,"path_prefix":null,"path_pattern":null,"path_suffix":null,"path_advanced_pattern":null,"mime_type":"*/*","ssp":null,"ssp_prefix":null,"ssp_pattern":null}]}

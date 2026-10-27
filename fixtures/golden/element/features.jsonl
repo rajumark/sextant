@@ -1,0 +1,6 @@
+{"kind":"feature","name":"android.hardware.camera","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.camera.autofocus","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.wifi","required":false,"version":null}
+{"kind":"feature","name":"glEsVersion","required":true,"version":"3.0"}
+{"kind":"library","name":"androidx.window.extensions","required":false,"version":null}
+{"kind":"library","name":"androidx.window.sidecar","required":false,"version":null}

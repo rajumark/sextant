@@ -1,0 +1,17 @@
+{"name":"android.permission.ACCESS_COARSE_LOCATION","kind":"uses-permission","max_sdk":null,"dangerous":true,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.ACCESS_FINE_LOCATION","kind":"uses-permission","max_sdk":null,"dangerous":true,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.ACCESS_LOCATION_EXTRA_COMMANDS","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.ACCESS_NETWORK_STATE","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.FOREGROUND_SERVICE","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.FOREGROUND_SERVICE_DATA_SYNC","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.FOREGROUND_SERVICE_LOCATION","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.INTERNET","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.POST_NOTIFICATIONS","kind":"uses-permission","max_sdk":null,"dangerous":true,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.READ_EXTERNAL_STORAGE","kind":"uses-permission","max_sdk":22,"dangerous":true,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.RECEIVE_BOOT_COMPLETED","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.WAKE_LOCK","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"androidx.car.app.ACCESS_SURFACE","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":true,"implied_by":null}
+{"name":"androidx.car.app.NAVIGATION_TEMPLATES","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":true,"implied_by":null}
+{"name":"app.organicmaps.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":true,"implied_by":null}
+{"name":"app.organicmaps.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION","kind":"declared","max_sdk":null,"dangerous":false,"protection_level":"signature","custom":true,"implied_by":null}

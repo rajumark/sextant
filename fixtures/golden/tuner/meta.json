@@ -1,0 +1,184 @@
+{
+  "schema_version": 7,
+  "tool": {
+    "name": "sextant",
+    "version": "<version>"
+  },
+  "file": {
+    "name": "tuner.apk",
+    "size_bytes": 181149,
+    "sha256": "7fbfaee87f3402f7c4b269ac42a36a2ff2c91b382655647efad23d631caff944"
+  },
+  "package": "org.billthefarmer.tuner",
+  "version_name": "1.58",
+  "version_code": 158,
+  "min_sdk": 23,
+  "target_sdk": 35,
+  "compile_sdk": 35,
+  "label": "Tuner",
+  "application_class": null,
+  "flags": {
+    "debuggable": null,
+    "allow_backup": true,
+    "uses_cleartext_traffic": null,
+    "network_security_config": null,
+    "extract_native_libs": false,
+    "test_only": null,
+    "full_backup_content": null,
+    "data_extraction_rules": null,
+    "backup_agent": null,
+    "full_backup_only": null,
+    "has_fragile_user_data": null,
+    "request_legacy_external_storage": null,
+    "preserve_legacy_external_storage": null,
+    "large_heap": null,
+    "hardware_accelerated": null,
+    "supports_rtl": null,
+    "resizeable_activity": null,
+    "enable_on_back_invoked_callback": null,
+    "app_component_factory": null,
+    "locale_config": null,
+    "app_category": null,
+    "is_game": null,
+    "memtag_mode": null,
+    "uses_non_sdk_api": null,
+    "manage_space_activity": null,
+    "task_affinity": null,
+    "process": null,
+    "theme": "@style/AppDarkTheme",
+    "profileable_shell": null,
+    "install_location": "auto",
+    "shared_user_id": null,
+    "shared_user_max_sdk": null,
+    "target_sandbox_version": null,
+    "supports_screens": {}
+  },
+  "signing": {
+    "verified": true,
+    "schemes": [
+      "v1",
+      "v2",
+      "v3"
+    ],
+    "certificates": [
+      {
+        "sha256": "F5:51:94:7F:71:F1:27:69:FE:27:DB:76:D3:9F:91:9A:B3:E9:34:77:CF:EE:4A:0A:AC:80:D0:FD:9E:60:6F:22",
+        "sha1": "03:AF:29:04:0C:9C:65:3E:B2:7B:1D:8D:F4:AE:B8:34:0A:16:81:3E",
+        "subject": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "issuer": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "not_before": "2013-02-27T04:10:44Z",
+        "not_after": "2040-07-15T04:10:44Z"
+      }
+    ]
+  },
+  "layout": {
+    "dex_files": 1,
+    "native_abis": []
+  },
+  "code": {
+    "dex_files": [
+      "classes.dex"
+    ],
+    "classes": 53,
+    "methods": 192,
+    "fields": 518,
+    "call_edges": 851,
+    "call_sites": 1525,
+    "string_refs": 191,
+    "distinct_strings": 76,
+    "field_refs": 763,
+    "type_refs": 161,
+    "kotlin_classes": 0,
+    "duplicate_classes": 0,
+    "unreadable_methods": 0,
+    "top_packages": [
+      {
+        "package": "org.billthefarmer.tuner",
+        "classes": 53
+      }
+    ]
+  },
+  "insights": {
+    "libraries": 0,
+    "frameworks": [],
+    "sdks": 0,
+    "sdk_categories": {},
+    "endpoints": 0,
+    "hosts": 0,
+    "top_hosts": [],
+    "resource_values": 90,
+    "locales": [
+      "cs",
+      "de",
+      "es",
+      "fr",
+      "hu",
+      "ja",
+      "pl",
+      "pt-BR",
+      "zh-CN"
+    ],
+    "native_libraries": 0,
+    "jni_methods": 0,
+    "android_gradle_plugin": "8.13.2",
+    "findings": {
+      "info": 1
+    }
+  },
+  "icons": {
+    "icon": {
+      "resource": "@drawable/ic_launcher",
+      "best": "res/5p.png",
+      "files": [
+        {
+          "path": "res/Dw.png",
+          "config": "hdpi",
+          "density": 240,
+          "format": "png",
+          "width": 72,
+          "height": 72,
+          "size_bytes": 1700
+        },
+        {
+          "path": "res/8X.png",
+          "config": "mdpi",
+          "density": 160,
+          "format": "png",
+          "width": 48,
+          "height": 48,
+          "size_bytes": 1032
+        },
+        {
+          "path": "res/M2.png",
+          "config": "xhdpi",
+          "density": 320,
+          "format": "png",
+          "width": 96,
+          "height": 96,
+          "size_bytes": 1919
+        },
+        {
+          "path": "res/Gd.png",
+          "config": "xxhdpi",
+          "density": 480,
+          "format": "png",
+          "width": 144,
+          "height": 144,
+          "size_bytes": 3448
+        },
+        {
+          "path": "res/5p.png",
+          "config": "xxxhdpi",
+          "density": 640,
+          "format": "png",
+          "width": 192,
+          "height": 192,
+          "size_bytes": 4534
+        }
+      ],
+      "adaptive": null
+    },
+    "round_icon": null
+  },
+  "warnings": []
+}

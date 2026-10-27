@@ -1,0 +1,2 @@
+{"scope":"application","kind":"meta-data","name":"com.google.mlkit.vision.DEPENDENCIES","value":"barcode_ui","resource":null}
+{"scope":"org.joinmastodon.android.TweakedFileProvider","kind":"meta-data","name":"android.support.FILE_PROVIDER_PATHS","value":null,"resource":"@xml/fileprovider_paths"}

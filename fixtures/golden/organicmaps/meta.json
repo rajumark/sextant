@@ -1,0 +1,488 @@
+{
+  "schema_version": 7,
+  "tool": {
+    "name": "sextant",
+    "version": "<version>"
+  },
+  "file": {
+    "name": "organicmaps.apk",
+    "size_bytes": 63797784,
+    "sha256": "654a736d43317084f13560281fe7013f869800610e9d6036b6789d9c9e07f8bc"
+  },
+  "package": "app.organicmaps",
+  "version_name": "2026.09.29-32-FDroid",
+  "version_code": 26092932,
+  "min_sdk": 21,
+  "target_sdk": 36,
+  "compile_sdk": 36,
+  "label": "Organic Maps",
+  "application_class": "app.organicmaps.MwmApplication",
+  "flags": {
+    "debuggable": null,
+    "allow_backup": true,
+    "uses_cleartext_traffic": null,
+    "network_security_config": "@xml/network_security_config",
+    "extract_native_libs": true,
+    "test_only": null,
+    "full_backup_content": "@xml/backup_content",
+    "data_extraction_rules": "@xml/backup_content_v31",
+    "backup_agent": null,
+    "full_backup_only": null,
+    "has_fragile_user_data": null,
+    "request_legacy_external_storage": null,
+    "preserve_legacy_external_storage": null,
+    "large_heap": null,
+    "hardware_accelerated": null,
+    "supports_rtl": true,
+    "resizeable_activity": true,
+    "enable_on_back_invoked_callback": false,
+    "app_component_factory": "androidx.core.app.CoreComponentFactory",
+    "locale_config": "@xml/locales_config",
+    "app_category": "maps",
+    "is_game": null,
+    "memtag_mode": null,
+    "uses_non_sdk_api": null,
+    "manage_space_activity": "app.organicmaps.ManageSpaceActivity",
+    "task_affinity": null,
+    "process": null,
+    "theme": "@style/MwmTheme",
+    "profileable_shell": null,
+    "install_location": "auto",
+    "shared_user_id": null,
+    "shared_user_max_sdk": null,
+    "target_sandbox_version": null,
+    "supports_screens": {
+      "largeScreens": "true",
+      "xlargeScreens": "true"
+    }
+  },
+  "signing": {
+    "verified": true,
+    "schemes": [
+      "v1",
+      "v2",
+      "v3"
+    ],
+    "certificates": [
+      {
+        "sha256": "E2:16:FC:38:6C:32:7E:C8:8D:05:60:26:F1:DE:A2:7B:E2:BC:3F:9D:7E:E9:56:E4:36:1C:4B:64:EC:45:9F:E9",
+        "sha1": "55:5A:67:D5:16:5C:9E:CD:3C:81:63:95:28:14:84:62:8D:FB:96:4B",
+        "subject": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "issuer": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "not_before": "2021-05-25T06:14:24Z",
+        "not_after": "2048-10-10T06:14:24Z"
+      }
+    ]
+  },
+  "layout": {
+    "dex_files": 2,
+    "native_abis": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86",
+      "x86_64"
+    ]
+  },
+  "code": {
+    "dex_files": [
+      "classes.dex",
+      "classes2.dex"
+    ],
+    "classes": 7143,
+    "methods": 43764,
+    "fields": 20931,
+    "call_edges": 108501,
+    "call_sites": 138561,
+    "string_refs": 12632,
+    "distinct_strings": 8564,
+    "field_refs": 73000,
+    "type_refs": 21660,
+    "kotlin_classes": 0,
+    "duplicate_classes": 0,
+    "unreadable_methods": 0,
+    "top_packages": [
+      {
+        "package": "j$.util.stream",
+        "classes": 268
+      },
+      {
+        "package": "androidx.appcompat.widget",
+        "classes": 185
+      },
+      {
+        "package": "androidx.car.app.model",
+        "classes": 170
+      },
+      {
+        "package": "androidx.core.view",
+        "classes": 156
+      },
+      {
+        "package": "androidx.recyclerview.widget",
+        "classes": 151
+      },
+      {
+        "package": "androidx.fragment.app",
+        "classes": 140
+      },
+      {
+        "package": "app.organicmaps.bookmarks",
+        "classes": 122
+      },
+      {
+        "package": "androidx.car.app",
+        "classes": 113
+      },
+      {
+        "package": "kotlinx.coroutines",
+        "classes": 112
+      },
+      {
+        "package": "androidx.lifecycle",
+        "classes": 108
+      },
+      {
+        "package": "app.organicmaps.editor",
+        "classes": 106
+      },
+      {
+        "package": "app.organicmaps",
+        "classes": 96
+      },
+      {
+        "package": "androidx.work",
+        "classes": 89
+      },
+      {
+        "package": "androidx.room",
+        "classes": 88
+      },
+      {
+        "package": "androidx.preference",
+        "classes": 83
+      }
+    ]
+  },
+  "insights": {
+    "libraries": 68,
+    "frameworks": [],
+    "sdks": 7,
+    "sdk_categories": {
+      "auth": 1,
+      "background-work": 1,
+      "database": 1,
+      "networking": 1,
+      "platform": 1,
+      "reactive": 1,
+      "ui": 1
+    },
+    "endpoints": 343,
+    "hosts": 80,
+    "top_hosts": [
+      {
+        "host": "*",
+        "urls": 245
+      },
+      {
+        "host": "www.openstreetmap.org",
+        "urls": 7
+      },
+      {
+        "host": "omaps.app",
+        "urls": 3
+      },
+      {
+        "host": "organicmaps.app",
+        "urls": 3
+      },
+      {
+        "host": "ge0.me",
+        "urls": 2
+      },
+      {
+        "host": "github.com",
+        "urls": 2
+      },
+      {
+        "host": "play.google.com",
+        "urls": 2
+      },
+      {
+        "host": "twitter.com",
+        "urls": 2
+      },
+      {
+        "host": "wiki.openstreetmap.org",
+        "urls": 2
+      },
+      {
+        "host": "www.garmin.com",
+        "urls": 2
+      },
+      {
+        "host": "www.google.com",
+        "urls": 2
+      },
+      {
+        "host": "www.googleapis.com",
+        "urls": 2
+      },
+      {
+        "host": "www.topografix.com",
+        "urls": 2
+      },
+      {
+        "host": "android.googlesource.com",
+        "urls": 1
+      },
+      {
+        "host": "api.openstreetmap.org",
+        "urls": 1
+      }
+    ],
+    "resource_values": 3679,
+    "locales": [
+      "af",
+      "ar",
+      "ast",
+      "az",
+      "be",
+      "bg",
+      "ca",
+      "cs",
+      "da",
+      "de",
+      "el",
+      "en-GB",
+      "es",
+      "es-MX",
+      "et",
+      "eu",
+      "fa",
+      "fi",
+      "fr",
+      "fr-CA",
+      "gl",
+      "hi",
+      "hr",
+      "hu",
+      "hy",
+      "in",
+      "is",
+      "it",
+      "iw",
+      "ja",
+      "ko",
+      "lo",
+      "lt",
+      "lv",
+      "mr",
+      "mt",
+      "nb",
+      "nl",
+      "pl",
+      "pt",
+      "pt-BR",
+      "ro",
+      "ru",
+      "sk",
+      "sl",
+      "sq",
+      "sr",
+      "sv",
+      "sw",
+      "th",
+      "tr",
+      "uk",
+      "vi",
+      "zh",
+      "zh-HK",
+      "zh-MO",
+      "zh-TW"
+    ],
+    "native_libraries": 4,
+    "jni_methods": 1768,
+    "android_gradle_plugin": "9.2.1",
+    "findings": {
+      "info": 2,
+      "low": 3
+    }
+  },
+  "icons": {
+    "icon": {
+      "resource": "@mipmap/ic_launcher",
+      "best": "res/o-.png",
+      "files": [
+        {
+          "path": "res/BW.xml",
+          "config": "anydpi-v26",
+          "density": null,
+          "format": "xml",
+          "width": null,
+          "height": null,
+          "size_bytes": 548
+        },
+        {
+          "path": "res/yn.png",
+          "config": "hdpi",
+          "density": 240,
+          "format": "png",
+          "width": 72,
+          "height": 72,
+          "size_bytes": 2727
+        },
+        {
+          "path": "res/9w.png",
+          "config": "mdpi",
+          "density": 160,
+          "format": "png",
+          "width": 48,
+          "height": 48,
+          "size_bytes": 1809
+        },
+        {
+          "path": "res/FS.png",
+          "config": "xhdpi",
+          "density": 320,
+          "format": "png",
+          "width": 96,
+          "height": 96,
+          "size_bytes": 3755
+        },
+        {
+          "path": "res/RJ.png",
+          "config": "xxhdpi",
+          "density": 480,
+          "format": "png",
+          "width": 144,
+          "height": 144,
+          "size_bytes": 5784
+        },
+        {
+          "path": "res/o-.png",
+          "config": "xxxhdpi",
+          "density": 640,
+          "format": "png",
+          "width": 192,
+          "height": 192,
+          "size_bytes": 8007
+        }
+      ],
+      "adaptive": {
+        "path": "res/BW.xml",
+        "background": {
+          "resource": "@color/ic_launcher_background",
+          "color": "#006c35",
+          "best": null,
+          "files": []
+        },
+        "foreground": {
+          "resource": "@mipmap/ic_launcher_foreground",
+          "color": null,
+          "best": "res/as.png",
+          "files": [
+            {
+              "path": "res/zr.png",
+              "config": "hdpi",
+              "density": 240,
+              "format": "png",
+              "width": 162,
+              "height": 162,
+              "size_bytes": 2743
+            },
+            {
+              "path": "res/QZ.png",
+              "config": "mdpi",
+              "density": 160,
+              "format": "png",
+              "width": 108,
+              "height": 108,
+              "size_bytes": 1831
+            },
+            {
+              "path": "res/Em.png",
+              "config": "xhdpi",
+              "density": 320,
+              "format": "png",
+              "width": 216,
+              "height": 216,
+              "size_bytes": 3521
+            },
+            {
+              "path": "res/Lf.png",
+              "config": "xxhdpi",
+              "density": 480,
+              "format": "png",
+              "width": 324,
+              "height": 324,
+              "size_bytes": 5058
+            },
+            {
+              "path": "res/as.png",
+              "config": "xxxhdpi",
+              "density": 640,
+              "format": "png",
+              "width": 432,
+              "height": 432,
+              "size_bytes": 6751
+            }
+          ]
+        },
+        "monochrome": {
+          "resource": "@mipmap/ic_launcher_foreground",
+          "color": null,
+          "best": "res/as.png",
+          "files": [
+            {
+              "path": "res/zr.png",
+              "config": "hdpi",
+              "density": 240,
+              "format": "png",
+              "width": 162,
+              "height": 162,
+              "size_bytes": 2743
+            },
+            {
+              "path": "res/QZ.png",
+              "config": "mdpi",
+              "density": 160,
+              "format": "png",
+              "width": 108,
+              "height": 108,
+              "size_bytes": 1831
+            },
+            {
+              "path": "res/Em.png",
+              "config": "xhdpi",
+              "density": 320,
+              "format": "png",
+              "width": 216,
+              "height": 216,
+              "size_bytes": 3521
+            },
+            {
+              "path": "res/Lf.png",
+              "config": "xxhdpi",
+              "density": 480,
+              "format": "png",
+              "width": 324,
+              "height": 324,
+              "size_bytes": 5058
+            },
+            {
+              "path": "res/as.png",
+              "config": "xxxhdpi",
+              "density": 640,
+              "format": "png",
+              "width": 432,
+              "height": 432,
+              "size_bytes": 6751
+            }
+          ]
+        }
+      }
+    },
+    "round_icon": null
+  },
+  "warnings": []
+}

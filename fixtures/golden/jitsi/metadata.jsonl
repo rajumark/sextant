@@ -1,0 +1,8 @@
+{"scope":"application","kind":"meta-data","name":"android.content.APP_RESTRICTIONS","value":null,"resource":"@xml/app_restrictions"}
+{"scope":"application","kind":"meta-data","name":"com.facebook.soloader.enabled","value":"false","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.emoji2.text.EmojiCompatInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.lifecycle.ProcessLifecycleInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.profileinstaller.ProfileInstallerInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"org.jitsi.meet.sdk.JitsiInitializer","value":"androidx.startup","resource":null}
+{"scope":"com.reactnativecommunity.webview.RNCWebViewFileProvider","kind":"meta-data","name":"android.support.FILE_PROVIDER_PATHS","value":null,"resource":"@xml/file_provider_paths"}
+{"scope":"org.jitsi.meet.MainActivity","kind":"meta-data","name":"firebase_crashlytics_collection_enabled","value":"false","resource":null}

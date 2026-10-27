@@ -1,0 +1,11 @@
+{"name":"android.permission.ACCESS_LOCAL_NETWORK","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.FOREGROUND_SERVICE","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.INTERNET","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.POST_NOTIFICATIONS","kind":"uses-permission","max_sdk":null,"dangerous":true,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.VIBRATE","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.WRITE_EXTERNAL_STORAGE","kind":"uses-permission","max_sdk":28,"dangerous":true,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"com.google.android.c2dm.permission.RECEIVE","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":true,"implied_by":null}
+{"name":"org.joinmastodon.android.permission.C2D_MESSAGE","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":true,"implied_by":null}
+{"name":"android.permission.READ_EXTERNAL_STORAGE","kind":"implied","max_sdk":28,"dangerous":true,"protection_level":null,"custom":false,"implied_by":"android.permission.WRITE_EXTERNAL_STORAGE"}
+{"name":"org.joinmastodon.android.permission.C2D_MESSAGE","kind":"declared","max_sdk":null,"dangerous":false,"protection_level":"signature","custom":true,"implied_by":null}

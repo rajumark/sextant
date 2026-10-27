@@ -1,0 +1,752 @@
+{
+  "schema_version": 7,
+  "tool": {
+    "name": "sextant",
+    "version": "<version>"
+  },
+  "file": {
+    "name": "telegramx.apk",
+    "size_bytes": 73662450,
+    "sha256": "5a6f13f790ce889b2984f0303ee6f605f7ae7106fed55879dc7b6c2bf9104ede"
+  },
+  "package": "org.thunderdog.challegram",
+  "version_name": "0.28.11.1800",
+  "version_code": 1800202,
+  "min_sdk": 23,
+  "target_sdk": 37,
+  "compile_sdk": 37,
+  "label": "Telegram X",
+  "application_class": "org.thunderdog.challegram.BaseApplication",
+  "flags": {
+    "debuggable": null,
+    "allow_backup": false,
+    "uses_cleartext_traffic": null,
+    "network_security_config": null,
+    "extract_native_libs": false,
+    "test_only": null,
+    "full_backup_content": "false",
+    "data_extraction_rules": null,
+    "backup_agent": null,
+    "full_backup_only": null,
+    "has_fragile_user_data": null,
+    "request_legacy_external_storage": true,
+    "preserve_legacy_external_storage": true,
+    "large_heap": true,
+    "hardware_accelerated": true,
+    "supports_rtl": true,
+    "resizeable_activity": null,
+    "enable_on_back_invoked_callback": true,
+    "app_component_factory": "androidx.core.app.CoreComponentFactory",
+    "locale_config": null,
+    "app_category": null,
+    "is_game": null,
+    "memtag_mode": null,
+    "uses_non_sdk_api": null,
+    "manage_space_activity": null,
+    "task_affinity": null,
+    "process": null,
+    "theme": "@style/AppTheme",
+    "profileable_shell": null,
+    "install_location": "auto",
+    "shared_user_id": null,
+    "shared_user_max_sdk": null,
+    "target_sandbox_version": null,
+    "supports_screens": {
+      "anyDensity": "true",
+      "largeScreens": "true",
+      "normalScreens": "true",
+      "resizeable": "true",
+      "smallScreens": "true",
+      "xlargeScreens": "true"
+    }
+  },
+  "signing": {
+    "verified": true,
+    "schemes": [
+      "v1",
+      "v2",
+      "v3"
+    ],
+    "certificates": [
+      {
+        "sha256": "A1:98:45:0B:69:30:63:05:CB:B7:1D:2E:7D:82:5F:7F:A6:A6:7C:A7:C5:60:42:19:6E:05:C9:58:B9:AD:4B:F6",
+        "sha1": "0F:54:F0:78:5A:B6:A4:B9:95:A6:9A:E9:75:DF:5D:7E:BD:E7:DC:76",
+        "subject": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "issuer": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "not_before": "2026-09-07T00:09:32Z",
+        "not_after": "2054-01-23T00:09:32Z"
+      }
+    ]
+  },
+  "layout": {
+    "dex_files": 3,
+    "native_abis": [
+      "arm64-v8a"
+    ]
+  },
+  "code": {
+    "dex_files": [
+      "classes.dex",
+      "classes2.dex",
+      "classes3.dex"
+    ],
+    "classes": 12141,
+    "methods": 66756,
+    "fields": 50619,
+    "call_edges": 228925,
+    "call_sites": 346486,
+    "string_refs": 47771,
+    "distinct_strings": 29481,
+    "field_refs": 203028,
+    "type_refs": 63843,
+    "kotlin_classes": 0,
+    "duplicate_classes": 0,
+    "unreadable_methods": 0,
+    "top_packages": [
+      {
+        "package": "",
+        "classes": 6735
+      },
+      {
+        "package": "org.drinkless.tdlib",
+        "classes": 3600
+      },
+      {
+        "package": "org.webrtc",
+        "classes": 355
+      },
+      {
+        "package": "j$.util.stream",
+        "classes": 263
+      },
+      {
+        "package": "j$.util",
+        "classes": 91
+      },
+      {
+        "package": "com.coremedia.iso.boxes",
+        "classes": 64
+      },
+      {
+        "package": "org.osmdroid.views.overlay",
+        "classes": 55
+      },
+      {
+        "package": "androidx.camera.camera2.compat.quirk",
+        "classes": 53
+      },
+      {
+        "package": "com.googlecode.mp4parser.boxes.apple",
+        "classes": 52
+      },
+      {
+        "package": "org.osmdroid.util",
+        "classes": 50
+      },
+      {
+        "package": "androidx.appcompat.widget",
+        "classes": 46
+      },
+      {
+        "package": "org.osmdroid.tileprovider.modules",
+        "classes": 38
+      },
+      {
+        "package": "java.util.function",
+        "classes": 36
+      },
+      {
+        "package": "com.davemorrissey.labs.subscaleview",
+        "classes": 34
+      },
+      {
+        "package": "org.osmdroid.views",
+        "classes": 27
+      }
+    ]
+  },
+  "insights": {
+    "libraries": 53,
+    "frameworks": [],
+    "sdks": 6,
+    "sdk_categories": {
+      "background-work": 1,
+      "communication": 1,
+      "database": 1,
+      "maps": 1,
+      "media": 1,
+      "networking": 1
+    },
+    "endpoints": 133,
+    "hosts": 75,
+    "top_hosts": [
+      {
+        "host": "telegra.ph",
+        "urls": 18
+      },
+      {
+        "host": "github.com",
+        "urls": 9
+      },
+      {
+        "host": "telegram.org",
+        "urls": 8
+      },
+      {
+        "host": "t.me",
+        "urls": 7
+      },
+      {
+        "host": "developer.android.com",
+        "urls": 3
+      },
+      {
+        "host": "overlay.openstreetmap.nl",
+        "urls": 3
+      },
+      {
+        "host": "play.google.com",
+        "urls": 3
+      },
+      {
+        "host": "translations.telegram.org",
+        "urls": 3
+      },
+      {
+        "host": "wms.chartbundle.com",
+        "urls": 3
+      },
+      {
+        "host": "www.google.com",
+        "urls": 3
+      },
+      {
+        "host": "ads.telegram.org",
+        "urls": 2
+      },
+      {
+        "host": "basemap.nationalmap.gov",
+        "urls": 2
+      },
+      {
+        "host": "maps.googleapis.com",
+        "urls": 2
+      },
+      {
+        "host": "music.yandex.ru",
+        "urls": 2
+      },
+      {
+        "host": "telegram.dog",
+        "urls": 2
+      }
+    ],
+    "resource_values": 8028,
+    "locales": [
+      "af",
+      "am",
+      "ar",
+      "as",
+      "az",
+      "be",
+      "bg",
+      "bn",
+      "bs",
+      "ca",
+      "cs",
+      "da",
+      "de",
+      "el",
+      "en-AU",
+      "en-CA",
+      "en-GB",
+      "en-IN",
+      "en-XC",
+      "eo",
+      "es",
+      "es-US",
+      "et",
+      "eu",
+      "fa",
+      "fi",
+      "fr",
+      "fr-CA",
+      "gl",
+      "gu",
+      "he",
+      "hi",
+      "hr",
+      "hu",
+      "hy",
+      "in",
+      "is",
+      "it",
+      "iw",
+      "ja",
+      "ka",
+      "kk",
+      "km",
+      "kn",
+      "ko",
+      "ky",
+      "lo",
+      "lt",
+      "lv",
+      "mk",
+      "ml",
+      "mn",
+      "mr",
+      "ms",
+      "my",
+      "nb",
+      "ne",
+      "nl",
+      "or",
+      "pa",
+      "pl",
+      "pt",
+      "pt-BR",
+      "pt-PT",
+      "ro",
+      "ru",
+      "si",
+      "sk",
+      "sl",
+      "sq",
+      "sr",
+      "sr-Latn",
+      "sv",
+      "sw",
+      "ta",
+      "te",
+      "th",
+      "tl",
+      "tr",
+      "uk",
+      "ur",
+      "uz",
+      "vi",
+      "zh",
+      "zh-CN",
+      "zh-HK",
+      "zh-Hans-HK",
+      "zh-Hans-MO",
+      "zh-MO",
+      "zh-TW",
+      "zu"
+    ],
+    "native_libraries": 8,
+    "jni_methods": 371,
+    "android_gradle_plugin": "9.3.1",
+    "findings": {
+      "info": 3,
+      "low": 4,
+      "medium": 1
+    }
+  },
+  "icons": {
+    "icon": {
+      "resource": "@mipmap/app_launcher",
+      "best": "res/c7.png",
+      "files": [
+        {
+          "path": "res/Vt.xml",
+          "config": "anydpi-v26",
+          "density": null,
+          "format": "xml",
+          "width": null,
+          "height": null,
+          "size_bytes": 548
+        },
+        {
+          "path": "res/8c.png",
+          "config": "hdpi",
+          "density": 240,
+          "format": "png",
+          "width": 72,
+          "height": 72,
+          "size_bytes": 6467
+        },
+        {
+          "path": "res/eJ.png",
+          "config": "mdpi",
+          "density": 160,
+          "format": "png",
+          "width": 48,
+          "height": 48,
+          "size_bytes": 3612
+        },
+        {
+          "path": "res/3e.png",
+          "config": "xhdpi",
+          "density": 320,
+          "format": "png",
+          "width": 96,
+          "height": 96,
+          "size_bytes": 9231
+        },
+        {
+          "path": "res/mF.png",
+          "config": "xxhdpi",
+          "density": 480,
+          "format": "png",
+          "width": 144,
+          "height": 144,
+          "size_bytes": 15595
+        },
+        {
+          "path": "res/c7.png",
+          "config": "xxxhdpi",
+          "density": 640,
+          "format": "png",
+          "width": 192,
+          "height": 192,
+          "size_bytes": 23024
+        }
+      ],
+      "adaptive": {
+        "path": "res/Vt.xml",
+        "background": {
+          "resource": "@mipmap/app_adaptive_bg",
+          "color": null,
+          "best": "res/Qs.webp",
+          "files": [
+            {
+              "path": "res/Gj.webp",
+              "config": "hdpi",
+              "density": 240,
+              "format": "webp",
+              "width": 162,
+              "height": 162,
+              "size_bytes": 4204
+            },
+            {
+              "path": "res/Pj.webp",
+              "config": "ldpi",
+              "density": 120,
+              "format": "webp",
+              "width": 81,
+              "height": 81,
+              "size_bytes": 1568
+            },
+            {
+              "path": "res/tW.webp",
+              "config": "mdpi",
+              "density": 160,
+              "format": "webp",
+              "width": 108,
+              "height": 108,
+              "size_bytes": 2334
+            },
+            {
+              "path": "res/_B.webp",
+              "config": "xhdpi",
+              "density": 320,
+              "format": "webp",
+              "width": 216,
+              "height": 216,
+              "size_bytes": 6486
+            },
+            {
+              "path": "res/Y0.webp",
+              "config": "xxhdpi",
+              "density": 480,
+              "format": "webp",
+              "width": 324,
+              "height": 324,
+              "size_bytes": 12730
+            },
+            {
+              "path": "res/Qs.webp",
+              "config": "xxxhdpi",
+              "density": 640,
+              "format": "webp",
+              "width": 432,
+              "height": 432,
+              "size_bytes": 20476
+            }
+          ]
+        },
+        "foreground": {
+          "resource": "@mipmap/app_adaptive_fg",
+          "color": null,
+          "best": "res/M1.webp",
+          "files": [
+            {
+              "path": "res/3T.webp",
+              "config": "hdpi",
+              "density": 240,
+              "format": "webp",
+              "width": 162,
+              "height": 162,
+              "size_bytes": 896
+            },
+            {
+              "path": "res/2p.webp",
+              "config": "ldpi",
+              "density": 120,
+              "format": "webp",
+              "width": 81,
+              "height": 81,
+              "size_bytes": 502
+            },
+            {
+              "path": "res/yW.webp",
+              "config": "mdpi",
+              "density": 160,
+              "format": "webp",
+              "width": 108,
+              "height": 108,
+              "size_bytes": 638
+            },
+            {
+              "path": "res/kB.webp",
+              "config": "xhdpi",
+              "density": 320,
+              "format": "webp",
+              "width": 216,
+              "height": 216,
+              "size_bytes": 1180
+            },
+            {
+              "path": "res/Gi.webp",
+              "config": "xxhdpi",
+              "density": 480,
+              "format": "webp",
+              "width": 324,
+              "height": 324,
+              "size_bytes": 1636
+            },
+            {
+              "path": "res/M1.webp",
+              "config": "xxxhdpi",
+              "density": 640,
+              "format": "webp",
+              "width": 432,
+              "height": 432,
+              "size_bytes": 2234
+            }
+          ]
+        },
+        "monochrome": {
+          "resource": "@drawable/app_adaptive_fg_monochrome",
+          "color": null,
+          "best": "res/hU.xml",
+          "files": [
+            {
+              "path": "res/hU.xml",
+              "config": "",
+              "density": 160,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 1552
+            }
+          ]
+        }
+      }
+    },
+    "round_icon": {
+      "resource": "@mipmap/app_launcher_round",
+      "best": "res/4U.png",
+      "files": [
+        {
+          "path": "res/_h.xml",
+          "config": "anydpi-v26",
+          "density": null,
+          "format": "xml",
+          "width": null,
+          "height": null,
+          "size_bytes": 548
+        },
+        {
+          "path": "res/ZW.png",
+          "config": "hdpi",
+          "density": 240,
+          "format": "png",
+          "width": 72,
+          "height": 72,
+          "size_bytes": 6467
+        },
+        {
+          "path": "res/R-.png",
+          "config": "mdpi",
+          "density": 160,
+          "format": "png",
+          "width": 48,
+          "height": 48,
+          "size_bytes": 3612
+        },
+        {
+          "path": "res/Yc.png",
+          "config": "xhdpi",
+          "density": 320,
+          "format": "png",
+          "width": 96,
+          "height": 96,
+          "size_bytes": 9231
+        },
+        {
+          "path": "res/aG.png",
+          "config": "xxhdpi",
+          "density": 480,
+          "format": "png",
+          "width": 144,
+          "height": 144,
+          "size_bytes": 15595
+        },
+        {
+          "path": "res/4U.png",
+          "config": "xxxhdpi",
+          "density": 640,
+          "format": "png",
+          "width": 192,
+          "height": 192,
+          "size_bytes": 23024
+        }
+      ],
+      "adaptive": {
+        "path": "res/_h.xml",
+        "background": {
+          "resource": "@mipmap/app_adaptive_bg_round",
+          "color": null,
+          "best": "res/fj.webp",
+          "files": [
+            {
+              "path": "res/x4.webp",
+              "config": "hdpi",
+              "density": 240,
+              "format": "webp",
+              "width": 162,
+              "height": 162,
+              "size_bytes": 5174
+            },
+            {
+              "path": "res/Pu.webp",
+              "config": "ldpi",
+              "density": 120,
+              "format": "webp",
+              "width": 81,
+              "height": 81,
+              "size_bytes": 1918
+            },
+            {
+              "path": "res/Ed.webp",
+              "config": "mdpi",
+              "density": 160,
+              "format": "webp",
+              "width": 108,
+              "height": 108,
+              "size_bytes": 2796
+            },
+            {
+              "path": "res/kX.webp",
+              "config": "xhdpi",
+              "density": 320,
+              "format": "webp",
+              "width": 216,
+              "height": 216,
+              "size_bytes": 8080
+            },
+            {
+              "path": "res/Bp.webp",
+              "config": "xxhdpi",
+              "density": 480,
+              "format": "webp",
+              "width": 324,
+              "height": 324,
+              "size_bytes": 15860
+            },
+            {
+              "path": "res/fj.webp",
+              "config": "xxxhdpi",
+              "density": 640,
+              "format": "webp",
+              "width": 432,
+              "height": 432,
+              "size_bytes": 26010
+            }
+          ]
+        },
+        "foreground": {
+          "resource": "@mipmap/app_adaptive_fg_round",
+          "color": null,
+          "best": "res/7N.webp",
+          "files": [
+            {
+              "path": "res/Q8.webp",
+              "config": "hdpi",
+              "density": 240,
+              "format": "webp",
+              "width": 162,
+              "height": 162,
+              "size_bytes": 1008
+            },
+            {
+              "path": "res/Pe.webp",
+              "config": "ldpi",
+              "density": 120,
+              "format": "webp",
+              "width": 81,
+              "height": 81,
+              "size_bytes": 572
+            },
+            {
+              "path": "res/H5.webp",
+              "config": "mdpi",
+              "density": 160,
+              "format": "webp",
+              "width": 108,
+              "height": 108,
+              "size_bytes": 712
+            },
+            {
+              "path": "res/bG.webp",
+              "config": "xhdpi",
+              "density": 320,
+              "format": "webp",
+              "width": 216,
+              "height": 216,
+              "size_bytes": 1292
+            },
+            {
+              "path": "res/zh.webp",
+              "config": "xxhdpi",
+              "density": 480,
+              "format": "webp",
+              "width": 324,
+              "height": 324,
+              "size_bytes": 1808
+            },
+            {
+              "path": "res/7N.webp",
+              "config": "xxxhdpi",
+              "density": 640,
+              "format": "webp",
+              "width": 432,
+              "height": 432,
+              "size_bytes": 2398
+            }
+          ]
+        },
+        "monochrome": {
+          "resource": "@drawable/app_adaptive_fg_monochrome",
+          "color": null,
+          "best": "res/hU.xml",
+          "files": [
+            {
+              "path": "res/hU.xml",
+              "config": "",
+              "density": 160,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 1552
+            }
+          ]
+        }
+      }
+    }
+  },
+  "warnings": []
+}

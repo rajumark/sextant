@@ -1,0 +1,3 @@
+{"kind":"intent","name":"GET_CONTENT","actions":["android.intent.action.GET_CONTENT"],"categories":[],"data":[]}
+{"kind":"intent","name":"IMAGE_CAPTURE","actions":["android.media.action.IMAGE_CAPTURE"],"categories":[],"data":[]}
+{"kind":"intent","name":"PICK","actions":["android.intent.action.PICK"],"categories":[],"data":[]}

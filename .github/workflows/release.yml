@@ -1,0 +1,35 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Cache APK corpus
+        uses: actions/cache@v4
+        with:
+          path: fixtures/external
+          key: apk-corpus-${{ hashFiles('fixtures/external.lock') }}
+      - name: Fetch APK corpus
+        run: scripts/fetch-apks.sh
+      - name: Test and build the release zip
+        run: ./gradlew build :cli:shadowDistZip
+      - name: Version from tag
+        run: echo "JRELEASER_PROJECT_VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+      - name: Publish (GitHub Release + Homebrew tap)
+        uses: jreleaser/release-action@v2
+        with:
+          arguments: full-release
+        env:
+          JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

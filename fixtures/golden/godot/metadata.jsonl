@@ -1,0 +1,6 @@
+{"scope":"application","kind":"property","name":"android.window.PROPERTY_XR_BOUNDARY_TYPE_RECOMMENDED","value":"XR_BOUNDARY_TYPE_NO_RECOMMENDATION","resource":null}
+{"scope":"application","kind":"meta-data","name":"org.godotengine.library.version","value":"4.7.2.stable","resource":null}
+{"scope":"application","kind":"meta-data","name":"org.godotengine.plugin.v2.GodotOpenXRHybridAppInternal","value":"org.godotengine.openxr.vendors.GodotOpenXRHybridAppInternal","resource":null}
+{"scope":"androidx.core.content.FileProvider","kind":"meta-data","name":"android.support.FILE_PROVIDER_PATHS","value":null,"resource":"@xml/godot_provider_paths"}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.profileinstaller.ProfileInstallerInitializer","value":"androidx.startup","resource":null}
+{"scope":"org.godotengine.editor.GodotXRGame","kind":"property","name":"android.window.PROPERTY_XR_ACTIVITY_START_MODE","value":"XR_ACTIVITY_START_MODE_FULL_SPACE_UNMANAGED","resource":null}

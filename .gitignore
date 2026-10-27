@@ -1,0 +1,34 @@
+.gradle/
+.kotlin/
+build/
+out/
+.idea/
+*.iml
+.DS_Store
+local.properties
+
+# Downloaded real-world APKs for the sweep (pinned in fixtures/external.lock)
+fixtures/external/
+# Extraction output from local runs
+*.sextant/
+
+# Signal fixtures embed Signal's public Google API key verbatim (trips secret scanning)
+fixtures/golden/signal/
+fixtures/golden/signal-old/
+
+# Local Claude Code agents and skills
+.claude/
+
+# Large binaries and local data
+*.apk
+*.aab
+*.dex
+*.zip
+*.tar.gz
+*.sqlite
+*.db
+*.log
+.env
+.env.*
+*.jks
+*.keystore

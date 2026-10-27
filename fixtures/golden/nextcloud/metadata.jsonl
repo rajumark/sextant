@@ -1,0 +1,12 @@
+{"scope":"application","kind":"meta-data","name":"android.content.APP_RESTRICTIONS","value":null,"resource":"@xml/app_config"}
+{"scope":"androidx.core.content.FileProvider","kind":"meta-data","name":"android.support.FILE_PROVIDER_PATHS","value":null,"resource":"@xml/exposed_filepaths"}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.emoji2.text.EmojiCompatInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.lifecycle.ProcessLifecycleInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.profileinstaller.ProfileInstallerInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"okhttp3.internal.platform.PlatformInitializer","value":"androidx.startup","resource":null}
+{"scope":"com.canhub.cropper.CropFileProvider","kind":"meta-data","name":"android.support.FILE_PROVIDER_PATHS","value":null,"resource":"@xml/cropper_library_file_paths"}
+{"scope":"com.nextcloud.client.widget.DashboardWidgetProvider","kind":"meta-data","name":"android.appwidget.provider","value":null,"resource":"@xml/dashboard_widget_info"}
+{"scope":"com.owncloud.android.authentication.AccountAuthenticatorService","kind":"meta-data","name":"android.accounts.AccountAuthenticator","value":null,"resource":"@xml/authenticator"}
+{"scope":"com.owncloud.android.syncadapter.FileSyncService","kind":"meta-data","name":"android.content.SyncAdapter","value":null,"resource":"@xml/syncadapter_files"}
+{"scope":"com.owncloud.android.ui.activity.FileDisplayActivity","kind":"meta-data","name":"android.app.searchable","value":null,"resource":"@xml/users_and_groups_searchable"}
+{"scope":"com.owncloud.android.ui.activity.ShareActivity","kind":"meta-data","name":"android.app.searchable","value":null,"resource":"@xml/users_and_groups_searchable"}

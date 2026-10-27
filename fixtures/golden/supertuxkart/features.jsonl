@@ -1,0 +1,8 @@
+{"kind":"feature","name":"android.hardware.bluetooth","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.gamepad","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.touchscreen","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.type.pc","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.usb.host","required":false,"version":null}
+{"kind":"feature","name":"android.software.input_methods","required":false,"version":null}
+{"kind":"feature","name":"android.software.leanback","required":false,"version":null}
+{"kind":"feature","name":"glEsVersion","required":null,"version":"2.0"}

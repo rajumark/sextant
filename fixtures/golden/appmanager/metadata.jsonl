@@ -1,0 +1,11 @@
+{"scope":"application","kind":"meta-data","name":"android.permission.INTERNET.mode","value":"runtime","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.emoji2.text.EmojiCompatInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.lifecycle.ProcessLifecycleInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.profileinstaller.ProfileInstallerInitializer","value":"androidx.startup","resource":null}
+{"scope":"io.github.muntashirakon.AppManager.accessibility.NoRootAccessibilityService","kind":"meta-data","name":"android.accessibilityservice","value":null,"resource":"@xml/accessibility_service_config"}
+{"scope":"io.github.muntashirakon.AppManager.adb.AdbPairingService","kind":"property","name":"android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE","value":"Discover and pair with this device's wireless ADB daemon using a user-provided pairing code","resource":null}
+{"scope":"io.github.muntashirakon.AppManager.logcat.RecordingWidgetProvider","kind":"meta-data","name":"android.appwidget.provider","value":null,"resource":"@xml/recording_widget_info"}
+{"scope":"io.github.muntashirakon.AppManager.oneclickops.ClearCacheAppWidget","kind":"meta-data","name":"android.appwidget.provider","value":null,"resource":"@xml/app_widget_info_clear_cache"}
+{"scope":"io.github.muntashirakon.AppManager.servermanager.WifiWaitService","kind":"property","name":"android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE","value":"Wait for Wi-Fi after boot and restore the user-configured wireless ADB connection","resource":null}
+{"scope":"io.github.muntashirakon.AppManager.usage.DataUsageAppWidget","kind":"meta-data","name":"android.appwidget.provider","value":null,"resource":"@xml/app_widget_info_data_usage"}
+{"scope":"io.github.muntashirakon.AppManager.usage.ScreenTimeAppWidget","kind":"meta-data","name":"android.appwidget.provider","value":null,"resource":"@xml/app_widget_info_screen_time"}

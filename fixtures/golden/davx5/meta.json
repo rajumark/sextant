@@ -1,0 +1,450 @@
+{
+  "schema_version": 7,
+  "tool": {
+    "name": "sextant",
+    "version": "<version>"
+  },
+  "file": {
+    "name": "davx5.apk",
+    "size_bytes": 17917704,
+    "sha256": "41cf9832d97c31e3fc694e5c66b38990dec3312936cc336141714db07259081b"
+  },
+  "package": "at.bitfire.davdroid",
+  "version_name": "4.5.21-ose",
+  "version_code": 405210002,
+  "min_sdk": 24,
+  "target_sdk": 37,
+  "compile_sdk": 37,
+  "label": "DAVx⁵",
+  "application_class": "com.davx5.ose.App",
+  "flags": {
+    "debuggable": null,
+    "allow_backup": false,
+    "uses_cleartext_traffic": null,
+    "network_security_config": "@xml/network_security_config",
+    "extract_native_libs": false,
+    "test_only": null,
+    "full_backup_content": null,
+    "data_extraction_rules": null,
+    "backup_agent": null,
+    "full_backup_only": null,
+    "has_fragile_user_data": null,
+    "request_legacy_external_storage": null,
+    "preserve_legacy_external_storage": null,
+    "large_heap": null,
+    "hardware_accelerated": null,
+    "supports_rtl": true,
+    "resizeable_activity": true,
+    "enable_on_back_invoked_callback": null,
+    "app_component_factory": "androidx.core.app.CoreComponentFactory",
+    "locale_config": "@xml/_generated_res_locale_config",
+    "app_category": null,
+    "is_game": null,
+    "memtag_mode": null,
+    "uses_non_sdk_api": null,
+    "manage_space_activity": null,
+    "task_affinity": null,
+    "process": null,
+    "theme": "@style/Theme.AppCompat.DayNight.NoActionBar",
+    "profileable_shell": null,
+    "install_location": "internalOnly",
+    "shared_user_id": null,
+    "shared_user_max_sdk": null,
+    "target_sandbox_version": null,
+    "supports_screens": {}
+  },
+  "signing": {
+    "verified": true,
+    "schemes": [
+      "v2",
+      "v3"
+    ],
+    "certificates": [
+      {
+        "sha256": "8B:48:E6:76:A6:86:49:67:79:17:83:C1:D8:D0:FC:0D:D6:D2:CE:33:E1:FB:36:78:77:93:EC:D0:86:D4:47:07",
+        "sha1": "55:98:F1:78:89:4D:83:16:6F:F7:90:60:BE:18:0E:58:31:50:10:82",
+        "subject": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "issuer": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "not_before": "2013-10-13T05:27:41Z",
+        "not_after": "2041-02-28T05:27:41Z"
+      }
+    ]
+  },
+  "layout": {
+    "dex_files": 2,
+    "native_abis": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86",
+      "x86_64"
+    ]
+  },
+  "code": {
+    "dex_files": [
+      "classes.dex",
+      "classes2.dex"
+    ],
+    "classes": 9243,
+    "methods": 44527,
+    "fields": 30521,
+    "call_edges": 155135,
+    "call_sites": 249098,
+    "string_refs": 30801,
+    "distinct_strings": 16665,
+    "field_refs": 126885,
+    "type_refs": 59063,
+    "kotlin_classes": 0,
+    "duplicate_classes": 0,
+    "unreadable_methods": 0,
+    "top_packages": [
+      {
+        "package": "org.conscrypt",
+        "classes": 441
+      },
+      {
+        "package": "androidx.compose.material3",
+        "classes": 301
+      },
+      {
+        "package": "net.fortuna.ical4j.model.property",
+        "classes": 165
+      },
+      {
+        "package": "org.xbill.DNS",
+        "classes": 156
+      },
+      {
+        "package": "net.fortuna.ical4j.model",
+        "classes": 149
+      },
+      {
+        "package": "androidx.compose.foundation.gestures",
+        "classes": 126
+      },
+      {
+        "package": "at.bitfire.davdroid.ui",
+        "classes": 125
+      },
+      {
+        "package": "androidx.appcompat.widget",
+        "classes": 112
+      },
+      {
+        "package": "androidx.compose.animation",
+        "classes": 109
+      },
+      {
+        "package": "at.bitfire.davdroid.ui.account",
+        "classes": 108
+      },
+      {
+        "package": "androidx.compose.foundation.text",
+        "classes": 106
+      },
+      {
+        "package": "androidx.compose.ui.platform",
+        "classes": 105
+      },
+      {
+        "package": "androidx.paging",
+        "classes": 104
+      },
+      {
+        "package": "at.bitfire.davdroid.sync",
+        "classes": 104
+      },
+      {
+        "package": "androidx.compose.runtime",
+        "classes": 102
+      }
+    ]
+  },
+  "insights": {
+    "libraries": 109,
+    "frameworks": [
+      "Jetpack Compose"
+    ],
+    "sdks": 12,
+    "sdk_categories": {
+      "auth": 1,
+      "background-work": 1,
+      "cryptography": 2,
+      "database": 1,
+      "dependency-injection": 1,
+      "networking": 2,
+      "push": 1,
+      "reactive": 1,
+      "serialization": 1,
+      "ui": 1
+    },
+    "endpoints": 65,
+    "hosts": 36,
+    "top_hosts": [
+      {
+        "host": "www.slf4j.org",
+        "urls": 9
+      },
+      {
+        "host": "schema.org",
+        "urls": 5
+      },
+      {
+        "host": "javax.xml.xmlconstants",
+        "urls": 4
+      },
+      {
+        "host": "json.schemastore.org",
+        "urls": 4
+      },
+      {
+        "host": "issuetracker.google.com",
+        "urls": 3
+      },
+      {
+        "host": "www.davx5.com",
+        "urls": 3
+      },
+      {
+        "host": "apache.org",
+        "urls": 2
+      },
+      {
+        "host": "api.fastmail.com",
+        "urls": 2
+      },
+      {
+        "host": "github.com",
+        "urls": 2
+      },
+      {
+        "host": "manual.davx5.com",
+        "urls": 2
+      },
+      {
+        "host": "www.fastmail.com",
+        "urls": 2
+      },
+      {
+        "host": "www.googleapis.com",
+        "urls": 2
+      },
+      {
+        "host": "xml.org",
+        "urls": 2
+      },
+      {
+        "host": "accounts.google.com",
+        "urls": 1
+      },
+      {
+        "host": "android.googlesource.com",
+        "urls": 1
+      }
+    ],
+    "resource_values": 665,
+    "locales": [
+      "af",
+      "am",
+      "ar",
+      "as",
+      "az",
+      "be",
+      "bg",
+      "bn",
+      "bs",
+      "ca",
+      "cs",
+      "da",
+      "de",
+      "el",
+      "en-AU",
+      "en-CA",
+      "en-GB",
+      "en-IN",
+      "en-XC",
+      "es",
+      "es-US",
+      "et",
+      "eu",
+      "fa",
+      "fi",
+      "fr",
+      "fr-CA",
+      "fy",
+      "gl",
+      "gu",
+      "hi",
+      "hr",
+      "hu",
+      "hy",
+      "in",
+      "is",
+      "it",
+      "iw",
+      "ja",
+      "ka",
+      "kk",
+      "km",
+      "kn",
+      "ko",
+      "ky",
+      "lo",
+      "lt",
+      "lv",
+      "mk",
+      "ml",
+      "mn",
+      "mr",
+      "ms",
+      "my",
+      "nb",
+      "nb-NO",
+      "ne",
+      "nl",
+      "or",
+      "pa",
+      "pl",
+      "pt",
+      "pt-BR",
+      "pt-PT",
+      "ro",
+      "ru",
+      "si",
+      "sk",
+      "sl",
+      "sl-SI",
+      "sq",
+      "sr",
+      "sr-Latn",
+      "sv",
+      "sw",
+      "szl",
+      "ta",
+      "te",
+      "th",
+      "tl",
+      "tr",
+      "uk",
+      "ur",
+      "uz",
+      "vi",
+      "zh",
+      "zh-CN",
+      "zh-HK",
+      "zh-TW",
+      "zu"
+    ],
+    "native_libraries": 8,
+    "jni_methods": 0,
+    "android_gradle_plugin": "9.4.1",
+    "findings": {
+      "info": 2,
+      "low": 4
+    }
+  },
+  "icons": {
+    "icon": {
+      "resource": "@mipmap/ic_launcher",
+      "best": "res/o-.png",
+      "files": [
+        {
+          "path": "res/BW.xml",
+          "config": "anydpi-v26",
+          "density": null,
+          "format": "xml",
+          "width": null,
+          "height": null,
+          "size_bytes": 548
+        },
+        {
+          "path": "res/yn.png",
+          "config": "hdpi",
+          "density": 240,
+          "format": "png",
+          "width": 72,
+          "height": 72,
+          "size_bytes": 3196
+        },
+        {
+          "path": "res/9w.png",
+          "config": "mdpi",
+          "density": 160,
+          "format": "png",
+          "width": 48,
+          "height": 48,
+          "size_bytes": 2083
+        },
+        {
+          "path": "res/FS.png",
+          "config": "xhdpi",
+          "density": 320,
+          "format": "png",
+          "width": 96,
+          "height": 96,
+          "size_bytes": 4126
+        },
+        {
+          "path": "res/RJ.png",
+          "config": "xxhdpi",
+          "density": 480,
+          "format": "png",
+          "width": 144,
+          "height": 144,
+          "size_bytes": 6129
+        },
+        {
+          "path": "res/o-.png",
+          "config": "xxxhdpi",
+          "density": 640,
+          "format": "png",
+          "width": 192,
+          "height": 192,
+          "size_bytes": 8044
+        }
+      ],
+      "adaptive": {
+        "path": "res/BW.xml",
+        "background": {
+          "resource": "@color/primaryColor",
+          "color": "#7cb342",
+          "best": null,
+          "files": []
+        },
+        "foreground": {
+          "resource": "@drawable/ic_launcher_foreground",
+          "color": null,
+          "best": "res/Qr.xml",
+          "files": [
+            {
+              "path": "res/Qr.xml",
+              "config": "",
+              "density": 160,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 3776
+            }
+          ]
+        },
+        "monochrome": {
+          "resource": "@drawable/ic_launcher_foreground",
+          "color": null,
+          "best": "res/Qr.xml",
+          "files": [
+            {
+              "path": "res/Qr.xml",
+              "config": "",
+              "density": 160,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 3776
+            }
+          ]
+        }
+      }
+    },
+    "round_icon": null
+  },
+  "warnings": []
+}

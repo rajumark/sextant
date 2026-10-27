@@ -1,0 +1,12 @@
+{"scope":"application","kind":"meta-data","name":"android.webkit.WebView.MetricsOptOut","value":"true","resource":null}
+{"scope":"application","kind":"meta-data","name":"com.google.android.gms.car.application","value":null,"resource":"@xml/automotive_app_desc"}
+{"scope":"application","kind":"meta-data","name":"com.google.android.gms.car.notification.SmallIcon","value":null,"resource":"@mipmap/ic_launcher"}
+{"scope":"application","kind":"meta-data","name":"com.samsung.android.keepalive.density","value":"true","resource":null}
+{"scope":"application","kind":"meta-data","name":"com.samsung.android.multidisplay.keep_process_alive","value":"true","resource":null}
+{"scope":"androidx.appcompat.app.AppLocalesMetadataHolderService","kind":"meta-data","name":"autoStoreLocales","value":"true","resource":null}
+{"scope":"androidx.core.content.FileProvider","kind":"meta-data","name":"android.support.FILE_PROVIDER_PATHS","value":null,"resource":"@xml/nnf_provider_paths"}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.emoji2.text.EmojiCompatInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.lifecycle.ProcessLifecycleInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.profileinstaller.ProfileInstallerInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.work.WorkManagerInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"okhttp3.internal.platform.PlatformInitializer","value":"androidx.startup","resource":null}

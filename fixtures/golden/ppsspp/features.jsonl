@@ -1,0 +1,10 @@
+{"kind":"feature","name":"android.hardware.camera","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.camera.autofocus","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.gamepad","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.location.gps","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.location.network","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.screen.landscape","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.touchscreen","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.type.pc","required":false,"version":null}
+{"kind":"feature","name":"android.software.leanback","required":false,"version":null}
+{"kind":"feature","name":"glEsVersion","required":null,"version":"2.0"}

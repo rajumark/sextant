@@ -1,0 +1,467 @@
+{
+  "schema_version": 7,
+  "tool": {
+    "name": "sextant",
+    "version": "<version>"
+  },
+  "file": {
+    "name": "duckduckgo.apk",
+    "size_bytes": 142353355,
+    "sha256": "b1c0cb010b6f188b301c202905333486df180ee321ee802f143de0e4f29bdbd0"
+  },
+  "package": "com.duckduckgo.mobile.android",
+  "version_name": "5.297.1",
+  "version_code": 52971000,
+  "min_sdk": 28,
+  "target_sdk": 36,
+  "compile_sdk": 36,
+  "label": "DuckDuckGo",
+  "application_class": "com.duckduckgo.app.global.DuckDuckGoApplication",
+  "flags": {
+    "debuggable": null,
+    "allow_backup": false,
+    "uses_cleartext_traffic": null,
+    "network_security_config": "@xml/network_security_config",
+    "extract_native_libs": true,
+    "test_only": null,
+    "full_backup_content": "@xml/backup_rules_android_11_and_older",
+    "data_extraction_rules": "@xml/backup_rules_android_12_upwards",
+    "backup_agent": null,
+    "full_backup_only": null,
+    "has_fragile_user_data": null,
+    "request_legacy_external_storage": true,
+    "preserve_legacy_external_storage": null,
+    "large_heap": true,
+    "hardware_accelerated": null,
+    "supports_rtl": null,
+    "resizeable_activity": null,
+    "enable_on_back_invoked_callback": false,
+    "app_component_factory": "androidx.core.app.CoreComponentFactory",
+    "locale_config": null,
+    "app_category": null,
+    "is_game": null,
+    "memtag_mode": null,
+    "uses_non_sdk_api": null,
+    "manage_space_activity": null,
+    "task_affinity": null,
+    "process": null,
+    "theme": "@style/Theme.DuckDuckGo.App",
+    "profileable_shell": null,
+    "install_location": null,
+    "shared_user_id": null,
+    "shared_user_max_sdk": null,
+    "target_sandbox_version": null,
+    "supports_screens": {}
+  },
+  "signing": {
+    "verified": true,
+    "schemes": [
+      "v3"
+    ],
+    "certificates": [
+      {
+        "sha256": "F0:70:7D:02:1C:0B:F3:E6:F8:DC:C1:1B:A3:F5:70:04:25:D5:97:DC:A3:01:A3:1E:21:05:56:93:4E:BB:1B:0A",
+        "sha1": "62:C8:0E:B8:55:4A:40:D5:A3:FE:4B:22:D7:95:62:73:1E:1A:69:D6",
+        "subject": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "issuer": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "not_before": "2013-12-15T10:45:15Z",
+        "not_after": "2041-05-02T10:45:15Z"
+      }
+    ]
+  },
+  "layout": {
+    "dex_files": 10,
+    "native_abis": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86",
+      "x86_64"
+    ]
+  },
+  "code": {
+    "dex_files": [
+      "classes.dex",
+      "classes2.dex",
+      "classes3.dex",
+      "classes4.dex",
+      "classes5.dex",
+      "classes6.dex",
+      "classes7.dex",
+      "classes8.dex",
+      "classes9.dex",
+      "classes10.dex"
+    ],
+    "classes": 77871,
+    "methods": 455333,
+    "fields": 218138,
+    "call_edges": 1109018,
+    "call_sites": 1558111,
+    "string_refs": 217058,
+    "distinct_strings": 61441,
+    "field_refs": 640008,
+    "type_refs": 331849,
+    "kotlin_classes": 49092,
+    "duplicate_classes": 0,
+    "unreadable_methods": 0,
+    "top_packages": [
+      {
+        "package": "metro.hints",
+        "classes": 2607
+      },
+      {
+        "package": "androidx.compose.material3",
+        "classes": 1946
+      },
+      {
+        "package": "com.duckduckgo.app.browser",
+        "classes": 1017
+      },
+      {
+        "package": "com.google.common.collect",
+        "classes": 1011
+      },
+      {
+        "package": "androidx.datastore.preferences.protobuf",
+        "classes": 523
+      },
+      {
+        "package": "com.duckduckgo.app.di",
+        "classes": 479
+      },
+      {
+        "package": "androidx.compose.foundation.layout",
+        "classes": 472
+      },
+      {
+        "package": "com.duckduckgo.sync.impl",
+        "classes": 455
+      },
+      {
+        "package": "com.duckduckgo.duckchat.impl.ui.nativeinput.views",
+        "classes": 449
+      },
+      {
+        "package": "io.reactivex.internal.operators.flowable",
+        "classes": 432
+      },
+      {
+        "package": "com.google.crypto.tink.proto",
+        "classes": 430
+      },
+      {
+        "package": "androidx.compose.foundation.gestures",
+        "classes": 429
+      },
+      {
+        "package": "com.duckduckgo.mobile.android.vpn.ui.tracker_activity.view.message",
+        "classes": 417
+      },
+      {
+        "package": "com.duckduckgo.duckchat.impl.contextual",
+        "classes": 412
+      },
+      {
+        "package": "com.duckduckgo.app.onboarding.ui.page",
+        "classes": 395
+      }
+    ]
+  },
+  "insights": {
+    "libraries": 112,
+    "frameworks": [
+      "Jetpack Compose",
+      "Kotlin"
+    ],
+    "sdks": 18,
+    "sdk_categories": {
+      "background-work": 1,
+      "barcode": 1,
+      "cryptography": 1,
+      "database": 2,
+      "dependency-injection": 1,
+      "image-loading": 2,
+      "networking": 2,
+      "reactive": 2,
+      "serialization": 3,
+      "ui": 3
+    },
+    "endpoints": 950,
+    "hosts": 845,
+    "top_hosts": [
+      {
+        "host": "duckduckgo.com",
+        "urls": 58
+      },
+      {
+        "host": "www.rfc-editor.org",
+        "urls": 14
+      },
+      {
+        "host": "github.com",
+        "urls": 7
+      },
+      {
+        "host": "tools.ietf.org",
+        "urls": 7
+      },
+      {
+        "host": "www.w3.org",
+        "urls": 5
+      },
+      {
+        "host": "help.duckduckgo.com",
+        "urls": 4
+      },
+      {
+        "host": "passwords.google.com",
+        "urls": 4
+      },
+      {
+        "host": "accounts.google.com",
+        "urls": 3
+      },
+      {
+        "host": "duck.ai",
+        "urls": 3
+      },
+      {
+        "host": "issuetracker.google.com",
+        "urls": 3
+      },
+      {
+        "host": "schemas.android.com",
+        "urls": 3
+      },
+      {
+        "host": "improving.duckduckgo.com",
+        "urls": 2
+      },
+      {
+        "host": "localhost",
+        "urls": 2
+      },
+      {
+        "host": "play.google.com",
+        "urls": 2
+      },
+      {
+        "host": "staticcdn.duckduckgo.com",
+        "urls": 2
+      }
+    ],
+    "resource_values": 5245,
+    "locales": [
+      "af",
+      "am",
+      "ar",
+      "as",
+      "az",
+      "be",
+      "bg",
+      "bn",
+      "bs",
+      "ca",
+      "cs",
+      "da",
+      "de",
+      "el",
+      "en-AU",
+      "en-CA",
+      "en-GB",
+      "en-IN",
+      "en-XC",
+      "es",
+      "es-419",
+      "es-US",
+      "et",
+      "eu",
+      "fa",
+      "fi",
+      "fr",
+      "fr-CA",
+      "gl",
+      "gu",
+      "he",
+      "hi",
+      "hr",
+      "hu",
+      "hy",
+      "id",
+      "in",
+      "is",
+      "it",
+      "iw",
+      "ja",
+      "ka",
+      "kk",
+      "km",
+      "kn",
+      "ko",
+      "ky",
+      "lo",
+      "lt",
+      "lv",
+      "mk",
+      "ml",
+      "mn",
+      "mr",
+      "ms",
+      "my",
+      "nb",
+      "ne",
+      "nl",
+      "or",
+      "pa",
+      "pl",
+      "pt",
+      "pt-BR",
+      "pt-PT",
+      "ro",
+      "ru",
+      "si",
+      "sk",
+      "sl",
+      "sq",
+      "sr",
+      "sr-Latn",
+      "sv",
+      "sw",
+      "ta",
+      "te",
+      "th",
+      "tl",
+      "tr",
+      "uk",
+      "ur",
+      "uz",
+      "vi",
+      "zh-CN",
+      "zh-HK",
+      "zh-TW",
+      "zu"
+    ],
+    "native_libraries": 44,
+    "jni_methods": 220,
+    "android_gradle_plugin": "8.13.2",
+    "findings": {
+      "info": 2,
+      "low": 4,
+      "medium": 1
+    }
+  },
+  "icons": {
+    "icon": {
+      "resource": "@mipmap/ic_launcher_red",
+      "best": "res/6e.xml",
+      "files": [
+        {
+          "path": "res/6e.xml",
+          "config": "anydpi",
+          "density": null,
+          "format": "xml",
+          "width": null,
+          "height": null,
+          "size_bytes": 548
+        }
+      ],
+      "adaptive": {
+        "path": "res/6e.xml",
+        "background": {
+          "resource": "@color/ic_launcher_red_background",
+          "color": "#f05f2b",
+          "best": null,
+          "files": []
+        },
+        "foreground": {
+          "resource": "@drawable/ic_launcher_foreground",
+          "color": null,
+          "best": "res/7E.xml",
+          "files": [
+            {
+              "path": "res/7E.xml",
+              "config": "anydpi",
+              "density": null,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 4628
+            }
+          ]
+        },
+        "monochrome": {
+          "resource": "@drawable/ic_launcher_monochrome",
+          "color": null,
+          "best": "res/VL.xml",
+          "files": [
+            {
+              "path": "res/VL.xml",
+              "config": "anydpi",
+              "density": null,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 3236
+            }
+          ]
+        }
+      }
+    },
+    "round_icon": {
+      "resource": "@mipmap/ic_launcher_red_round",
+      "best": "res/CT.xml",
+      "files": [
+        {
+          "path": "res/CT.xml",
+          "config": "anydpi",
+          "density": null,
+          "format": "xml",
+          "width": null,
+          "height": null,
+          "size_bytes": 548
+        }
+      ],
+      "adaptive": {
+        "path": "res/CT.xml",
+        "background": {
+          "resource": "@color/ic_launcher_red_background",
+          "color": "#f05f2b",
+          "best": null,
+          "files": []
+        },
+        "foreground": {
+          "resource": "@drawable/ic_launcher_foreground_round",
+          "color": null,
+          "best": "res/_h.xml",
+          "files": [
+            {
+              "path": "res/_h.xml",
+              "config": "anydpi",
+              "density": null,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 5828
+            }
+          ]
+        },
+        "monochrome": {
+          "resource": "@drawable/ic_launcher_monochrome",
+          "color": null,
+          "best": "res/VL.xml",
+          "files": [
+            {
+              "path": "res/VL.xml",
+              "config": "anydpi",
+              "density": null,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 3236
+            }
+          ]
+        }
+      }
+    }
+  },
+  "warnings": []
+}

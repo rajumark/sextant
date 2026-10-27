@@ -1,0 +1,1 @@
+{"kind":"intent","name":"GET_CONTENT */*","actions":["android.intent.action.GET_CONTENT"],"categories":[],"data":[{"scheme":null,"host":null,"port":null,"path":null,"path_prefix":null,"path_pattern":null,"path_suffix":null,"path_advanced_pattern":null,"mime_type":"*/*","ssp":null,"ssp_prefix":null,"ssp_pattern":null}]}

@@ -1,0 +1,552 @@
+{
+  "schema_version": 7,
+  "tool": {
+    "name": "sextant",
+    "version": "<version>"
+  },
+  "file": {
+    "name": "opencamera.apk",
+    "size_bytes": 4973923,
+    "sha256": "ca5672ca8c7174554ca0b07b5b26e505817a05142f571cf2abe67e790c30249c"
+  },
+  "package": "net.sourceforge.opencamera",
+  "version_name": "1.56.2",
+  "version_code": 96,
+  "min_sdk": 23,
+  "target_sdk": 36,
+  "compile_sdk": 36,
+  "label": "Open Camera",
+  "application_class": "net.sourceforge.opencamera.OpenCameraApplication",
+  "flags": {
+    "debuggable": null,
+    "allow_backup": true,
+    "uses_cleartext_traffic": null,
+    "network_security_config": null,
+    "extract_native_libs": false,
+    "test_only": null,
+    "full_backup_content": null,
+    "data_extraction_rules": null,
+    "backup_agent": null,
+    "full_backup_only": null,
+    "has_fragile_user_data": null,
+    "request_legacy_external_storage": null,
+    "preserve_legacy_external_storage": null,
+    "large_heap": true,
+    "hardware_accelerated": null,
+    "supports_rtl": null,
+    "resizeable_activity": null,
+    "enable_on_back_invoked_callback": null,
+    "app_component_factory": "androidx.core.app.CoreComponentFactory",
+    "locale_config": null,
+    "app_category": null,
+    "is_game": null,
+    "memtag_mode": null,
+    "uses_non_sdk_api": null,
+    "manage_space_activity": null,
+    "task_affinity": null,
+    "process": null,
+    "theme": "@style/AppTheme",
+    "profileable_shell": null,
+    "install_location": "auto",
+    "shared_user_id": null,
+    "shared_user_max_sdk": null,
+    "target_sandbox_version": null,
+    "supports_screens": {
+      "anyDensity": "true",
+      "largeScreens": "true",
+      "normalScreens": "true",
+      "smallScreens": "true",
+      "xlargeScreens": "true"
+    }
+  },
+  "signing": {
+    "verified": true,
+    "schemes": [
+      "v1",
+      "v2",
+      "v3"
+    ],
+    "certificates": [
+      {
+        "sha256": "43:89:91:C9:68:E8:D3:08:CA:34:07:8D:37:51:1C:90:C5:02:D5:96:BA:F9:F0:D0:C5:FB:D1:C9:BF:67:DF:6D",
+        "sha1": "5B:8C:B3:05:3F:E0:41:6E:F9:85:0D:B5:E8:B8:B2:E5:8A:E2:12:FF",
+        "subject": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "issuer": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "not_before": "2014-03-02T06:19:02Z",
+        "not_after": "2041-07-18T06:19:02Z"
+      }
+    ]
+  },
+  "layout": {
+    "dex_files": 2,
+    "native_abis": []
+  },
+  "code": {
+    "dex_files": [
+      "classes.dex",
+      "classes2.dex"
+    ],
+    "classes": 5349,
+    "methods": 38646,
+    "fields": 21115,
+    "call_edges": 100522,
+    "call_sites": 128332,
+    "string_refs": 20695,
+    "distinct_strings": 6735,
+    "field_refs": 46224,
+    "type_refs": 24829,
+    "kotlin_classes": 2244,
+    "duplicate_classes": 0,
+    "unreadable_methods": 0,
+    "top_packages": [
+      {
+        "package": "kotlinx.coroutines.flow",
+        "classes": 290
+      },
+      {
+        "package": "androidx.appcompat.widget",
+        "classes": 263
+      },
+      {
+        "package": "net.sourceforge.opencamera",
+        "classes": 259
+      },
+      {
+        "package": "androidx.core.app",
+        "classes": 215
+      },
+      {
+        "package": "androidx.core.view",
+        "classes": 201
+      },
+      {
+        "package": "kotlinx.coroutines",
+        "classes": 179
+      },
+      {
+        "package": "androidx.fragment.app",
+        "classes": 140
+      },
+      {
+        "package": "kotlinx.coroutines.channels",
+        "classes": 136
+      },
+      {
+        "package": "kotlin.collections",
+        "classes": 134
+      },
+      {
+        "package": "androidx.lifecycle",
+        "classes": 131
+      },
+      {
+        "package": "kotlin",
+        "classes": 113
+      },
+      {
+        "package": "androidx.appcompat.app",
+        "classes": 99
+      },
+      {
+        "package": "android.support.v4.media.session",
+        "classes": 92
+      },
+      {
+        "package": "kotlin.jvm.internal",
+        "classes": 92
+      },
+      {
+        "package": "androidx.media",
+        "classes": 89
+      }
+    ]
+  },
+  "insights": {
+    "libraries": 36,
+    "frameworks": [
+      "Kotlin"
+    ],
+    "sdks": 1,
+    "sdk_categories": {
+      "reactive": 1
+    },
+    "endpoints": 14,
+    "hosts": 14,
+    "top_hosts": [
+      {
+        "host": "design.google.com",
+        "urls": 1
+      },
+      {
+        "host": "developer.android.com",
+        "urls": 1
+      },
+      {
+        "host": "fonts.google.com",
+        "urls": 1
+      },
+      {
+        "host": "fsf.org",
+        "urls": 1
+      },
+      {
+        "host": "github.com",
+        "urls": 1
+      },
+      {
+        "host": "google.github.io",
+        "urls": 1
+      },
+      {
+        "host": "ns.adobe.com",
+        "urls": 1
+      },
+      {
+        "host": "ns.google.com",
+        "urls": 1
+      },
+      {
+        "host": "opencamera.org.uk",
+        "urls": 1
+      },
+      {
+        "host": "schemas.android.com",
+        "urls": 1
+      },
+      {
+        "host": "www.apache.org",
+        "urls": 1
+      },
+      {
+        "host": "www.gnu.org",
+        "urls": 1
+      },
+      {
+        "host": "www.w3.org",
+        "urls": 1
+      },
+      {
+        "host": "xmlpull.org",
+        "urls": 1
+      }
+    ],
+    "resource_values": 1164,
+    "locales": [
+      "af",
+      "am",
+      "ar",
+      "as",
+      "az",
+      "be",
+      "bg",
+      "bn",
+      "bs",
+      "ca",
+      "cs",
+      "da",
+      "de",
+      "el",
+      "en-AU",
+      "en-CA",
+      "en-GB",
+      "en-IN",
+      "en-XC",
+      "es",
+      "es-US",
+      "et",
+      "eu",
+      "fa",
+      "fi",
+      "fr",
+      "fr-CA",
+      "gl",
+      "gu",
+      "hi",
+      "hr",
+      "hu",
+      "hy",
+      "in",
+      "is",
+      "it",
+      "iw",
+      "ja",
+      "ka",
+      "kk",
+      "km",
+      "kn",
+      "ko",
+      "ky",
+      "lo",
+      "lt",
+      "lv",
+      "mk",
+      "ml",
+      "mn",
+      "mr",
+      "ms",
+      "my",
+      "nb",
+      "ne",
+      "nl",
+      "or",
+      "pa",
+      "pl",
+      "pt",
+      "pt-BR",
+      "pt-PT",
+      "ro",
+      "ru",
+      "si",
+      "sk",
+      "sl",
+      "sq",
+      "sr",
+      "sr-Latn",
+      "sv",
+      "sw",
+      "ta",
+      "te",
+      "th",
+      "tl",
+      "tr",
+      "uk",
+      "ur",
+      "uz",
+      "vi",
+      "zh-CN",
+      "zh-HK",
+      "zh-TW",
+      "zu"
+    ],
+    "native_libraries": 0,
+    "jni_methods": 0,
+    "android_gradle_plugin": "8.13.2",
+    "findings": {
+      "info": 1,
+      "low": 1
+    }
+  },
+  "icons": {
+    "icon": {
+      "resource": "@mipmap/ic_launcher",
+      "best": "res/o-.png",
+      "files": [
+        {
+          "path": "res/BW.xml",
+          "config": "anydpi-v26",
+          "density": null,
+          "format": "xml",
+          "width": null,
+          "height": null,
+          "size_bytes": 548
+        },
+        {
+          "path": "res/yn.png",
+          "config": "hdpi",
+          "density": 240,
+          "format": "png",
+          "width": 72,
+          "height": 72,
+          "size_bytes": 5593
+        },
+        {
+          "path": "res/9w.png",
+          "config": "mdpi",
+          "density": 160,
+          "format": "png",
+          "width": 48,
+          "height": 48,
+          "size_bytes": 3368
+        },
+        {
+          "path": "res/FS.png",
+          "config": "xhdpi",
+          "density": 320,
+          "format": "png",
+          "width": 96,
+          "height": 96,
+          "size_bytes": 8111
+        },
+        {
+          "path": "res/RJ.png",
+          "config": "xxhdpi",
+          "density": 480,
+          "format": "png",
+          "width": 144,
+          "height": 144,
+          "size_bytes": 12742
+        },
+        {
+          "path": "res/o-.png",
+          "config": "xxxhdpi",
+          "density": 640,
+          "format": "png",
+          "width": 192,
+          "height": 192,
+          "size_bytes": 18392
+        }
+      ],
+      "adaptive": {
+        "path": "res/BW.xml",
+        "background": {
+          "resource": "@mipmap/ic_launcher_background",
+          "color": null,
+          "best": "res/Gx.png",
+          "files": [
+            {
+              "path": "res/I2.png",
+              "config": "hdpi",
+              "density": 240,
+              "format": "png",
+              "width": 162,
+              "height": 162,
+              "size_bytes": 1411
+            },
+            {
+              "path": "res/3z.png",
+              "config": "mdpi",
+              "density": 160,
+              "format": "png",
+              "width": 108,
+              "height": 108,
+              "size_bytes": 947
+            },
+            {
+              "path": "res/6h.png",
+              "config": "xhdpi",
+              "density": 320,
+              "format": "png",
+              "width": 216,
+              "height": 216,
+              "size_bytes": 1850
+            },
+            {
+              "path": "res/cV.png",
+              "config": "xxhdpi",
+              "density": 480,
+              "format": "png",
+              "width": 324,
+              "height": 324,
+              "size_bytes": 2977
+            },
+            {
+              "path": "res/Gx.png",
+              "config": "xxxhdpi",
+              "density": 640,
+              "format": "png",
+              "width": 432,
+              "height": 432,
+              "size_bytes": 4074
+            }
+          ]
+        },
+        "foreground": {
+          "resource": "@mipmap/ic_launcher_foreground",
+          "color": null,
+          "best": "res/as.png",
+          "files": [
+            {
+              "path": "res/zr.png",
+              "config": "hdpi",
+              "density": 240,
+              "format": "png",
+              "width": 162,
+              "height": 162,
+              "size_bytes": 5288
+            },
+            {
+              "path": "res/QZ.png",
+              "config": "mdpi",
+              "density": 160,
+              "format": "png",
+              "width": 108,
+              "height": 108,
+              "size_bytes": 3073
+            },
+            {
+              "path": "res/Em.png",
+              "config": "xhdpi",
+              "density": 320,
+              "format": "png",
+              "width": 216,
+              "height": 216,
+              "size_bytes": 7554
+            },
+            {
+              "path": "res/Lf.png",
+              "config": "xxhdpi",
+              "density": 480,
+              "format": "png",
+              "width": 324,
+              "height": 324,
+              "size_bytes": 12862
+            },
+            {
+              "path": "res/as.png",
+              "config": "xxxhdpi",
+              "density": 640,
+              "format": "png",
+              "width": 432,
+              "height": 432,
+              "size_bytes": 19078
+            }
+          ]
+        },
+        "monochrome": {
+          "resource": "@mipmap/ic_launcher_foreground",
+          "color": null,
+          "best": "res/as.png",
+          "files": [
+            {
+              "path": "res/zr.png",
+              "config": "hdpi",
+              "density": 240,
+              "format": "png",
+              "width": 162,
+              "height": 162,
+              "size_bytes": 5288
+            },
+            {
+              "path": "res/QZ.png",
+              "config": "mdpi",
+              "density": 160,
+              "format": "png",
+              "width": 108,
+              "height": 108,
+              "size_bytes": 3073
+            },
+            {
+              "path": "res/Em.png",
+              "config": "xhdpi",
+              "density": 320,
+              "format": "png",
+              "width": 216,
+              "height": 216,
+              "size_bytes": 7554
+            },
+            {
+              "path": "res/Lf.png",
+              "config": "xxhdpi",
+              "density": 480,
+              "format": "png",
+              "width": 324,
+              "height": 324,
+              "size_bytes": 12862
+            },
+            {
+              "path": "res/as.png",
+              "config": "xxxhdpi",
+              "density": 640,
+              "format": "png",
+              "width": 432,
+              "height": 432,
+              "size_bytes": 19078
+            }
+          ]
+        }
+      }
+    },
+    "round_icon": null
+  },
+  "warnings": []
+}

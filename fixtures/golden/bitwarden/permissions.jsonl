@@ -1,0 +1,16 @@
+{"name":"android.permission.ACCESS_NETWORK_STATE","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.CAMERA","kind":"uses-permission","max_sdk":null,"dangerous":true,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.INTERNET","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.NFC","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.POST_NOTIFICATIONS","kind":"uses-permission","max_sdk":null,"dangerous":true,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.SYSTEM_ALERT_WINDOW","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.USE_BIOMETRIC","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.USE_FINGERPRINT","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.VIBRATE","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.WAKE_LOCK","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.WRITE_EXTERNAL_STORAGE","kind":"uses-permission","max_sdk":null,"dangerous":true,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"com.google.android.c2dm.permission.RECEIVE","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":true,"implied_by":null}
+{"name":"com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":true,"implied_by":null}
+{"name":"com.x8bit.bitwarden.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":true,"implied_by":null}
+{"name":"android.permission.READ_EXTERNAL_STORAGE","kind":"implied","max_sdk":null,"dangerous":true,"protection_level":null,"custom":false,"implied_by":"android.permission.WRITE_EXTERNAL_STORAGE"}
+{"name":"com.x8bit.bitwarden.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION","kind":"declared","max_sdk":null,"dangerous":false,"protection_level":"signature","custom":true,"implied_by":null}

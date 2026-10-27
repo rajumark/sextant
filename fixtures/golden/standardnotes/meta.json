@@ -1,0 +1,535 @@
+{
+  "schema_version": 7,
+  "tool": {
+    "name": "sextant",
+    "version": "<version>"
+  },
+  "file": {
+    "name": "standardnotes.apk",
+    "size_bytes": 89678485,
+    "sha256": "782f6e65ee3496e269b18cca2564de95c916f31a498d5160425dd9233e63bd8d"
+  },
+  "package": "com.standardnotes",
+  "version_name": "3.202.10",
+  "version_code": 3005235,
+  "min_sdk": 28,
+  "target_sdk": 36,
+  "compile_sdk": 36,
+  "label": "Standard Notes",
+  "application_class": "com.standardnotes.MainApplication",
+  "flags": {
+    "debuggable": null,
+    "allow_backup": true,
+    "uses_cleartext_traffic": null,
+    "network_security_config": "@xml/network_security_config",
+    "extract_native_libs": false,
+    "test_only": null,
+    "full_backup_content": null,
+    "data_extraction_rules": null,
+    "backup_agent": null,
+    "full_backup_only": null,
+    "has_fragile_user_data": null,
+    "request_legacy_external_storage": true,
+    "preserve_legacy_external_storage": null,
+    "large_heap": null,
+    "hardware_accelerated": null,
+    "supports_rtl": true,
+    "resizeable_activity": null,
+    "enable_on_back_invoked_callback": null,
+    "app_component_factory": "androidx.core.app.CoreComponentFactory",
+    "locale_config": null,
+    "app_category": null,
+    "is_game": null,
+    "memtag_mode": null,
+    "uses_non_sdk_api": null,
+    "manage_space_activity": null,
+    "task_affinity": null,
+    "process": null,
+    "theme": "@style/AppTheme",
+    "profileable_shell": null,
+    "install_location": null,
+    "shared_user_id": null,
+    "shared_user_max_sdk": null,
+    "target_sandbox_version": null,
+    "supports_screens": {}
+  },
+  "signing": {
+    "verified": true,
+    "schemes": [
+      "v3"
+    ],
+    "certificates": [
+      {
+        "sha256": "F5:DE:E5:E6:53:81:21:14:6A:40:50:BD:4F:4C:F6:EE:2D:DC:4D:69:0A:DD:B9:45:44:E9:A3:B2:0C:4C:B5:A7",
+        "sha1": "7B:D1:C1:97:05:95:EB:CB:30:1D:0E:53:A4:C9:B7:C9:1E:9D:AE:07",
+        "subject": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "issuer": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "not_before": "2019-05-02T08:11:16Z",
+        "not_after": "2046-09-17T08:11:16Z"
+      }
+    ]
+  },
+  "layout": {
+    "dex_files": 2,
+    "native_abis": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86",
+      "x86_64"
+    ]
+  },
+  "code": {
+    "dex_files": [
+      "classes.dex",
+      "classes2.dex"
+    ],
+    "classes": 14433,
+    "methods": 99002,
+    "fields": 40632,
+    "call_edges": 228786,
+    "call_sites": 285327,
+    "string_refs": 44104,
+    "distinct_strings": 17820,
+    "field_refs": 108398,
+    "type_refs": 57931,
+    "kotlin_classes": 4679,
+    "duplicate_classes": 0,
+    "unreadable_methods": 0,
+    "top_packages": [
+      {
+        "package": "com.google.common.collect",
+        "classes": 950
+      },
+      {
+        "package": "androidx.datastore.preferences.protobuf",
+        "classes": 360
+      },
+      {
+        "package": "com.google.common.util.concurrent",
+        "classes": 313
+      },
+      {
+        "package": "kotlinx.coroutines.flow",
+        "classes": 296
+      },
+      {
+        "package": "androidx.appcompat.widget",
+        "classes": 247
+      },
+      {
+        "package": "androidx.core.app",
+        "classes": 214
+      },
+      {
+        "package": "androidx.room",
+        "classes": 210
+      },
+      {
+        "package": "androidx.core.view",
+        "classes": 200
+      },
+      {
+        "package": "kotlinx.coroutines",
+        "classes": 183
+      },
+      {
+        "package": "androidx.fragment.app",
+        "classes": 181
+      },
+      {
+        "package": "com.facebook.react.bridge",
+        "classes": 174
+      },
+      {
+        "package": "com.facebook.react.uimanager",
+        "classes": 171
+      },
+      {
+        "package": "com.google.common.base",
+        "classes": 166
+      },
+      {
+        "package": "androidx.lifecycle",
+        "classes": 152
+      },
+      {
+        "package": "com.facebook.imagepipeline.producers",
+        "classes": 146
+      }
+    ]
+  },
+  "insights": {
+    "libraries": 49,
+    "frameworks": [
+      "Hermes (JS engine)",
+      "Kotlin",
+      "React Native"
+    ],
+    "sdks": 5,
+    "sdk_categories": {
+      "background-work": 1,
+      "database": 1,
+      "image-loading": 1,
+      "networking": 1,
+      "reactive": 1
+    },
+    "endpoints": 85,
+    "hosts": 71,
+    "top_hosts": [
+      {
+        "host": "www.slf4j.org",
+        "urls": 9
+      },
+      {
+        "host": "issuetracker.google.com",
+        "urls": 3
+      },
+      {
+        "host": "app.standardnotes.com",
+        "urls": 2
+      },
+      {
+        "host": "fb.me",
+        "urls": 2
+      },
+      {
+        "host": "play.google.com",
+        "urls": 2
+      },
+      {
+        "host": "www.facebook.com",
+        "urls": 2
+      },
+      {
+        "host": "100.112.45.106",
+        "urls": 1
+      },
+      {
+        "host": "android.googlesource.com",
+        "urls": 1
+      },
+      {
+        "host": "api.standardnotes.com",
+        "urls": 1
+      },
+      {
+        "host": "app.standardnotes.org",
+        "urls": 1
+      },
+      {
+        "host": "assets.standardnotes.com",
+        "urls": 1
+      },
+      {
+        "host": "bit.ly",
+        "urls": 1
+      },
+      {
+        "host": "cdn.jsdelivr.net",
+        "urls": 1
+      },
+      {
+        "host": "codemirror.net",
+        "urls": 1
+      },
+      {
+        "host": "day.js.org",
+        "urls": 1
+      }
+    ],
+    "resource_values": 334,
+    "locales": [
+      "af",
+      "am",
+      "ar",
+      "as",
+      "az",
+      "be",
+      "bg",
+      "bn",
+      "bs",
+      "ca",
+      "cs",
+      "da",
+      "de",
+      "el",
+      "en-AU",
+      "en-CA",
+      "en-GB",
+      "en-IN",
+      "en-XC",
+      "es",
+      "es-ES",
+      "es-US",
+      "et",
+      "eu",
+      "fa",
+      "fi",
+      "fr",
+      "fr-CA",
+      "gl",
+      "gu",
+      "hi",
+      "hr",
+      "hu",
+      "hy",
+      "in",
+      "is",
+      "it",
+      "iw",
+      "ja",
+      "ka",
+      "kk",
+      "km",
+      "kn",
+      "ko",
+      "ky",
+      "lo",
+      "lt",
+      "lv",
+      "mk",
+      "ml",
+      "mn",
+      "mr",
+      "ms",
+      "my",
+      "nb",
+      "ne",
+      "nl",
+      "or",
+      "pa",
+      "pl",
+      "pt",
+      "pt-BR",
+      "pt-PT",
+      "ro",
+      "ru",
+      "si",
+      "sk",
+      "sl",
+      "sq",
+      "sr",
+      "sr-Latn",
+      "sv",
+      "sw",
+      "ta",
+      "te",
+      "th",
+      "tl",
+      "tr",
+      "uk",
+      "ur",
+      "uz",
+      "vi",
+      "zh-CN",
+      "zh-HK",
+      "zh-TW",
+      "zu"
+    ],
+    "native_libraries": 52,
+    "jni_methods": 16,
+    "android_gradle_plugin": "8.8.0",
+    "findings": {
+      "high": 1,
+      "info": 3,
+      "low": 4,
+      "medium": 2
+    }
+  },
+  "icons": {
+    "icon": {
+      "resource": "@mipmap/ic_launcher",
+      "best": "res/o-.png",
+      "files": [
+        {
+          "path": "res/BW.xml",
+          "config": "anydpi",
+          "density": null,
+          "format": "xml",
+          "width": null,
+          "height": null,
+          "size_bytes": 548
+        },
+        {
+          "path": "res/yn.png",
+          "config": "hdpi",
+          "density": 240,
+          "format": "png",
+          "width": 72,
+          "height": 72,
+          "size_bytes": 789
+        },
+        {
+          "path": "res/N3.png",
+          "config": "ldpi",
+          "density": 120,
+          "format": "png",
+          "width": 36,
+          "height": 36,
+          "size_bytes": 629
+        },
+        {
+          "path": "res/9w.png",
+          "config": "mdpi",
+          "density": 160,
+          "format": "png",
+          "width": 48,
+          "height": 48,
+          "size_bytes": 629
+        },
+        {
+          "path": "res/FS.png",
+          "config": "xhdpi",
+          "density": 320,
+          "format": "png",
+          "width": 96,
+          "height": 96,
+          "size_bytes": 1118
+        },
+        {
+          "path": "res/RJ.png",
+          "config": "xxhdpi",
+          "density": 480,
+          "format": "png",
+          "width": 144,
+          "height": 144,
+          "size_bytes": 1644
+        },
+        {
+          "path": "res/o-.png",
+          "config": "xxxhdpi",
+          "density": 640,
+          "format": "png",
+          "width": 192,
+          "height": 192,
+          "size_bytes": 2201
+        }
+      ],
+      "adaptive": {
+        "path": "res/BW.xml",
+        "background": {
+          "resource": "@mipmap/ic_launcher_background",
+          "color": null,
+          "best": "res/Gx.png",
+          "files": [
+            {
+              "path": "res/I2.png",
+              "config": "hdpi",
+              "density": 240,
+              "format": "png",
+              "width": 162,
+              "height": 162,
+              "size_bytes": 795
+            },
+            {
+              "path": "res/3z.png",
+              "config": "mdpi",
+              "density": 160,
+              "format": "png",
+              "width": 108,
+              "height": 108,
+              "size_bytes": 502
+            },
+            {
+              "path": "res/6h.png",
+              "config": "xhdpi",
+              "density": 320,
+              "format": "png",
+              "width": 216,
+              "height": 216,
+              "size_bytes": 1077
+            },
+            {
+              "path": "res/cV.png",
+              "config": "xxhdpi",
+              "density": 480,
+              "format": "png",
+              "width": 324,
+              "height": 324,
+              "size_bytes": 1936
+            },
+            {
+              "path": "res/Gx.png",
+              "config": "xxxhdpi",
+              "density": 640,
+              "format": "png",
+              "width": 432,
+              "height": 432,
+              "size_bytes": 2839
+            }
+          ]
+        },
+        "foreground": {
+          "resource": "@mipmap/ic_launcher_foreground",
+          "color": null,
+          "best": "res/as.png",
+          "files": [
+            {
+              "path": "res/zr.png",
+              "config": "hdpi",
+              "density": 240,
+              "format": "png",
+              "width": 162,
+              "height": 162,
+              "size_bytes": 332
+            },
+            {
+              "path": "res/QZ.png",
+              "config": "mdpi",
+              "density": 160,
+              "format": "png",
+              "width": 108,
+              "height": 108,
+              "size_bytes": 254
+            },
+            {
+              "path": "res/Em.png",
+              "config": "xhdpi",
+              "density": 320,
+              "format": "png",
+              "width": 216,
+              "height": 216,
+              "size_bytes": 419
+            },
+            {
+              "path": "res/Lf.png",
+              "config": "xxhdpi",
+              "density": 480,
+              "format": "png",
+              "width": 324,
+              "height": 324,
+              "size_bytes": 652
+            },
+            {
+              "path": "res/as.png",
+              "config": "xxxhdpi",
+              "density": 640,
+              "format": "png",
+              "width": 432,
+              "height": 432,
+              "size_bytes": 868
+            }
+          ]
+        },
+        "monochrome": {
+          "resource": "@drawable/ic_launcher_monochrome",
+          "color": null,
+          "best": "res/c7.png",
+          "files": [
+            {
+              "path": "res/c7.png",
+              "config": "",
+              "density": 160,
+              "format": "png",
+              "width": 108,
+              "height": 108,
+              "size_bytes": 484
+            }
+          ]
+        }
+      }
+    },
+    "round_icon": null
+  },
+  "warnings": []
+}

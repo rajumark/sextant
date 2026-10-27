@@ -1,0 +1,2 @@
+{"name":"Hermes (JS engine)","evidence":["file lib/x86_64/libhermes.so"]}
+{"name":"React Native","evidence":["file lib/x86_64/libreactnative.so","file assets/index.android.bundle","1149 classes in com.facebook.react"]}

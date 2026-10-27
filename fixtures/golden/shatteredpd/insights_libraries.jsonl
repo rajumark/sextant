@@ -1,0 +1,9 @@
+{"group":"androidx.annotation","artifact":"annotation-experimental","version":"1.4.1","evidence":"META-INF/androidx.annotation_annotation-experimental.version"}
+{"group":"androidx.core","artifact":"core","version":"1.15.0","evidence":"META-INF/androidx.core_core.version"}
+{"group":"androidx.interpolator","artifact":"interpolator","version":"1.0.0","evidence":"META-INF/androidx.interpolator_interpolator.version"}
+{"group":"androidx.profileinstaller","artifact":"profileinstaller","version":"1.3.0","evidence":"META-INF/androidx.profileinstaller_profileinstaller.version"}
+{"group":"androidx.startup","artifact":"startup-runtime","version":"1.1.1","evidence":"META-INF/androidx.startup_startup-runtime.version"}
+{"group":"androidx.tracing","artifact":"tracing","version":"1.2.0","evidence":"META-INF/androidx.tracing_tracing.version"}
+{"group":"androidx.versionedparcelable","artifact":"versionedparcelable","version":"1.1.1","evidence":"META-INF/androidx.versionedparcelable_versionedparcelable.version"}
+{"group":"kotlinx","artifact":"coroutines_android","version":"1.6.4","evidence":"META-INF/kotlinx_coroutines_android.version"}
+{"group":"kotlinx","artifact":"coroutines_core","version":"1.6.4","evidence":"META-INF/kotlinx_coroutines_core.version"}

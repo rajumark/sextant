@@ -1,0 +1,5 @@
+{"scope":"application","kind":"meta-data","name":"android.max_aspect","value":"10","resource":null}
+{"scope":"application","kind":"meta-data","name":"com.samsung.android.keepalive.density","value":"true","resource":null}
+{"scope":"application","kind":"meta-data","name":"com.samsung.android.multidisplay.keep_process_alive","value":"true","resource":null}
+{"scope":"application","kind":"meta-data","name":"com.sec.android.support.multiwindow","value":"true","resource":null}
+{"scope":"com.termux.app.TermuxActivity","kind":"meta-data","name":"android.app.shortcuts","value":null,"resource":"@xml/shortcuts"}

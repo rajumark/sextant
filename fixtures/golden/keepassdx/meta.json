@@ -1,0 +1,612 @@
+{
+  "schema_version": 7,
+  "tool": {
+    "name": "sextant",
+    "version": "<version>"
+  },
+  "file": {
+    "name": "keepassdx.apk",
+    "size_bytes": 16762225,
+    "sha256": "0c52db962ec434eacae760ba8a9538c56e192005f358aac3e60d776fcb05c1ee"
+  },
+  "package": "com.kunzisoft.keepass.libre",
+  "version_name": "4.5.6",
+  "version_code": 45600,
+  "min_sdk": 19,
+  "target_sdk": 36,
+  "compile_sdk": 36,
+  "label": "KeePassDX",
+  "application_class": "com.kunzisoft.keepass.app.App",
+  "flags": {
+    "debuggable": null,
+    "allow_backup": true,
+    "uses_cleartext_traffic": null,
+    "network_security_config": null,
+    "extract_native_libs": true,
+    "test_only": null,
+    "full_backup_content": "@xml/old_backup_rules",
+    "data_extraction_rules": "@xml/backup_rules",
+    "backup_agent": "com.kunzisoft.keepass.backup.SettingsBackupAgent",
+    "full_backup_only": null,
+    "has_fragile_user_data": null,
+    "request_legacy_external_storage": null,
+    "preserve_legacy_external_storage": null,
+    "large_heap": true,
+    "hardware_accelerated": null,
+    "supports_rtl": true,
+    "resizeable_activity": true,
+    "enable_on_back_invoked_callback": null,
+    "app_component_factory": "androidx.core.app.CoreComponentFactory",
+    "locale_config": "@xml/_generated_res_locale_config",
+    "app_category": null,
+    "is_game": null,
+    "memtag_mode": null,
+    "uses_non_sdk_api": null,
+    "manage_space_activity": null,
+    "task_affinity": null,
+    "process": null,
+    "theme": "@style/KeepassDXStyle.Night",
+    "profileable_shell": null,
+    "install_location": "auto",
+    "shared_user_id": null,
+    "shared_user_max_sdk": null,
+    "target_sandbox_version": null,
+    "supports_screens": {
+      "anyDensity": "true",
+      "largeScreens": "true",
+      "normalScreens": "true",
+      "smallScreens": "true"
+    }
+  },
+  "signing": {
+    "verified": true,
+    "schemes": [
+      "v1",
+      "v2",
+      "v3"
+    ],
+    "certificates": [
+      {
+        "sha256": "C8:10:AA:B7:EF:A4:D5:AD:3F:C2:94:1F:DF:5F:99:B8:8A:3B:73:F8:62:19:71:56:27:ED:B4:DA:BA:C5:41:A4",
+        "sha1": "73:3C:4D:AB:72:76:6B:75:8C:25:54:9C:A3:F2:53:27:AD:39:C5:B8",
+        "subject": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "issuer": "CN=FDroid,OU=FDroid,O=fdroid.org,L=ORG,ST=ORG,C=UK",
+        "not_before": "2017-11-24T21:46:14Z",
+        "not_after": "2045-04-11T21:46:14Z"
+      }
+    ]
+  },
+  "layout": {
+    "dex_files": 3,
+    "native_abis": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86",
+      "x86_64"
+    ]
+  },
+  "code": {
+    "dex_files": [
+      "classes.dex",
+      "classes2.dex",
+      "classes3.dex"
+    ],
+    "classes": 18277,
+    "methods": 120999,
+    "fields": 84485,
+    "call_edges": 305687,
+    "call_sites": 412519,
+    "string_refs": 56988,
+    "distinct_strings": 21991,
+    "field_refs": 167408,
+    "type_refs": 84927,
+    "kotlin_classes": 5020,
+    "duplicate_classes": 0,
+    "unreadable_methods": 0,
+    "top_packages": [
+      {
+        "package": "org.bouncycastle.jcajce.provider.symmetric",
+        "classes": 563
+      },
+      {
+        "package": "com.kunzisoft.keepass.activities",
+        "classes": 328
+      },
+      {
+        "package": "kotlinx.coroutines.flow",
+        "classes": 296
+      },
+      {
+        "package": "com.kunzisoft.keepass.viewmodels",
+        "classes": 295
+      },
+      {
+        "package": "org.bouncycastle.jcajce.provider.digest",
+        "classes": 268
+      },
+      {
+        "package": "androidx.appcompat.widget",
+        "classes": 246
+      },
+      {
+        "package": "androidx.core.app",
+        "classes": 221
+      },
+      {
+        "package": "com.kunzisoft.keepass.activities.fragments",
+        "classes": 219
+      },
+      {
+        "package": "com.google.android.material.color.utilities",
+        "classes": 218
+      },
+      {
+        "package": "androidx.recyclerview.widget",
+        "classes": 203
+      },
+      {
+        "package": "com.kunzisoft.keepass.activities.dialogs",
+        "classes": 203
+      },
+      {
+        "package": "androidx.core.view",
+        "classes": 198
+      },
+      {
+        "package": "androidx.room",
+        "classes": 190
+      },
+      {
+        "package": "kotlinx.coroutines",
+        "classes": 183
+      },
+      {
+        "package": "org.apache.commons.io.input",
+        "classes": 180
+      }
+    ]
+  },
+  "insights": {
+    "libraries": 51,
+    "frameworks": [
+      "Kotlin"
+    ],
+    "sdks": 4,
+    "sdk_categories": {
+      "cryptography": 1,
+      "database": 1,
+      "reactive": 1,
+      "ui": 1
+    },
+    "endpoints": 87,
+    "hosts": 44,
+    "top_hosts": [
+      {
+        "host": "github.com",
+        "urls": 10
+      },
+      {
+        "host": "www.keepassdx.com",
+        "urls": 3
+      },
+      {
+        "host": "*.*",
+        "urls": 2
+      },
+      {
+        "host": "*.*\\\\.*",
+        "urls": 2
+      },
+      {
+        "host": "*.*\\\\..*\\\\.*",
+        "urls": 2
+      },
+      {
+        "host": "*.*\\\\..*\\\\..*\\\\.*",
+        "urls": 2
+      },
+      {
+        "host": "*.*\\\\..*\\\\..*\\\\..*\\\\.*",
+        "urls": 2
+      },
+      {
+        "host": "*.*\\\\..*\\\\..*\\\\..*\\\\..*\\\\.*",
+        "urls": 2
+      },
+      {
+        "host": "*.*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\.*",
+        "urls": 2
+      },
+      {
+        "host": "*.*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\.*",
+        "urls": 2
+      },
+      {
+        "host": "*.*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\.*",
+        "urls": 2
+      },
+      {
+        "host": "*.*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\.*",
+        "urls": 2
+      },
+      {
+        "host": "*.*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\.*",
+        "urls": 2
+      },
+      {
+        "host": "*.*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\.kdb",
+        "urls": 2
+      },
+      {
+        "host": "*.*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\.kdbx",
+        "urls": 2
+      }
+    ],
+    "resource_values": 3568,
+    "locales": [
+      "af",
+      "am",
+      "ar",
+      "as",
+      "az",
+      "be",
+      "bg",
+      "bn",
+      "bn-BD",
+      "bs",
+      "ca",
+      "ckb",
+      "cs",
+      "da",
+      "de",
+      "el",
+      "en-AU",
+      "en-CA",
+      "en-GB",
+      "en-IN",
+      "en-XC",
+      "eo",
+      "es",
+      "es-419",
+      "es-US",
+      "et",
+      "eu",
+      "fa",
+      "fi",
+      "fil",
+      "fr",
+      "fr-CA",
+      "gl",
+      "gu",
+      "hi",
+      "hr",
+      "hu",
+      "hy",
+      "in",
+      "is",
+      "it",
+      "iw",
+      "ja",
+      "jv",
+      "ka",
+      "kk",
+      "km",
+      "kn",
+      "ko",
+      "ky",
+      "lo",
+      "lt",
+      "lv",
+      "mk",
+      "ml",
+      "mn",
+      "mr",
+      "ms",
+      "my",
+      "nb",
+      "ne",
+      "nl",
+      "nn",
+      "or",
+      "pa",
+      "pl",
+      "pt",
+      "pt-BR",
+      "pt-PT",
+      "ro",
+      "ru",
+      "si",
+      "sk",
+      "sl",
+      "sq",
+      "sr",
+      "sr-Latn",
+      "sv",
+      "sw",
+      "ta",
+      "te",
+      "th",
+      "tl",
+      "tr",
+      "tt",
+      "uk",
+      "ur",
+      "uz",
+      "vi",
+      "yue-Hant",
+      "zh-CN",
+      "zh-HK",
+      "zh-TW",
+      "zu"
+    ],
+    "native_libraries": 8,
+    "jni_methods": 28,
+    "android_gradle_plugin": "8.13.2",
+    "findings": {
+      "high": 1,
+      "info": 1,
+      "low": 4
+    }
+  },
+  "icons": {
+    "icon": {
+      "resource": "@mipmap/ic_launcher",
+      "best": "res/o-.png",
+      "files": [
+        {
+          "path": "res/BW1.xml",
+          "config": "anydpi-v26",
+          "density": null,
+          "format": "xml",
+          "width": null,
+          "height": null,
+          "size_bytes": 548
+        },
+        {
+          "path": "res/yn.png",
+          "config": "hdpi",
+          "density": 240,
+          "format": "png",
+          "width": 72,
+          "height": 72,
+          "size_bytes": 2158
+        },
+        {
+          "path": "res/N3.png",
+          "config": "ldpi",
+          "density": 120,
+          "format": "png",
+          "width": 36,
+          "height": 36,
+          "size_bytes": 1069
+        },
+        {
+          "path": "res/9w.png",
+          "config": "mdpi",
+          "density": 160,
+          "format": "png",
+          "width": 48,
+          "height": 48,
+          "size_bytes": 1438
+        },
+        {
+          "path": "res/FS.png",
+          "config": "xhdpi",
+          "density": 320,
+          "format": "png",
+          "width": 96,
+          "height": 96,
+          "size_bytes": 2854
+        },
+        {
+          "path": "res/RJ.png",
+          "config": "xxhdpi",
+          "density": 480,
+          "format": "png",
+          "width": 144,
+          "height": 144,
+          "size_bytes": 4389
+        },
+        {
+          "path": "res/o-.png",
+          "config": "xxxhdpi",
+          "density": 640,
+          "format": "png",
+          "width": 192,
+          "height": 192,
+          "size_bytes": 6254
+        }
+      ],
+      "adaptive": {
+        "path": "res/BW1.xml",
+        "background": {
+          "resource": "@drawable/ic_launcher_background",
+          "color": null,
+          "best": "res/M0.png",
+          "files": [
+            {
+              "path": "res/M0.png",
+              "config": "",
+              "density": 160,
+              "format": "png",
+              "width": 96,
+              "height": 96,
+              "size_bytes": 508
+            }
+          ]
+        },
+        "foreground": {
+          "resource": "@drawable/ic_launcher_foreground",
+          "color": null,
+          "best": "res/qx.png",
+          "files": [
+            {
+              "path": "res/qx.png",
+              "config": "",
+              "density": 160,
+              "format": "png",
+              "width": 96,
+              "height": 96,
+              "size_bytes": 1280
+            },
+            {
+              "path": "res/PF.xml",
+              "config": "anydpi-v24",
+              "density": null,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 1996
+            }
+          ]
+        },
+        "monochrome": {
+          "resource": "@drawable/ic_launcher_monochrome",
+          "color": null,
+          "best": "res/c0.xml",
+          "files": [
+            {
+              "path": "res/c0.xml",
+              "config": "anydpi-v24",
+              "density": null,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 1528
+            }
+          ]
+        }
+      }
+    },
+    "round_icon": {
+      "resource": "@mipmap/ic_launcher_round",
+      "best": "res/Gc.png",
+      "files": [
+        {
+          "path": "res/0K.xml",
+          "config": "anydpi-v26",
+          "density": null,
+          "format": "xml",
+          "width": null,
+          "height": null,
+          "size_bytes": 548
+        },
+        {
+          "path": "res/8c.png",
+          "config": "hdpi",
+          "density": 240,
+          "format": "png",
+          "width": 72,
+          "height": 72,
+          "size_bytes": 3830
+        },
+        {
+          "path": "res/tw.png",
+          "config": "ldpi",
+          "density": 120,
+          "format": "png",
+          "width": 36,
+          "height": 36,
+          "size_bytes": 1737
+        },
+        {
+          "path": "res/zR.png",
+          "config": "mdpi",
+          "density": 160,
+          "format": "png",
+          "width": 48,
+          "height": 48,
+          "size_bytes": 2375
+        },
+        {
+          "path": "res/wb.png",
+          "config": "xhdpi",
+          "density": 320,
+          "format": "png",
+          "width": 96,
+          "height": 96,
+          "size_bytes": 5084
+        },
+        {
+          "path": "res/fO.png",
+          "config": "xxhdpi",
+          "density": 480,
+          "format": "png",
+          "width": 144,
+          "height": 144,
+          "size_bytes": 7926
+        },
+        {
+          "path": "res/Gc.png",
+          "config": "xxxhdpi",
+          "density": 640,
+          "format": "png",
+          "width": 192,
+          "height": 192,
+          "size_bytes": 11448
+        }
+      ],
+      "adaptive": {
+        "path": "res/0K.xml",
+        "background": {
+          "resource": "@drawable/ic_launcher_background",
+          "color": null,
+          "best": "res/M0.png",
+          "files": [
+            {
+              "path": "res/M0.png",
+              "config": "",
+              "density": 160,
+              "format": "png",
+              "width": 96,
+              "height": 96,
+              "size_bytes": 508
+            }
+          ]
+        },
+        "foreground": {
+          "resource": "@drawable/ic_launcher_foreground",
+          "color": null,
+          "best": "res/qx.png",
+          "files": [
+            {
+              "path": "res/qx.png",
+              "config": "",
+              "density": 160,
+              "format": "png",
+              "width": 96,
+              "height": 96,
+              "size_bytes": 1280
+            },
+            {
+              "path": "res/PF.xml",
+              "config": "anydpi-v24",
+              "density": null,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 1996
+            }
+          ]
+        },
+        "monochrome": {
+          "resource": "@drawable/ic_launcher_monochrome",
+          "color": null,
+          "best": "res/c0.xml",
+          "files": [
+            {
+              "path": "res/c0.xml",
+              "config": "anydpi-v24",
+              "density": null,
+              "format": "xml",
+              "width": null,
+              "height": null,
+              "size_bytes": 1528
+            }
+          ]
+        }
+      }
+    }
+  },
+  "warnings": []
+}

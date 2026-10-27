@@ -1,0 +1,2 @@
+{"name":"Godot","evidence":["file lib/arm64-v8a/libgodot_android.so","215 classes in org.godotengine.godot"]}
+{"name":"Kotlin","evidence":["2604 classes with kotlin.Metadata"]}

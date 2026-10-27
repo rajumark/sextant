@@ -1,0 +1,16 @@
+{"kind":"package","name":"btools.routingapp","actions":[],"categories":[],"data":[]}
+{"kind":"package","name":"com.android.gpstest","actions":[],"categories":[],"data":[]}
+{"kind":"package","name":"com.android.gpstest.osmdroid","actions":[],"categories":[],"data":[]}
+{"kind":"package","name":"com.chartcross.gpstest","actions":[],"categories":[],"data":[]}
+{"kind":"package","name":"com.chartcross.gpstestplus","actions":[],"categories":[],"data":[]}
+{"kind":"package","name":"com.dsi.ant.plugins.antplus","actions":[],"categories":[],"data":[]}
+{"kind":"package","name":"com.eclipsim.gpsstatus2","actions":[],"categories":[],"data":[]}
+{"kind":"package","name":"com.mapillary.app","actions":[],"categories":[],"data":[]}
+{"kind":"package","name":"com.vonglasow.michael.satstat","actions":[],"categories":[],"data":[]}
+{"kind":"package","name":"net.osmand.nauticalPlugin","actions":[],"categories":[],"data":[]}
+{"kind":"package","name":"net.osmand.skimapsPlugin","actions":[],"categories":[],"data":[]}
+{"kind":"package","name":"net.osmand.srtmPlugin","actions":[],"categories":[],"data":[]}
+{"kind":"package","name":"net.osmand.srtmPlugin.paid","actions":[],"categories":[],"data":[]}
+{"kind":"package","name":"org.bruxo.gpsconnected","actions":[],"categories":[],"data":[]}
+{"kind":"intent","name":"TTS_SERVICE","actions":["android.intent.action.TTS_SERVICE"],"categories":[],"data":[]}
+{"kind":"provider","name":"androidx.car.app.connection","actions":[],"categories":[],"data":[]}

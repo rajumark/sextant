@@ -1,0 +1,12 @@
+{"kind":"feature","name":"android.hardware.camera","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.vr.headtracking","required":false,"version":"1"}
+{"kind":"feature","name":"android.hardware.vulkan.level","required":false,"version":"1"}
+{"kind":"feature","name":"android.hardware.vulkan.version","required":false,"version":"0x401000"}
+{"kind":"feature","name":"android.hardware.xr.input.controller","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.xr.input.eye_tracking","required":false,"version":null}
+{"kind":"feature","name":"android.hardware.xr.input.hand_tracking","required":false,"version":null}
+{"kind":"feature","name":"android.software.xr.api.openxr","required":false,"version":null}
+{"kind":"feature","name":"glEsVersion","required":true,"version":"3.0"}
+{"kind":"library","name":"androidx.window.extensions","required":false,"version":null}
+{"kind":"library","name":"androidx.window.sidecar","required":false,"version":null}
+{"kind":"native-library","name":"libopenxr.google.so","required":false,"version":null}

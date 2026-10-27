@@ -1,0 +1,5 @@
+{"kind":"intent","name":"LINK","actions":["org.unifiedpush.android.distributor.LINK"],"categories":[],"data":[]}
+{"kind":"intent","name":"REGISTER","actions":["org.unifiedpush.android.distributor.REGISTER"],"categories":[],"data":[]}
+{"kind":"intent","name":"SEND text/plain","actions":["android.intent.action.SEND"],"categories":[],"data":[{"scheme":null,"host":null,"port":null,"path":null,"path_prefix":null,"path_pattern":null,"path_suffix":null,"path_advanced_pattern":null,"mime_type":"text/plain","ssp":null,"ssp_prefix":null,"ssp_pattern":null}]}
+{"kind":"intent","name":"UNREGISTER","actions":["org.unifiedpush.android.distributor.UNREGISTER"],"categories":[],"data":[]}
+{"kind":"intent","name":"VIEW */*","actions":["android.intent.action.VIEW"],"categories":["android.intent.category.DEFAULT"],"data":[{"scheme":null,"host":null,"port":null,"path":null,"path_prefix":null,"path_pattern":null,"path_suffix":null,"path_advanced_pattern":null,"mime_type":"*/*","ssp":null,"ssp_prefix":null,"ssp_pattern":null}]}
