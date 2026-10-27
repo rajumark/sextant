@@ -19,7 +19,7 @@ Extracted by sextant <version> · schema 7 · sha256 c3212821efeb998e21c1f087499
 - Frameworks: Jetpack Compose, Kotlin
 - SDKs (15): WorkManager, ZXing, Room, Dagger / Hilt, Coil, Timber, ExoPlayer / Media3, Cronet, OkHttp, Retrofit, Kotlin Coroutines, Protocol Buffers, kotlinx.serialization, Jetpack Compose, Material Components
 - Libraries with exact versions: 123 · built with AGP 9.3.1
-- Endpoints: 197 URLs on 94 hosts; top: companion.home-assistant.io (67), github.com (10), www.home-assistant.io (9), www.w3.org (5), my.home-assistant.io (4), developer.android.com (3)
+- Endpoints: 197 URLs on 90 hosts; top: companion.home-assistant.io (67), github.com (10), www.home-assistant.io (9), www.w3.org (5), my.home-assistant.io (4), developer.android.com (3)
 - Native: 12 libraries, 0 JNI methods · Locales: 95
 
 ## Review findings (static observations to check, not proven issues)

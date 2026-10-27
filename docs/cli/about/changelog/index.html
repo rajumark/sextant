@@ -1467,6 +1467,12 @@
 <li><strong>CLI 1.0.0:</strong> everything built in 0.1.0 to 0.10.0 (see CHANGELOG.md). One <code>sextant-1.0.0.zip</code> runs on macOS, Linux and Windows with Java 17 or newer.</li>
 <li><strong>Desktop app 1.0.0:</strong> a window for opening an APK and browsing its overview, manifest, permissions, components, signing, icons and output. Installers for macOS (<code>.dmg</code>), Windows (<code>.msi</code>) and Linux (<code>.deb</code>).</li>
 <li>Releases are published by pushing a commit whose message is exactly <code>#go</code>.</li>
+<li><strong>Documentation site</strong> at https://rajumark.github.io/sextant/cli/ (MkDocs Material, source in <code>cli-docs/</code>). The command and index-schema reference pages are generated from the code by <code>scripts/build-cli-docs.sh</code>.</li>
+<li><strong><code>findings --sarif</code></strong> prints SARIF 2.1.0 for GitHub code scanning, GitLab and security dashboards (validated against the OASIS schema).</li>
+<li><strong><code>findings --fail-on &lt;severity&gt;</code></strong> exits with the new code 5 when any finding is at or above the severity, for CI gates.</li>
+<li><code>findings --json</code> now prints the same records as <code>insights/findings.jsonl</code> (evidence uses <code>where</code>, as in the file).</li>
+<li><strong>Fixed:</strong> host counts and top hosts included custom-scheme deep links (<code>binaryeye://scan</code> counted as host "scan"). They now count only network URLs (http, https, ws, wss, ftp, ftps); <code>endpoints</code> still lists everything.</li>
+<li><code>mcp --help</code> lists the tools from the server itself, so it can't go stale.</li>
 </ul>
 <h2 id="0100-version-10-full-manifest-coverage">0.10.0 (Version 10): full manifest coverage<a class="headerlink" href="#0100-version-10-full-manifest-coverage" title="Permanent link">&para;</a></h2>
 <ul>

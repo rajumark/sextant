@@ -19,7 +19,7 @@ Extracted by sextant <version> · schema 7 · sha256 727693d59c4d678c046386812a1
 - Frameworks: Kotlin
 - SDKs (10): ZXing, Bouncy Castle, Room, Ktor, OkHttp, Retrofit, Kotlin Coroutines, Moshi, kotlinx.serialization, Material Components
 - Libraries with exact versions: 0 · built with AGP 9.1.1
-- Endpoints: 4264 URLs on 402 hosts; top: *.*.3g2 (12), *.*.3ga (12), *.*.3gp (12), *.*.3gp2 (12), *.*.3gpp (12), *.*.a52 (12)
+- Endpoints: 4264 URLs on 401 hosts; top: www.slf4j.org (9), *.*.3g2 (6), *.*.3ga (6), *.*.3gp (6), *.*.3gp2 (6), *.*.3gpp (6)
 - Native: 4 libraries, 121 JNI methods · Locales: 112
 
 ## Review findings (static observations to check, not proven issues)

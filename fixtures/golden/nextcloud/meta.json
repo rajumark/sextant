@@ -187,7 +187,7 @@
       "ui": 2
     },
     "endpoints": 164,
-    "hosts": 83,
+    "hosts": 81,
     "top_hosts": [
       {
         "host": "mock",

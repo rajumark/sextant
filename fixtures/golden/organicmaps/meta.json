@@ -180,10 +180,6 @@
     "hosts": 80,
     "top_hosts": [
       {
-        "host": "*",
-        "urls": 245
-      },
-      {
         "host": "www.openstreetmap.org",
         "urls": 7
       },
@@ -194,6 +190,10 @@
       {
         "host": "organicmaps.app",
         "urls": 3
+      },
+      {
+        "host": "*",
+        "urls": 2
       },
       {
         "host": "ge0.me",

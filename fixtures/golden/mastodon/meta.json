@@ -166,7 +166,7 @@
       "serialization": 1
     },
     "endpoints": 18,
-    "hosts": 11,
+    "hosts": 9,
     "top_hosts": [
       {
         "host": "sponsor.joinmastodon.org",
@@ -197,19 +197,11 @@
         "urls": 1
       },
       {
-        "host": "callback",
-        "urls": 1
-      },
-      {
         "host": "fcm.googleapis.com",
         "urls": 1
       },
       {
         "host": "github.com",
-        "urls": 1
-      },
-      {
-        "host": "share",
         "urls": 1
       }
     ],

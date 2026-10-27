@@ -173,12 +173,8 @@
       "reactive": 1
     },
     "endpoints": 108,
-    "hosts": 103,
+    "hosts": 102,
     "top_hosts": [
-      {
-        "host": "*.*\\\\.godot",
-        "urls": 2
-      },
       {
         "host": "godotengine.org",
         "urls": 2
@@ -233,6 +229,10 @@
       },
       {
         "host": "chilliant.blogspot.com",
+        "urls": 1
+      },
+      {
+        "host": "computergraphics.stackexchange.com",
         "urls": 1
       }
     ],

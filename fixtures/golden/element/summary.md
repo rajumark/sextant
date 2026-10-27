@@ -19,7 +19,7 @@ Extracted by sextant <version> · schema 7 · sha256 6ce8ee6c3a5a76ab2928f3f3b6e
 - Frameworks: Hermes (JS engine), Jetpack Compose, React Native
 - SDKs (26): PostHog, WorkManager, ZXing, Matrix SDK, WebRTC, Sentry, Realm, Room, Dagger / Hilt, Glide, Meta Fresco, Timber, MapLibre, ExoPlayer / Media3, OkHttp, Retrofit, UnifiedPush, Kotlin Coroutines, RxJava, Gson, Jackson, Moshi, Protocol Buffers, kotlinx.serialization, Jetpack Compose, Material Components
 - Libraries with exact versions: 78 · built with AGP 8.11.0
-- Endpoints: 203 URLs on 136 hosts; top: github.com (14), element.io (10), www.w3.org (7), dashif.org (4), localhost (4), matrix.to (4)
+- Endpoints: 203 URLs on 135 hosts; top: github.com (14), element.io (10), www.w3.org (7), dashif.org (4), localhost (4), tools.ietf.org (4)
 - Native: 21 libraries, 854 JNI methods · Locales: 107
 
 ## Review findings (static observations to check, not proven issues)

@@ -1,6 +1,7 @@
 package io.github.rajumark.sextant.core.diff
 
 import io.github.rajumark.sextant.core.index.IndexReader
+import io.github.rajumark.sextant.core.insights.Urls
 import io.github.rajumark.sextant.core.model.AppMeta
 import io.github.rajumark.sextant.core.output.SextantJson
 import kotlinx.serialization.Serializable
@@ -182,7 +183,7 @@ object Differ {
     private const val FRAMEWORKS = "SELECT name FROM frameworks"
     private const val SDKS = "SELECT name || ' (' || category || ')' FROM sdks"
     private const val LIBRARIES = "SELECT \"group\" || ':' || artifact, version FROM libraries"
-    private const val HOSTS = "SELECT DISTINCT host FROM endpoints"
+    private val HOSTS = "SELECT DISTINCT host FROM endpoints WHERE ${Urls.NETWORK_SQL}"
     private const val URLS = "SELECT url FROM endpoints"
     private const val NATIVE = "SELECT path, sha256 FROM native_libraries"
     private const val JNI = "SELECT DISTINCT jni_class || '.' || jni_method FROM native_symbols WHERE jni_class IS NOT NULL"

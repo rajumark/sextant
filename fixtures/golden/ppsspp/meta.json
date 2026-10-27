@@ -169,67 +169,67 @@
     "sdks": 0,
     "sdk_categories": {},
     "endpoints": 96,
-    "hosts": 51,
+    "hosts": 37,
     "top_hosts": [
-      {
-        "host": "*.*\\\\..*\\\\..*\\\\.chd",
-        "urls": 4
-      },
-      {
-        "host": "*.*\\\\..*\\\\..*\\\\.cso",
-        "urls": 4
-      },
-      {
-        "host": "*.*\\\\..*\\\\..*\\\\.elf",
-        "urls": 4
-      },
-      {
-        "host": "*.*\\\\..*\\\\..*\\\\.iso",
-        "urls": 4
-      },
-      {
-        "host": "*.*\\\\..*\\\\.chd",
-        "urls": 4
-      },
-      {
-        "host": "*.*\\\\..*\\\\.cso",
-        "urls": 4
-      },
-      {
-        "host": "*.*\\\\..*\\\\.elf",
-        "urls": 4
-      },
-      {
-        "host": "*.*\\\\..*\\\\.iso",
-        "urls": 4
-      },
-      {
-        "host": "*.*\\\\.chd",
-        "urls": 4
-      },
-      {
-        "host": "*.*\\\\.cso",
-        "urls": 4
-      },
-      {
-        "host": "*.*\\\\.elf",
-        "urls": 4
-      },
-      {
-        "host": "*.*\\\\.iso",
-        "urls": 4
-      },
-      {
-        "host": "*.*\\\\.pbp",
-        "urls": 2
-      },
-      {
-        "host": "*.*\\\\.ppdmp",
-        "urls": 2
-      },
       {
         "host": "forums.ppsspp.org",
         "urls": 2
+      },
+      {
+        "host": "media.retroachievements.org",
+        "urls": 2
+      },
+      {
+        "host": "metadata.ppsspp.org",
+        "urls": 2
+      },
+      {
+        "host": "retroachievements.org",
+        "urls": 2
+      },
+      {
+        "host": "store.ppsspp.org",
+        "urls": 2
+      },
+      {
+        "host": "twitter.com",
+        "urls": 2
+      },
+      {
+        "host": "www.ppsspp.org",
+        "urls": 2
+      },
+      {
+        "host": "[fe80:]",
+        "urls": 1
+      },
+      {
+        "host": "agracingfoundation.org",
+        "urls": 1
+      },
+      {
+        "host": "android.googlesource.com",
+        "urls": 1
+      },
+      {
+        "host": "api.jqueryui.com",
+        "urls": 1
+      },
+      {
+        "host": "discord.gg",
+        "urls": 1
+      },
+      {
+        "host": "fb.me",
+        "urls": 1
+      },
+      {
+        "host": "framedump.ppsspp.org",
+        "urls": 1
+      },
+      {
+        "host": "github.com",
+        "urls": 1
       }
     ],
     "resource_values": 247,

@@ -65,3 +65,19 @@ Found in code string constants and string resources. Values are masked (first 6 
 ```
 
 In the index: tables `findings` and `finding_evidence`, plus the `finding` search kind.
+
+## SARIF and CI
+
+```bash
+sextant findings app/ --sarif > sextant.sarif        # SARIF 2.1.0 for GitHub code scanning, GitLab, dashboards
+sextant findings app/ --fail-on high                 # exit code 5 if there is any high finding
+```
+
+| Sextant severity | SARIF `level` | GitHub `security-severity` |
+|---|---|---|
+| `high` | `error` | 8.0 |
+| `medium` | `warning` | 5.0 |
+| `low` | `note` | 3.0 |
+| `info` | `note` | 1.0 |
+
+Each evidence item becomes a location: `AndroidManifest.xml` for manifest evidence, `resources.arsc` for resources, and `smali/<class path>.smali` for code, with the component, method descriptor or resource name as the logical location. See [Security review → In CI](../guides/security-review.md#in-ci-fail-the-build-and-upload-to-code-scanning) for a complete GitHub Actions workflow.

@@ -178,7 +178,7 @@
       "ui": 1
     },
     "endpoints": 353,
-    "hosts": 293,
+    "hosts": 260,
     "top_hosts": [
       {
         "host": "xmlpull.org",
@@ -193,10 +193,6 @@
         "urls": 5
       },
       {
-        "host": "*",
-        "urls": 4
-      },
-      {
         "host": "apache.org",
         "urls": 3
       },
@@ -205,40 +201,44 @@
         "urls": 3
       },
       {
-        "host": "*.*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\.am.log",
+        "host": "f-droid.org",
         "urls": 2
       },
       {
-        "host": "*.*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\.apkm",
+        "host": "reports.exodus-privacy.eu.org",
         "urls": 2
       },
       {
-        "host": "*.*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\.apks",
+        "host": "schemas.android.com",
         "urls": 2
       },
       {
-        "host": "*.*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\.xapk",
+        "host": "website.com",
         "urls": 2
       },
       {
-        "host": "*.*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\.am.log",
+        "host": "www.antlr.org",
         "urls": 2
       },
       {
-        "host": "*.*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\.apkm",
+        "host": "www.iana.org",
         "urls": 2
       },
       {
-        "host": "*.*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\.apks",
+        "host": "www.w3.org",
         "urls": 2
       },
       {
-        "host": "*.*\\\\..*\\\\..*\\\\..*\\\\..*\\\\..*\\\\.xapk",
+        "host": "xml.org",
         "urls": 2
       },
       {
-        "host": "*.*\\\\..*\\\\..*\\\\..*\\\\..*\\\\.am.log",
-        "urls": 2
+        "host": "360samsungvr.com",
+        "urls": 1
+      },
+      {
+        "host": "about.flipboard.com",
+        "urls": 1
       }
     ],
     "resource_values": 3828,

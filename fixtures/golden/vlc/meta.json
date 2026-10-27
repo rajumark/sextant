@@ -177,67 +177,67 @@
       "ui": 1
     },
     "endpoints": 4264,
-    "hosts": 402,
+    "hosts": 401,
     "top_hosts": [
       {
+        "host": "www.slf4j.org",
+        "urls": 9
+      },
+      {
         "host": "*.*.3g2",
-        "urls": 12
+        "urls": 6
       },
       {
         "host": "*.*.3ga",
-        "urls": 12
+        "urls": 6
       },
       {
         "host": "*.*.3gp",
-        "urls": 12
+        "urls": 6
       },
       {
         "host": "*.*.3gp2",
-        "urls": 12
+        "urls": 6
       },
       {
         "host": "*.*.3gpp",
-        "urls": 12
+        "urls": 6
       },
       {
         "host": "*.*.a52",
-        "urls": 12
+        "urls": 6
       },
       {
         "host": "*.*.aac",
-        "urls": 12
+        "urls": 6
       },
       {
         "host": "*.*.ac3",
-        "urls": 12
+        "urls": 6
       },
       {
         "host": "*.*.adt",
-        "urls": 12
+        "urls": 6
       },
       {
         "host": "*.*.adts",
-        "urls": 12
+        "urls": 6
       },
       {
         "host": "*.*.aif",
-        "urls": 12
+        "urls": 6
       },
       {
         "host": "*.*.aifc",
-        "urls": 12
+        "urls": 6
       },
       {
         "host": "*.*.aiff",
-        "urls": 12
+        "urls": 6
       },
       {
         "host": "*.*.amr",
-        "urls": 12
-      },
-      {
-        "host": "*.*.amv",
-        "urls": 12
+        "urls": 6
       }
     ],
     "resource_values": 3776,

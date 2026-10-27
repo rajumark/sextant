@@ -182,12 +182,8 @@
       "ui": 2
     },
     "endpoints": 1359,
-    "hosts": 484,
+    "hosts": 483,
     "top_hosts": [
-      {
-        "host": "*",
-        "urls": 175
-      },
       {
         "host": "osmand.net",
         "urls": 76
@@ -242,6 +238,10 @@
       },
       {
         "host": "share.here.com",
+        "urls": 10
+      },
+      {
+        "host": "wb.amap.com",
         "urls": 10
       }
     ],

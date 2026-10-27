@@ -19,7 +19,7 @@ Extracted by sextant <version> · schema 7 · sha256 ca05d8f4ec364f84bde1946738e
 - Frameworks: Jetpack Compose, Kotlin, Qt
 - SDKs (11): Coil, Picasso, Ktor, OkHttp, Kotlin Coroutines, Gson, Jackson, Protocol Buffers, kotlinx.serialization, Jetpack Compose, Material Components
 - Libraries with exact versions: 87 · built with AGP 8.10.1
-- Endpoints: 1359 URLs on 484 hosts; top: * (175), osmand.net (76), docs.osmand.net (36), www.openstreetmap.org (18), openstreetmap.org (11), osm.org (11)
+- Endpoints: 1359 URLs on 483 hosts; top: osmand.net (76), docs.osmand.net (36), www.openstreetmap.org (18), openstreetmap.org (11), osm.org (11), here.com (10)
 - Native: 7 libraries, 5798 JNI methods · Locales: 119
 
 ## Review findings (static observations to check, not proven issues)

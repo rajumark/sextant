@@ -19,7 +19,7 @@ Extracted by sextant <version> · schema 7 · sha256 44e1ecb9268702fb65adcee14cf
 - Frameworks: none detected
 - SDKs (0): none detected
 - Libraries with exact versions: 21 · built with AGP 8.11.1
-- Endpoints: 96 URLs on 51 hosts; top: *.*\\..*\\..*\\.chd (4), *.*\\..*\\..*\\.cso (4), *.*\\..*\\..*\\.elf (4), *.*\\..*\\..*\\.iso (4), *.*\\..*\\.chd (4), *.*\\..*\\.cso (4)
+- Endpoints: 96 URLs on 37 hosts; top: forums.ppsspp.org (2), media.retroachievements.org (2), metadata.ppsspp.org (2), retroachievements.org (2), store.ppsspp.org (2), twitter.com (2)
 - Native: 7 libraries, 123 JNI methods · Locales: 85
 
 ## Review findings (static observations to check, not proven issues)

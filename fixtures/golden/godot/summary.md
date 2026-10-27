@@ -19,7 +19,7 @@ Extracted by sextant <version> · schema 7 · sha256 1458a57a3fae0ed94e9d756024e
 - Frameworks: Godot, Kotlin
 - SDKs (2): Bouncy Castle, Kotlin Coroutines
 - Libraries with exact versions: 27 · built with AGP 8.6.1
-- Endpoints: 108 URLs on 103 hosts; top: *.*\\.godot (2), godotengine.org (2), schemas.android.com (2), www.iryoku.com (2), www.unicode.org (2), adriaan.games (1)
+- Endpoints: 108 URLs on 102 hosts; top: godotengine.org (2), schemas.android.com (2), www.iryoku.com (2), www.unicode.org (2), adriaan.games (1), allenwp.com (1)
 - Native: 4 libraries, 68 JNI methods · Locales: 85
 
 ## Review findings (static observations to check, not proven issues)

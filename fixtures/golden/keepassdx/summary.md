@@ -19,7 +19,7 @@ Extracted by sextant <version> · schema 7 · sha256 0c52db962ec434eacae760ba8a9
 - Frameworks: Kotlin
 - SDKs (4): Bouncy Castle, Room, Kotlin Coroutines, Material Components
 - Libraries with exact versions: 51 · built with AGP 8.13.2
-- Endpoints: 87 URLs on 44 hosts; top: github.com (10), www.keepassdx.com (3), *.* (2), *.*\\.* (2), *.*\\..*\\.* (2), *.*\\..*\\..*\\.* (2)
+- Endpoints: 87 URLs on 11 hosts; top: github.com (10), www.keepassdx.com (3), schemas.android.com (2), android.googlesource.com (1), f-droid.org (1), gitlab.com (1)
 - Native: 8 libraries, 28 JNI methods · Locales: 94
 
 ## Review findings (static observations to check, not proven issues)

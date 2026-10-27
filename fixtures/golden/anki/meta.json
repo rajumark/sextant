@@ -186,7 +186,7 @@
       "ui": 2
     },
     "endpoints": 255,
-    "hosts": 83,
+    "hosts": 75,
     "top_hosts": [
       {
         "host": "github.com",
@@ -241,12 +241,12 @@
         "urls": 5
       },
       {
-        "host": "*.*\\\\.apkg",
+        "host": "dashif.org",
         "urls": 4
       },
       {
-        "host": "*.*\\\\.colpkg",
-        "urls": 4
+        "host": "forums.ankiweb.net",
+        "urls": 3
       }
     ],
     "resource_values": 4388,

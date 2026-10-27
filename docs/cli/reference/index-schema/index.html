@@ -1183,7 +1183,7 @@ or external) has one row in <code>methods</code>; edges point at integer ids, an
 and <code>search_items</code> give the readable, descriptor-based form. JSON arrays are stored as TEXT; use SQLite's
 <code>json_each</code> to expand them. Query it with <code>sextant sql &lt;dir&gt; "…"</code> (read-only) or any SQLite tool.</p>
 <p>Schema version: <strong>6</strong>
-(stored in <code>meta</code> as <code>index_version</code>).</p>
+(stored in <code>meta</code> as <code>index_schema_version</code>).</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">meta</span><span class="w"> </span><span class="p">(</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="k">key</span><span class="w">   </span><span class="nb">TEXT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="n">value</span><span class="w"> </span><span class="nb">TEXT</span>

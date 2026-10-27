@@ -188,7 +188,7 @@
       "ui": 2
     },
     "endpoints": 197,
-    "hosts": 94,
+    "hosts": 90,
     "top_hosts": [
       {
         "host": "companion.home-assistant.io",

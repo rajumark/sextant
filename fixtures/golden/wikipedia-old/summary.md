@@ -19,7 +19,7 @@ Extracted by sextant <version> · schema 7 · sha256 4602977099bff12bf24afbbe5a5
 - Frameworks: Jetpack Compose
 - SDKs (16): WorkManager, Room, LeakCanary, Coil, Timber, MapLibre, ExoPlayer / Media3, OkHttp, Retrofit, Kotlin Coroutines, Gson, Jackson, kotlinx.serialization, Jetpack Compose, Lottie, Material Components
 - Libraries with exact versions: 110 · built with AGP 9.4.1
-- Endpoints: 144 URLs on 51 hosts; top: www.mediawiki.org (30), thumb.wikimedia.org (10), *.wikipedia.org (7), donate.wikimedia.org (7), en.wikipedia.org (7), www.w3.org (6)
+- Endpoints: 144 URLs on 51 hosts; top: www.mediawiki.org (30), thumb.wikimedia.org (10), donate.wikimedia.org (7), en.wikipedia.org (7), *.wikipedia.org (6), www.w3.org (6)
 - Native: 8 libraries, 0 JNI methods · Locales: 197
 
 ## Review findings (static observations to check, not proven issues)

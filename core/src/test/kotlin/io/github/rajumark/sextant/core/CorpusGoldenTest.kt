@@ -26,8 +26,12 @@ class CorpusGoldenTest {
 
     private val update = System.getProperty("sextant.updateGolden") == "true"
 
-    // The tool version changes every release; keep it out of the golden files.
-    private fun normalize(text: String) = text.replace(Sextant.version, "<version>")
+    // The tool version changes every release; keep it out of the golden files. Only where the tool writes it:
+    // a plain replace would also hit library versions that happen to be equal (androidx 1.0.0 vs sextant 1.0.0).
+    private fun normalize(text: String) =
+        text
+            .replace(Regex("""("name": "sextant",\s*"version": ")${Regex.escape(Sextant.version)}""""), "$1<version>\"")
+            .replace("sextant ${Sextant.version} ·", "sextant <version> ·")
 
     private val compared =
         OutputFiles.ALL +

@@ -19,7 +19,7 @@ Extracted by sextant <version> · schema 7 · sha256 9d6fcc5f9b0a9b0e7dbb2d255c3
 - Frameworks: Flutter
 - SDKs (6): WebRTC, ExoPlayer / Media3, OkHttp, UnifiedPush, Jackson, Material Components
 - Libraries with exact versions: 64 · built with AGP 8.11.1
-- Endpoints: 62 URLs on 42 hosts; top: github.com (7), developer.android.com (5), dashif.org (4), www.w3.org (3), aomedia.org (2), apache.org (2)
+- Endpoints: 62 URLs on 41 hosts; top: github.com (7), developer.android.com (5), dashif.org (4), www.w3.org (3), aomedia.org (2), apache.org (2)
 - Native: 35 libraries, 964 JNI methods · Locales: 88
 
 ## Review findings (static observations to check, not proven issues)

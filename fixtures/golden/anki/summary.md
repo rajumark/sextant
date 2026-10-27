@@ -19,7 +19,7 @@ Extracted by sextant <version> · schema 7 · sha256 bd0ac8cb9ddff42e1c316e37ee1
 - Frameworks: Jetpack Compose, Kotlin
 - SDKs (11): WorkManager, ACRA, Room, LeakCanary, ExoPlayer / Media3, OkHttp, Kotlin Coroutines, Protocol Buffers, kotlinx.serialization, Jetpack Compose, Material Components
 - Libraries with exact versions: 91 · built with AGP 9.4.0
-- Endpoints: 255 URLs on 83 hosts; top: github.com (43), issuetracker.google.com (15), ankiweb.net (13), docs.ankidroid.org (13), docs.ankiweb.net (10), code.google.com (9)
+- Endpoints: 255 URLs on 75 hosts; top: github.com (43), issuetracker.google.com (15), ankiweb.net (13), docs.ankidroid.org (13), docs.ankiweb.net (10), code.google.com (9)
 - Native: 8 libraries, 12 JNI methods · Locales: 109
 
 ## Review findings (static observations to check, not proven issues)

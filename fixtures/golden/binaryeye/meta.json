@@ -170,7 +170,7 @@
       "ui": 1
     },
     "endpoints": 24,
-    "hosts": 12,
+    "hosts": 9,
     "top_hosts": [
       {
         "host": "markusfisch.de",
@@ -189,23 +189,11 @@
         "urls": 1
       },
       {
-        "host": "details*id=com.xiaomi.scanner",
-        "urls": 1
-      },
-      {
-        "host": "encode",
-        "urls": 1
-      },
-      {
         "host": "github.com",
         "urls": 1
       },
       {
         "host": "issuetracker.google.com",
-        "urls": 1
-      },
-      {
-        "host": "scan",
         "urls": 1
       },
       {

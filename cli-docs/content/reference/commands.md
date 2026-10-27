@@ -243,6 +243,8 @@ Usage: sextant findings [<options>] <dir>
 Options:
   --severity=(info|low|medium|high)  Minimum severity to show
   --json                             One JSON object per finding
+  --sarif                            SARIF 2.1.0 for GitHub code scanning and other dashboards
+  --fail-on=(info|low|medium|high)   Exit with code 5 if any finding is at or above this severity (for CI); the output is unchanged
   -h, --help                         Show this message and exit
 
 Arguments:

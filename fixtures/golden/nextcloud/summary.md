@@ -19,7 +19,7 @@ Extracted by sextant <version> · schema 7 · sha256 8fd4d86de9497d3afecc0bad201
 - Frameworks: Jetpack Compose, Kotlin
 - SDKs (18): WorkManager, ZXing, Bouncy Castle, Conscrypt, Room, Dagger / Hilt, Coil, Glide, osmdroid, ExoPlayer / Media3, Ktor, OkHttp, Kotlin Coroutines, Gson, Jackson, kotlinx.serialization, Jetpack Compose, Material Components
 - Libraries with exact versions: 104 · built with AGP 9.3.2
-- Endpoints: 164 URLs on 83 hosts; top: mock (10), www.slf4j.org (10), * (9), github.com (9), www.w3.org (8), nextcloud.com (5)
+- Endpoints: 164 URLs on 81 hosts; top: mock (10), www.slf4j.org (10), * (9), github.com (9), www.w3.org (8), nextcloud.com (5)
 - Native: 12 libraries, 88 JNI methods · Locales: 112
 
 ## Review findings (static observations to check, not proven issues)

@@ -20,7 +20,7 @@ Extracted by sextant <version> · schema 7 · sha256 dc2b6d74e575cf4ca2b1b21f7c9
 - Frameworks: Jetpack Compose
 - SDKs (20): Google Mobile Ads (AdMob), Mozilla Glean, Google Sign-In, WorkManager, ZXing, Mozilla GeckoView, WebRTC, Sentry, Tink, Room, ExoPlayer / Media3, Google Play Core / In-App Updates, Google Play Services Base, UnifiedPush, Kotlin Coroutines, Protocol Buffers, kotlinx.serialization, Jetpack Compose, Lottie, Material Components
 - Libraries with exact versions: 118 · built with AGP 9.4.0
-- Endpoints: 2856 URLs on 2784 hosts; top: www.mozilla.org (8), www.w3.org (8), addons.mozilla.org (5), identity.mozilla.com (5), safebrowsing.googleapis.com (5), www.google.com (5)
+- Endpoints: 2856 URLs on 2756 hosts; top: www.mozilla.org (8), www.w3.org (8), addons.mozilla.org (5), identity.mozilla.com (5), safebrowsing.googleapis.com (5), www.google.com (5)
 - Native: 15 libraries, 84 JNI methods · Locales: 155
 
 ## Review findings (static observations to check, not proven issues)

@@ -69,3 +69,41 @@ The full list of rules, with what each one means, is in [Review findings](../ref
 
 !!! example "On real apps"
     Across the 46-APK test corpus, every high-severity finding was checked by hand. Examples: Logseq's `SslSkipPlugin` and an `InsecureTrustManager` bundled into Standard Notes accept every certificate; AppManager's wireless-ADB pairing does so on purpose (self-signed certificates); VLC ships a test key inside Netty's `OpenSsl` class.
+
+## In CI: fail the build and upload to code scanning
+
+`--fail-on <severity>` makes `findings` exit with code **5** when any finding is at or above that severity, so a release pipeline can stop on, say, a debuggable build or a trust-all TrustManager. The normal output is still printed.
+
+```bash
+sextant extract -q app-release.apk -o build/sextant
+sextant findings build/sextant --fail-on high
+```
+
+`--sarif` prints the findings as [SARIF 2.1.0](https://docs.oasis-open.org/sarif/sarif/v2.1.0/sarif-v2.1.0.html), the format GitHub code scanning, GitLab and most security dashboards import. Each finding is one result with its severity mapped to a SARIF level (`high` → error, `medium` → warning, `low`/`info` → note) and to GitHub's `security-severity`. An APK has no source files, so each evidence item points at the part of the APK it lives in (`AndroidManifest.xml`, `resources.arsc`, or the class as `smali/com/example/Foo.smali`), with the exact component, method or resource as a logical location.
+
+```yaml title=".github/workflows/apk-review.yml"
+name: APK review
+on: [push]
+permissions:
+  contents: read
+  security-events: write
+jobs:
+  sextant:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: 17 }
+      - run: ./gradlew assembleRelease
+      - name: Install Sextant
+        run: |
+          curl -fsSL -o sextant.zip https://github.com/rajumark/sextant/releases/latest/download/sextant-1.0.0.zip
+          unzip -q sextant.zip && echo "$PWD/sextant-1.0.0/bin" >> "$GITHUB_PATH"
+      - run: sextant extract -q app/build/outputs/apk/release/app-release.apk -o build/sextant
+      - run: sextant findings build/sextant --sarif > sextant.sarif
+      - uses: github/codeql-action/upload-sarif@v3
+        with: { sarif_file: sextant.sarif, category: sextant }
+      - run: sextant findings build/sextant --fail-on high
+```
+
+Combine with `--severity` to keep low-severity notes out of the dashboard: `sextant findings build/sextant --severity medium --sarif`.

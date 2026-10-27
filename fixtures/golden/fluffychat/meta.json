@@ -175,7 +175,7 @@
       "ui": 1
     },
     "endpoints": 62,
-    "hosts": 42,
+    "hosts": 41,
     "top_hosts": [
       {
         "host": "github.com",
@@ -226,15 +226,15 @@
         "urls": 1
       },
       {
-        "host": "chat",
-        "urls": 1
-      },
-      {
         "host": "crbug.com",
         "urls": 1
       },
       {
         "host": "dartbug.com",
+        "urls": 1
+      },
+      {
+        "host": "default.url",
         "urls": 1
       }
     ],

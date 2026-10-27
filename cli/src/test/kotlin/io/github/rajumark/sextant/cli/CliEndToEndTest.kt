@@ -367,6 +367,32 @@ class CliEndToEndTest {
     }
 
     @Test
+    fun `findings --fail-on exits 5 for CI, --sarif prints SARIF 2_1_0`() {
+        val dir = extracted("binaryeye")
+        val failing = sextant("findings", dir, "--fail-on", "medium")
+        failing.exitCode shouldBe 5
+        failing.stderr shouldContain "at or above medium (cleartext)"
+        failing.stdout shouldContain "Cleartext HTTP allowed"
+        sextant("findings", dir, "--fail-on", "high").exitCode shouldBe 0
+        val sarif = sextant("findings", dir, "--sarif")
+        sarif.exitCode shouldBe 0
+        val doc = Json.parseToJsonElement(sarif.stdout).jsonObject
+        doc.getValue("version").jsonPrimitive.content shouldBe "2.1.0"
+        sarif.stdout shouldContain "\"uri\": \"AndroidManifest.xml\""
+        sarif.stdout shouldContain "\"uri\": \"smali/de/markusfisch/android/binaryeye/activity/DecodeActivity.smali\""
+        sextant("findings", dir, "--sarif", "--json").exitCode shouldBe 1
+    }
+
+    @Test
+    fun `top hosts count only network URLs, not custom-scheme deep links`() {
+        val dir = extracted("binaryeye")
+        val json = Json.parseToJsonElement(sextant("insights", dir, "--json").stdout.trim()).jsonObject
+        val hosts = json.getValue("top_hosts").toString()
+        hosts shouldContain "markusfisch.de"
+        hosts shouldNotContain "\"scan\""
+    }
+
+    @Test
     fun `xref, reach and smali commands`() {
         val dir = extracted("binaryeye")
         val xref = sextant("xref", dir, "Lde/markusfisch/android/binaryeye/activity/CameraActivity;->c1")

@@ -44,6 +44,8 @@ AndroidX and many other libraries ship `META-INF/<group>_<artifact>.version` fil
 
 Every URL from code strings (with the method that uses it), string resources, deep links, manifest meta-data, text assets (React Native/Hermes bundles, configs) and native libraries. See [`endpoints`](../reference/commands.md#endpoints).
 
+Host counts (`Top hosts`, `meta.json → insights.hosts`, the hosts section of `diff`) include only network URLs (`http`, `https`, `ws`, `wss`, `ftp`, `ftps`). A custom-scheme deep link such as `myapp://scan` names a screen in the app, not a server; it is still listed by `endpoints` and in `insights/endpoints.jsonl`.
+
 ## Native code
 
 ELF `.dynsym` tables are parsed for exported functions. JNI functions (`Java_…`) are decoded back to the Java class and method they implement, including `_1`, `_0xxxx` escapes and overload suffixes:

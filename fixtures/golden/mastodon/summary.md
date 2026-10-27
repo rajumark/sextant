@@ -19,7 +19,7 @@ Extracted by sextant <version> · schema 7 · sha256 ce1a8222a1f9a59cdde0816a64a
 - Frameworks: none detected
 - SDKs (4): ZXing, OkHttp, Google Play Services Base, Gson
 - Libraries with exact versions: 0 · built with AGP 8.13.2
-- Endpoints: 18 URLs on 11 hosts; top: sponsor.joinmastodon.org (4), example.com (2), joinmastodon.org (2), mastodon.online (2), mastodon.social (2), api.joinmastodon.org (1)
+- Endpoints: 18 URLs on 9 hosts; top: sponsor.joinmastodon.org (4), example.com (2), joinmastodon.org (2), mastodon.online (2), mastodon.social (2), api.joinmastodon.org (1)
 - Native: 0 libraries, 0 JNI methods · Locales: 136
 
 ## Review findings (static observations to check, not proven issues)

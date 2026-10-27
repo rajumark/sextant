@@ -182,7 +182,7 @@
       "ui": 3
     },
     "endpoints": 2856,
-    "hosts": 2784,
+    "hosts": 2756,
     "top_hosts": [
       {
         "host": "www.mozilla.org",

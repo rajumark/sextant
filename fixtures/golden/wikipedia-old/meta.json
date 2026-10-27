@@ -190,16 +190,16 @@
         "urls": 10
       },
       {
-        "host": "*.wikipedia.org",
-        "urls": 7
-      },
-      {
         "host": "donate.wikimedia.org",
         "urls": 7
       },
       {
         "host": "en.wikipedia.org",
         "urls": 7
+      },
+      {
+        "host": "*.wikipedia.org",
+        "urls": 6
       },
       {
         "host": "www.w3.org",

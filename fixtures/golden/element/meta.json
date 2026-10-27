@@ -190,7 +190,7 @@
       "ui": 2
     },
     "endpoints": 203,
-    "hosts": 136,
+    "hosts": 135,
     "top_hosts": [
       {
         "host": "github.com",
@@ -210,10 +210,6 @@
       },
       {
         "host": "localhost",
-        "urls": 4
-      },
-      {
-        "host": "matrix.to",
         "urls": 4
       },
       {
@@ -241,7 +237,7 @@
         "urls": 3
       },
       {
-        "host": "room",
+        "host": "matrix.to",
         "urls": 3
       },
       {
@@ -249,8 +245,12 @@
         "urls": 3
       },
       {
-        "host": "user",
-        "urls": 3
+        "host": "apache.org",
+        "urls": 2
+      },
+      {
+        "host": "app.element.io",
+        "urls": 2
       }
     ],
     "resource_values": 5255,

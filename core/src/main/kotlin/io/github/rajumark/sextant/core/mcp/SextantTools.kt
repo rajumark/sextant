@@ -11,6 +11,7 @@ import io.github.rajumark.sextant.core.index.IndexReader
 import io.github.rajumark.sextant.core.index.IndexSchema
 import io.github.rajumark.sextant.core.index.SearchHit
 import io.github.rajumark.sextant.core.insights.AppIcons
+import io.github.rajumark.sextant.core.insights.Urls
 import io.github.rajumark.sextant.core.mcp.McpTool.Param
 import io.github.rajumark.sextant.core.output.OutputFiles
 import io.github.rajumark.sextant.core.output.OutputWriter
@@ -165,7 +166,8 @@ class SextantTools(
                     listOf(
                         "frameworks" to "SELECT name, evidence FROM frameworks ORDER BY name",
                         "sdks" to "SELECT category, name, classes FROM sdks ORDER BY category, name",
-                        "top_hosts" to "SELECT host, count(*) AS urls FROM endpoints GROUP BY host ORDER BY urls DESC, host LIMIT 20",
+                        "top_hosts" to
+                            "SELECT host, count(*) AS urls FROM endpoints WHERE ${Urls.NETWORK_SQL} GROUP BY host ORDER BY urls DESC, host LIMIT 20",
                         "libraries" to "SELECT \"group\", artifact, version FROM libraries ORDER BY \"group\", artifact",
                         "native" to
                             "SELECT name, max(exported_symbols) AS exported, max(jni_methods) AS jni FROM native_libraries GROUP BY name ORDER BY jni DESC",

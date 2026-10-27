@@ -9,6 +9,9 @@ enum class ExitCode(
     INPUT(2),
     OUTPUT(3),
     INTERNAL(4),
+
+    /** `findings --fail-on`: at least one finding at or above the threshold. */
+    FINDINGS(5),
 }
 
 /** An expected failure with a message meant for humans (and a hint on how to fix it). */

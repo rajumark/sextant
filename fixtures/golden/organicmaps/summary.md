@@ -19,7 +19,7 @@ Extracted by sextant <version> · schema 7 · sha256 654a736d43317084f13560281fe
 - Frameworks: none detected
 - SDKs (7): Google Sign-In, WorkManager, Room, OkHttp, Google Play Services Base, Kotlin Coroutines, Material Components
 - Libraries with exact versions: 68 · built with AGP 9.2.1
-- Endpoints: 343 URLs on 80 hosts; top: * (245), www.openstreetmap.org (7), omaps.app (3), organicmaps.app (3), ge0.me (2), github.com (2)
+- Endpoints: 343 URLs on 80 hosts; top: www.openstreetmap.org (7), omaps.app (3), organicmaps.app (3), * (2), ge0.me (2), github.com (2)
 - Native: 4 libraries, 1768 JNI methods · Locales: 57
 
 ## Review findings (static observations to check, not proven issues)

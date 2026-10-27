@@ -65,6 +65,15 @@ private const val MAX_SOURCES = 20
 
 /** URL extraction from free text. Only URLs with a plausible host are kept. */
 object Urls {
+    /**
+     * Schemes whose host is a network server. Host counts use only these: a custom-scheme deep link such as
+     * `myapp://scan` names a screen in the app, not a server.
+     */
+    val NETWORK_SCHEMES = setOf("http", "https", "ws", "wss", "ftp", "ftps")
+
+    /** SQL condition on the endpoints table matching [NETWORK_SCHEMES]. */
+    val NETWORK_SQL = "scheme IN (" + NETWORK_SCHEMES.sorted().joinToString { "'$it'" } + ")"
+
     private val HOST = Regex("""^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$|^\[[0-9a-f:.]+]$""")
 
     fun find(text: String): List<String> =
@@ -230,7 +239,7 @@ object InsightsBuilder {
         val frameworks = Frameworks.detect(entryNames, classNames, manifestNames, code?.kotlinClasses ?: 0)
         val sdks = sdks(classNames, manifestNames)
         val endpoints = endpoints(code, resources, manifest, components, binaryUrls)
-        val hosts = endpoints.groupingBy { it.host }.eachCount()
+        val hosts = endpoints.filter { it.scheme in Urls.NETWORK_SCHEMES }.groupingBy { it.host }.eachCount()
 
         val stats =
             InsightStats(

@@ -8,7 +8,7 @@ and `search_items` give the readable, descriptor-based form. JSON arrays are sto
 `json_each` to expand them. Query it with `sextant sql <dir> "…"` (read-only) or any SQLite tool.
 
 Schema version: **6**
-(stored in `meta` as `index_version`).
+(stored in `meta` as `index_schema_version`).
 
 ```sql
 CREATE TABLE meta (

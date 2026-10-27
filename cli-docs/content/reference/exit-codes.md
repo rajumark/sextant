@@ -7,6 +7,7 @@
 | `2` | Input error | File not found, not a zip, no `AndroidManifest.xml`, undecodable manifest, bad SQL, unknown class or method |
 | `3` | Output error | Output folder not empty without `--force`, not writable |
 | `4` | Internal error | A bug; please report it with the APK's sha256 |
+| `5` | Findings gate | `findings --fail-on <severity>` found at least one finding at or above that severity |
 
 Errors are printed to **stderr** with a hint when there is an obvious fix:
 

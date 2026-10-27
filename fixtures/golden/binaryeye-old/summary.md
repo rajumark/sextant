@@ -19,7 +19,7 @@ Extracted by sextant <version> · schema 7 · sha256 f89d1ceeb5b5ff7cdeca1fa0922
 - Frameworks: none detected
 - SDKs (1): Material Components
 - Libraries with exact versions: 46 · built with AGP 9.3.2
-- Endpoints: 24 URLs on 12 hosts; top: markusfisch.de (8), www.w3.org (4), example.com (3), android.googlesource.com (1), details*id=com.xiaomi.scanner (1), encode (1)
+- Endpoints: 24 URLs on 9 hosts; top: markusfisch.de (8), www.w3.org (4), example.com (3), android.googlesource.com (1), github.com (1), issuetracker.google.com (1)
 - Native: 12 libraries, 56 JNI methods · Locales: 87
 
 ## Review findings (static observations to check, not proven issues)

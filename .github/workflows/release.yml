@@ -38,7 +38,7 @@ jobs:
       - name: Fetch APK corpus
         run: scripts/fetch-apks.sh
       - name: Test and build the CLI zip
-        run: ./gradlew build :cli:shadowDistZip
+        run: ./gradlew :core:build :cli:build :cli:shadowDistZip
       - uses: actions/upload-artifact@v4
         with:
           name: cli

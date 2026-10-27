@@ -23,6 +23,7 @@ sextant insights app/
 sextant endpoints app/ --host example.com
 sextant diff app-4.2/ app-4.3/
 sextant findings app/ --severity medium
+sextant findings app/ --sarif > sextant.sarif   # GitHub code scanning; --fail-on high for CI
 sextant xref app/ com.example.Session.token
 sextant reach app/ com.example.DeepLinkActivity okhttp3/
 sextant smali app.apk com.example.LoginRepository.login
@@ -99,6 +100,7 @@ Progress and errors go to **stderr**, data goes to **stdout**, so `--json` outpu
 | 2 | Input error (missing file, not an APK, undecodable manifest) |
 | 3 | Output error (non-empty folder without `--force`, not writable) |
 | 4 | Internal error (a bug, so please report it) |
+| 5 | `findings --fail-on` found a finding at or above the threshold (for CI) |
 
 ## Output
 
