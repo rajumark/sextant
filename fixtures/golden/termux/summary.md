@@ -1,5 +1,5 @@
 # com.termux 0.118.3 (1002)
-Extracted by sextant <version> · schema 7 · sha256 e6265a57eb5ca363808488e3b01955958bed93bc0c8a0d281849b363b11027ec
+Extracted by sextant <version> · schema 8 · sha256 e6265a57eb5ca363808488e3b01955958bed93bc0c8a0d281849b363b11027ec
 
 ## App
 - Label: Termux

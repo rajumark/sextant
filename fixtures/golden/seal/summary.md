@@ -1,5 +1,5 @@
 # com.junkfood.seal 1.13.1-(F-Droid) (11314)
-Extracted by sextant <version> · schema 7 · sha256 095c2275152653155219d0f276f7a8e09be6436b3196cf1d1b56ebb5a39bf488
+Extracted by sextant <version> · schema 8 · sha256 095c2275152653155219d0f276f7a8e09be6436b3196cf1d1b56ebb5a39bf488
 
 ## App
 - Label: Seal

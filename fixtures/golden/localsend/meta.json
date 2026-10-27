@@ -1,5 +1,5 @@
 {
-  "schema_version": 7,
+  "schema_version": 8,
   "tool": {
     "name": "sextant",
     "version": "<version>"
@@ -51,7 +51,24 @@
     "shared_user_id": null,
     "shared_user_max_sdk": null,
     "target_sandbox_version": null,
-    "supports_screens": {}
+    "supports_screens": {},
+    "icon": "@mipmap/ic_launcher",
+    "round_icon": null,
+    "banner": "@drawable/banner",
+    "logo": null,
+    "description": null,
+    "has_code": null,
+    "intent_matching_flags": null,
+    "backup_in_foreground": null,
+    "restore_any_version": null,
+    "kill_after_restore": null,
+    "zygote_preload_name": null,
+    "window_soft_input_mode": null,
+    "config_changes": null,
+    "shared_user_label": null,
+    "compile_sdk_codename": "16",
+    "platform_build_version_name": "16",
+    "attributions": {}
   },
   "signing": {
     "verified": true,

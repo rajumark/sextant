@@ -1,5 +1,5 @@
 # org.connectbot 1.11.1-oss (11101000)
-Extracted by sextant <version> · schema 7 · sha256 96cf501a83e89284ff3ec93ac06e7a6a6aa8a35c0c02486b865945fe59ac8223
+Extracted by sextant <version> · schema 8 · sha256 96cf501a83e89284ff3ec93ac06e7a6a6aa8a35c0c02486b865945fe59ac8223
 
 ## App
 - Label: ConnectBot

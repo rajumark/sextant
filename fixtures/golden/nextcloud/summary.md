@@ -1,5 +1,5 @@
 # com.nextcloud.client 35.0.1 (350000190)
-Extracted by sextant <version> · schema 7 · sha256 8fd4d86de9497d3afecc0bad201b177c8f413c0e2e3e152cbc80f48d6e9b481f
+Extracted by sextant <version> · schema 8 · sha256 8fd4d86de9497d3afecc0bad201b177c8f413c0e2e3e152cbc80f48d6e9b481f
 
 ## App
 - Label: Nextcloud

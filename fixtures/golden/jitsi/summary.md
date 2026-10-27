@@ -1,5 +1,5 @@
 # org.jitsi.meet 26.0.0 (26000004)
-Extracted by sextant <version> · schema 7 · sha256 72aab4912b08431a2340fc1fb1f181be3a07e8b7ac607e0bb9e4c3814c2e4248
+Extracted by sextant <version> · schema 8 · sha256 72aab4912b08431a2340fc1fb1f181be3a07e8b7ac607e0bb9e4c3814c2e4248
 
 ## App
 - Label: Jitsi Meet

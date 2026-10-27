@@ -689,7 +689,7 @@ git tag v0.1.0 && git push --tags
 // ───── STATUS: the single place to update progress ─────
 // status: done | progress | pending | hold | skipped | failed · hours = estimated focused work
 const STATUS = {
-  updated: "2026-10-27T19:46",
+  updated: "2026-10-28T04:30",
   started: "2026-10-27T00:00",
   versions: [
     { id: "V1", tag: "v0.1.0", title: "App identity and manifest", tasks: [
@@ -1024,6 +1024,51 @@ const STATUS = {
         ["README, CHANGELOG", "done"],
       ] },
     ] },
+    { id: "V11", tag: "schema 8", title: "Workbench harvest: components, startup, resources, SDKs", tasks: [
+      { title: "Components: verdicts + CLI (all 5 types)", hours: 1.5, status: "done", subs: [
+        ["All <activity>/<service>/<provider> attributes structured (schema 8); coverage guard test over the corpus", "done"],
+        ["18 verdict tags with reasons (launcher, app-link, hidden-entry, task-hijack, unguarded, sensitive-role, boot, uri-grants, …)", "done"],
+        ["sextant components / component: filters, plain-language entry points, adb commands, exact manifest entry", "done"],
+        ["Verified on 46 APKs; components.tags + attributes in index.sqlite", "done"],
+      ], note: "Found in the corpus: DuckDuckGo exports androidx.compose.ui.tooling.PreviewActivity; Bitwarden trusts user CAs with cleartext allowed." },
+      { title: "Desktop: component pages", hours: 1.5, status: "done", subs: [
+        ["Activities, Services, Receivers, Providers, Aliases on core verdicts; Components page removed", "done"],
+        ["Summary strip, filters with counts, sort, group by package, multi-select export, context menu", "done"],
+        ["Keyboard (↑ ↓ Esc / ⌘F) and ⌘K command palette", "done"],
+        ["Manifest entry (XML/JSON) + Search on web / Ask AI in every detail pane", "done"],
+      ] },
+      { title: "Application class + startup order", hours: 0.8, status: "done", subs: [
+        ["sextant app: factory, attachBaseContext, providers by initOrder, androidx.startup initializers, onCreate", "done"],
+        ["With index: calls of each step and SDKs started at launch", "done"],
+        ["Desktop Application page", "done"],
+      ] },
+      { title: "Resources harvest (CLI first)", hours: 2.5, status: "done", subs: [
+        ["strings (every locale, plurals, arrays), resource_ids, styles, drawables, layouts, menus, navigation, assets, xml_configs", "done"],
+        ["References kept as written and resolved (@string/x → value) + resource_refs (who uses what)", "done"],
+        ["String catalog: used/unused, URL, email, key-like, format, untranslated", "done"],
+        ["XML configs summarized: network security (cleartext, pins, user CAs), backup rules, FileProvider paths", "done"],
+        ["Assets: hidden code detection (DEX/ELF/zip under other names)", "done"],
+        ["sextant res; index tables; verified on 46 APKs (3.4 M strings, 15 k layouts)", "done"],
+      ] },
+      { title: "Desktop: resource pages", hours: 1.5, status: "done", subs: [
+        ["Strings, Layouts, Menus, Navigation, Styles & themes, Drawables, Resource IDs, Assets, XML configs", "done"],
+        ["Used by links between pages; locale switcher on Strings", "done"],
+        ["Drawable image previews", "pending"],
+        ["Resource ids referenced from code (const scan)", "pending"],
+      ] },
+      { title: "SDK and library intelligence", hours: 1.0, status: "done", subs: [
+        ["Versions from META-INF *.version, pom.properties, Play services/Firebase .properties, OkHttp user agent", "done"],
+        ["sextant sdks: roles per app; across apps --category / --sdk / --below VERSION", "done"],
+        ["Desktop SDKs & libraries page (startup link, declared components)", "done"],
+        ["Known-vulnerability data (offline CVE list)", "pending"],
+      ], note: "Corpus: OkHttp in 26 of 46 apps (3.12.13 → 5.5.0); 4 apps below 4.10.0." },
+      { title: "Verify, docs, commit", hours: 0.5, status: "done", subs: [
+        ["Core 163 + CLI 37 tests green, goldens regenerated (resource files pinned by digest)", "done"],
+        ["Desktop 45 tests + screenshots of every page on fresh analyses of Bitwarden and Binary Eye", "done"],
+        ["CLI docs for components, component, app, res, sdks; CHANGELOG", "done"],
+        ["Usability check report for the new pages", "pending"],
+      ] },
+    ] },
   ],
 };
 
@@ -1083,7 +1128,7 @@ const STATUS = {
 <script>
 // ───── DESKTOP: update by hand when the desktop app changes ─────
 const DESKTOP = {
-  updated: "2026-10-27T19:46",
+  updated: "2026-10-28T04:30",
   meta: "sextant/desktop · Compose Multiplatform + Material 3 · reads APKs through :core in-process · run: desktop/run.sh · tests: 32 passing, ktlint clean (last run) · not committed yet",
   dummy: [
     "<b>In the app: no dummy data.</b> Every number, name and verdict comes from core's output for the APK you open.",

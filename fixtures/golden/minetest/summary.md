@@ -1,5 +1,5 @@
 # net.minetest.minetest 5.17.0 (5170000)
-Extracted by sextant <version> · schema 7 · sha256 87a136d408ed560d3d56e55ca2ac780deb7a8941635b16960c88831fb33f9233
+Extracted by sextant <version> · schema 8 · sha256 87a136d408ed560d3d56e55ca2ac780deb7a8941635b16960c88831fb33f9233
 
 ## App
 - Label: Luanti

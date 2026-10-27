@@ -1,5 +1,5 @@
 # de.markusfisch.android.binaryeye 1.75.3 (178)
-Extracted by sextant <version> · schema 7 · sha256 f89d1ceeb5b5ff7cdeca1fa09225075eab31c50067c58ca0ba19606393581daf
+Extracted by sextant <version> · schema 8 · sha256 f89d1ceeb5b5ff7cdeca1fa09225075eab31c50067c58ca0ba19606393581daf
 
 ## App
 - Label: Binary Eye

@@ -1,5 +1,5 @@
 # org.wikipedia r/50610-r-2026-10-06 (50610)
-Extracted by sextant <version> · schema 7 · sha256 4602977099bff12bf24afbbe5a516c0979cb6e5122a4fbbf21569c3fe46a7040
+Extracted by sextant <version> · schema 8 · sha256 4602977099bff12bf24afbbe5a516c0979cb6e5122a4fbbf21569c3fe46a7040
 
 ## App
 - Label: Wikipedia

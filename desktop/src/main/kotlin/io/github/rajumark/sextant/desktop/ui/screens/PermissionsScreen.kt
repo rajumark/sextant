@@ -58,6 +58,7 @@ import io.github.rajumark.sextant.desktop.ui.common.SubsectionLabel
 import io.github.rajumark.sextant.desktop.ui.common.Syntax
 import io.github.rajumark.sextant.desktop.ui.common.Tag
 import io.github.rajumark.sextant.desktop.ui.common.Tone
+import io.github.rajumark.sextant.desktop.ui.common.WebActions
 import io.github.rajumark.sextant.desktop.ui.common.highlighted
 import io.github.rajumark.sextant.desktop.ui.workspace.PermissionFilter
 import io.github.rajumark.sextant.desktop.ui.workspace.WorkspaceState
@@ -157,7 +158,7 @@ fun PermissionsScreen(ws: WorkspaceState) {
                 EmptyState(
                     Icons.Outlined.TouchApp,
                     "Select a permission",
-                    "Details, the manifest entry and the exact JSONL line appear here.",
+                    "Its meaning, what it is used for and its manifest entry appear here.",
                 )
             } else {
                 PermissionDetail(ws, selected)
@@ -231,62 +232,15 @@ private fun PermissionDetail(
             }
         }
         SubsectionLabel("Manifest entry")
-        CodeBlock(highlighted(ManifestFormat.permissionSnippet(p), Syntax.Xml), Modifier.fillMaxWidth())
+        CodeBlock(highlighted(p.manifestXml ?: ManifestFormat.permissionSnippet(p), Syntax.Xml), Modifier.fillMaxWidth())
         PermissionWebActions(p)
     }
 }
 
-/** Look the permission up on the web, or ask an AI assistant about it. Links open in the user's browser. */
+/** Look the permission up on the web, or ask an AI assistant about it. */
 @Composable
-private fun PermissionWebActions(p: Permission) {
-    val notify = LocalNotifier.current
-    val question = "What does the Android permission ${p.name} allow an app to do, and when do apps need it?"
-    var menuOpen by remember { mutableStateOf(false) }
-    Row(Modifier.fillMaxWidth().padding(top = 20.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        OutlinedButton(onClick = {
-            if (!openInBrowser("https://duckduckgo.com/?q=${urlQuery("Android permission ${p.name}")}")) {
-                notify("Could not open a browser")
-            }
-        }) {
-            Icon(Icons.Outlined.Search, null, Modifier.size(18.dp))
-            Spacer(Modifier.width(8.dp))
-            Text("Search on web")
-        }
-        Box {
-            Button(onClick = { menuOpen = true }) {
-                Icon(Icons.Outlined.Lightbulb, null, Modifier.size(18.dp))
-                Spacer(Modifier.width(8.dp))
-                Text("Ask AI")
-            }
-            DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
-                DropdownMenuItem(
-                    text = { Text("ChatGPT") },
-                    onClick = {
-                        menuOpen = false
-                        if (!openInBrowser("https://chatgpt.com/?q=${urlQuery(question)}")) notify("Could not open a browser")
-                    },
-                )
-                DropdownMenuItem(
-                    text = { Text("Claude") },
-                    onClick = {
-                        menuOpen = false
-                        if (!openInBrowser("https://claude.ai/new?q=${urlQuery(question)}")) notify("Could not open a browser")
-                    },
-                )
-                DropdownMenuItem(
-                    text = { Text("Gemini") },
-                    onClick = {
-                        menuOpen = false
-                        // Gemini cannot take a question in its address, so the question is copied for pasting.
-                        copyToClipboard(question)
-                        if (openInBrowser("https://gemini.google.com/app")) {
-                            notify("Question copied. Paste it into Gemini.")
-                        } else {
-                            notify("Could not open a browser")
-                        }
-                    },
-                )
-            }
-        }
-    }
-}
+private fun PermissionWebActions(p: Permission) =
+    WebActions(
+        searchQuery = "Android permission ${p.name}",
+        question = "What does the Android permission ${p.name} allow an app to do, and when do apps need it?",
+    )

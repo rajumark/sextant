@@ -1,5 +1,5 @@
 # app.organicmaps 2026.09.29-32-FDroid (26092932)
-Extracted by sextant <version> · schema 7 · sha256 654a736d43317084f13560281fe7013f869800610e9d6036b6789d9c9e07f8bc
+Extracted by sextant <version> · schema 8 · sha256 654a736d43317084f13560281fe7013f869800610e9d6036b6789d9c9e07f8bc
 
 ## App
 - Label: Organic Maps

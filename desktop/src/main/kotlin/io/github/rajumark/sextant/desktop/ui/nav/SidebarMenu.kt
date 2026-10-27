@@ -9,15 +9,26 @@ import io.github.rajumark.sextant.desktop.ui.workspace.Destination
  */
 val SidebarMenu: List<List<Destination>> =
     listOf(
-        listOf(Destination.Overview, Destination.Permissions, Destination.IconFiles),
+        listOf(Destination.Overview, Destination.Application, Destination.Sdks, Destination.Permissions, Destination.IconFiles),
         listOf(
             Destination.Activities,
             Destination.Services,
             Destination.Receivers,
+            Destination.Providers,
             Destination.Aliases,
-            Destination.Components,
             Destination.Manifest,
             Destination.Signing,
             Destination.Output,
+        ),
+        listOf(
+            Destination.Strings,
+            Destination.Layouts,
+            Destination.Menus,
+            Destination.Navigation,
+            Destination.Styles,
+            Destination.Drawables,
+            Destination.ResourceIds,
+            Destination.Assets,
+            Destination.XmlConfigs,
         ),
     )

@@ -14,6 +14,8 @@ import io.github.rajumark.sextant.core.model.FeatureRecord
 import io.github.rajumark.sextant.core.model.MetadataRecord
 import io.github.rajumark.sextant.core.model.Permission
 import io.github.rajumark.sextant.core.model.QueryRecord
+import io.github.rajumark.sextant.core.model.ResourceHarvest
+import io.github.rajumark.sextant.core.insights.ResourceHarvester
 import io.github.rajumark.sextant.core.model.ToolInfo
 import io.github.rajumark.sextant.core.model.XmlNode
 import java.nio.file.Path
@@ -30,6 +32,8 @@ data class Extraction(
     val features: List<FeatureRecord> = emptyList(),
     val metadata: List<MetadataRecord> = emptyList(),
     val queries: List<QueryRecord> = emptyList(),
+    /** res/ and assets/ (schema 8); empty when read from an older folder. */
+    val resources: ResourceHarvest = ResourceHarvest(),
 )
 
 object Extractor {
@@ -90,6 +94,13 @@ object Extractor {
                 null
             }
         if (facts.packageName == null) warnings += "manifest has no package attribute"
+        val resources =
+            try {
+                ZipFile(apk.toFile()).use { ResourceHarvester.harvest(it, decoded) }
+            } catch (e: Exception) {
+                warnings += "resources could not be harvested (${e.javaClass.simpleName}: ${e.message})"
+                ResourceHarvest()
+            }
 
         val meta =
             AppMeta(
@@ -112,6 +123,6 @@ object Extractor {
                 icons = icons,
                 warnings = warnings.distinct().sorted(),
             )
-        return Extraction(meta, decoded.root, permissions, components, insights, mapper.features(), mapper.metadata(), mapper.queries())
+        return Extraction(meta, decoded.root, permissions, components, insights, mapper.features(), mapper.metadata(), mapper.queries(), resources)
     }
 }

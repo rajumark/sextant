@@ -48,6 +48,7 @@
 {"group":"androidx.viewpager","artifact":"viewpager","version":"1.1.0","evidence":"META-INF/androidx.viewpager_viewpager.version"}
 {"group":"androidx.work","artifact":"work-runtime","version":"2.11.2","evidence":"META-INF/androidx.work_work-runtime.version"}
 {"group":"com.google.dagger","artifact":"dagger","version":"2.59","evidence":"META-INF/com.google.dagger_dagger.version"}
+{"group":"com.squareup.okhttp3","artifact":"okhttp","version":"5.4.0","evidence":"code string in Lgu;->b(Lku3;)Ln04;"}
 {"group":"kotlinx","artifact":"coroutines_android","version":"1.11.0","evidence":"META-INF/kotlinx_coroutines_android.version"}
 {"group":"kotlinx","artifact":"coroutines_core","version":"1.11.0","evidence":"META-INF/kotlinx_coroutines_core.version"}
 {"group":"kotlinx","artifact":"coroutines_guava","version":"1.11.0","evidence":"META-INF/kotlinx_coroutines_guava.version"}

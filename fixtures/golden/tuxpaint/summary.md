@@ -1,5 +1,5 @@
 # org.tuxpaint 0.9.35 (9350)
-Extracted by sextant <version> · schema 7 · sha256 0834a371444b62be6d7c776a43994f7ab603367eb7d5b55d2847b2de7896ce3f
+Extracted by sextant <version> · schema 8 · sha256 0834a371444b62be6d7c776a43994f7ab603367eb7d5b55d2847b2de7896ce3f
 
 ## App
 - Label: Tux Paint

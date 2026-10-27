@@ -1,5 +1,5 @@
 # org.mozilla.fennec_fdroid 158.0.2 (1580220)
-Extracted by sextant <version> · schema 7 · sha256 dc2b6d74e575cf4ca2b1b21f7c97e16704284931a179c3c9314dcd6ae0829200
+Extracted by sextant <version> · schema 8 · sha256 dc2b6d74e575cf4ca2b1b21f7c97e16704284931a179c3c9314dcd6ae0829200
 
 ## App
 - Label: Fennec

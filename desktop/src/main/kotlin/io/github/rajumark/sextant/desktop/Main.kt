@@ -77,8 +77,11 @@ private fun runApp() =
                     Separator()
                     Item("Close analysis", shortcut = shortcut(Key.W), enabled = state.workspace != null, onClick = state::closeWorkspace)
                 }
+                Menu("Go") {
+                    Item("Go to…", shortcut = shortcut(Key.K), enabled = state.workspace != null) { state.workspace?.paletteOpen = true }
+                }
                 Menu("View") {
-                    val keys = listOf(Key.One, Key.Two, Key.Three, Key.Four, Key.Five, Key.Six, Key.Seven)
+                    val keys = listOf(Key.One, Key.Two, Key.Three, Key.Four, Key.Five, Key.Six, Key.Seven, Key.Eight, Key.Nine)
                     Destination.entries.forEachIndexed { i, d ->
                         Item(d.label, shortcut = keys.getOrNull(i)?.let { shortcut(it) }, enabled = state.workspace != null) {
                             state.workspace?.destination = d

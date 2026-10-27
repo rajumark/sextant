@@ -1,5 +1,5 @@
 # org.billthefarmer.tuner 1.58 (158)
-Extracted by sextant <version> · schema 7 · sha256 7fbfaee87f3402f7c4b269ac42a36a2ff2c91b382655647efad23d631caff944
+Extracted by sextant <version> · schema 8 · sha256 7fbfaee87f3402f7c4b269ac42a36a2ff2c91b382655647efad23d631caff944
 
 ## App
 - Label: Tuner

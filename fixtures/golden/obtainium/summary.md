@@ -1,5 +1,5 @@
 # dev.imranr.obtainium.fdroid 1.7.1 (23593)
-Extracted by sextant <version> · schema 7 · sha256 78f330b9e23c94bd3d5958bd707606821af9ad332face5d90e9d9e5d1fe0cd07
+Extracted by sextant <version> · schema 8 · sha256 78f330b9e23c94bd3d5958bd707606821af9ad332face5d90e9d9e5d1fe0cd07
 
 ## App
 - Label: Obtainium

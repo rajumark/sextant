@@ -1,5 +1,5 @@
 # io.github.muntashirakon.AppManager 4.1.1 (451)
-Extracted by sextant <version> · schema 7 · sha256 e1f6ba10812c74016ad626e11e27a1ae450aec2c0964a11466abb9e7a9c8ef84
+Extracted by sextant <version> · schema 8 · sha256 e1f6ba10812c74016ad626e11e27a1ae450aec2c0964a11466abb9e7a9c8ef84
 
 ## App
 - Label: App Manager

@@ -99,6 +99,7 @@
 {"group":"com.google.dagger","artifact":"dagger-android","version":"2.60.1","evidence":"META-INF/com.google.dagger_dagger-android.version"}
 {"group":"com.google.dagger","artifact":"dagger-android-support","version":"2.60.1","evidence":"META-INF/com.google.dagger_dagger-android-support.version"}
 {"group":"com.google.dagger","artifact":"dagger-lint-aar","version":"2.60.1","evidence":"META-INF/com.google.dagger_dagger-lint-aar.version"}
+{"group":"com.squareup.okhttp3","artifact":"okhttp","version":"5.5.0","evidence":"code string in Lokhttp3/internal/connection/RealRoutePlanner;->createTunnelRequest(Lokhttp3/Route;)Lokhttp3/Request;"}
 {"group":"kotlinx","artifact":"coroutines_android","version":"1.11.0","evidence":"META-INF/kotlinx_coroutines_android.version"}
 {"group":"kotlinx","artifact":"coroutines_core","version":"1.11.0","evidence":"META-INF/kotlinx_coroutines_core.version"}
 {"group":"kotlinx","artifact":"coroutines_slf4j","version":"1.11.0","evidence":"META-INF/kotlinx_coroutines_slf4j.version"}

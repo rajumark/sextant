@@ -1,5 +1,5 @@
 # org.videolan.vlc 3.7.2 (13070208)
-Extracted by sextant <version> · schema 7 · sha256 727693d59c4d678c046386812a103209a25423460c9d22e38e12460f12402ab6
+Extracted by sextant <version> · schema 8 · sha256 727693d59c4d678c046386812a103209a25423460c9d22e38e12460f12402ab6
 
 ## App
 - Label: VLC

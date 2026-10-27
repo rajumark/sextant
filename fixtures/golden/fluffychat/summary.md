@@ -1,5 +1,5 @@
 # chat.fluffy.fluffychat 2.11.0 (3570)
-Extracted by sextant <version> · schema 7 · sha256 9d6fcc5f9b0a9b0e7dbb2d255c36f9dc2afff4aa83a380809605f30b27b111fa
+Extracted by sextant <version> · schema 8 · sha256 9d6fcc5f9b0a9b0e7dbb2d255c36f9dc2afff4aa83a380809605f30b27b111fa
 
 ## App
 - Label: FluffyChat

@@ -4,6 +4,7 @@ import io.github.rajumark.sextant.core.CodeSink
 import io.github.rajumark.sextant.core.Extraction
 import io.github.rajumark.sextant.core.SextantException
 import io.github.rajumark.sextant.core.insights.AppIcons
+import io.github.rajumark.sextant.core.insights.ComponentReviews
 import io.github.rajumark.sextant.core.insights.IconFile
 import io.github.rajumark.sextant.core.insights.Insights
 import io.github.rajumark.sextant.core.model.CallRecord
@@ -12,7 +13,10 @@ import io.github.rajumark.sextant.core.model.FieldRecord
 import io.github.rajumark.sextant.core.model.FieldRefRecord
 import io.github.rajumark.sextant.core.model.IntentFilter
 import io.github.rajumark.sextant.core.model.MethodRecord
+import io.github.rajumark.sextant.core.model.NavAction
 import io.github.rajumark.sextant.core.model.PathPermission
+import io.github.rajumark.sextant.core.model.ResValue
+import io.github.rajumark.sextant.core.model.ResourceHarvest
 import io.github.rajumark.sextant.core.model.StringRecord
 import io.github.rajumark.sextant.core.model.TypeRefRecord
 import io.github.rajumark.sextant.core.output.InfoReports
@@ -20,6 +24,8 @@ import io.github.rajumark.sextant.core.output.SextantJson
 import io.github.rajumark.sextant.core.output.makeReadable
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardCopyOption
@@ -326,8 +332,9 @@ class IndexWriter(
             st.executeBatch()
         }
         val filters = ListSerializer(IntentFilter.serializer())
-        conn.prepareStatement("INSERT INTO components VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)").use { st ->
-            for (c in extraction.components) {
+        conn.prepareStatement("INSERT INTO components VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)").use { st ->
+            val reviews = ComponentReviews.of(extraction.components, m.`package`)
+            for ((c, review) in extraction.components.zip(reviews)) {
                 st.setString(1, c.type)
                 st.setString(2, c.name)
                 st.setInt(3, if (c.exported) 1 else 0)
@@ -349,10 +356,17 @@ class IndexWriter(
                 c.isolatedProcess?.let { st.setInt(19, if (it) 1 else 0) } ?: st.setNull(19, java.sql.Types.INTEGER)
                 c.directBootAware?.let { st.setInt(20, if (it) 1 else 0) } ?: st.setNull(20, java.sql.Types.INTEGER)
                 st.setString(21, c.label)
+                st.setString(22, json(review.tags))
+                val attrs = ComponentReviews.attributes(c)
+                st.setString(
+                    23,
+                    if (attrs.isEmpty()) null else JsonObject(attrs.associate { (k, v) -> k to JsonPrimitive(v) }).toString(),
+                )
                 st.addBatch()
             }
             st.executeBatch()
         }
+        insertResources(extraction.resources)
         extraction.insights?.let(::insertInsights)
         insertIcons(m.icons)
         conn.prepareStatement("INSERT INTO features VALUES (?,?,?,?)").use { st ->
@@ -439,6 +453,113 @@ class IndexWriter(
                 st.addBatch()
             }
             st.executeBatch()
+        }
+    }
+
+    private fun insertResources(r: ResourceHarvest) {
+        fun <T> rows(
+            table: String,
+            columns: Int,
+            items: List<T>,
+            bind: (PreparedStatement, T) -> Unit,
+        ) {
+            if (items.isEmpty()) return
+            conn.prepareStatement("INSERT INTO $table VALUES (" + List(columns) { "?" }.joinToString(",") + ")").use { st ->
+                for (item in items) {
+                    bind(st, item)
+                    st.addBatch()
+                }
+                st.executeBatch()
+            }
+        }
+
+        fun PreparedStatement.int(
+            i: Int,
+            v: Int?,
+        ) = if (v == null) setNull(i, java.sql.Types.INTEGER) else setInt(i, v)
+        val values = ListSerializer(ResValue.serializer())
+        rows("string_resources", 6, r.strings) { st, s ->
+            st.setString(1, s.name)
+            st.setString(2, s.kind)
+            st.setString(3, s.config)
+            st.setString(4, s.locale)
+            st.setString(5, s.item)
+            st.setString(6, s.value)
+        }
+        rows("resource_ids", 4, r.ids) { st, x ->
+            st.setString(1, x.id)
+            st.setString(2, x.type)
+            st.setString(3, x.name)
+            st.setString(4, json(x.configs))
+        }
+        rows("styles", 5, r.styles) { st, x ->
+            st.setString(1, x.name)
+            st.setString(2, x.config)
+            st.setString(3, x.parent)
+            st.setString(4, SextantJson.compact.encodeToString(values, x.items))
+            st.setString(5, json(x.usedBy))
+        }
+        rows("drawables", 8, r.drawables) { st, x ->
+            st.setString(1, x.type)
+            st.setString(2, x.name)
+            st.setString(3, x.config)
+            st.setString(4, x.path)
+            st.setString(5, x.format)
+            st.setLong(6, x.bytes)
+            st.int(7, x.width)
+            st.int(8, x.height)
+        }
+        rows("layouts", 9, r.layouts) { st, x ->
+            st.setString(1, x.name)
+            st.setString(2, x.config)
+            st.setString(3, x.path)
+            st.setString(4, x.root)
+            st.setInt(5, x.viewCount)
+            st.setString(6, json(x.ids))
+            st.setString(7, json(x.customViews))
+            st.setString(8, json(x.fragments))
+            st.setString(9, json(x.includes))
+        }
+        rows("menus", 9, r.menus.flatMap { m -> m.items.map { m to it } }) { st, (m, i) ->
+            st.setString(1, m.name)
+            st.setString(2, m.config)
+            st.setInt(3, i.depth)
+            st.setString(4, i.tag)
+            st.setString(5, i.id)
+            st.setString(6, i.title?.raw)
+            st.setString(7, i.title?.resolved)
+            st.setString(8, i.icon)
+            st.setString(9, i.showAsAction)
+        }
+        rows("navigation_destinations", 7, r.navigation.flatMap { g -> g.destinations.map { g to it } }) { st, (g, d) ->
+            st.setString(1, g.name)
+            st.setString(2, d.id)
+            st.setString(3, d.kind)
+            st.setString(4, d.className)
+            st.setString(5, d.label?.let { it.resolved ?: it.raw })
+            st.setString(6, json(d.deepLinks))
+            st.setString(7, SextantJson.compact.encodeToString(ListSerializer(NavAction.serializer()), d.actions))
+        }
+        rows("assets", 5, r.assets) { st, x ->
+            st.setString(1, x.path)
+            st.setString(2, x.kind)
+            st.setLong(3, x.bytes)
+            st.setString(4, x.magic)
+            st.setInt(5, if (x.hiddenCode) 1 else 0)
+        }
+        rows("xml_configs", 6, r.xml) { st, x ->
+            st.setString(1, x.name)
+            st.setString(2, x.config)
+            st.setString(3, x.path)
+            st.setString(4, x.kind)
+            st.setString(5, JsonObject(x.summary.mapValues { JsonPrimitive(it.value) }).toString())
+            st.setString(6, x.xml)
+        }
+        rows("resource_refs", 4, r.refs) { st, x ->
+            st.setString(1, x.ref)
+            st.setString(2, x.fromKind)
+            st.setString(3, x.from)
+            st.setString(4, x.attribute)
         }
     }
 
@@ -557,6 +678,7 @@ class IndexWriter(
                 "library" to "\"group\" || ':' || artifact || ':' || version FROM libraries",
                 "native_symbol" to "name FROM native_symbols",
                 "finding" to "severity || ' ' || title || ' ' || id FROM findings",
+                "string_resource" to "substr(name || ' = ' || value, 1, ${IndexSchema.MAX_SEARCH_TEXT}) FROM string_resources",
             )
     }
 }

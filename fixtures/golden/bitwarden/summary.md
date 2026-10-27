@@ -1,5 +1,5 @@
 # com.x8bit.bitwarden 2024.10.0 (11270)
-Extracted by sextant <version> · schema 7 · sha256 a6616c0c1c2c111b340071175b0bfe22c9df00718c902a688f66573ec920c788
+Extracted by sextant <version> · schema 8 · sha256 a6616c0c1c2c111b340071175b0bfe22c9df00718c902a688f66573ec920c788
 
 ## App
 - Label: Bitwarden
@@ -18,7 +18,7 @@ Extracted by sextant <version> · schema 7 · sha256 a6616c0c1c2c111b340071175b0
 ## Insights
 - Frameworks: .NET (Xamarin / MAUI), Kotlin
 - SDKs (11): Firebase Analytics, Microsoft App Center, Google Sign-In, Tink, Glide, Firebase Core, Google Play Services Base, Firebase Cloud Messaging, Kotlin Coroutines, Gson, Material Components
-- Libraries with exact versions: 52
+- Libraries with exact versions: 70
 - Endpoints: 32 URLs on 29 hosts; top: ns.adobe.com (2), schemas.android.com (2), www.googleapis.com (2), android.googlesource.com (1), bitwarden-c2b35.firebaseio.com (1), cloud.google.com (1)
 - Native: 644 libraries, 40 JNI methods · Locales: 86
 

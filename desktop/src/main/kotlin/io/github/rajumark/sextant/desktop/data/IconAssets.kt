@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.vector.PathParser
 import androidx.compose.ui.unit.dp
 import io.github.rajumark.sextant.core.ManifestDecoder
 import io.github.rajumark.sextant.core.model.XmlNode
+import io.github.rajumark.sextant.desktop.model.ManifestNode
 import java.nio.file.Path
 import java.util.concurrent.ConcurrentHashMap
 import java.util.zip.ZipFile
@@ -41,6 +42,19 @@ object IconAssets {
         val root = runCatching { decode(xml) }.getOrNull() ?: return null
         return vectorOf(root)
     }
+
+    /** The XML source of a binary XML file in the APK, as readable text; null when it cannot be decoded. */
+    fun xmlText(
+        apk: Path,
+        path: String,
+    ): String? {
+        val xml = bytes(apk, path) ?: return null
+        val decode = decoderFor(apk) ?: return null
+        val root = runCatching { decode(xml) }.getOrNull() ?: return null
+        return ManifestFormat.xml(toManifestNode(root))
+    }
+
+    private fun toManifestNode(n: XmlNode): ManifestNode = ManifestNode(n.tag, n.attributes.toList(), n.children.map(::toManifestNode))
 
     /** The APK's binary-XML decoder, built from its manifest and resource table once. */
     private fun decoderFor(apk: Path): ((ByteArray) -> XmlNode?)? =

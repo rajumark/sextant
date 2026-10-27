@@ -1,5 +1,5 @@
 # com.kunzisoft.keepass.libre 4.5.6 (45600)
-Extracted by sextant <version> · schema 7 · sha256 0c52db962ec434eacae760ba8a9538c56e192005f358aac3e60d776fcb05c1ee
+Extracted by sextant <version> · schema 8 · sha256 0c52db962ec434eacae760ba8a9538c56e192005f358aac3e60d776fcb05c1ee
 
 ## App
 - Label: KeePassDX

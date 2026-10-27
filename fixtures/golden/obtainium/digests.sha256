@@ -7,3 +7,13 @@ bbc9add0471f24e24ab3428fc9935d0236510be4131ed747a8cb565dfc9c1b28      23895  cod
 4bd31176ccdaa7734dbff1c134ad0f1125a1c916dd3573e38cca48efb67ca706      12234  code/type_refs.jsonl
 1daa15800d96f97a0fe1d2c452e7f7973c164d337635b700732707f9176453fc        131  resources/values.jsonl
 83d8e38768729f1a18035b0dbe5a2aad84b15e90888bad7502a53f355929d9be        330  native/symbols.jsonl
+6be77e8909a852874c61878240a445e8c3832d1f182e4b639dde175d320aa2d3       1054  resources/strings.jsonl
+41ce35961478e855f57ee42eab2e79ebb080ebd002d3324e18afa1a3f3e57ca3       1181  resources/ids.jsonl
+0e77341a08b4a487488dcc816cccaabfb7267d535ff3505b0028bf9624c613a9         12  resources/styles.jsonl
+ee68dde916427a37698b4cb35e91a53339a436d4599debd4f7890c67e4c2dc31        429  resources/drawables.jsonl
+992c1d0011adc321949035ede2408c1c88b27691bcedac1c1f22bede9c69e070          4  resources/layouts.jsonl
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855          0  resources/menus.jsonl
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855          0  resources/navigation.jsonl
+af1493e26a4603e203d78e086442fa461c5edef46f5bbe142b1aefd33c4fb32c         66  resources/assets.jsonl
+be9fcca3593d4c34d4395e4b949632d75c346118dda5f60ba06ce65ff849d39b          3  resources/xml.jsonl
+705045406ffb9d60c98c41c73841150e0936c72a608eb8e7047e7499e33ef606         25  resources/refs.jsonl

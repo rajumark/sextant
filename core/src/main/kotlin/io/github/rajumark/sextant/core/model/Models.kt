@@ -83,6 +83,25 @@ data class AppFlags(
     val targetSandboxVersion: Int? = null,
     /** `<supports-screens>` attributes as written (smallScreens, largeScreens, anyDensity, …). */
     val supportsScreens: Map<String, String> = emptyMap(),
+    // Schema 8: the remaining <application> and <manifest> attributes.
+    val icon: String? = null,
+    val roundIcon: String? = null,
+    val banner: String? = null,
+    val logo: String? = null,
+    val description: String? = null,
+    val hasCode: Boolean? = null,
+    val intentMatchingFlags: String? = null,
+    val backupInForeground: Boolean? = null,
+    val restoreAnyVersion: Boolean? = null,
+    val killAfterRestore: Boolean? = null,
+    val zygotePreloadName: String? = null,
+    val windowSoftInputMode: String? = null,
+    val configChanges: String? = null,
+    val sharedUserLabel: String? = null,
+    val compileSdkCodename: String? = null,
+    val platformBuildVersionName: String? = null,
+    /** `<attribution android:tag>`: data-access audit tags the app declares (Android 11+), with their labels. */
+    val attributions: Map<String, String?> = emptyMap(),
 )
 
 @Serializable
@@ -117,6 +136,14 @@ data class Permission(
     val protectionLevel: String?,
     val custom: Boolean,
     val impliedBy: String?,
+    // Schema 8. uses-permission: lowest SDK it applies to, flags (neverForLocation), required.
+    val minSdk: Int? = null,
+    val usesPermissionFlags: String? = null,
+    val required: Boolean? = null,
+    // Schema 8. Declared permissions.
+    val label: String? = null,
+    val description: String? = null,
+    val permissionGroup: String? = null,
 )
 
 @Serializable
@@ -144,12 +171,55 @@ data class Component(
     val excludeFromRecents: Boolean? = null,
     val allowTaskReparenting: Boolean? = null,
     val screenOrientation: String? = null,
+    // Schema 8: the rest of <activity>. null = not set in the manifest.
+    val theme: String? = null,
+    val configChanges: String? = null,
+    val windowSoftInputMode: String? = null,
+    val documentLaunchMode: String? = null,
+    val lockTaskMode: String? = null,
+    val parentActivityName: String? = null,
+    val noHistory: Boolean? = null,
+    val clearTaskOnLaunch: Boolean? = null,
+    val finishOnTaskLaunch: Boolean? = null,
+    val alwaysRetainTaskState: Boolean? = null,
+    val autoRemoveFromRecents: Boolean? = null,
+    val maxRecents: Int? = null,
+    val resizeableActivity: Boolean? = null,
+    val supportsPictureInPicture: Boolean? = null,
+    val showWhenLocked: Boolean? = null,
+    val turnScreenOn: Boolean? = null,
+    /** Can be embedded in another app's task (activity embedding, bubbles). */
+    val allowEmbedded: Boolean? = null,
+    val hardwareAccelerated: Boolean? = null,
+    val stateNotNeeded: Boolean? = null,
+    val maxAspectRatio: String? = null,
+    val persistableMode: String? = null,
+    val relinquishTaskIdentity: Boolean? = null,
+    /** Deprecated (API 27) form of showWhenLocked. */
+    val showOnLockScreen: Boolean? = null,
+    val enableOnBackInvokedCallback: Boolean? = null,
+    val banner: String? = null,
+    /** `<layout>` child: default and minimum window size and gravity for freeform/multi-window. */
+    val windowLayout: Map<String, String> = emptyMap(),
     // Services.
     val foregroundServiceType: String? = null,
     val isolatedProcess: Boolean? = null,
+    // Schema 8. Services: runs in the caller's isolated process; stops when the user removes the task.
+    val externalService: Boolean? = null,
+    val stopWithTask: Boolean? = null,
+    val useAppZygote: Boolean? = null,
+    val visibleToInstantApps: Boolean? = null,
+    val description: String? = null,
+    // Schema 8. Providers.
+    val multiprocess: Boolean? = null,
+    val syncable: Boolean? = null,
+    val initOrder: Int? = null,
+    val forceUriPermissions: Boolean? = null,
     // Any component.
     val directBootAware: Boolean? = null,
     val label: String? = null,
+    val icon: String? = null,
+    val roundIcon: String? = null,
 )
 
 /** `<path-permission>` inside a provider: permissions for paths matching the pattern. */

@@ -9,6 +9,7 @@ import io.github.rajumark.sextant.desktop.model.AdaptivePreview
 import io.github.rajumark.sextant.desktop.model.Analysis
 import io.github.rajumark.sextant.desktop.model.ApkLayout
 import io.github.rajumark.sextant.desktop.model.AppComponent
+import io.github.rajumark.sextant.desktop.model.ComponentFacts
 import io.github.rajumark.sextant.desktop.model.AppFlags
 import io.github.rajumark.sextant.desktop.model.AppMeta
 import io.github.rajumark.sextant.desktop.model.Certificate
@@ -25,8 +26,18 @@ import io.github.rajumark.sextant.desktop.model.ManifestNode
 import io.github.rajumark.sextant.desktop.model.Permission
 import io.github.rajumark.sextant.desktop.model.PermissionKind
 import io.github.rajumark.sextant.desktop.model.Signing
+import java.nio.file.Files
 import java.nio.file.Path
+import io.github.rajumark.sextant.core.index.IndexReader
+import io.github.rajumark.sextant.core.insights.AppStartup
+import io.github.rajumark.sextant.core.insights.AppStartups
+import io.github.rajumark.sextant.core.insights.ComponentReview
+import io.github.rajumark.sextant.core.insights.SdkInventory
+import io.github.rajumark.sextant.core.insights.StringCatalog
+import io.github.rajumark.sextant.core.output.OutputFiles
+import io.github.rajumark.sextant.core.insights.ComponentReviews
 import io.github.rajumark.sextant.core.model.Component as CoreComponent
+import io.github.rajumark.sextant.core.output.ManifestXml
 import io.github.rajumark.sextant.core.model.Permission as CorePermission
 import io.github.rajumark.sextant.core.model.XmlNode as CoreXmlNode
 
@@ -90,16 +101,44 @@ object CoreMapper {
             )
         return Analysis(
             meta = meta,
-            permissions = extraction.permissions.map(::permission),
-            components = extraction.components.map(::component),
+            permissions = extraction.permissions.map { permission(it, extraction.manifest) },
+            components =
+                extraction.components.zip(ComponentReviews.of(extraction.components, extraction.meta.`package`)).map { (c, r) ->
+                    component(c, r, extraction.manifest)
+                },
             manifest = node(extraction.manifest),
             outputDir = outputDir.toString(),
             apkPath = apkPath?.toString(),
             outputFiles = OutputFolder.list(outputDir),
             analyzedAtMillis = analyzedAtMillis,
             durationMs = durationMs,
+            startup = startup(extraction, outputDir),
+            resources = extraction.resources,
+            sdks =
+                runCatching {
+                    extraction.insights?.let { SdkInventory.of(outputDir.fileName.toString(), m.`package`, m.versionName, it.sdks, it.libraries) }
+                        ?: SdkInventory.fromFolder(outputDir)
+                }.getOrNull(),
+            stringKeys = StringCatalog.of(extraction.resources),
+            applicationXml =
+                extraction.manifest.children
+                    .firstOrNull { it.tag == "application" }
+                    ?.let { ManifestXml.render(CoreXmlNode(it.tag, it.attributes, emptyList())).trimEnd() },
         )
     }
+
+    /** Same as `sextant app`: follows startup calls when the folder has a code index. */
+    private fun startup(
+        extraction: Extraction,
+        outputDir: Path,
+    ): AppStartup? =
+        runCatching {
+            if (Files.exists(outputDir.resolve(OutputFiles.INDEX))) {
+                IndexReader.open(outputDir).use { AppStartups.build(extraction, it) }
+            } else {
+                AppStartups.build(extraction, null)
+            }
+        }.getOrNull()
 
     private fun adaptivePreview(icons: AppIcons?): AdaptivePreview? {
         val adaptive = (icons?.icon ?: icons?.roundIcon)?.adaptive ?: return null
@@ -144,8 +183,10 @@ object CoreMapper {
         return IconPick(layer, foreground.files.firstOrNull { it.path == layer }?.format ?: "").takeIf { it.drawable }
     }
 
-    private fun permission(p: CorePermission) =
-        Permission(
+    private fun permission(
+        p: CorePermission,
+        manifest: CoreXmlNode,
+    ) = Permission(
             name = p.name,
             kind = PermissionKind.fromWire(p.kind),
             maxSdk = p.maxSdk,
@@ -154,10 +195,20 @@ object CoreMapper {
             custom = p.custom,
             impliedBy = p.impliedBy,
             jsonLine = SextantJson.compact.encodeToString(CorePermission.serializer(), p),
+            manifestXml =
+                ManifestXml
+                    .permission(manifest, p.name)
+                    .filter { it.tag == (if (p.kind == "declared") "permission" else p.kind) }
+                    .joinToString("") { ManifestXml.render(it) }
+                    .trimEnd()
+                    .ifEmpty { null },
         )
 
-    private fun component(c: CoreComponent) =
-        AppComponent(
+    private fun component(
+        c: CoreComponent,
+        r: ComponentReview,
+        manifest: CoreXmlNode,
+    ) = AppComponent(
             type = ComponentType.fromWire(c.type),
             name = c.name,
             exported = c.exported,
@@ -192,6 +243,32 @@ object CoreMapper {
                     )
                 },
             jsonLine = SextantJson.compact.encodeToString(CoreComponent.serializer(), c),
+            readPermission = c.readPermission,
+            writePermission = c.writePermission,
+            grantUriPermissions = c.grantUriPermissions,
+            facts =
+                ComponentFacts(
+                    tags = r.tags,
+                    reasons = r.reasons,
+                    entryPoints = r.entryPoints,
+                    deepLinks = r.deepLinks,
+                    appLinkHosts = r.appLinkHosts,
+                    aliases = r.aliases,
+                    adb = r.adb.map { it.label to it.command },
+                    attributes = ComponentReviews.attributes(c),
+                    manifestXml = ManifestXml.component(manifest, c.name)?.let { ManifestXml.render(it).trimEnd() },
+                    label = c.label,
+                    pathPermissions =
+                        c.pathPermissions.map { p ->
+                            (p.path ?: p.pathPrefix?.let { "$it*" } ?: p.pathPattern ?: "?") + "  " +
+                                listOfNotNull(
+                                    p.permission?.let { "permission=$it" },
+                                    p.readPermission?.let { "read=$it" },
+                                    p.writePermission?.let { "write=$it" },
+                                ).joinToString(" ")
+                        },
+                    grantUriPaths = c.grantUriPaths,
+                ),
         )
 
     private fun node(n: CoreXmlNode): ManifestNode = ManifestNode(n.tag, n.attributes.toList(), n.children.map(::node))

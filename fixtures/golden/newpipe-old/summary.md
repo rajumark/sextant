@@ -1,5 +1,5 @@
 # org.schabi.newpipe 0.29.0 (1014)
-Extracted by sextant <version> · schema 7 · sha256 11c320613aebaf2132897f44dc9fa02bd05100b3edaacad11ceaa250889ff5d4
+Extracted by sextant <version> · schema 8 · sha256 11c320613aebaf2132897f44dc9fa02bd05100b3edaacad11ceaa250889ff5d4
 
 ## App
 - Label: NewPipe

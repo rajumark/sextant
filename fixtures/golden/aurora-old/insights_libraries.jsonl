@@ -108,5 +108,6 @@
 {"group":"com.google.dagger","artifact":"dagger-lint-aar","version":"2.58","evidence":"META-INF/com.google.dagger_dagger-lint-aar.version"}
 {"group":"com.google.dagger","artifact":"hilt-android","version":"2.58","evidence":"META-INF/com.google.dagger_hilt-android.version"}
 {"group":"com.google.dagger","artifact":"hilt-core","version":"2.58","evidence":"META-INF/com.google.dagger_hilt-core.version"}
+{"group":"com.squareup.okhttp3","artifact":"okhttp","version":"5.3.2","evidence":"code string in Lmg/p;->f(Lig/i0;Ljava/util/List;)Lmg/e;"}
 {"group":"kotlinx","artifact":"coroutines_android","version":"1.10.2","evidence":"META-INF/kotlinx_coroutines_android.version"}
 {"group":"kotlinx","artifact":"coroutines_core","version":"1.10.2","evidence":"META-INF/kotlinx_coroutines_core.version"}

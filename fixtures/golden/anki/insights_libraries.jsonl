@@ -87,5 +87,6 @@
 {"group":"androidx.work","artifact":"work-runtime","version":"2.11.2","evidence":"META-INF/androidx.work_work-runtime.version"}
 {"group":"androidx.work","artifact":"work-runtime-ktx","version":"2.11.2","evidence":"META-INF/androidx.work_work-runtime-ktx.version"}
 {"group":"com.google.android.material","artifact":"material","version":"1.14.0","evidence":"META-INF/com.google.android.material_material.version"}
+{"group":"com.squareup.okhttp3","artifact":"okhttp","version":"5.4.0","evidence":"code string in Luh6;->b(Lry;)Lnq6;"}
 {"group":"kotlinx","artifact":"coroutines_android","version":"1.11.0","evidence":"META-INF/kotlinx_coroutines_android.version"}
 {"group":"kotlinx","artifact":"coroutines_core","version":"1.11.0","evidence":"META-INF/kotlinx_coroutines_core.version"}

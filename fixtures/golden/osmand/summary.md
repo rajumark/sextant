@@ -1,5 +1,5 @@
 # net.osmand.plus 5.4.10 (541003)
-Extracted by sextant <version> · schema 7 · sha256 ca05d8f4ec364f84bde1946738e898abfb392234905eef1dc0ec597d4580b112
+Extracted by sextant <version> · schema 8 · sha256 ca05d8f4ec364f84bde1946738e898abfb392234905eef1dc0ec597d4580b112
 
 ## App
 - Label: OsmAnd~

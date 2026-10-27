@@ -1,5 +1,5 @@
 # net.sourceforge.opencamera 1.56.2 (96)
-Extracted by sextant <version> · schema 7 · sha256 ca5672ca8c7174554ca0b07b5b26e505817a05142f571cf2abe67e790c30249c
+Extracted by sextant <version> · schema 8 · sha256 ca5672ca8c7174554ca0b07b5b26e505817a05142f571cf2abe67e790c30249c
 
 ## App
 - Label: Open Camera

@@ -1,5 +1,5 @@
 # com.duckduckgo.mobile.android 5.297.1 (52971000)
-Extracted by sextant <version> · schema 7 · sha256 b1c0cb010b6f188b301c202905333486df180ee321ee802f143de0e4f29bdbd0
+Extracted by sextant <version> · schema 8 · sha256 b1c0cb010b6f188b301c202905333486df180ee321ee802f143de0e4f29bdbd0
 
 ## App
 - Label: DuckDuckGo

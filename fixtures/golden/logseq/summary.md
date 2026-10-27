@@ -1,5 +1,5 @@
 # com.logseq.app 2.0.2 (89)
-Extracted by sextant <version> · schema 7 · sha256 e011983cdea2946711dd6ff35b00cff3321cd4f8937fee3f42e718f3aa6226e0
+Extracted by sextant <version> · schema 8 · sha256 e011983cdea2946711dd6ff35b00cff3321cd4f8937fee3f42e718f3aa6226e0
 
 ## App
 - Label: Logseq

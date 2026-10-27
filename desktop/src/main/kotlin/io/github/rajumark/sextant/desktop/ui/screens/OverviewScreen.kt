@@ -109,8 +109,11 @@ fun OverviewScreen(ws: WorkspaceState) {
                                 Tone.Primary,
                                 mod,
                             ) {
-                                ws.exportedOnly = true
-                                ws.destination = Destination.Components
+                                ws.componentPage(ComponentType.Activity).apply {
+                                    clearFilters()
+                                    exported = true
+                                }
+                                ws.destination = Destination.Activities
                             }
                         },
                         { mod ->
@@ -122,8 +125,7 @@ fun OverviewScreen(ws: WorkspaceState) {
                                 Tone.Tertiary,
                                 mod,
                             ) {
-                                ws.deepLinksOnly = true
-                                ws.destination = Destination.Components
+                                ws.showComponentsWithTag(ComponentType.Activity, "deep-link")
                             }
                         },
                         { mod ->
@@ -380,7 +382,7 @@ private fun ComponentMixCard(ws: WorkspaceState) {
         )
     val total = parts.sumOf { it.second }.coerceAtLeast(1)
     SectionCard("Component mix", icon = Icons.Outlined.PieChart, action = {
-        TextButton(onClick = { ws.destination = Destination.Components }) { Text("View all") }
+        TextButton(onClick = { ws.destination = Destination.Activities }) { Text("View all") }
     }) {
         Row(Modifier.fillMaxWidth().height(14.dp).clip(CircleShape), horizontalArrangement = Arrangement.spacedBy(3.dp)) {
             parts.filter { it.second > 0 }.forEach { (_, n, color) ->

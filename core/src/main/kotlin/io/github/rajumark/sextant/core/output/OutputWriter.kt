@@ -14,6 +14,7 @@ import io.github.rajumark.sextant.core.model.FeatureRecord
 import io.github.rajumark.sextant.core.model.MetadataRecord
 import io.github.rajumark.sextant.core.model.Permission
 import io.github.rajumark.sextant.core.model.QueryRecord
+import io.github.rajumark.sextant.core.model.ResourceHarvest
 import io.github.rajumark.sextant.core.model.XmlNode
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.serializer
@@ -41,6 +42,19 @@ object OutputFiles {
     const val NATIVE_LIBRARIES = "native/libraries.jsonl"
     const val NATIVE_SYMBOLS = "native/symbols.jsonl"
     const val FINDINGS = "insights/findings.jsonl"
+
+    // Schema 8: res/ and assets/.
+    const val RES_STRINGS = "resources/strings.jsonl"
+    const val RES_IDS = "resources/ids.jsonl"
+    const val RES_STYLES = "resources/styles.jsonl"
+    const val RES_DRAWABLES = "resources/drawables.jsonl"
+    const val RES_LAYOUTS = "resources/layouts.jsonl"
+    const val RES_MENUS = "resources/menus.jsonl"
+    const val RES_NAVIGATION = "resources/navigation.jsonl"
+    const val RES_ASSETS = "resources/assets.jsonl"
+    const val RES_XML = "resources/xml.jsonl"
+    const val RES_REFS = "resources/refs.jsonl"
+    val HARVEST = listOf(RES_STRINGS, RES_IDS, RES_STYLES, RES_DRAWABLES, RES_LAYOUTS, RES_MENUS, RES_NAVIGATION, RES_ASSETS, RES_XML, RES_REFS)
     val INSIGHTS = listOf(LIBRARIES, FRAMEWORKS, SDKS, ENDPOINTS, RESOURCES, NATIVE_LIBRARIES, NATIVE_SYMBOLS, FINDINGS)
     val ALL = listOf(SUMMARY, META, MANIFEST, PERMISSIONS, COMPONENTS, FEATURES, METADATA, QUERIES)
 }
@@ -121,8 +135,25 @@ object OutputWriter {
             writeText(dir, OutputFiles.FEATURES, jsonl(extraction.features)),
             writeText(dir, OutputFiles.METADATA, jsonl(extraction.metadata)),
             writeText(dir, OutputFiles.QUERIES, jsonl(extraction.queries)),
-        ) + (extraction.insights?.let { writeInsights(it, dir) } ?: emptyList())
+        ) + writeResources(extraction.resources, dir) + (extraction.insights?.let { writeInsights(it, dir) } ?: emptyList())
     }
+
+    private fun writeResources(
+        r: ResourceHarvest,
+        dir: Path,
+    ): List<Path> =
+        listOf(
+            writeText(dir, OutputFiles.RES_STRINGS, jsonl(r.strings)),
+            writeText(dir, OutputFiles.RES_IDS, jsonl(r.ids)),
+            writeText(dir, OutputFiles.RES_STYLES, jsonl(r.styles)),
+            writeText(dir, OutputFiles.RES_DRAWABLES, jsonl(r.drawables)),
+            writeText(dir, OutputFiles.RES_LAYOUTS, jsonl(r.layouts)),
+            writeText(dir, OutputFiles.RES_MENUS, jsonl(r.menus)),
+            writeText(dir, OutputFiles.RES_NAVIGATION, jsonl(r.navigation)),
+            writeText(dir, OutputFiles.RES_ASSETS, jsonl(r.assets)),
+            writeText(dir, OutputFiles.RES_XML, jsonl(r.xml)),
+            writeText(dir, OutputFiles.RES_REFS, jsonl(r.refs)),
+        )
 
     private fun writeInsights(
         insights: Insights,
@@ -172,6 +203,7 @@ object OutputWriter {
     ): Path {
         val target = dir.resolve(name)
         try {
+            Files.createDirectories(target.parent)
             val tmp = Files.createTempFile(target.parent, ".${target.fileName}.", ".tmp")
             val text = if (content.isEmpty() || content.endsWith("\n")) content else content + "\n"
             Files.writeString(tmp, text.escapeLoneSurrogates())
@@ -206,6 +238,20 @@ object OutputReader {
             features = optionalLines(dir, OutputFiles.FEATURES).map { SextantJson.reader.decodeFromString<FeatureRecord>(it) },
             metadata = optionalLines(dir, OutputFiles.METADATA).map { SextantJson.reader.decodeFromString<MetadataRecord>(it) },
             queries = optionalLines(dir, OutputFiles.QUERIES).map { SextantJson.reader.decodeFromString<QueryRecord>(it) },
+            // Added in schema 8.
+            resources =
+                ResourceHarvest(
+                    ids = optionalLines(dir, OutputFiles.RES_IDS).map { SextantJson.reader.decodeFromString(it) },
+                    strings = optionalLines(dir, OutputFiles.RES_STRINGS).map { SextantJson.reader.decodeFromString(it) },
+                    styles = optionalLines(dir, OutputFiles.RES_STYLES).map { SextantJson.reader.decodeFromString(it) },
+                    drawables = optionalLines(dir, OutputFiles.RES_DRAWABLES).map { SextantJson.reader.decodeFromString(it) },
+                    layouts = optionalLines(dir, OutputFiles.RES_LAYOUTS).map { SextantJson.reader.decodeFromString(it) },
+                    menus = optionalLines(dir, OutputFiles.RES_MENUS).map { SextantJson.reader.decodeFromString(it) },
+                    navigation = optionalLines(dir, OutputFiles.RES_NAVIGATION).map { SextantJson.reader.decodeFromString(it) },
+                    assets = optionalLines(dir, OutputFiles.RES_ASSETS).map { SextantJson.reader.decodeFromString(it) },
+                    xml = optionalLines(dir, OutputFiles.RES_XML).map { SextantJson.reader.decodeFromString(it) },
+                    refs = optionalLines(dir, OutputFiles.RES_REFS).map { SextantJson.reader.decodeFromString(it) },
+                ),
         )
     }
 

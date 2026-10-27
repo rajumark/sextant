@@ -1,5 +1,5 @@
 # at.bitfire.davdroid 4.5.21-ose (405210002)
-Extracted by sextant <version> · schema 7 · sha256 41cf9832d97c31e3fc694e5c66b38990dec3312936cc336141714db07259081b
+Extracted by sextant <version> · schema 8 · sha256 41cf9832d97c31e3fc694e5c66b38990dec3312936cc336141714db07259081b
 
 ## App
 - Label: DAVx⁵

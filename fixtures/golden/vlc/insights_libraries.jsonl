@@ -1,0 +1,1 @@
+{"group":"com.squareup.okhttp3","artifact":"okhttp","version":"4.9.3","evidence":"code string in Lokhttp3/internal/connection/RealConnection;->createTunnelRequest()Lokhttp3/Request;"}

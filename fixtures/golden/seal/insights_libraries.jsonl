@@ -87,5 +87,6 @@
 {"group":"com.google.dagger","artifact":"dagger-lint-aar","version":"2.45","evidence":"META-INF/com.google.dagger_dagger-lint-aar.version"}
 {"group":"com.google.dagger","artifact":"hilt-android","version":"2.45","evidence":"META-INF/com.google.dagger_hilt-android.version"}
 {"group":"com.google.dagger","artifact":"hilt-core","version":"2.45","evidence":"META-INF/com.google.dagger_hilt-core.version"}
+{"group":"com.squareup.okhttp3","artifact":"okhttp","version":"5.0.0-alpha.10","evidence":"code string in Lokhttp3/internal/connection/RealRoutePlanner;->planConnectToRoute$okhttp(Lokhttp3/Route;Ljava/util/List;)Lokhttp3/internal/connection/ConnectPlan;"}
 {"group":"kotlinx","artifact":"coroutines_android","version":"1.7.3","evidence":"META-INF/kotlinx_coroutines_android.version"}
 {"group":"kotlinx","artifact":"coroutines_core","version":"1.7.3","evidence":"META-INF/kotlinx_coroutines_core.version"}

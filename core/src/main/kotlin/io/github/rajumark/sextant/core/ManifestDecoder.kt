@@ -20,6 +20,25 @@ class DecodedManifest(
     val resources: ResourceResolver,
     /** Decodes another binary XML file from the APK (e.g. an adaptive icon) with the same resource table; null if invalid. */
     val decodeXml: (ByteArray) -> XmlNode?,
+    /** Every entry of resources.arsc in every configuration (empty when there is no table). */
+    val table: List<RawResource> = emptyList(),
+) {
+    /** BCP-47 locale of a configuration qualifier (`-pt-rBR` → `pt-BR`), or null. */
+    fun locale(config: String): String? = ManifestDecoder.locale(config)
+}
+
+/** One resources.arsc entry in one configuration: a simple value, or a bag (style, plurals, array) of items. */
+class RawResource(
+    val id: Int,
+    val type: String,
+    val name: String,
+    /** Qualifier without the leading dash; `""` for the default configuration. */
+    val config: String,
+    val value: String?,
+    /** Bags: parent style as `@style/Name`. */
+    val parent: String?,
+    /** Bags: (attribute or item key, value). Plural keys are the raw quantity ids. */
+    val items: List<Pair<String, String>>,
 )
 
 /** One file behind a file resource, for one configuration (density qualifier etc.). */
@@ -84,12 +103,14 @@ object ManifestDecoder {
     ): DecodedManifest {
         val root = RootNode(JadxDecompiler(JadxArgs()))
         var resolver = ResourceResolver.EMPTY
+        var table = emptyList<RawResource>()
         if (resourceTable != null) {
             try {
                 val parser = ResTableBinaryParser(root)
                 parser.decode(resourceTable.inputStream())
                 root.processResources(parser.resStorage)
                 resolver = buildResolver(parser)
+                table = rawTable(parser)
             } catch (e: Exception) {
                 warnings += "resources.arsc could not be decoded (${e.javaClass.simpleName}); resource references are left unresolved"
             }
@@ -109,7 +130,7 @@ object ManifestDecoder {
         val decodeOther: (ByteArray) -> XmlNode? = { bytes ->
             runCatching { parseXml(BinaryXMLParser(root).parse(bytes.inputStream()).codeStr) }.getOrNull()
         }
-        return DecodedManifest(tree, resolver, decodeOther)
+        return DecodedManifest(tree, resolver, decodeOther, table)
     }
 
     private fun buildResolver(parser: ResTableBinaryParser): ResourceResolver {
@@ -142,8 +163,28 @@ object ManifestDecoder {
         return ResourceResolver(values, entries, locales.toList(), files.mapValues { (_, v) -> v.sortedBy { it.config } })
     }
 
+    private fun rawTable(parser: ResTableBinaryParser): List<RawResource> {
+        val names = parser.resStorage.resourcesNames
+        val values = ValuesParser(parser.strings, names)
+        return parser.resStorage.resources.map { e ->
+            val simple = e.simpleValue?.let { runCatching { values.getSimpleValueString(e) }.getOrNull() }
+            val items =
+                e.namedValues.orEmpty().map { nv ->
+                    val key =
+                        if (e.typeName == "plurals") {
+                            nv.nameRef.toString()
+                        } else {
+                            runCatching { values.decodeNameRef(nv.nameRef) }.getOrNull() ?: "0x%08x".format(nv.nameRef)
+                        }
+                    key to (runCatching { values.decodeValue(nv.rawValue) }.getOrNull() ?: "")
+                }
+            val parent = e.parentRef.takeIf { it != 0 }?.let { ref -> names[ref]?.let { "@$it" } ?: "0x%08x".format(ref) }
+            RawResource(e.id, e.typeName, e.keyName, e.config.orEmpty().removePrefix("-"), simple, parent, items)
+        }
+    }
+
     /** `-fr` → `fr`, `-pt-rBR` → `pt-BR`, `-b+sr+Latn` → `sr-Latn`; other qualifiers → null. */
-    private fun locale(config: String): String? {
+    internal fun locale(config: String): String? {
         BCP47.find(config)?.let { return it.groupValues[1].replace('+', '-') }
         val m = LOCALE.find(config) ?: return null
         return if (m.groupValues[2].isEmpty()) m.groupValues[1] else "${m.groupValues[1]}-${m.groupValues[2]}"
@@ -170,9 +211,13 @@ object ManifestDecoder {
         }
         val children = mutableListOf<XmlNode>()
         val nodes = element.childNodes
+        val text = StringBuilder()
         for (i in 0 until nodes.length) {
-            (nodes.item(i) as? Element)?.let { children += toNode(it) }
+            val node = nodes.item(i)
+            if (node is Element) children += toNode(node) else if (node.nodeType == org.w3c.dom.Node.TEXT_NODE) text.append(node.nodeValue)
         }
+        // Element text matters in res/xml configs (<domain>example.org</domain>); manifests have none.
+        if (children.isEmpty() && text.isNotBlank()) attrs["#text"] = text.toString().trim()
         return XmlNode(element.tagName, attrs, children)
     }
 }

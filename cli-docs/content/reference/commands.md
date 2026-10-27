@@ -15,23 +15,28 @@ Options:
   -h, --help     Show this message and exit
 
 Commands:
-  extract    Extract structured data from an APK into a folder.
-  info       Show a short summary of an APK or an extracted folder.
-  sql        Run read-only SQL over index.sqlite. Use --schema to see the tables.
-  find       Find anything containing the text: classes, methods, fields, strings, components, permissions, deep links, resources, endpoints, SDKs, libraries and native symbols.
-  class      Show a class: hierarchy, fields, methods, who calls it and the strings it uses.
-  callers    Show who calls a method, as a tree. Calls through an interface or superclass are recorded against that base method.
-  callees    Show what a method calls, as a tree. External (framework/library) methods are leaves.
-  source     Print decompiled Java (jadx) for one class or method. Names are kept as in the bytecode, matching the index.
-  insights   Show what the app is built with: frameworks, SDKs, libraries, endpoints and native code.
-  endpoints  List URLs found in code strings, resources, deep links and manifest values, with their sources.
-  mcp        Run an MCP server on stdin/stdout so AI agents can extract, search and query APKs. Tools: extract, summary, find, class, callers, callees, sql, source, insights, xref, reach, smali, icon, findings, endpoints.
-  diff       Compare two extracted versions: app facts, permissions, components, deep links, SDKs, libraries, hosts, URLs, native code, packages, classes, strings and resources.
-  findings   Show review findings (debuggable, cleartext, exported components, WebView bridges, weak crypto, trust-all TLS, embedded secrets, …) with evidence. They are static observations to check, not proven vulnerabilities.
-  xref       Where is a class or field used: instantiations, casts, instanceof, const-class, calls into its methods, field reads and writes.
-  reach      Find call paths from an entry point (e.g. an exported activity) to target methods, following virtual and interface dispatch into subclasses. Static approximation: reflection, framework callbacks and native code are not followed.
-  smali      Print smali (bytecode assembly) for one class or method. Works where decompiling fails; # 0x… offsets match the code files.
-  icon       Find the app icon: every file behind android:icon (or --round) per density, adaptive icon layers, pixel sizes, and the best file to use. -o saves it.
+  extract     Extract structured data from an APK into a folder.
+  info        Show a short summary of an APK or an extracted folder.
+  sql         Run read-only SQL over index.sqlite. Use --schema to see the tables.
+  find        Find anything containing the text: classes, methods, fields, strings, components, permissions, deep links, resources, endpoints, SDKs, libraries and native symbols.
+  class       Show a class: hierarchy, fields, methods, who calls it and the strings it uses.
+  callers     Show who calls a method, as a tree. Calls through an interface or superclass are recorded against that base method.
+  callees     Show what a method calls, as a tree. External (framework/library) methods are leaves.
+  source      Print decompiled Java (jadx) for one class or method. Names are kept as in the bytecode, matching the index.
+  insights    Show what the app is built with: frameworks, SDKs, libraries, endpoints and native code.
+  endpoints   List URLs found in code strings, resources, deep links and manifest values, with their sources.
+  mcp         Run an MCP server on stdin/stdout so AI agents can extract, search and query APKs. Tools: extract, summary, find, class, callers, callees, sql, source, insights, xref, reach, smali, icon, findings, endpoints.
+  diff        Compare two extracted versions: app facts, permissions, components, deep links, SDKs, libraries, hosts, URLs, native code, packages, classes, strings and resources.
+  findings    Show review findings (debuggable, cleartext, exported components, WebView bridges, weak crypto, trust-all TLS, embedded secrets, …) with evidence. They are static observations to check, not proven vulnerabilities.
+  xref        Where is a class or field used: instantiations, casts, instanceof, const-class, calls into its methods, field reads and writes.
+  reach       Find call paths from an entry point (e.g. an exported activity) to target methods, following virtual and interface dispatch into subclasses. Static approximation: reflection, framework callbacks and native code are not followed.
+  smali       Print smali (bytecode assembly) for one class or method. Works where decompiling fails; # 0x… offsets match the code files.
+  icon        Find the app icon: every file behind android:icon (or --round) per density, adaptive icon layers, pixel sizes, and the best file to use. -o saves it.
+  components  List activities, aliases, services, receivers and providers with verdicts: launcher, app-link, deep-link, hidden-entry, task-hijack, lock-screen, exported-by-default, guarded, disabled.
+  component   Explain one component: verdicts with reasons, activity attributes, intent filters in plain words, deep links, aliases and ready-to-run adb commands.
+  app         Show the Application class and the startup order: AppComponentFactory, attachBaseContext, content providers (androidx.startup initializers), onCreate; with an extracted folder, also their calls and the SDKs they start.
+  res         List strings (every locale, plurals, arrays), resource ids, styles and themes, drawables, layouts, menus, navigation graphs, assets and XML configs. References are shown as written and resolved; NAME shows one entry and who uses it.
+  sdks        Show SDKs and libraries by role (analytics, ads, crash reporting, auth, database, UI, …) with versions when an artifact proves them. With several apps, show which SDKs appear where and filter apps by SDK, category or version.
 ```
 
 ## extract
@@ -94,10 +99,10 @@ Usage: sextant find [<options>] <dir> <text>
   Find anything containing the text: classes, methods, fields, strings, components, permissions, deep links, resources, endpoints, SDKs, libraries and native symbols.
 
 Options:
-  --kind=(class|method|field|string|component|permission|deep_link|resource|endpoint|sdk|library|native_symbol|finding)  Only this kind
-  --limit=<int>                                                                                                          Maximum results (default 50)
-  --json                                                                                                                 One JSON object per line
-  -h, --help                                                                                                             Show this message and exit
+  --kind=(class|method|field|string|component|permission|deep_link|resource|endpoint|sdk|library|native_symbol|finding|string_resource)  Only this kind
+  --limit=<int>                                                                                                                          Maximum results (default 50)
+  --json                                                                                                                                 One JSON object per line
+  -h, --help                                                                                                                             Show this message and exit
 
 Arguments:
   <dir>   An extracted folder
@@ -318,4 +323,93 @@ Options:
 
 Arguments:
   <target>  An APK (fast: manifest + resources only) or an extracted folder
+```
+
+## components
+
+```text
+Usage: sextant components [<options>] <target>
+
+  List activities, aliases, services, receivers and providers with verdicts: launcher, app-link, deep-link, hidden-entry, task-hijack, lock-screen, exported-by-default, guarded, disabled.
+
+Options:
+  --type=(activity|activity-alias|service|receiver|provider)                                                                                                                                                        Only this type; repeat for several (activity includes aliases with --type activity-alias)
+  --tag=(launcher|app-link|deep-link|hidden-entry|unguarded|sensitive-role|system-role|boot|foreground|task-hijack|lock-screen|uri-grants|file-provider|isolated|direct-boot|exported-by-default|guarded|disabled)  Only components with this verdict; repeat to require several
+  --exported                                                                                                                                                                                                        Only exported components
+  --search=<text>                                                                                                                                                                                                   Only names, deep links, authorities, permissions or processes containing this text
+  --json                                                                                                                                                                                                            One JSON object per component: component, review, attributes
+  -h, --help                                                                                                                                                                                                        Show this message and exit
+
+Arguments:
+  <target>  An extracted folder, or an APK (analyzed in memory, nothing written)
+```
+
+## component
+
+```text
+Usage: sextant component [<options>] <target> <name>
+
+  Explain one component: verdicts with reasons, activity attributes, intent filters in plain words, deep links, aliases and ready-to-run adb commands.
+
+Options:
+  --json      One JSON object: component, review, attributes
+  -h, --help  Show this message and exit
+
+Arguments:
+  <target>  An extracted folder, or an APK (analyzed in memory, nothing written)
+  <name>    Class name, or a unique suffix such as .MainActivity
+```
+
+## app
+
+```text
+Usage: sextant app [<options>] <target>
+
+  Show the Application class and the startup order: AppComponentFactory, attachBaseContext, content providers (androidx.startup initializers), onCreate; with an extracted folder, also their calls and the SDKs they start.
+
+Options:
+  --json      One JSON object
+  -h, --help  Show this message and exit
+
+Arguments:
+  <target>  An extracted folder (follows startup calls with its index), or an APK (manifest only)
+```
+
+## res
+
+```text
+Usage: sextant res [<options>] <target> <kindname> [<name>]
+
+  List strings (every locale, plurals, arrays), resource ids, styles and themes, drawables, layouts, menus, navigation graphs, assets and XML configs. References are shown as written and resolved; NAME shows one entry and who uses it.
+
+Options:
+  --search=<text>                                                            Only entries whose name or value contains this text
+  --flag=(used|unused|url|email|secret-like|format|html|untranslated|empty)  string-keys only: used, unused, url, email, secret-like, format, html, untranslated, empty
+  --config=<text>                                                            Only this configuration, e.g. fr, night, default
+  --limit=<int>                                                              Maximum rows (default 500)
+  --json                                                                     One JSON object per record
+  -h, --help                                                                 Show this message and exit
+
+Arguments:
+  <target>    An extracted folder, or an APK (analyzed in memory, nothing written)
+  <kindname>  What to list: strings, string-keys, ids, styles, drawables, layouts, menus, navigation, assets, xml, refs
+  <name>      Show one entry in full (all configurations) and what references it
+```
+
+## sdks
+
+```text
+Usage: sextant sdks [<options>] <targets>...
+
+  Show SDKs and libraries by role (analytics, ads, crash reporting, auth, database, UI, …) with versions when an artifact proves them. With several apps, show which SDKs appear where and filter apps by SDK, category or version.
+
+Options:
+  --category=<text>  Only apps that have an SDK in this category; repeat to require several (ads, analytics, …)
+  --sdk=<text>       Only apps that contain this SDK or library (name or group:artifact, case-insensitive substring); repeat to require several
+  --below=<text>     With one --sdk: only apps whose version of it is lower than this (e.g. 4.9.0)
+  --json             One JSON object per app (its SDK profile)
+  -h, --help         Show this message and exit
+
+Arguments:
+  <targets>  Extracted folders and/or APKs (APKs are analyzed in memory)
 ```

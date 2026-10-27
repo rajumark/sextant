@@ -1,5 +1,5 @@
 # org.localsend.localsend_app 1.18.2 (643)
-Extracted by sextant <version> · schema 7 · sha256 82ec3568fba2aa5295b9aae8b76f701d7a4703d86b9f8bad749472038fbaeab3
+Extracted by sextant <version> · schema 8 · sha256 82ec3568fba2aa5295b9aae8b76f701d7a4703d86b9f8bad749472038fbaeab3
 
 ## App
 - Label: LocalSend

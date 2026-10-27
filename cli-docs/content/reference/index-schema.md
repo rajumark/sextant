@@ -7,7 +7,7 @@ or external) has one row in `methods`; edges point at integer ids, and the views
 and `search_items` give the readable, descriptor-based form. JSON arrays are stored as TEXT; use SQLite's
 `json_each` to expand them. Query it with `sextant sql <dir> "…"` (read-only) or any SQLite tool.
 
-Schema version: **6**
+Schema version: **7**
 (stored in `meta` as `index_schema_version`).
 
 ```sql
@@ -47,7 +47,94 @@ CREATE TABLE components (
   foreground_service_type TEXT,     -- services
   isolated_process        INTEGER,
   direct_boot_aware       INTEGER,
-  label                   TEXT
+  label                   TEXT,
+  tags                    TEXT NOT NULL, -- JSON array of verdicts: launcher, app-link, deep-link, hidden-entry, task-hijack, …
+  attributes              TEXT      -- JSON object of the other type-specific attributes that are set (launchMode, theme, …)
+);
+
+-- res/ and assets/ (index schema 7). String resources are separate from code strings (table strings).
+CREATE TABLE string_resources (
+  name    TEXT NOT NULL,
+  kind    TEXT NOT NULL,            -- string | plurals | array
+  config  TEXT NOT NULL,            -- '' default, fr, pt-rBR, night, …
+  locale  TEXT,                     -- BCP-47, NULL for non-locale configs
+  item    TEXT,                     -- plural quantity or array index
+  value   TEXT NOT NULL
+);
+CREATE TABLE resource_ids (
+  id      TEXT NOT NULL,            -- 0x7f0e001c
+  type    TEXT NOT NULL,
+  name    TEXT NOT NULL,
+  configs TEXT NOT NULL             -- JSON array
+);
+CREATE TABLE styles (
+  name     TEXT NOT NULL,
+  config   TEXT NOT NULL,
+  parent   TEXT,
+  items    TEXT NOT NULL,           -- JSON array of {name, raw, resolved}
+  used_by  TEXT NOT NULL            -- JSON array: application / activity names using it as theme
+);
+CREATE TABLE drawables (
+  type    TEXT NOT NULL,            -- drawable | mipmap
+  name    TEXT NOT NULL,
+  config  TEXT NOT NULL,
+  path    TEXT NOT NULL,
+  format  TEXT NOT NULL,            -- png | webp | vector | shape | selector | adaptive-icon | …
+  bytes   INTEGER NOT NULL,
+  width   INTEGER,
+  height  INTEGER
+);
+CREATE TABLE layouts (
+  name         TEXT NOT NULL,
+  config       TEXT NOT NULL,
+  path         TEXT NOT NULL,
+  root         TEXT,
+  views        INTEGER NOT NULL,
+  ids          TEXT NOT NULL,       -- JSON array
+  custom_views TEXT NOT NULL,       -- JSON array
+  fragments    TEXT NOT NULL,       -- JSON array
+  includes     TEXT NOT NULL        -- JSON array
+);
+CREATE TABLE menus (
+  menu           TEXT NOT NULL,
+  config         TEXT NOT NULL,
+  depth          INTEGER NOT NULL,
+  tag            TEXT NOT NULL,     -- item | group | menu
+  id             TEXT,
+  title          TEXT,              -- as written (@string/x)
+  title_resolved TEXT,
+  icon           TEXT,
+  show_as_action TEXT
+);
+CREATE TABLE navigation_destinations (
+  graph       TEXT NOT NULL,
+  id          TEXT,
+  kind        TEXT NOT NULL,        -- fragment | activity | dialog | navigation | …
+  class_name  TEXT,
+  label       TEXT,
+  deep_links  TEXT NOT NULL,        -- JSON array
+  actions     TEXT NOT NULL         -- JSON array of {id, destination, pop_up_to}
+);
+CREATE TABLE assets (
+  path        TEXT NOT NULL,
+  kind        TEXT NOT NULL,
+  bytes       INTEGER NOT NULL,
+  magic       TEXT,                 -- dex | elf | zip when the content is code or an archive
+  hidden_code INTEGER NOT NULL
+);
+CREATE TABLE xml_configs (
+  name    TEXT NOT NULL,
+  config  TEXT NOT NULL,
+  path    TEXT NOT NULL,
+  kind    TEXT NOT NULL,            -- network-security-config | file-provider-paths | backup-rules | …
+  summary TEXT NOT NULL,            -- JSON object
+  xml     TEXT NOT NULL
+);
+CREATE TABLE resource_refs (
+  ref       TEXT NOT NULL,          -- @string/app_name
+  from_kind TEXT NOT NULL,          -- layout | menu | navigation | xml | style | manifest
+  "from"    TEXT NOT NULL,
+  attribute TEXT NOT NULL
 );
 
 -- uses-feature / uses-library / uses-native-library
@@ -259,7 +346,7 @@ CREATE TABLE finding_evidence (
 
 -- Substring search (trigram: any 3+ character fragment matches). Contentless to save space:
 -- rowid = (source id << 4) | kind; kinds: 1 class, 2 method, 3 field, 4 string, 5 component, 6 permission,
--- 7 deep_link, 8 resource, 9 endpoint, 10 sdk, 11 library, 12 native_symbol, 13 finding.
+-- 7 deep_link, 8 resource, 9 endpoint, 10 sdk, 11 library, 12 native_symbol, 13 finding, 14 string_resource.
 -- Indexed text: class full name; method and field "SimpleClass.name" (field + " = value"); first 1000 chars of strings.
 CREATE VIRTUAL TABLE search USING fts5(text, content = '', tokenize = 'trigram');
 
@@ -278,7 +365,8 @@ CREATE VIEW search_items AS
   UNION ALL SELECT rowid * 16 + 10, 'sdk', name, name || ' (' || category || ')' FROM sdks
   UNION ALL SELECT rowid * 16 + 11, 'library', "group" || ':' || artifact, "group" || ':' || artifact || ':' || version FROM libraries
   UNION ALL SELECT rowid * 16 + 12, 'native_symbol', library, name FROM native_symbols
-  UNION ALL SELECT rowid * 16 + 13, 'finding', id, severity || ' ' || title FROM findings;
+  UNION ALL SELECT rowid * 16 + 13, 'finding', id, severity || ' ' || title FROM findings
+  UNION ALL SELECT rowid * 16 + 14, 'string_resource', '@string/' || name, name || ' = ' || value FROM string_resources;
 ```
 
 Indexes created after loading:
@@ -294,6 +382,8 @@ CREATE INDEX calls_callee ON calls(callee);
 CREATE INDEX string_refs_string ON string_refs(string);
 CREATE INDEX string_refs_method ON string_refs(method);
 CREATE INDEX components_name ON components(name);
+CREATE INDEX string_resources_name ON string_resources(name);
+CREATE INDEX resource_refs_ref ON resource_refs(ref);
 CREATE INDEX permissions_name ON permissions(name);
 CREATE INDEX endpoints_host ON endpoints(host);
 CREATE INDEX field_refs_field ON field_refs(field);

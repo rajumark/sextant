@@ -94,6 +94,7 @@
 {"group":"androidx.work","artifact":"work-runtime","version":"2.11.2","evidence":"META-INF/androidx.work_work-runtime.version"}
 {"group":"androidx.work","artifact":"work-rxjava3","version":"2.11.2","evidence":"META-INF/androidx.work_work-rxjava3.version"}
 {"group":"com.google.android.material","artifact":"material","version":"1.11.0","evidence":"META-INF/com.google.android.material_material.version"}
+{"group":"com.squareup.okhttp3","artifact":"okhttp","version":"5.4.0","evidence":"code string in Lokhttp3/internal/connection/RealRoutePlanner;->planConnectToRoute$okhttp(Lokhttp3/Route;Ljava/util/ArrayList;)Lokhttp3/internal/connection/ConnectPlan;"}
 {"group":"kotlinx","artifact":"coroutines_android","version":"1.11.0","evidence":"META-INF/kotlinx_coroutines_android.version"}
 {"group":"kotlinx","artifact":"coroutines_core","version":"1.11.0","evidence":"META-INF/kotlinx_coroutines_core.version"}
 {"group":"kotlinx","artifact":"coroutines_reactive","version":"1.11.0","evidence":"META-INF/kotlinx_coroutines_reactive.version"}

@@ -2,6 +2,17 @@
 
 All notable changes to Sextant. Versions follow semver; `schema_version` in `meta.json` tracks the output format separately.
 
+## Unreleased (schema 8, index schema 7)
+
+- **Component verdicts:** 18 tags with a reason each, the same in the CLI and the desktop app: launcher, app-link, deep-link, hidden-entry, unguarded, sensitive-role, system-role, boot, foreground, task-hijack, lock-screen, uri-grants, file-provider, isolated, direct-boot, exported-by-default, guarded, disabled.
+- **`sextant components`** (filter by type, tag, exported, search) and **`sextant component`** (verdicts and reasons, attributes, entry points in plain words, deep links, App Link hosts, aliases, adb commands, the exact manifest entry).
+- **`sextant app`:** the Application class and the startup order (AppComponentFactory, attachBaseContext, content providers by initOrder with androidx.startup initializers, onCreate); with an extracted folder, the calls of each step and the SDKs started at launch.
+- **`sextant res`:** strings in every locale (plurals, arrays), resource ids, styles and themes, drawables, layouts, menus, navigation graphs, assets and res/xml configs, plus `string-keys` (used/unused, URL, email, key-like, format, untranslated) and `refs` (who uses which resource). References keep their `@type/name` and the resolved value. Written to `resources/*.jsonl` and new index tables (`string_resources`, `resource_ids`, `styles`, `drawables`, `layouts`, `menus`, `navigation_destinations`, `assets`, `xml_configs`, `resource_refs`).
+- **res/xml summaries:** network security config (cleartext, pins, user CAs, debug overrides), backup and data-extraction rules, FileProvider paths. Assets whose bytes are DEX, ELF or zip under another name are flagged as hidden code.
+- **`sextant sdks`:** SDKs and libraries by role with versions from META-INF `*.version`, Maven `pom.properties`, Play services/Firebase `.properties` and OkHttp's user agent; across many apps with `--category`, `--sdk` and `--below VERSION`.
+- **Manifest coverage:** every remaining `<activity>`, `<service>`, `<provider>`, `<application>`, `<uses-permission>` and `<permission>` attribute and `<attribution>` tags are structured; a corpus test fails on any attribute that is neither structured nor deliberately raw.
+- **Desktop:** Activities, Services, Receivers, Providers and Aliases rebuilt on the verdicts (summary strip, filters with counts, sort, group by package, multi-select copy, context menu, keyboard), the Components page removed, a ⌘K command palette, and new Application, SDKs & libraries and nine resource pages. Every detail pane has a Manifest entry and Search on web / Ask AI.
+
 ## 1.0.0: first public release
 
 - **CLI 1.0.0:** everything built in 0.1.0 to 0.10.0 (see CHANGELOG.md). One `sextant-1.0.0.zip` runs on macOS, Linux and Windows with Java 17 or newer.

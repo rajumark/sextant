@@ -1,5 +1,5 @@
 # org.godotengine.editor.v4 4.7.2.stable (407025003)
-Extracted by sextant <version> · schema 7 · sha256 1458a57a3fae0ed94e9d756024ed14edc560a00235aab1ad8400454ba9f53f9b
+Extracted by sextant <version> · schema 8 · sha256 1458a57a3fae0ed94e9d756024ed14edc560a00235aab1ad8400454ba9f53f9b
 
 ## App
 - Label: Godot Engine 4 (release)

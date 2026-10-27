@@ -1,5 +1,5 @@
 # com.aurora.store 4.8.1 (73)
-Extracted by sextant <version> · schema 7 · sha256 fd4d2d4cfb4a4d77766930f722c6a524af90cc1c7ff8aa6b81fe9c2b0fc5308a
+Extracted by sextant <version> · schema 8 · sha256 fd4d2d4cfb4a4d77766930f722c6a524af90cc1c7ff8aa6b81fe9c2b0fc5308a
 
 ## App
 - Label: Aurora Store

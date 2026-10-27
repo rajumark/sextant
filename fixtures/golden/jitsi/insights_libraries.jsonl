@@ -40,5 +40,6 @@
 {"group":"androidx.viewpager2","artifact":"viewpager2","version":"1.1.0","evidence":"META-INF/androidx.viewpager2_viewpager2.version"}
 {"group":"androidx.webkit","artifact":"webkit","version":"1.4.0","evidence":"META-INF/androidx.webkit_webkit.version"}
 {"group":"com.google.android.material","artifact":"material","version":"1.12.0","evidence":"META-INF/com.google.android.material_material.version"}
+{"group":"com.squareup.okhttp3","artifact":"okhttp","version":"4.12.0","evidence":"code string in LS5/f;->l()LN5/B;"}
 {"group":"kotlinx","artifact":"coroutines_android","version":"1.6.4","evidence":"META-INF/kotlinx_coroutines_android.version"}
 {"group":"kotlinx","artifact":"coroutines_core","version":"1.6.4","evidence":"META-INF/kotlinx_coroutines_core.version"}

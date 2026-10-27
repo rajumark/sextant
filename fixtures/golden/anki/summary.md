@@ -1,5 +1,5 @@
 # com.ichi2.anki 2.25.3 (22503300)
-Extracted by sextant <version> · schema 7 · sha256 bd0ac8cb9ddff42e1c316e37ee1e5f2cbe94a30f81485fa317d53664574c2b3a
+Extracted by sextant <version> · schema 8 · sha256 bd0ac8cb9ddff42e1c316e37ee1e5f2cbe94a30f81485fa317d53664574c2b3a
 
 ## App
 - Label: AnkiDroid

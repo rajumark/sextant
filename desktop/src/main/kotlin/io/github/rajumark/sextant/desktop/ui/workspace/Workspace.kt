@@ -20,12 +20,13 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import io.github.rajumark.sextant.desktop.AppState
 import io.github.rajumark.sextant.desktop.model.ComponentType
-import io.github.rajumark.sextant.desktop.ui.screens.ComponentsScreen
+import io.github.rajumark.sextant.desktop.ui.screens.ApplicationScreen
 import io.github.rajumark.sextant.desktop.ui.screens.IconsScreen
 import io.github.rajumark.sextant.desktop.ui.screens.ManifestScreen
 import io.github.rajumark.sextant.desktop.ui.screens.OutputScreen
 import io.github.rajumark.sextant.desktop.ui.screens.OverviewScreen
 import io.github.rajumark.sextant.desktop.ui.screens.PermissionsScreen
+import io.github.rajumark.sextant.desktop.ui.screens.ResourceScreen
 import io.github.rajumark.sextant.desktop.ui.screens.SigningScreen
 import io.github.rajumark.sextant.desktop.ui.screens.TypedComponentScreen
 
@@ -39,6 +40,7 @@ fun Workspace(
     val fastEffects = MaterialTheme.motionScheme.fastEffectsSpec<Float>()
     val spatial = MaterialTheme.motionScheme.defaultSpatialSpec<IntOffset>()
     // No page top bar: each screen carries its own title, and the actions live in the menu bar.
+    if (ws.paletteOpen) CommandPalette(ws)
     Column(Modifier.fillMaxSize()) {
         Column(Modifier.weight(1f).fillMaxWidth()) {
             Surface(
@@ -56,16 +58,20 @@ fun Workspace(
                     Box(Modifier.fillMaxSize()) {
                         when (dest) {
                             Destination.Overview -> OverviewScreen(ws)
+                            Destination.Application -> ApplicationScreen(ws)
                             Destination.Permissions -> PermissionsScreen(ws)
-                            Destination.Components -> ComponentsScreen(ws)
                             Destination.Manifest -> ManifestScreen(ws)
                             Destination.Signing -> SigningScreen(ws)
                             Destination.Output -> OutputScreen(ws, app::revealOutput)
                             Destination.IconFiles -> IconsScreen(ws)
-                            Destination.Activities -> TypedComponentScreen(ws, ComponentType.Activity, "Activities")
-                            Destination.Services -> TypedComponentScreen(ws, ComponentType.Service, "Services")
-                            Destination.Receivers -> TypedComponentScreen(ws, ComponentType.Receiver, "Receivers")
-                            Destination.Aliases -> TypedComponentScreen(ws, ComponentType.ActivityAlias, "Aliases")
+                            Destination.Activities -> TypedComponentScreen(ws, ComponentType.Activity)
+                            Destination.Services -> TypedComponentScreen(ws, ComponentType.Service)
+                            Destination.Receivers -> TypedComponentScreen(ws, ComponentType.Receiver)
+                            Destination.Providers -> TypedComponentScreen(ws, ComponentType.Provider)
+                            Destination.Aliases -> TypedComponentScreen(ws, ComponentType.ActivityAlias)
+                            Destination.Strings, Destination.Layouts, Destination.Menus, Destination.Navigation, Destination.Styles,
+                            Destination.Drawables, Destination.ResourceIds, Destination.Assets, Destination.XmlConfigs, Destination.Sdks,
+                            -> ResourceScreen(ws, dest)
                         }
                     }
                 }

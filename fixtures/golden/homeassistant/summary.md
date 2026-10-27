@@ -1,5 +1,5 @@
 # io.homeassistant.companion.android.minimal 2026.8.4-minimal (24228)
-Extracted by sextant <version> · schema 7 · sha256 c3212821efeb998e21c1f0874992f6805a81a6f85ed03519fd3b89ec67690fe4
+Extracted by sextant <version> · schema 8 · sha256 c3212821efeb998e21c1f0874992f6805a81a6f85ed03519fd3b89ec67690fe4
 
 ## App
 - Label: Home Assistant

@@ -1,5 +1,5 @@
 # com.termux.api 0.53.0 (1002)
-Extracted by sextant <version> · schema 7 · sha256 4497dbbf81906df52e59ed387a5223d225aa0de3aca817cc557a621e4dadda44
+Extracted by sextant <version> · schema 8 · sha256 4497dbbf81906df52e59ed387a5223d225aa0de3aca817cc557a621e4dadda44
 
 ## App
 - Label: Termux:API

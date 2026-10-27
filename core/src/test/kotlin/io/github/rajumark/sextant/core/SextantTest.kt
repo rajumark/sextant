@@ -11,7 +11,7 @@ class SextantTest {
     }
 
     @Test
-    fun `schema version is 7 since all manifest categories are structured`() {
-        Sextant.SCHEMA_VERSION shouldBe 7
+    fun `schema version is 8 since every activity, service and provider attribute is structured`() {
+        Sextant.SCHEMA_VERSION shouldBe 8
     }
 }

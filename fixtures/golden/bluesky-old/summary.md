@@ -1,5 +1,5 @@
 # xyz.blueskyweb.app 1.135.0 (1635)
-Extracted by sextant <version> · schema 7 · sha256 55f8774f2b89046ccc1a7aa3147a4ed9ad3f3eb4c22e11ae8eb17945b1951ae7
+Extracted by sextant <version> · schema 8 · sha256 55f8774f2b89046ccc1a7aa3147a4ed9ad3f3eb4c22e11ae8eb17945b1951ae7
 
 ## App
 - Label: Bluesky
@@ -18,7 +18,7 @@ Extracted by sextant <version> · schema 7 · sha256 55f8774f2b89046ccc1a7aa3147
 ## Insights
 - Frameworks: Expo, Hermes (JS engine), Jetpack Compose, Kotlin, React Native
 - SDKs (17): Google Sign-In, Sentry, Bouncy Castle, Room, Glide, Meta Fresco, Google ML Kit, ExoPlayer / Media3, OkHttp, Firebase Core, Google Play Core / In-App Updates, Google Play Services Base, Firebase Cloud Messaging, Kotlin Coroutines, Gson, Jetpack Compose, Material Components
-- Libraries with exact versions: 108 · built with AGP 8.12.0
+- Libraries with exact versions: 134 · built with AGP 8.12.0
 - Endpoints: 151 URLs on 122 hosts; top: github.com (6), www.w3.org (6), issuetracker.google.com (5), dashif.org (4), developer.android.com (4), docs.sentry.io (3)
 - Native: 152 libraries, 372 JNI methods · Locales: 90
 

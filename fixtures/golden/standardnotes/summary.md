@@ -1,5 +1,5 @@
 # com.standardnotes 3.202.10 (3005235)
-Extracted by sextant <version> · schema 7 · sha256 782f6e65ee3496e269b18cca2564de95c916f31a498d5160425dd9233e63bd8d
+Extracted by sextant <version> · schema 8 · sha256 782f6e65ee3496e269b18cca2564de95c916f31a498d5160425dd9233e63bd8d
 
 ## App
 - Label: Standard Notes

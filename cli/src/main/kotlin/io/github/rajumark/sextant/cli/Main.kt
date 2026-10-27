@@ -68,6 +68,11 @@ fun main(args: Array<String>) {
             ReachCommand(),
             SmaliCommand(),
             IconCommand(),
+            ComponentsCommand(),
+            ComponentCommand(),
+            AppCommand(),
+            ResourceCommand(),
+            SdkCommand(),
         )
     try {
         command.parse(args)

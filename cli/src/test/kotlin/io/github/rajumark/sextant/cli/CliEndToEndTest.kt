@@ -423,4 +423,50 @@ class CliEndToEndTest {
         Files.readAllBytes(out).take(4) shouldBe listOf(0x89.toByte(), 'P'.code.toByte(), 'N'.code.toByte(), 'G'.code.toByte())
         sextant("icon", apk("binaryeye"), "--json").stdout shouldContain "\"resource\":\"@mipmap/ic_launcher\""
     }
+
+    @Test
+    fun `components lists verdicts and component explains one, from an APK and a folder alike`() {
+        val list = sextant("components", apk("bitwarden"), "--type", "activity", "--tag", "launcher")
+        list.exitCode shouldBe 0
+        list.stdout shouldContain "com.x8bit.bitwarden.MainActivity"
+        list.stderr shouldContain "of 33 components"
+        val one = sextant("component", extracted("bitwarden"), ".MainActivity")
+        one.exitCode shouldBe 0
+        one.stdout shouldContain "launcher: Has a MAIN/LAUNCHER filter"
+        one.stdout shouldContain "launchMode     singleTask"
+        one.stdout shouldContain "## Manifest entry"
+        sextant("component", apk("bitwarden"), "NoSuchActivity").exitCode shouldBe 1
+    }
+
+    @Test
+    fun `app shows the startup order and, with an index, the SDKs it starts`() {
+        val fromApk = sextant("app", apk("bitwarden"))
+        fromApk.exitCode shouldBe 0
+        fromApk.stdout shouldContain "## Startup order"
+        fromApk.stdout shouldContain "No code index"
+        val fromFolder = sextant("app", "--json", extracted("bitwarden"))
+        Json.parseToJsonElement(fromFolder.stdout).jsonObject["code_indexed"]!!.jsonPrimitive.content shouldBe "true"
+    }
+
+    @Test
+    fun `res lists resources with resolved references and who uses them`() {
+        val menus = sextant("res", apk("binaryeye"), "menus")
+        menus.exitCode shouldBe 0
+        menus.stdout shouldContain "Compose barcode"
+        val name = sextant("res", apk("binaryeye"), "strings", "app_name")
+        name.stdout shouldContain "Binary Eye"
+        name.stdout shouldContain "manifest application"
+        sextant("res", apk("bitwarden"), "xml").stdout shouldContain "base-cleartext=true user-certs=trusted"
+    }
+
+    @Test
+    fun `sdks shows roles and versions, and filters apps by version across several`() {
+        val one = sextant("sdks", extracted("bitwarden"))
+        one.exitCode shouldBe 0
+        one.stdout shouldContain "Gson"
+        one.stdout shouldContain "2.10.1"
+        val across = sextant("sdks", extracted("bitwarden"), extracted("binaryeye"), "--sdk", "Gson", "--below", "99")
+        across.exitCode shouldBe 0
+        across.stderr shouldContain "of 2 apps match"
+    }
 }

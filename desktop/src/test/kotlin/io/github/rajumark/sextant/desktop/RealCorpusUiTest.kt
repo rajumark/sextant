@@ -4,6 +4,7 @@ import io.github.rajumark.sextant.desktop.data.CoreRepository
 import io.github.rajumark.sextant.desktop.data.MemoryStore
 import io.github.rajumark.sextant.desktop.data.renderPng
 import io.github.rajumark.sextant.desktop.data.testState
+import io.github.rajumark.sextant.desktop.model.ComponentType
 import io.github.rajumark.sextant.desktop.theme.ThemeMode
 import io.github.rajumark.sextant.desktop.ui.workspace.Destination
 import java.io.File
@@ -56,8 +57,14 @@ class RealCorpusUiTest {
                     state.workspace!!.destination = dest
                     // Select the first item so the detail panes render real data too.
                     state.workspace!!.selectedPermission = analysis.permissions.firstOrNull()?.name
-                    state.workspace!!.selectedComponent =
-                        analysis.deepLinkComponents.firstOrNull()?.name ?: analysis.components.firstOrNull()?.name
+                    // Each component page selects its riskiest entry, so verdicts and reasons render too.
+                    for (type in ComponentType.entries) {
+                        state.workspace!!.componentPage(type).selected =
+                            analysis.components
+                                .filter { it.type == type }
+                                .maxByOrNull { it.tags.size }
+                                ?.name
+                    }
                     state.workspace!!.selectedNode = "0"
                     val png = renderPng(frames = 20, frameNanos = 50_000_000L) { App(state) }
                     if (dir.name in keep) File(outDir, "${dir.name}-${dest.name.lowercase()}.png").writeBytes(png)
@@ -67,6 +74,38 @@ class RealCorpusUiTest {
         // Opening a folder should feel instant (checklist PF-03: < 1 s to first view).
         val slowest = openMillis.entries.sortedByDescending { it.value }.take(5)
         println("open() slowest: " + slowest.joinToString { "${it.key} ${it.value} ms" })
+        assertTrue(failures.isEmpty(), failures.joinToString("\n"))
+    }
+
+    /** Fresh analyses (not golden folders) so resource, SDK and startup pages render real data; screenshots are kept. */
+    @Test
+    fun `fresh analyses render every page with real data`() {
+        val apks = listOf("bitwarden", "binaryeye").map { Path.of(System.getProperty("sextant.corpus") ?: "../fixtures/external").resolve("$it.apk") }
+        if (apks.any { !Files.exists(it) }) return println("skipped: corpus APKs missing")
+        val repo = CoreRepository(MemoryStore(), Files.createTempDirectory("sextant-fresh"))
+        val dir = File(outDir, "fresh").apply { mkdirs() }
+        val failures = mutableListOf<String>()
+        for (apk in apks) {
+            val analysis = repo.analyze(apk)
+            for (dest in Destination.entries) {
+                runCatching {
+                    val state = testState(analysis).apply { themeMode = ThemeMode.Light }
+                    val ws = state.workspace!!
+                    ws.destination = dest
+                    for (type in ComponentType.entries) {
+                        ws.componentPage(type).selected = analysis.components.filter { it.type == type }.maxByOrNull { it.tags.size }?.name
+                    }
+                    ws.selectedStartupStep = analysis.startup?.steps?.lastOrNull()?.order
+                    ws.resourcePage(Destination.Strings).selected = analysis.stringKeys.firstOrNull { "used" in it.flags }?.name
+                    ws.resourcePage(Destination.Layouts).selected = analysis.resources.layouts.maxByOrNull { it.viewCount }?.name
+                    ws.resourcePage(Destination.Menus).selected = analysis.resources.menus.firstOrNull()?.name
+                    ws.resourcePage(Destination.XmlConfigs).selected = analysis.resources.xml.firstOrNull { it.kind == "network-security-config" }?.name
+                    ws.resourcePage(Destination.Sdks).selected = analysis.sdks?.entries?.firstOrNull { it.version != null && it.kind == "sdk" }?.name
+                    val png = renderPng(frames = 20, frameNanos = 50_000_000L) { App(state) }
+                    File(dir, "${apk.fileName.toString().removeSuffix(".apk")}-${dest.name.lowercase()}.png").writeBytes(png)
+                }.onFailure { failures += "${apk.fileName}/${dest.name}: ${it::class.simpleName}: ${it.message}" }
+            }
+        }
         assertTrue(failures.isEmpty(), failures.joinToString("\n"))
     }
 }

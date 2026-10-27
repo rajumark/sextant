@@ -1,5 +1,5 @@
 # org.joinmastodon.android 2.13.4 (191)
-Extracted by sextant <version> · schema 7 · sha256 ce1a8222a1f9a59cdde0816a64a39692123c3bc05f64966abae5b0ea2dfe709e
+Extracted by sextant <version> · schema 8 · sha256 ce1a8222a1f9a59cdde0816a64a39692123c3bc05f64966abae5b0ea2dfe709e
 
 ## App
 - Label: Mastodon

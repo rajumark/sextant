@@ -12,7 +12,11 @@ class SidebarMenuTest {
     }
 
     @Test
-    fun `overview, permissions and icons come first, then a divider, then the rest`() {
-        assertEquals(listOf(Destination.Overview, Destination.Permissions, Destination.IconFiles), SidebarMenu[0])
+    fun `app-level pages come first, then components and manifest, then resources`() {
+        assertEquals(
+            listOf(Destination.Overview, Destination.Application, Destination.Sdks, Destination.Permissions, Destination.IconFiles),
+            SidebarMenu[0],
+        )
+        assertEquals(Destination.Strings, SidebarMenu.last().first())
     }
 }

@@ -72,15 +72,18 @@ import io.github.rajumark.sextant.desktop.model.AdaptivePreview
 import io.github.rajumark.sextant.desktop.model.IconFileInfo
 import io.github.rajumark.sextant.desktop.model.IconPick
 import io.github.rajumark.sextant.desktop.saveWithDialog
+import io.github.rajumark.sextant.desktop.ui.common.CodeBlock
 import io.github.rajumark.sextant.desktop.ui.common.CopyButton
 import io.github.rajumark.sextant.desktop.ui.common.EmptyState
 import io.github.rajumark.sextant.desktop.ui.common.IconBadge
 import io.github.rajumark.sextant.desktop.ui.common.KeyValueRow
 import io.github.rajumark.sextant.desktop.ui.common.ListDetail
 import io.github.rajumark.sextant.desktop.ui.common.SubsectionLabel
+import io.github.rajumark.sextant.desktop.ui.common.Syntax
 import io.github.rajumark.sextant.desktop.ui.common.Tag
 import io.github.rajumark.sextant.desktop.ui.common.Tone
 import io.github.rajumark.sextant.desktop.ui.common.formatBytes
+import io.github.rajumark.sextant.desktop.ui.common.highlighted
 import io.github.rajumark.sextant.desktop.ui.workspace.WorkspaceState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -334,6 +337,7 @@ private fun IconDetail(
                 Text("Save…")
             }
         }
+        if (f.format == "xml") XmlSource(apk, f.path)
         SubsectionLabel("Properties")
         KeyValueRow("Role", e.role)
         KeyValueRow("Resource", e.resource, mono = true)
@@ -384,26 +388,56 @@ private fun IconPicture(
     size: Dp,
     description: String,
 ) {
+    // Every load ends with a result (drawn, or "cannot draw"), so nothing spins forever.
     if (format == "xml") {
-        val vector by produceState<ImageVector?>(null, apk, path) {
-            value = withContext(Dispatchers.IO) { IconAssets.vector(apk, path) }
+        val result by produceState<Pair<Boolean, ImageVector?>>(false to null, apk, path) {
+            value = true to withContext(Dispatchers.IO) { IconAssets.vector(apk, path) }
         }
-        val loaded = vector
-        if (loaded != null) {
-            Image(rememberVectorPainter(loaded), description, Modifier.size(size), contentScale = ContentScale.Fit)
-        } else {
-            Loading(size)
+        val (done, vector) = result
+        when {
+            !done -> Loading(size)
+            vector != null -> Image(rememberVectorPainter(vector), description, Modifier.size(size), contentScale = ContentScale.Fit)
+            else -> CannotDraw(size)
         }
         return
     }
-    val bitmap by produceState<ImageBitmap?>(null, apk, path) {
-        value = withContext(Dispatchers.IO) { AppIconImage.load(apk, IconPick(path, format)) }
+    val result by produceState<Pair<Boolean, ImageBitmap?>>(false to null, apk, path) {
+        value = true to withContext(Dispatchers.IO) { AppIconImage.load(apk, IconPick(path, format)) }
     }
-    val loaded = bitmap
+    val (done, bitmap) = result
+    when {
+        !done -> Loading(size)
+        bitmap != null ->
+            Image(
+                bitmap = bitmap,
+                contentDescription = description,
+                contentScale = ContentScale.Fit,
+                modifier = Modifier.size(size),
+            )
+        else -> CannotDraw(size)
+    }
+}
+
+@Composable
+private fun CannotDraw(size: Dp) {
+    Text("XML", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+}
+
+/** The XML source of a binary XML icon, shown in the details. */
+@Composable
+private fun XmlSource(
+    apk: Path,
+    path: String,
+) {
+    val text by produceState<String?>(null, apk, path) {
+        value = withContext(Dispatchers.IO) { IconAssets.xmlText(apk, path) ?: "Could not decode this XML file." }
+    }
+    SubsectionLabel("XML")
+    val loaded = text
     if (loaded != null) {
-        Image(bitmap = loaded, contentDescription = description, contentScale = ContentScale.Fit, modifier = Modifier.size(size))
+        CodeBlock(highlighted(loaded, Syntax.Xml), Modifier.fillMaxWidth())
     } else {
-        Loading(size)
+        Loading(24.dp)
     }
 }
 

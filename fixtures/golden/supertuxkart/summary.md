@@ -1,5 +1,5 @@
 # org.supertuxkart.stk 1.4 (312)
-Extracted by sextant <version> · schema 7 · sha256 b6469d2888970b0c87df0c9eb472ea7d12f331f57f7623c6769986209e830a2f
+Extracted by sextant <version> · schema 8 · sha256 b6469d2888970b0c87df0c9eb472ea7d12f331f57f7623c6769986209e830a2f
 
 ## App
 - Label: SuperTuxKart

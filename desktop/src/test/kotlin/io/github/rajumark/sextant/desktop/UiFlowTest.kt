@@ -10,6 +10,7 @@ import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.v2.runComposeUiTest
 import androidx.compose.ui.unit.dp
@@ -57,7 +58,8 @@ class UiFlowTest {
             val state = testState(northwind)
             setContent { App(state) }
             Destination.entries.drop(1).forEach { d ->
-                onAllNodesWithText(d.label)[0].performClick()
+                // The menu scrolls when it is taller than the window (resource pages): bring the item into view first.
+                onAllNodesWithText(d.label)[0].performScrollTo().performClick()
                 waitForIdle()
                 assertEquals(d, state.workspace?.destination)
             }

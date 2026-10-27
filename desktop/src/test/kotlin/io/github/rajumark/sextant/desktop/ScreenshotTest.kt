@@ -91,10 +91,10 @@ class ScreenshotTest {
     @Test
     fun components() {
         shot("08-components") {
-            App(workspace(Destination.Components) { it.workspace!!.selectedComponent = "com.northwind.notes.deeplink.DeepLinkActivity" })
+            App(workspace(Destination.Activities) { it.workspace!!.selectedComponent = "com.northwind.notes.deeplink.DeepLinkActivity" })
         }
         shot("09-components-narrow", width = 980, height = 760) {
-            App(workspace(Destination.Components) { it.workspace!!.selectedComponent = "com.northwind.notes.ui.LaunchActivity" })
+            App(workspace(Destination.Activities) { it.workspace!!.selectedComponent = "com.northwind.notes.ui.LaunchActivity" })
         }
     }
 

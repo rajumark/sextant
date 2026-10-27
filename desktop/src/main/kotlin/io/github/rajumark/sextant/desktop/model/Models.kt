@@ -17,6 +17,16 @@ data class Analysis(
     val analyzedAtMillis: Long,
     /** Wall time of the extraction; null when an existing folder was opened. */
     val durationMs: Long?,
+    /** Application class and startup order, prepared by core (`sextant app`); null for sample data. */
+    val startup: io.github.rajumark.sextant.core.insights.AppStartup? = null,
+    /** The `<application>` element's own attributes as declared, for its "Manifest entry". */
+    val applicationXml: String? = null,
+    /** res/ and assets/ as harvested by core (`sextant res`); empty for sample data and pre-schema-8 folders. */
+    val resources: io.github.rajumark.sextant.core.model.ResourceHarvest = io.github.rajumark.sextant.core.model.ResourceHarvest(),
+    /** SDKs and libraries with roles and versions (`sextant sdks`); null when insights were not extracted. */
+    val sdks: io.github.rajumark.sextant.core.insights.SdkProfile? = null,
+    /** Strings grouped per key with locales, flags and users (`sextant res … string-keys`). */
+    val stringKeys: List<io.github.rajumark.sextant.core.insights.StringKey> = emptyList(),
 ) {
     val dangerousCount: Int get() = permissions.count { it.dangerous }
     val declaredCount: Int get() = permissions.count { it.kind == PermissionKind.Declared }
@@ -158,6 +168,8 @@ data class Permission(
     val impliedBy: String?,
     /** The exact line in permissions.jsonl. */
     val jsonLine: String,
+    /** The manifest elements naming it, as declared (from core); null for sample data. */
+    val manifestXml: String? = null,
 ) {
     val shortName: String get() = name.substringAfterLast('.')
 }
@@ -241,17 +253,52 @@ data class AppComponent(
     val intentFilters: List<IntentFilterSpec>,
     /** The exact line in components.jsonl. */
     val jsonLine: String,
+    val readPermission: String? = null,
+    val writePermission: String? = null,
+    val grantUriPermissions: Boolean? = null,
+    /** Verdicts and prepared views from core's ComponentReviews; empty for hand-made sample data. */
+    val facts: ComponentFacts = ComponentFacts(),
 ) {
     val simpleName: String get() = name.substringAfterLast('.')
     val packagePath: String get() = name.substringBeforeLast('.', "")
 
+    /** Core's deep-link patterns (same as the CLI); sample data falls back to its BROWSABLE filters. */
     val deepLinks: List<String>
         get() =
-            intentFilters
+            facts.deepLinks ?: intentFilters
                 .filter { f -> "android.intent.category.BROWSABLE" in f.categories }
                 .flatMap { f -> f.data.mapNotNull { it.uri } }
                 .distinct()
+
+    val tags: List<String> get() = facts.tags
+
+    /** A type-specific manifest attribute (launchMode, theme, …) as written, or null when not set. */
+    fun attribute(name: String): String? = facts.attributes.firstOrNull { it.first == name }?.second
 }
+
+/** What core prepared for one component: everything the CLI's `sextant component` shows, ready to display. */
+data class ComponentFacts(
+    /** Verdict ids in display order (launcher, app-link, deep-link, hidden-entry, task-hijack, …). */
+    val tags: List<String> = emptyList(),
+    /** Why each tag applies. */
+    val reasons: Map<String, String> = emptyMap(),
+    /** One plain sentence per intent filter, in filter order. */
+    val entryPoints: List<String> = emptyList(),
+    val deepLinks: List<String>? = null,
+    val appLinkHosts: List<String> = emptyList(),
+    /** Aliases whose targetActivity is this activity. */
+    val aliases: List<String> = emptyList(),
+    /** label → adb command. */
+    val adb: List<Pair<String, String>> = emptyList(),
+    /** Type-specific attributes that are set, as android: names. */
+    val attributes: List<Pair<String, String>> = emptyList(),
+    /** The element exactly as declared in the decoded manifest, with its children (filters, meta-data). */
+    val manifestXml: String? = null,
+    val label: String? = null,
+    /** Provider `<path-permission>` rows, already formatted. */
+    val pathPermissions: List<String> = emptyList(),
+    val grantUriPaths: List<String> = emptyList(),
+)
 
 data class ManifestNode(
     val tag: String,

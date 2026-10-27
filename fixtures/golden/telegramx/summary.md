@@ -1,5 +1,5 @@
 # org.thunderdog.challegram 0.28.11.1800 (1800202)
-Extracted by sextant <version> · schema 7 · sha256 5a6f13f790ce889b2984f0303ee6f605f7ae7106fed55879dc7b6c2bf9104ede
+Extracted by sextant <version> · schema 8 · sha256 5a6f13f790ce889b2984f0303ee6f605f7ae7106fed55879dc7b6c2bf9104ede
 
 ## App
 - Label: Telegram X

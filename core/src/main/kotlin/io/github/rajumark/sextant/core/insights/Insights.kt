@@ -52,7 +52,13 @@ class InsightsCollector : CodeSink {
         if (record.kotlin) kotlinClasses++
     }
 
+    /** Libraries whose version only shows up as a code constant (OkHttp's user agent "okhttp/4.12.0"). */
+    internal val libraryVersions = mutableListOf<LibraryRecord>()
+
     override fun string(record: StringRecord) {
+        if (record.value.startsWith("okhttp/") && record.value.length < 24 && libraryVersions.none { it.artifact == "okhttp" }) {
+            libraryVersions += LibraryRecord("com.squareup.okhttp3", "okhttp", record.value.removePrefix("okhttp/"), "code string in ${record.method}")
+        }
         for (url in Urls.find(record.value)) {
             val methods = codeUrls.getOrPut(url) { TreeSet() }
             if (methods.size < MAX_SOURCES) methods += record.method
@@ -192,6 +198,30 @@ object InsightsBuilder {
                         libraries += LibraryRecord(m.groupValues[1], m.groupValues[2], version, name)
                     }
                 }
+                // Google Play services and Firebase ship `play-services-base.properties` (version=, client=) at the root.
+                if ('/' !in name && name.endsWith(".properties") && entry.size in 1..4096) {
+                    val props = zip.getInputStream(entry).use { it.readNBytes(4096).decodeToString() }.lines().associate { it.substringBefore('=').trim() to it.substringAfter('=', "").trim() }
+                    val client = props["client"]
+                    val version = props["version"]
+                    if (client != null && !version.isNullOrEmpty()) {
+                        val group =
+                            when {
+                                client.startsWith("firebase") -> "com.google.firebase"
+                                client.startsWith("play-services") -> "com.google.android.gms"
+                                client.startsWith("vision") || client.startsWith("mlkit") -> "com.google.mlkit"
+                                else -> "properties"
+                            }
+                        libraries += LibraryRecord(group, client, version, name)
+                    }
+                }
+                // Maven artifacts keep META-INF/maven/<group>/<artifact>/pom.properties.
+                if (name.startsWith("META-INF/maven/") && name.endsWith("/pom.properties") && entry.size in 1..4096) {
+                    val props = zip.getInputStream(entry).use { it.readNBytes(4096).decodeToString() }.lines().associate { it.substringBefore('=').trim() to it.substringAfter('=', "").trim() }
+                    val g = props["groupId"]
+                    val a = props["artifactId"]
+                    val v = props["version"]
+                    if (!g.isNullOrEmpty() && !a.isNullOrEmpty() && !v.isNullOrEmpty()) libraries += LibraryRecord(g, a, v, name)
+                }
                 if (SCANNED_ASSET.matches(name) && entry.size in 1..MAX_ASSET_BYTES) {
                     scan(zip.getInputStream(entry).use { it.readNBytes(MAX_ASSET_BYTES.toInt()) }, EndpointSource("asset", name))
                 }
@@ -262,7 +292,10 @@ object InsightsBuilder {
             )
         return Insights(
             stats = stats,
-            libraries = libraries.sortedWith(compareBy({ it.group }, { it.artifact })),
+            libraries =
+                (libraries + code?.libraryVersions.orEmpty())
+                    .distinctBy { it.group to it.artifact }
+                    .sortedWith(compareBy({ it.group }, { it.artifact })),
             frameworks = frameworks,
             sdks = sdks,
             endpoints = endpoints,
@@ -302,6 +335,19 @@ object InsightsBuilder {
     /** Index of rule prefixes: a class is matched by looking up each of its dotted prefixes, not by scanning every rule. */
     private val prefixIndex: Map<String, List<SdkRule>> by lazy {
         rules.flatMap { r -> r.packages.map { it to r } }.groupBy({ it.first }, { it.second })
+    }
+
+    /** The SDK a class belongs to, as (name, category), by the same package rules as `insights`; null if none. */
+    fun sdkOf(className: String): Pair<String, String>? {
+        var i = className.indexOf('.')
+        var found: SdkRule? = null
+        while (true) {
+            val prefix = if (i < 0) className else className.substring(0, i)
+            prefixIndex[prefix]?.firstOrNull()?.let { found = it }
+            if (i < 0) break
+            i = className.indexOf('.', i + 1)
+        }
+        return found?.let { it.name to it.category }
     }
 
     private fun sdks(

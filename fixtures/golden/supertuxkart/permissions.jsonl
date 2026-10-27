@@ -1,5 +1,5 @@
-{"name":"android.permission.BLUETOOTH","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null}
-{"name":"android.permission.INTERNET","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null}
-{"name":"android.permission.READ_EXTERNAL_STORAGE","kind":"uses-permission","max_sdk":null,"dangerous":true,"protection_level":null,"custom":false,"implied_by":null}
-{"name":"android.permission.VIBRATE","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null}
-{"name":"android.permission.WRITE_EXTERNAL_STORAGE","kind":"uses-permission","max_sdk":null,"dangerous":true,"protection_level":null,"custom":false,"implied_by":null}
+{"name":"android.permission.BLUETOOTH","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null,"min_sdk":null,"uses_permission_flags":null,"required":null,"label":null,"description":null,"permission_group":null}
+{"name":"android.permission.INTERNET","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null,"min_sdk":null,"uses_permission_flags":null,"required":null,"label":null,"description":null,"permission_group":null}
+{"name":"android.permission.READ_EXTERNAL_STORAGE","kind":"uses-permission","max_sdk":null,"dangerous":true,"protection_level":null,"custom":false,"implied_by":null,"min_sdk":null,"uses_permission_flags":null,"required":null,"label":null,"description":null,"permission_group":null}
+{"name":"android.permission.VIBRATE","kind":"uses-permission","max_sdk":null,"dangerous":false,"protection_level":null,"custom":false,"implied_by":null,"min_sdk":null,"uses_permission_flags":null,"required":null,"label":null,"description":null,"permission_group":null}
+{"name":"android.permission.WRITE_EXTERNAL_STORAGE","kind":"uses-permission","max_sdk":null,"dangerous":true,"protection_level":null,"custom":false,"implied_by":null,"min_sdk":null,"uses_permission_flags":null,"required":null,"label":null,"description":null,"permission_group":null}

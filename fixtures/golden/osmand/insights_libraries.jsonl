@@ -82,6 +82,7 @@
 {"group":"androidx.window","artifact":"window","version":"1.5.0","evidence":"META-INF/androidx.window_window.version"}
 {"group":"androidx.window","artifact":"window-core","version":"1.5.0","evidence":"META-INF/androidx.window_window-core.version"}
 {"group":"com.google.android.material","artifact":"material","version":"1.14.0","evidence":"META-INF/com.google.android.material_material.version"}
+{"group":"com.squareup.okhttp3","artifact":"okhttp","version":"4.12.0","evidence":"code string in Lokhttp3/internal/connection/RealConnection;->createTunnelRequest()Lokhttp3/Request;"}
 {"group":"kotlinx","artifact":"coroutines_android","version":"1.10.2","evidence":"META-INF/kotlinx_coroutines_android.version"}
 {"group":"kotlinx","artifact":"coroutines_core","version":"1.10.2","evidence":"META-INF/kotlinx_coroutines_core.version"}
 {"group":"kotlinx","artifact":"coroutines_slf4j","version":"1.10.2","evidence":"META-INF/kotlinx_coroutines_slf4j.version"}

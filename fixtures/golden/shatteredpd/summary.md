@@ -1,5 +1,5 @@
 # com.shatteredpixel.shatteredpixeldungeon 4.0.2 (922)
-Extracted by sextant <version> · schema 7 · sha256 ceef4cdd4beddcb3d85379ac004cb4ab5d918b89dc7366b4ce9c4a3585a5e78e
+Extracted by sextant <version> · schema 8 · sha256 ceef4cdd4beddcb3d85379ac004cb4ab5d918b89dc7366b4ce9c4a3585a5e78e
 
 ## App
 - Label: Shattered Pixel Dungeon

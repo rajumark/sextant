@@ -1,5 +1,5 @@
 # org.ppsspp.ppsspp 1.19.3 (119030000)
-Extracted by sextant <version> · schema 7 · sha256 44e1ecb9268702fb65adcee14cffb6cdc3607e87abcf409004c9bdb6b2543f6c
+Extracted by sextant <version> · schema 8 · sha256 44e1ecb9268702fb65adcee14cffb6cdc3607e87abcf409004c9bdb6b2543f6c
 
 ## App
 - Label: PPSSPP

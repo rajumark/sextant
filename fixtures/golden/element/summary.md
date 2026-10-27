@@ -1,5 +1,5 @@
 # im.vector.app 1.6.62 (40106624)
-Extracted by sextant <version> · schema 7 · sha256 6ce8ee6c3a5a76ab2928f3f3b6e3934c352a3fd6bf76b7ff3dc291c6cbd928de
+Extracted by sextant <version> · schema 8 · sha256 6ce8ee6c3a5a76ab2928f3f3b6e3934c352a3fd6bf76b7ff3dc291c6cbd928de
 
 ## App
 - Label: Element Classic

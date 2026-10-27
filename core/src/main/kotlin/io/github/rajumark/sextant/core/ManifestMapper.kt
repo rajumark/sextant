@@ -88,6 +88,28 @@ class ManifestMapper(
                             ?.mapKeys { it.key.removePrefix("android:") }
                             ?.toSortedMap()
                             .orEmpty(),
+                    icon = application?.android("icon"),
+                    roundIcon = application?.android("roundIcon"),
+                    banner = application?.android("banner"),
+                    logo = application?.android("logo"),
+                    description = resources.resolve(application?.android("description")),
+                    hasCode = bool(application?.android("hasCode")),
+                    intentMatchingFlags = application?.android("intentMatchingFlags"),
+                    backupInForeground = bool(application?.android("backupInForeground")),
+                    restoreAnyVersion = bool(application?.android("restoreAnyVersion")),
+                    killAfterRestore = bool(application?.android("killAfterRestore")),
+                    zygotePreloadName = application?.android("zygotePreloadName")?.let(::className),
+                    windowSoftInputMode = application?.android("windowSoftInputMode"),
+                    configChanges = application?.android("configChanges"),
+                    sharedUserLabel = resources.resolve(manifest.android("sharedUserLabel")),
+                    compileSdkCodename = manifest.android("compileSdkVersionCodename"),
+                    platformBuildVersionName = manifest.attr("platformBuildVersionName"),
+                    attributions =
+                        manifest
+                            .children("attribution")
+                            .mapNotNull { a -> a.android("tag")?.let { it to resources.resolve(a.android("label")) } }
+                            .toMap()
+                            .toSortedMap(),
                 ),
         )
 
@@ -178,6 +200,9 @@ class ManifestMapper(
                         protectionLevel = null,
                         custom = !isPlatformPermission(name),
                         impliedBy = null,
+                        minSdk = resources.resolve(node.android("minSdkVersion"))?.toIntOrNull(),
+                        usesPermissionFlags = node.android("usesPermissionFlags"),
+                        required = bool(node.android("required")),
                     )
             }
         }
@@ -193,6 +218,9 @@ class ManifestMapper(
                     protectionLevel = level,
                     custom = true,
                     impliedBy = null,
+                    label = resources.resolve(node.android("label")),
+                    description = resources.resolve(node.android("description")),
+                    permissionGroup = node.android("permissionGroup"),
                 )
         }
         result += impliedPermissions(result)
@@ -297,17 +325,65 @@ class ManifestMapper(
                 node.children("grant-uri-permission").mapNotNull {
                     it.android("path") ?: it.android("pathPrefix")?.let { p -> "$p*" } ?: it.android("pathPattern")
                 },
-            launchMode = node.android("launchMode"),
+            launchMode = launchMode(resources.resolve(node.android("launchMode"))),
             taskAffinity = node.android("taskAffinity"),
             excludeFromRecents = bool(node.android("excludeFromRecents")),
             allowTaskReparenting = bool(node.android("allowTaskReparenting")),
             screenOrientation = node.android("screenOrientation"),
+            theme = node.android("theme"),
+            configChanges = node.android("configChanges"),
+            windowSoftInputMode = node.android("windowSoftInputMode"),
+            documentLaunchMode = node.android("documentLaunchMode"),
+            lockTaskMode = node.android("lockTaskMode"),
+            parentActivityName = node.android("parentActivityName")?.let(::className),
+            noHistory = bool(node.android("noHistory")),
+            clearTaskOnLaunch = bool(node.android("clearTaskOnLaunch")),
+            finishOnTaskLaunch = bool(node.android("finishOnTaskLaunch")),
+            alwaysRetainTaskState = bool(node.android("alwaysRetainTaskState")),
+            autoRemoveFromRecents = bool(node.android("autoRemoveFromRecents")),
+            maxRecents = resources.resolve(node.android("maxRecents"))?.toIntOrNull(),
+            resizeableActivity = bool(node.android("resizeableActivity")),
+            supportsPictureInPicture = bool(node.android("supportsPictureInPicture")),
+            showWhenLocked = bool(node.android("showWhenLocked")),
+            turnScreenOn = bool(node.android("turnScreenOn")),
+            allowEmbedded = bool(node.android("allowEmbedded")),
+            hardwareAccelerated = bool(node.android("hardwareAccelerated")),
+            stateNotNeeded = bool(node.android("stateNotNeeded")),
+            maxAspectRatio = node.android("maxAspectRatio"),
+            persistableMode = node.android("persistableMode"),
+            relinquishTaskIdentity = bool(node.android("relinquishTaskIdentity")),
+            showOnLockScreen = bool(node.android("showOnLockScreen")),
+            enableOnBackInvokedCallback = bool(node.android("enableOnBackInvokedCallback")),
+            banner = node.android("banner"),
+            windowLayout = node.child("layout")?.attributes?.mapKeys { it.key.removePrefix("android:") }?.toSortedMap().orEmpty(),
             foregroundServiceType = node.android("foregroundServiceType"),
             isolatedProcess = bool(node.android("isolatedProcess")),
+            externalService = bool(node.android("externalService")),
+            stopWithTask = bool(node.android("stopWithTask")),
+            useAppZygote = bool(node.android("useAppZygote")),
+            visibleToInstantApps = bool(node.android("visibleToInstantApps")),
+            description = resources.resolve(node.android("description")),
+            multiprocess = bool(node.android("multiprocess")),
+            syncable = bool(node.android("syncable")),
+            initOrder = resources.resolve(node.android("initOrder"))?.toIntOrNull(),
+            forceUriPermissions = bool(node.android("forceUriPermissions")),
             directBootAware = bool(node.android("directBootAware")),
             label = resources.resolve(node.android("label")),
+            icon = node.android("icon"),
+            roundIcon = node.android("roundIcon"),
         )
     }
+
+    /** launchMode as its name; an `@integer/…` resource resolves to the enum's number. */
+    private fun launchMode(raw: String?): String? =
+        when (raw) {
+            "0" -> "standard"
+            "1" -> "singleTop"
+            "2" -> "singleTask"
+            "3" -> "singleInstance"
+            "4" -> "singleInstancePerTask"
+            else -> raw
+        }
 
     private fun intentFilter(node: XmlNode) =
         IntentFilter(

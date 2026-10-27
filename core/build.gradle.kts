@@ -32,6 +32,8 @@ tasks.register<Test>("updateGolden") {
     filter.includeTestsMatching("*CorpusGoldenTest*")
     systemProperty("sextant.updateGolden", "true")
     outputs.upToDateWhen { false }
+    // Same room as `test`: resource harvesting of the biggest corpus apps needs more than the default heap.
+    maxHeapSize = "2g"
 }
 
 tasks.test {

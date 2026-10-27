@@ -36,7 +36,7 @@ class CorpusGoldenTest {
     private val compared =
         OutputFiles.ALL +
             listOf(OutputFiles.LIBRARIES, OutputFiles.FRAMEWORKS, OutputFiles.SDKS, OutputFiles.ENDPOINTS, OutputFiles.NATIVE_LIBRARIES)
-    private val digestedFiles = listOf(OutputFiles.RESOURCES, OutputFiles.NATIVE_SYMBOLS)
+    private val digestedFiles = listOf(OutputFiles.RESOURCES, OutputFiles.NATIVE_SYMBOLS) + OutputFiles.HARVEST
 
     private fun digests(
         out: Path,
