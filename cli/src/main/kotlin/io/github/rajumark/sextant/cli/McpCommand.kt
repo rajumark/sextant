@@ -13,8 +13,8 @@ class McpCommand : CoreCliktCommand(name = "mcp") {
     private val apk by option("--apk", help = "The APK for `source` (and the default for `extract`)").path()
 
     override fun help(context: Context) =
-        "Run an MCP server on stdin/stdout so AI agents can extract, search, and query APKs (tools: extract, summary, find, class, " +
-            "callers, callees, sql, source, insights, endpoints)."
+        "Run an MCP server on stdin/stdout so AI agents can extract, search and query APKs. Tools: " +
+            SextantTools(null, null).tools.joinToString { it.name } + "."
 
     override fun run() {
         val tools = SextantTools(dir, apk)

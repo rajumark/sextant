@@ -157,6 +157,16 @@
   .tabbar button { font: 600 14px var(--sans); background: none; border: 0; border-bottom: 2px solid transparent; color: var(--muted); padding: 10px 14px; cursor: pointer; }
   .tabbar button:hover { color: var(--text); }
   .tabbar .theme-toggle { margin-left: auto; font-weight: 500; font-size: 13px; color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: 6px 12px; margin-bottom: 6px; }
+  .tabbar .docs-link { font: 600 14px var(--sans); color: var(--accent); padding: 10px 14px; text-decoration: none; }
+  .tabbar .docs-link:hover { text-decoration: underline; }
+  .subtabs { display: inline-flex; gap: 4px; padding: 4px; margin: 6px 0 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 999px; }
+  .subtabs button { font: 600 13px var(--sans); background: none; border: 0; border-radius: 999px; color: var(--muted); padding: 7px 14px; cursor: pointer; }
+  .subtabs button.on { background: var(--accent); color: #fff; }
+  .clifeat { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  .clifeat[hidden] { display: none; }
+  .clifeat li { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; font-size: 14px; }
+  .clifeat code { font: 600 13px var(--mono); }
+  .clifeat .where { color: var(--muted); }
   .tabbar button.on { color: var(--text); border-bottom-color: var(--accent); }
   .dk-meta { color: var(--muted); font-size: 14px; margin: 14px 0 0; }
   .kanban { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0; }
@@ -200,6 +210,7 @@
 <div class="tabbar" role="tablist">
   <button role="tab" data-tab="report" class="on">Sextant report</button>
   <button role="tab" data-tab="desktop">Desktop app</button>
+  <a class="docs-link" href="cli/">CLI documentation ↗</a>
   <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Switch theme">Dark</button>
 </div>
 
@@ -658,6 +669,15 @@ git tag v0.1.0 && git push --tags
     <div class="col"><h4><span>Done</span><span class="muted" id="dk-done-n"></span></h4><ol id="dk-done"></ol></div>
     <div class="col"><h4><span>Pending</span><span class="muted" id="dk-pending-n"></span></h4><ol id="dk-pending"></ol></div>
   </div>
+
+  <h2 style="margin-top:28px"><span class="num">D3</span>CLI features in the desktop app</h2>
+  <p class="muted" style="margin:0">What the <a href="cli/">Sextant CLI</a> can do, split by whether the desktop app shows it yet. Each command links to its documentation.</p>
+  <div class="subtabs" role="tablist">
+    <button role="tab" data-sub="used" class="on">Used in the app <span id="dk-used-n"></span></button>
+    <button role="tab" data-sub="unused">Not used yet <span id="dk-unused-n"></span></button>
+  </div>
+  <ul class="clifeat" id="dk-cli-used"></ul>
+  <ul class="clifeat" id="dk-cli-unused" hidden></ul>
 </div>
 
 <footer>
@@ -1102,6 +1122,32 @@ const DESKTOP = {
     "Expressive Material 3 skill added under .claude/skills (text guidance, no screenshots)",
     "Usability check of the open-APK flow written (desktop/docs/usability)",
   ],
+  // CLI features: [command or output, docs page under cli/, what it does / where the app shows it]
+  cliUsed: [
+    ["extract", "reference/commands/#extract", "Runs in-process when you open an APK; the app writes the same output folder as the CLI"],
+    ["info", "reference/commands/#info", "Overview: identity, SDK levels, application flags, code counts, decoder warnings"],
+    ["permissions.jsonl", "reference/output/#permissionsjsonl", "Permissions screen: dangerous, normal, declared, custom and implied permissions"],
+    ["components.jsonl", "reference/output/#componentsjsonl", "Components screens: exported state and why, intent filters, deep links"],
+    ["manifest.json", "reference/output/", "Manifest screen: tree, XML and JSON views"],
+    ["meta.json → signing", "reference/output/#metajson", "Signing screen: schemes, certificates, fingerprints, verification"],
+    ["icon", "reference/commands/#icon", "App icon in the header and the Icons screen: every density, adaptive layers, best file"],
+    ["output folder", "reference/output/", "Output screen: file list, sizes and previews; open an existing folder"],
+  ],
+  cliUnused: [
+    ["find", "reference/commands/#find", "Full-text search over classes, methods, strings, URLs, resources, SDKs and native symbols"],
+    ["sql", "reference/commands/#sql", "Read-only SQL over index.sqlite (the app writes the index but has no query view)"],
+    ["class", "reference/commands/#class", "One class: hierarchy, fields, methods, callers and strings"],
+    ["callers / callees", "reference/commands/#callers", "Call trees for a method"],
+    ["reach", "reference/commands/#reach", "Call paths from an entry point to target methods"],
+    ["xref", "reference/commands/#xref", "Where a class or field is used"],
+    ["source / smali", "reference/commands/#source", "Decompiled Java and bytecode for a class or method"],
+    ["insights", "reference/commands/#insights", "Frameworks, SDKs, library versions, hosts and native code"],
+    ["endpoints", "reference/commands/#endpoints", "Every URL with where it was found"],
+    ["findings", "reference/commands/#findings", "Review points with evidence (debuggable, cleartext, exported, weak crypto, secrets…)"],
+    ["diff", "reference/commands/#diff", "Compare two versions of an app"],
+    ["features / metadata / queries", "reference/output/#featuresjsonl-metadatajsonl-queriesjsonl", "uses-feature, uses-library, meta-data and package visibility"],
+    ["mcp", "reference/commands/#mcp", "MCP server for AI agents (CLI only by design)"],
+  ],
   pending: [
     "Real progress and cancel in core: the dialog shows elapsed time, and Cancel only closes it (needs core changes)",
     "Sample APK for first-time users (needs size and license decision)",
@@ -1132,6 +1178,18 @@ const DESKTOP = {
   document.getElementById("dk-pending-n").textContent = DESKTOP.pending.length;
   document.getElementById("dk-done").innerHTML = DESKTOP.done.map(t => `<li>${esc(t)}</li>`).join("");
   document.getElementById("dk-pending").innerHTML = DESKTOP.pending.map(t => `<li>${esc(t)}</li>`).join("");
+
+  const feat = list => list.map(([name, doc, what]) =>
+    `<li><a href="cli/${doc}"><code>${esc(name)}</code></a> <span class="where">· ${esc(what)}</span></li>`).join("");
+  document.getElementById("dk-cli-used").innerHTML = feat(DESKTOP.cliUsed);
+  document.getElementById("dk-cli-unused").innerHTML = feat(DESKTOP.cliUnused);
+  document.getElementById("dk-used-n").textContent = `(${DESKTOP.cliUsed.length})`;
+  document.getElementById("dk-unused-n").textContent = `(${DESKTOP.cliUnused.length})`;
+  document.querySelectorAll(".subtabs button").forEach(b => b.addEventListener("click", () => {
+    document.querySelectorAll(".subtabs button").forEach(x => x.classList.toggle("on", x === b));
+    document.getElementById("dk-cli-used").hidden = b.dataset.sub !== "used";
+    document.getElementById("dk-cli-unused").hidden = b.dataset.sub !== "unused";
+  }));
 
   const show = tab => {
     document.getElementById("tab-report").hidden = tab !== "report";

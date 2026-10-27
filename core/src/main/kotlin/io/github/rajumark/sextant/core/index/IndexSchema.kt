@@ -198,7 +198,7 @@ object IndexSchema {
 
         CREATE TABLE endpoint_sources (
           endpoint INTEGER NOT NULL REFERENCES endpoints(id),
-          kind     TEXT NOT NULL,            -- code | resource | deep_link | manifest
+          kind     TEXT NOT NULL,            -- code | resource | deep_link | manifest | asset | native
           location TEXT NOT NULL             -- method descriptor, @string/name or component
         );
 

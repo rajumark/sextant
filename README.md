@@ -9,6 +9,8 @@
 
 Sextant is a command-line tool that turns an Android APK into clean, structured data that people, scripts and AI agents can read.
 
+**[Documentation](https://rajumark.github.io/sextant/cli/)** · [Install](https://rajumark.github.io/sextant/cli/getting-started/installation/) · [Commands](https://rajumark.github.io/sextant/cli/reference/commands/) · [Releases](https://github.com/rajumark/sextant/releases)
+
 ```bash
 sextant extract app.apk -o app/
 sextant info app/

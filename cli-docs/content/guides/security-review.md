@@ -1,0 +1,71 @@
+# Security review
+
+`sextant findings` lists **review points**: static observations a reviewer should check, each with the evidence that triggered it. They are deliberately not called vulnerabilities, because a check may exist elsewhere and some patterns are fine in context.
+
+```bash
+sextant findings app/
+sextant findings app/ --severity medium   # medium and high only
+sextant findings app/ --json              # one JSON object per finding, with evidence
+```
+
+```text
+[medium] Cleartext HTTP allowed  (1)  · cleartext
+    android:usesCleartextTraffic=true allows unencrypted HTTP.
+    - manifest application usesCleartextTraffic=true
+[low] Components exported without permission  (6)  · exported-component
+    Other apps can start these activities, services or receivers; check how they handle incoming intents.
+    - manifest de.markusfisch.android.binaryeye.activity.CameraActivity  = activity
+    ...
+[low] Weak hash algorithm  (3)  · weak-hash
+    MD5/SHA-1 are not collision resistant; fine for checksums, not for security decisions.
+    - method Lde/markusfisch/android/binaryeye/activity/DecodeActivity;->C(Ljava/lang/String;[B)V  = SHA-1
+```
+
+The full list of rules, with what each one means, is in [Review findings](../reference/findings.md).
+
+## A review workflow
+
+1. **Attack surface.** Exported components without permission, deep links, providers and their read/write permissions:
+
+    ```bash
+    sextant sql app/ "SELECT type, name, permission, read_permission, write_permission FROM components WHERE exported = 1 AND enabled = 1"
+    sextant sql app/ "SELECT url, component FROM deep_links"
+    ```
+
+2. **What those entry points can reach.** Use `reach` from an exported component to sensitive APIs:
+
+    ```bash
+    sextant reach app/ com.example.DeepLinkActivity 'WebView.loadUrl'
+    sextant reach app/ com.example.ShareReceiver okhttp3/
+    ```
+
+3. **Network.** Cleartext settings, the network security config, every host the app mentions:
+
+    ```bash
+    sextant endpoints app/
+    sextant sql app/ "SELECT value FROM meta WHERE key = 'meta_json'" --json   # flags.uses_cleartext_traffic, network_security_config
+    ```
+
+4. **Crypto and TLS.** `weak-cipher`, `weak-hash`, `trust-all-certificates` and `accept-all-hostnames` point at the methods; read them with `source` or `smali`.
+
+5. **Secrets.** Embedded keys and tokens are masked in the output (only the first 6 and last 4 characters are shown). Search for more with `find`:
+
+    ```bash
+    sextant find app/ "api_key" --kind resource
+    sextant find app/ "BEGIN"  --kind string
+    ```
+
+6. **Native code.** JNI methods map back to the Java side:
+
+    ```bash
+    sextant sql app/ "SELECT jni_class, jni_method, library FROM native_symbols WHERE jni_class IS NOT NULL"
+    ```
+
+## How the code rules work
+
+- **Correlated, not keyword-only.** `weak-cipher` fires only when a method both loads a cipher string (`"AES/ECB/…"`, `"DES"`, bare `"AES"`, which defaults to ECB) and calls `Cipher.getInstance`. The same applies to `weak-hash` with `MessageDigest.getInstance`.
+- **Body size, not names.** `trust-all-certificates` fires when an `X509TrustManager.checkServerTrusted` implementation is empty; `accept-all-hostnames` when a `HostnameVerifier.verify` has at most two instructions.
+- **Manifest semantics.** A provider counts as protected by `android:permission`, or by `readPermission` and `writePermission` together; a provider with only one of them gets `exported-provider-partial`. Launcher activities are not reported as exported components.
+
+!!! example "On real apps"
+    Across the 46-APK test corpus, every high-severity finding was checked by hand. Examples: Logseq's `SslSkipPlugin` and an `InsecureTrustManager` bundled into Standard Notes accept every certificate; AppManager's wireless-ADB pairing does so on purpose (self-signed certificates); VLC ships a test key inside Netty's `OpenSsl` class.
