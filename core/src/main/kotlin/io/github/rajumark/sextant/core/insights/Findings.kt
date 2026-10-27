@@ -251,13 +251,8 @@ object Findings {
             "Custom task affinity or task reparenting",
             "Activities with a taskAffinity other than the app's, or allowTaskReparenting=true, can move between tasks; review them for task hijacking.",
             components
-                .filter { c ->
-                    c.type == "activity" &&
-                        (
-                            (c.taskAffinity != null && c.taskAffinity.isNotEmpty() && c.taskAffinity != packageName) ||
-                                c.allowTaskReparenting == true
-                        )
-                }.map { c ->
+                .filter { c -> ComponentReviews.taskHijackReason(c, packageName) != null }
+                .map { c ->
                     FindingEvidence("manifest", c.name, c.taskAffinity?.let { "taskAffinity=$it" } ?: "allowTaskReparenting=true")
                 },
         )

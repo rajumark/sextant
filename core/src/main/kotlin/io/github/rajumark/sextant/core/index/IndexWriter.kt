@@ -4,6 +4,7 @@ import io.github.rajumark.sextant.core.CodeSink
 import io.github.rajumark.sextant.core.Extraction
 import io.github.rajumark.sextant.core.SextantException
 import io.github.rajumark.sextant.core.insights.AppIcons
+import io.github.rajumark.sextant.core.insights.ComponentReviews
 import io.github.rajumark.sextant.core.insights.IconFile
 import io.github.rajumark.sextant.core.insights.Insights
 import io.github.rajumark.sextant.core.model.CallRecord
@@ -20,6 +21,8 @@ import io.github.rajumark.sextant.core.output.SextantJson
 import io.github.rajumark.sextant.core.output.makeReadable
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardCopyOption
@@ -326,8 +329,9 @@ class IndexWriter(
             st.executeBatch()
         }
         val filters = ListSerializer(IntentFilter.serializer())
-        conn.prepareStatement("INSERT INTO components VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)").use { st ->
-            for (c in extraction.components) {
+        conn.prepareStatement("INSERT INTO components VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)").use { st ->
+            val reviews = ComponentReviews.of(extraction.components, m.`package`)
+            for ((c, review) in extraction.components.zip(reviews)) {
                 st.setString(1, c.type)
                 st.setString(2, c.name)
                 st.setInt(3, if (c.exported) 1 else 0)
@@ -349,6 +353,12 @@ class IndexWriter(
                 c.isolatedProcess?.let { st.setInt(19, if (it) 1 else 0) } ?: st.setNull(19, java.sql.Types.INTEGER)
                 c.directBootAware?.let { st.setInt(20, if (it) 1 else 0) } ?: st.setNull(20, java.sql.Types.INTEGER)
                 st.setString(21, c.label)
+                st.setString(22, json(review.tags))
+                val attrs = ComponentReviews.activityAttributes(c)
+                st.setString(
+                    23,
+                    if (attrs.isEmpty()) null else JsonObject(attrs.associate { (k, v) -> k to JsonPrimitive(v) }).toString(),
+                )
                 st.addBatch()
             }
             st.executeBatch()

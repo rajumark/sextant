@@ -46,7 +46,9 @@ object IndexSchema {
           foreground_service_type TEXT,     -- services
           isolated_process        INTEGER,
           direct_boot_aware       INTEGER,
-          label                   TEXT
+          label                   TEXT,
+          tags                    TEXT NOT NULL, -- JSON array of verdicts: launcher, app-link, deep-link, hidden-entry, task-hijack, …
+          activity                TEXT      -- activities: JSON object of the other <activity> attributes that are set
         );
 
         -- uses-feature / uses-library / uses-native-library

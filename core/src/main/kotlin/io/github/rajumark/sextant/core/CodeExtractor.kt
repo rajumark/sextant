@@ -290,8 +290,8 @@ object CodeExtractor {
             is ByteEncodedValue -> value.value.toString()
             is ShortEncodedValue -> value.value.toString()
             is CharEncodedValue -> value.value.toString()
-            is FloatEncodedValue -> value.value.toString()
-            is DoubleEncodedValue -> value.value.toString()
+            is FloatEncodedValue -> Decimals.format(value.value)
+            is DoubleEncodedValue -> Decimals.format(value.value)
             else -> null
         }
 

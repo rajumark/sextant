@@ -1473,6 +1473,7 @@
 <li><code>findings --json</code> now prints the same records as <code>insights/findings.jsonl</code> (evidence uses <code>where</code>, as in the file).</li>
 <li><strong>Fixed:</strong> host counts and top hosts included custom-scheme deep links (<code>binaryeye://scan</code> counted as host "scan"). They now count only network URLs (http, https, ws, wss, ftp, ftps); <code>endpoints</code> still lists everything.</li>
 <li><strong>Fixed on Windows:</strong> output is always UTF-8, so call trees, arrows and non-Latin strings no longer turn into <code>?</code> (and <code>--json</code> stays valid).</li>
+<li><strong>Fixed:</strong> float and double field constants printed differently on Java 17 than on Java 19+ (<code>Double.toString</code> changed), so output depended on the Java version. They now always use the shortest form, on every JDK.</li>
 <li><code>mcp --help</code> lists the tools from the server itself, so it can't go stale.</li>
 </ul>
 <h2 id="0100-version-10-full-manifest-coverage">0.10.0 (Version 10): full manifest coverage<a class="headerlink" href="#0100-version-10-full-manifest-coverage" title="Permanent link">&para;</a></h2>

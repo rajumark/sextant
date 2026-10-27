@@ -13,6 +13,7 @@ All notable changes to Sextant. Versions follow semver; `schema_version` in `met
 - `findings --json` now prints the same records as `insights/findings.jsonl` (evidence uses `where`, as in the file).
 - **Fixed:** host counts and top hosts included custom-scheme deep links (`binaryeye://scan` counted as host "scan"). They now count only network URLs (http, https, ws, wss, ftp, ftps); `endpoints` still lists everything.
 - **Fixed on Windows:** output is always UTF-8, so call trees, arrows and non-Latin strings no longer turn into `?` (and `--json` stays valid).
+- **Fixed:** float and double field constants printed differently on Java 17 than on Java 19+ (`Double.toString` changed), so output depended on the Java version. They now always use the shortest form, on every JDK.
 - `mcp --help` lists the tools from the server itself, so it can't go stale.
 
 ## 0.10.0 (Version 10): full manifest coverage
