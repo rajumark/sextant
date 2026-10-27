@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sextant Version 1</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/svg+xml" href="assets/sextant-light.svg" media="(prefers-color-scheme: light)">
+<link rel="icon" type="image/svg+xml" href="assets/sextant-dark.svg" media="(prefers-color-scheme: dark)">
 <style>
   :root {
     --bg: #fbfaf7;
@@ -168,6 +171,8 @@
   .dtree b { font-weight: 600; }
   .dtree .sub { color: var(--muted); }
   .dummy { border-left: 3px solid var(--ok); background: var(--ok-soft); padding: 12px 16px; border-radius: 0 10px 10px 0; margin: 14px 0; font-size: 14.5px; }
+  .app-icon img { display: block; width: 88px; height: 88px; margin-bottom: 14px; }
+  :root[data-theme="dark"] .app-icon source + img { content: url("assets/sextant-dark.png"); }
   footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
 </style>
 </head>
@@ -175,6 +180,10 @@
 <div class="wrap">
 
 <header class="hero">
+  <picture class="app-icon">
+    <source media="(prefers-color-scheme: dark)" srcset="assets/sextant-dark.png">
+    <img src="assets/sextant-light.png" width="88" height="88" alt="Sextant app icon">
+  </picture>
   <div class="eyebrow">Sextant · Plan · Version 1 (v0.1.0)</div>
   <h1>Sextant Version 1</h1>
   <p class="lede">A command-line tool that turns an Android APK into clean, structured data that people and AI agents can read. Version 1 does one small job end to end: it reads the APK's identity, manifest, permissions and components and writes them out as stable JSON and JSONL.</p>

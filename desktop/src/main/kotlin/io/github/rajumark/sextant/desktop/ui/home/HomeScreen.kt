@@ -25,7 +25,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.BrightnessAuto
 import androidx.compose.material.icons.outlined.DarkMode
 import androidx.compose.material.icons.outlined.Delete
-import androidx.compose.material.icons.outlined.Explore
 import androidx.compose.material.icons.outlined.FolderOpen
 import androidx.compose.material.icons.outlined.History
 import androidx.compose.material.icons.outlined.LightMode
@@ -60,8 +59,8 @@ import io.github.rajumark.sextant.desktop.model.Analysis
 import io.github.rajumark.sextant.desktop.theme.ThemeMode
 import io.github.rajumark.sextant.desktop.ui.common.AppIcon
 import io.github.rajumark.sextant.desktop.ui.common.EmptyState
-import io.github.rajumark.sextant.desktop.ui.common.IconBadge
 import io.github.rajumark.sextant.desktop.ui.common.MonoLine
+import io.github.rajumark.sextant.desktop.ui.common.SextantLogo
 import io.github.rajumark.sextant.desktop.ui.common.ShapeBadge
 import io.github.rajumark.sextant.desktop.ui.common.Tag
 import io.github.rajumark.sextant.desktop.ui.common.Tone
@@ -149,7 +148,7 @@ private fun RecentPane(
 @Composable
 private fun HomeTopBar(app: AppState) {
     Row(Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 16.dp), verticalAlignment = Alignment.CenterVertically) {
-        IconBadge(Icons.Outlined.Explore, Tone.Primary, 40.dp)
+        SextantLogo(40.dp)
         Spacer(Modifier.width(12.dp))
         Column(Modifier.weight(1f)) {
             Text("Sextant", style = MaterialTheme.typography.titleLarge)

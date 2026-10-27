@@ -1,4 +1,11 @@
-# Sextant
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/sextant-dark.png">
+    <img src="docs/assets/sextant-light.png" width="128" height="128" alt="Sextant app icon">
+  </picture>
+</p>
+
+<h1 align="center">Sextant</h1>
 
 Sextant is a command-line tool that turns an Android APK into clean, structured data that people, scripts and AI agents can read.
 

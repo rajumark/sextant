@@ -34,11 +34,17 @@ compose.desktop {
             // Installers take MAJOR.MINOR.PATCH only (no -dev suffix), and macOS needs MAJOR > 0.
             packageVersion = project.version.toString().substringBefore("-")
             modules("java.sql")
+            // App icon (Ocean): design sources in design/icon/.
+            macOS { iconFile.set(project.file("icons/sextant.icns")) }
+            windows { iconFile.set(project.file("icons/sextant.ico")) }
+            linux { iconFile.set(project.file("icons/sextant.png")) }
         }
     }
 }
 
 tasks.test {
+    // Real-APK tests run the full engine on large apps (same heap as core's corpus tests).
+    maxHeapSize = "2g"
     // Screenshot tests render off-screen; the UI tests need headless-safe AWT.
     systemProperty("java.awt.headless", "true")
     // Real-APK corpus (scripts/fetch-apks.sh); the repository test skips when it is missing.

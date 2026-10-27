@@ -14,6 +14,7 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import io.github.rajumark.sextant.desktop.data.CoreRepository
 import io.github.rajumark.sextant.desktop.theme.ThemeMode
+import io.github.rajumark.sextant.desktop.ui.common.SextantIcon
 import io.github.rajumark.sextant.desktop.ui.workspace.Destination
 import java.awt.Dimension
 import java.awt.Frame
@@ -26,6 +27,11 @@ private fun shortcut(
 fun main() {
     // Name shown in the macOS menu bar; must be set before AWT starts.
     System.setProperty("apple.awt.application.name", "Sextant")
+    // Dock/taskbar icon when running from Gradle; packaged installers carry the .icns/.ico/.png instead.
+    runCatching {
+        val taskbar = java.awt.Taskbar.getTaskbar()
+        if (taskbar.isSupported(java.awt.Taskbar.Feature.ICON_IMAGE)) SextantIcon.awtImage()?.let { taskbar.iconImage = it }
+    }
     runApp()
 }
 
@@ -52,7 +58,7 @@ private fun runApp() =
                 ?.meta
                 ?.label
                 ?.let { "Sextant — $it" } ?: "Sextant"
-        Window(onCloseRequest = ::exitApplication, state = windowState, title = title) {
+        Window(onCloseRequest = ::exitApplication, state = windowState, title = title, icon = SextantIcon.windowPainter) {
             owner[0] = window
             window.minimumSize = Dimension(960, 640)
             MenuBar {
