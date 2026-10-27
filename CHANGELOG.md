@@ -12,6 +12,7 @@ All notable changes to Sextant. Versions follow semver; `schema_version` in `met
 - **`findings --fail-on <severity>`** exits with the new code 5 when any finding is at or above the severity, for CI gates.
 - `findings --json` now prints the same records as `insights/findings.jsonl` (evidence uses `where`, as in the file).
 - **Fixed:** host counts and top hosts included custom-scheme deep links (`binaryeye://scan` counted as host "scan"). They now count only network URLs (http, https, ws, wss, ftp, ftps); `endpoints` still lists everything.
+- **Fixed on Windows:** output is always UTF-8, so call trees, arrows and non-Latin strings no longer turn into `?` (and `--json` stays valid).
 - `mcp --help` lists the tools from the server itself, so it can't go stale.
 
 ## 0.10.0 (Version 10): full manifest coverage

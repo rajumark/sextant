@@ -48,9 +48,14 @@ class CliEndToEndTest {
                 .directory(cwd.toFile())
                 .redirectError(tmp.resolve("stderr.txt").toFile())
                 .start()
-        val stdout = process.inputStream.bufferedReader().readText()
+        val stdout = process.inputStream.bufferedReader(Charsets.UTF_8).readText()
         check(process.waitFor(120, TimeUnit.SECONDS)) { "sextant timed out" }
-        return Result(process.exitValue(), stdout, Files.readString(tmp.resolve("stderr.txt")))
+        // The CLI prints platform line endings (CRLF on Windows); compare content, not line endings.
+        return Result(
+            process.exitValue(),
+            stdout.replace("\r\n", "\n"),
+            Files.readString(tmp.resolve("stderr.txt")).replace("\r\n", "\n"),
+        )
     }
 
     @Test

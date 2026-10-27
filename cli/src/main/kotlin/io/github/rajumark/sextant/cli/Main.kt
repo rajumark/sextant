@@ -9,6 +9,10 @@ import com.github.ajalt.clikt.parameters.options.versionOption
 import io.github.rajumark.sextant.core.ExitCode
 import io.github.rajumark.sextant.core.Sextant
 import io.github.rajumark.sextant.core.SextantException
+import java.io.BufferedOutputStream
+import java.io.FileDescriptor
+import java.io.FileOutputStream
+import java.io.PrintStream
 import kotlin.system.exitProcess
 
 class SextantCommand : CoreCliktCommand(name = Sextant.NAME) {
@@ -34,7 +38,17 @@ internal fun <T> guarded(block: () -> T): T =
         throw CliktError(message, statusCode = e.exitCode.code)
     }
 
+/**
+ * stdout and stderr are always UTF-8. Java otherwise uses the console code page on Windows (often cp1252/cp437),
+ * which turns tree lines, arrows and non-Latin strings into `?` and makes --json output invalid for consumers.
+ */
+private fun utf8Streams() {
+    System.setOut(PrintStream(BufferedOutputStream(FileOutputStream(FileDescriptor.out), 1 shl 13), true, Charsets.UTF_8))
+    System.setErr(PrintStream(BufferedOutputStream(FileOutputStream(FileDescriptor.err), 1 shl 10), true, Charsets.UTF_8))
+}
+
 fun main(args: Array<String>) {
+    utf8Streams()
     val command =
         SextantCommand().subcommands(
             ExtractCommand(),

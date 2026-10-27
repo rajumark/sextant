@@ -108,6 +108,9 @@ class McpServerTest {
             sextant.handle("""{"jsonrpc":"2.0","id":9,"method":"tools/call","params":{"name":"$name","arguments":$args}}""")!!,
         ).jsonObject
 
+    /** Windows paths have backslashes, which must be escaped inside a JSON string. */
+    private fun jsonPath(path: Any) = path.toString().replace("\\", "\\\\")
+
     @AfterAll
     fun cleanup() {
         dir.toFile().deleteRecursively()
@@ -121,7 +124,9 @@ class McpServerTest {
             .jsonObject
             .getValue("isError")
             .jsonPrimitive.boolean shouldBe true
-        text(tool("extract", """{"apk":"${CorpusApks.require("binaryeye")}","out":"${dir.resolve("be")}"}""")) shouldContain
+        text(
+            tool("extract", """{"apk":"${jsonPath(CorpusApks.require("binaryeye"))}","out":"${jsonPath(dir.resolve("be"))}"}"""),
+        ) shouldContain
             "de.markusfisch.android.binaryeye"
         text(tool("find", """{"text":"markusfisch.de/BinaryEye","kind":"string"}""")) shouldContain "CameraActivity;->onResume()V"
         text(tool("callees", """{"method":"CameraActivity.onResume","depth":1}""")) shouldContain "(external)"
