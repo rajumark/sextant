@@ -1,5 +1,5 @@
 # com.aurora.store 4.8.1 (73)
-Extracted by sextant <version> · schema 6 · sha256 fd4d2d4cfb4a4d77766930f722c6a524af90cc1c7ff8aa6b81fe9c2b0fc5308a
+Extracted by sextant <version> · schema 7 · sha256 fd4d2d4cfb4a4d77766930f722c6a524af90cc1c7ff8aa6b81fe9c2b0fc5308a
 
 ## App
 - Label: Aurora Store
@@ -25,12 +25,15 @@ Extracted by sextant <version> · schema 6 · sha256 fd4d2d4cfb4a4d77766930f722c
 ## Review findings (static observations to check, not proven issues)
 - [low] Runs external commands (1) — e.g. Lyd/a;->c([Ljava/lang/String;)Lyd/j;
 - [info] App data can be backed up (1) — e.g. application allowBackup=true
+- [info] Legacy external storage requested (1) — e.g. application requestLegacyExternalStorage=true
 - [info] WebView JavaScript enabled (1) — e.g. Lcom/aurora/store/view/ui/account/GoogleFragment;->T(Landroid/view/View;Landroid/os/Bundle;)V
 
 ## Counts
 - Permissions: 19 requested (3 dangerous), 1 declared
 - Components: 5 activity, 0 activity-alias, 4 service, 9 receiver, 3 provider
 - Exported: 6 (1 with deep links)
+- Features: 0 required, 4 optional · libraries: androidx.window.extensions, androidx.window.sidecar
+- Queries (package visibility): 0 packages, 0 intents, 0 providers · Metadata: 7 entries
 
 ## Exported components
 - activity com.aurora.store.MainActivity — http://market.android.com/details, http://play.google.com/store/apps/details, http://play.google.com/store/apps/dev
@@ -45,6 +48,9 @@ Extracted by sextant <version> · schema 6 · sha256 fd4d2d4cfb4a4d77766930f722c
 - manifest.json — full decoded manifest tree
 - permissions.jsonl — one permission per line
 - components.jsonl — one component per line (grep '"exported":true')
+- features.jsonl — uses-feature / uses-library / uses-native-library
+- metadata.jsonl — meta-data and property entries (application and components)
+- queries.jsonl — package visibility: packages, intents, providers the app can see
 - code/classes.jsonl — one class per line (id, super, interfaces, source file, Kotlin)
 - code/methods.jsonl — one method per line (id like Lcom/a/B;->m(I)V)
 - code/fields.jsonl — one field per line, with constant initial values

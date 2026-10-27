@@ -14,7 +14,9 @@ pin=false
 if [[ "${1:-}" == "--pin" ]]; then pin=true; shift; fi
 only=("$@")
 
-sha() { shasum -a 256 "$1" | awk '{print $1}'; }
+sha() {
+  if command -v shasum >/dev/null 2>&1; then shasum -a 256 "$1"; else sha256sum "$1"; fi | awk '{print $1}'
+}
 failed=0
 
 while IFS=$'\t' read -r id kind url expected; do

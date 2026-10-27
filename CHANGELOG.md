@@ -2,6 +2,12 @@
 
 All notable changes to Sextant. Versions follow semver; `schema_version` in `meta.json` tracks the output format separately.
 
+## 1.0.0: first public release
+
+- **CLI 1.0.0:** everything built in 0.1.0 to 0.10.0 (see CHANGELOG.md). One `sextant-1.0.0.zip` runs on macOS, Linux and Windows with Java 17 or newer.
+- **Desktop app 1.0.0:** a window for opening an APK and browsing its overview, manifest, permissions, components, signing, icons and output. Installers for macOS (`.dmg`), Windows (`.msi`) and Linux (`.deb`).
+- Releases are published by pushing a commit whose message is exactly `#go`.
+
 ## 0.10.0 (Version 10): full manifest coverage
 
 - All `<application>` flags are now structured in `meta.json → flags` (backup, testOnly, legacy storage, largeHeap, memtag, locale config, category, profileable, …), together with the identity attributes `installLocation`, `sharedUserId`, `targetSandboxVersion` and `supports-screens`.

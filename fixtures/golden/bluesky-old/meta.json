@@ -1,5 +1,5 @@
 {
-  "schema_version": 6,
+  "schema_version": 7,
   "tool": {
     "name": "sextant",
     "version": "<version>"
@@ -22,7 +22,36 @@
     "allow_backup": true,
     "uses_cleartext_traffic": null,
     "network_security_config": null,
-    "extract_native_libs": false
+    "extract_native_libs": false,
+    "test_only": null,
+    "full_backup_content": null,
+    "data_extraction_rules": null,
+    "backup_agent": null,
+    "full_backup_only": null,
+    "has_fragile_user_data": null,
+    "request_legacy_external_storage": true,
+    "preserve_legacy_external_storage": null,
+    "large_heap": true,
+    "hardware_accelerated": null,
+    "supports_rtl": true,
+    "resizeable_activity": null,
+    "enable_on_back_invoked_callback": false,
+    "app_component_factory": "androidx.core.app.CoreComponentFactory",
+    "locale_config": null,
+    "app_category": null,
+    "is_game": null,
+    "memtag_mode": null,
+    "uses_non_sdk_api": null,
+    "manage_space_activity": null,
+    "task_affinity": null,
+    "process": null,
+    "theme": "@style/AppTheme",
+    "profileable_shell": null,
+    "install_location": null,
+    "shared_user_id": null,
+    "shared_user_max_sdk": null,
+    "target_sandbox_version": null,
+    "supports_screens": {}
   },
   "signing": {
     "verified": true,
@@ -318,7 +347,7 @@
     "jni_methods": 372,
     "android_gradle_plugin": "8.12.0",
     "findings": {
-      "info": 3,
+      "info": 5,
       "low": 3,
       "medium": 2
     }

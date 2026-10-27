@@ -1,0 +1,7 @@
+# Golden files are compared byte for byte: keep LF on every OS (Windows checkouts would otherwise get CRLF).
+* text=auto eol=lf
+*.bat text eol=crlf
+*.jar binary
+*.png binary
+*.webp binary
+*.apk binary

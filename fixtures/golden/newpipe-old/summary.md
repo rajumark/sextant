@@ -1,5 +1,5 @@
 # org.schabi.newpipe 0.29.0 (1014)
-Extracted by sextant <version> · schema 6 · sha256 11c320613aebaf2132897f44dc9fa02bd05100b3edaacad11ceaa250889ff5d4
+Extracted by sextant <version> · schema 7 · sha256 11c320613aebaf2132897f44dc9fa02bd05100b3edaacad11ceaa250889ff5d4
 
 ## App
 - Label: NewPipe
@@ -32,6 +32,8 @@ Extracted by sextant <version> · schema 6 · sha256 11c320613aebaf2132897f44dc9
 - Permissions: 12 requested (3 dangerous), 1 declared
 - Components: 13 activity, 0 activity-alias, 11 service, 5 receiver, 4 provider
 - Exported: 9 (1 with deep links)
+- Features: 0 required, 2 optional · libraries: androidx.window.extensions, androidx.window.sidecar
+- Queries (package visibility): 0 packages, 1 intents, 0 providers · Metadata: 12 entries
 
 ## Exported components
 - activity org.schabi.newpipe.MainActivity
@@ -49,6 +51,9 @@ Extracted by sextant <version> · schema 6 · sha256 11c320613aebaf2132897f44dc9
 - manifest.json — full decoded manifest tree
 - permissions.jsonl — one permission per line
 - components.jsonl — one component per line (grep '"exported":true')
+- features.jsonl — uses-feature / uses-library / uses-native-library
+- metadata.jsonl — meta-data and property entries (application and components)
+- queries.jsonl — package visibility: packages, intents, providers the app can see
 - code/classes.jsonl — one class per line (id, super, interfaces, source file, Kotlin)
 - code/methods.jsonl — one method per line (id like Lcom/a/B;->m(I)V)
 - code/fields.jsonl — one field per line, with constant initial values

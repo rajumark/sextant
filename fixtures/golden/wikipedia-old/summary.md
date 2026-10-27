@@ -1,5 +1,5 @@
 # org.wikipedia r/50610-r-2026-10-06 (50610)
-Extracted by sextant <version> · schema 6 · sha256 4602977099bff12bf24afbbe5a516c0979cb6e5122a4fbbf21569c3fe46a7040
+Extracted by sextant <version> · schema 7 · sha256 4602977099bff12bf24afbbe5a516c0979cb6e5122a4fbbf21569c3fe46a7040
 
 ## App
 - Label: Wikipedia
@@ -28,12 +28,15 @@ Extracted by sextant <version> · schema 6 · sha256 4602977099bff12bf24afbbe5a5
 - [low] Components exported without permission (7) — e.g. org.wikipedia.main.MainActivity
 - [low] Weak hash algorithm (1) — e.g. Lcom/hcaptcha/sdk/HCaptchaDebugInfo;->debugInfo(Ljava/lang/String;Ljava/lang/String;)Ljava/util/ArrayList;
 - [info] App data can be backed up (1) — e.g. application allowBackup=true
+- [info] Custom task affinity or task reparenting (1) — e.g. androidx.glance.appwidget.action.InvisibleActionTrampolineActivity
 - [info] WebView JavaScript enabled (3) — e.g. Lokio/internal/DefaultSocket;-><init>(Landroid/os/Handler;Landroid/content/Context;Lcom/hcaptcha/sdk/HCaptchaConfig;Lcom/hcaptcha/sdk/HCaptchaInternalConfig;Lcom/hcaptcha/sdk/IHCaptchaVerifier;Lcom/hcaptcha/sdk/HCaptchaWebView;)V
 
 ## Counts
 - Permissions: 17 requested (7 dangerous), 1 declared
 - Components: 75 activity, 2 activity-alias, 6 service, 12 receiver, 3 provider
 - Exported: 12 (1 with deep links)
+- Features: 1 required, 4 optional · libraries: androidx.window.extensions, androidx.window.sidecar, com.sec.android.app.multiwindow
+- Queries (package visibility): 0 packages, 2 intents, 0 providers · Metadata: 14 entries
 
 ## Exported components
 - activity org.wikipedia.main.MainActivity
@@ -54,6 +57,9 @@ Extracted by sextant <version> · schema 6 · sha256 4602977099bff12bf24afbbe5a5
 - manifest.json — full decoded manifest tree
 - permissions.jsonl — one permission per line
 - components.jsonl — one component per line (grep '"exported":true')
+- features.jsonl — uses-feature / uses-library / uses-native-library
+- metadata.jsonl — meta-data and property entries (application and components)
+- queries.jsonl — package visibility: packages, intents, providers the app can see
 - code/classes.jsonl — one class per line (id, super, interfaces, source file, Kotlin)
 - code/methods.jsonl — one method per line (id like Lcom/a/B;->m(I)V)
 - code/fields.jsonl — one field per line, with constant initial values

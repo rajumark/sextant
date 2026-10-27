@@ -4,6 +4,7 @@ components 33
 deep_links 400
 endpoint_sources 685
 endpoints 566
+features 4
 field_refs 160989
 fields 41554
 finding_evidence 9
@@ -12,10 +13,12 @@ frameworks 1
 icons 16
 libraries 100
 meta 10
+metadata 12
 methods 73029
 native_libraries 4
 native_symbols 4
 permissions 13
+queries 1
 resources 1765
 sdks 13
 string_refs 42503

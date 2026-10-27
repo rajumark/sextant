@@ -28,6 +28,8 @@ Sextant needs Java 17 or newer.
 
 Download `sextant-<version>.zip` from the releases page, unzip it, and add `sextant-<version>/bin` to your `PATH`.
 
+The desktop app has its own installers on the same releases page: `.dmg` for macOS (Apple silicon), `.msi` for Windows and `.deb` for Linux. They are not signed yet, so macOS asks you to allow the app once in System Settings → Privacy & Security.
+
 To build from source:
 
 ```bash

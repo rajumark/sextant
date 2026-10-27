@@ -1,0 +1,15 @@
+{"scope":"androidx.core.content.FileProvider","kind":"meta-data","name":"android.support.FILE_PROVIDER_PATHS","value":null,"resource":"@xml/debug_paths"}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.emoji2.text.EmojiCompatInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.lifecycle.ProcessLifecycleInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"androidx.profileinstaller.ProfileInstallerInitializer","value":"androidx.startup","resource":null}
+{"scope":"androidx.startup.InitializationProvider","kind":"meta-data","name":"okhttp3.internal.platform.PlatformInitializer","value":"androidx.startup","resource":null}
+{"scope":"at.bitfire.davdroid.sync.account.AccountAuthenticatorService","kind":"meta-data","name":"android.accounts.AccountAuthenticator","value":null,"resource":"@xml/account_authenticator"}
+{"scope":"at.bitfire.davdroid.sync.account.AddressBookAuthenticatorService","kind":"meta-data","name":"android.accounts.AccountAuthenticator","value":null,"resource":"@xml/account_authenticator_address_book"}
+{"scope":"at.bitfire.davdroid.sync.adapter.CalendarsSyncAdapterService","kind":"meta-data","name":"android.content.SyncAdapter","value":null,"resource":"@xml/sync_calendars"}
+{"scope":"at.bitfire.davdroid.sync.adapter.ContactsSyncAdapterService","kind":"meta-data","name":"android.content.SyncAdapter","value":null,"resource":"@xml/sync_contacts"}
+{"scope":"at.bitfire.davdroid.sync.adapter.ContactsSyncAdapterService","kind":"meta-data","name":"android.provider.CONTACTS_STRUCTURE","value":null,"resource":"@xml/contacts"}
+{"scope":"at.bitfire.davdroid.sync.adapter.JtxSyncAdapterService","kind":"meta-data","name":"android.content.SyncAdapter","value":null,"resource":"@xml/sync_notes"}
+{"scope":"at.bitfire.davdroid.sync.adapter.OpenTasksSyncAdapterService","kind":"meta-data","name":"android.content.SyncAdapter","value":null,"resource":"@xml/sync_opentasks"}
+{"scope":"at.bitfire.davdroid.sync.adapter.TasksOrgSyncAdapterService","kind":"meta-data","name":"android.content.SyncAdapter","value":null,"resource":"@xml/sync_tasks_org"}
+{"scope":"at.bitfire.davdroid.ui.widget.IconSyncButtonWidgetReceiver","kind":"meta-data","name":"android.appwidget.provider","value":null,"resource":"@xml/widget_info_icon_sync_button"}
+{"scope":"at.bitfire.davdroid.ui.widget.LabeledSyncButtonWidgetReceiver","kind":"meta-data","name":"android.appwidget.provider","value":null,"resource":"@xml/widget_info_labeled_sync_button"}

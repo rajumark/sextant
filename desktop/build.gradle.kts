@@ -31,8 +31,8 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "Sextant"
-            // Installers need MAJOR > 0 on macOS, so the app is versioned separately from the 0.x CLI.
-            packageVersion = "1.0.0"
+            // Installers take MAJOR.MINOR.PATCH only (no -dev suffix), and macOS needs MAJOR > 0.
+            packageVersion = project.version.toString().substringBefore("-")
             modules("java.sql")
         }
     }

@@ -1,5 +1,5 @@
 # at.bitfire.davdroid 4.5.20-ose (405200005)
-Extracted by sextant <version> · schema 6 · sha256 df387d8b3ddc3730d88d2bfea939aadb8906cc6cff7de46385a7751d1b536462
+Extracted by sextant <version> · schema 7 · sha256 df387d8b3ddc3730d88d2bfea939aadb8906cc6cff7de46385a7751d1b536462
 
 ## App
 - Label: DAVx⁵
@@ -27,11 +27,15 @@ Extracted by sextant <version> · schema 6 · sha256 df387d8b3ddc3730d88d2bfea93
 - [low] Components exported without permission (16) — e.g. at.bitfire.cert4android.TrustCertificateActivity
 - [low] SecureRandom with explicit seed (1) — e.g. Lio/ktor/util/NonceKt$nonceGeneratorJob$1;->invokeSuspend(Ljava/lang/Object;)Ljava/lang/Object;
 - [low] Weak cipher or ECB mode (1) — e.g. Lorg/conscrypt/CryptoUpcalls;->rsaOpWithPrivateKey(Ljava/security/PrivateKey;II[B)[B
+- [info] Custom task affinity or task reparenting (1) — e.g. androidx.glance.appwidget.action.InvisibleActionTrampolineActivity
+- [info] Exported provider grants URI permissions for any path (1) — e.g. at.bitfire.davdroid.webdav.DavDocumentsProvider
 
 ## Counts
 - Permissions: 25 requested (8 dangerous), 1 declared
 - Components: 23 activity, 0 activity-alias, 14 service, 12 receiver, 3 provider
 - Exported: 23 (2 with deep links)
+- Features: 0 required, 1 optional · libraries: androidx.window.extensions, androidx.window.sidecar
+- Queries (package visibility): 5 packages, 8 intents, 2 providers · Metadata: 15 entries
 
 ## Exported components
 - activity at.bitfire.cert4android.TrustCertificateActivity
@@ -63,6 +67,9 @@ Extracted by sextant <version> · schema 6 · sha256 df387d8b3ddc3730d88d2bfea93
 - manifest.json — full decoded manifest tree
 - permissions.jsonl — one permission per line
 - components.jsonl — one component per line (grep '"exported":true')
+- features.jsonl — uses-feature / uses-library / uses-native-library
+- metadata.jsonl — meta-data and property entries (application and components)
+- queries.jsonl — package visibility: packages, intents, providers the app can see
 - code/classes.jsonl — one class per line (id, super, interfaces, source file, Kotlin)
 - code/methods.jsonl — one method per line (id like Lcom/a/B;->m(I)V)
 - code/fields.jsonl — one field per line, with constant initial values

@@ -1,5 +1,5 @@
 # xyz.blueskyweb.app 1.135.0 (1635)
-Extracted by sextant <version> · schema 6 · sha256 55f8774f2b89046ccc1a7aa3147a4ed9ad3f3eb4c22e11ae8eb17945b1951ae7
+Extracted by sextant <version> · schema 7 · sha256 55f8774f2b89046ccc1a7aa3147a4ed9ad3f3eb4c22e11ae8eb17945b1951ae7
 
 ## App
 - Label: Bluesky
@@ -30,12 +30,16 @@ Extracted by sextant <version> · schema 6 · sha256 55f8774f2b89046ccc1a7aa3147
 - [low] Weak hash algorithm (9) — e.g. LAf/a;->b(Ljava/util/UUID;Ljava/lang/String;)Ljava/util/UUID;
 - [info] App data can be backed up (1) — e.g. application allowBackup=true
 - [info] Google API key (2) — e.g. @string/google_api_key
+- [info] Legacy external storage requested (1) — e.g. application requestLegacyExternalStorage=true
+- [info] Custom task affinity or task reparenting (1) — e.g. expo.modules.webbrowser.BrowserProxyActivity
 - [info] WebView JavaScript enabled (2) — e.g. Lcom/reactnativecommunity/webview/k;->K(Lcom/reactnativecommunity/webview/p;Z)V
 
 ## Counts
 - Permissions: 41 requested (14 dangerous), 1 declared
 - Components: 11 activity, 11 activity-alias, 10 service, 4 receiver, 12 provider
 - Exported: 3 (1 with deep links)
+- Features: 0 required, 0 optional · libraries: androidx.camera.extensions.impl, androidx.window.extensions, androidx.window.sidecar
+- Queries (package visibility): 0 packages, 19 intents, 0 providers · Metadata: 49 entries
 
 ## Exported components
 - activity xyz.blueskyweb.app.MainActivity — bluesky:, exp+bluesky:, https://bsky.app
@@ -47,6 +51,9 @@ Extracted by sextant <version> · schema 6 · sha256 55f8774f2b89046ccc1a7aa3147
 - manifest.json — full decoded manifest tree
 - permissions.jsonl — one permission per line
 - components.jsonl — one component per line (grep '"exported":true')
+- features.jsonl — uses-feature / uses-library / uses-native-library
+- metadata.jsonl — meta-data and property entries (application and components)
+- queries.jsonl — package visibility: packages, intents, providers the app can see
 - code/classes.jsonl — one class per line (id, super, interfaces, source file, Kotlin)
 - code/methods.jsonl — one method per line (id like Lcom/a/B;->m(I)V)
 - code/fields.jsonl — one field per line, with constant initial values

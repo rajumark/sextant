@@ -1,0 +1,15 @@
+{"kind":"package","name":"at.bitfire.icsdroid","actions":[],"categories":[],"data":[]}
+{"kind":"package","name":"at.techbee.jtx","actions":[],"categories":[],"data":[]}
+{"kind":"package","name":"com.google.android.gms","actions":[],"categories":[],"data":[]}
+{"kind":"package","name":"org.dmfs.tasks","actions":[],"categories":[],"data":[]}
+{"kind":"package","name":"org.tasks","actions":[],"categories":[],"data":[]}
+{"kind":"intent","name":"* content:","actions":["*"],"categories":[],"data":[{"scheme":"content","host":"com.android.contacts","port":null,"path":null,"path_prefix":null,"path_pattern":null,"path_suffix":null,"path_advanced_pattern":null,"mime_type":null,"ssp":null,"ssp_prefix":null,"ssp_pattern":null}]}
+{"kind":"intent","name":"* content:","actions":["*"],"categories":[],"data":[{"scheme":"content","host":"com.android.calendar","port":null,"path":null,"path_prefix":null,"path_pattern":null,"path_suffix":null,"path_advanced_pattern":null,"mime_type":null,"ssp":null,"ssp_prefix":null,"ssp_pattern":null}]}
+{"kind":"intent","name":"CustomTabsService","actions":["android.support.customtabs.action.CustomTabsService"],"categories":[],"data":[]}
+{"kind":"intent","name":"LINK","actions":["org.unifiedpush.android.distributor.LINK"],"categories":[],"data":[]}
+{"kind":"intent","name":"REGISTER","actions":["org.unifiedpush.android.distributor.REGISTER"],"categories":[],"data":[]}
+{"kind":"intent","name":"UNREGISTER","actions":["org.unifiedpush.android.distributor.UNREGISTER"],"categories":[],"data":[]}
+{"kind":"intent","name":"VIEW https:","actions":["android.intent.action.VIEW"],"categories":[],"data":[{"scheme":"https","host":null,"port":null,"path":null,"path_prefix":null,"path_pattern":null,"path_suffix":null,"path_advanced_pattern":null,"mime_type":null,"ssp":null,"ssp_prefix":null,"ssp_pattern":null}]}
+{"kind":"intent","name":"VIEW https:","actions":["android.intent.action.VIEW"],"categories":["android.intent.category.BROWSABLE"],"data":[{"scheme":"https","host":null,"port":null,"path":null,"path_prefix":null,"path_pattern":null,"path_suffix":null,"path_advanced_pattern":null,"mime_type":null,"ssp":null,"ssp_prefix":null,"ssp_pattern":null}]}
+{"kind":"provider","name":"com.android.calendar","actions":[],"categories":[],"data":[]}
+{"kind":"provider","name":"com.android.contacts","actions":[],"categories":[],"data":[]}

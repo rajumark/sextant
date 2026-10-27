@@ -54,7 +54,8 @@ class CorpusGoldenTest {
 
     @TestFactory
     fun `output matches golden files`(): List<DynamicTest> =
-        CorpusApks.ids.map { id ->
+        // Some golden folders are kept out of git (Signal embeds a Google API key verbatim); skip those when absent.
+        CorpusApks.ids.filter { update || Files.isDirectory(CorpusApks.goldenDir.resolve(it)) }.map { id ->
             DynamicTest.dynamicTest(id) {
                 // One APK at a time: its own folder, deleted right after the check, and code hashed instead of written,
                 // so the whole corpus needs about one APK's index on disk (a class-level folder used to hold all 46).
