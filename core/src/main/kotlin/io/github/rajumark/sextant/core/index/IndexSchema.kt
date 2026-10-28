@@ -6,7 +6,7 @@ package io.github.rajumark.sextant.core.index
  * The views give the readable, descriptor-based form.
  */
 object IndexSchema {
-    const val VERSION = 7
+    const val VERSION = 8
 
     val DDL =
         """
@@ -313,6 +313,23 @@ object IndexSchema {
           jni_method TEXT
         );
 
+        -- Every zip entry of the APK (index schema 8): the bottom layer, so every byte is accounted for.
+        -- decoded_by names the decoder that turned the file into rows; NULL = listed only. See `sextant coverage`.
+        CREATE TABLE files (
+          id               INTEGER PRIMARY KEY,
+          path             TEXT NOT NULL UNIQUE,
+          type             TEXT NOT NULL,  -- manifest | resource-table | dex | resource | native-library | asset | signature | library-version | kotlin-metadata | service-loader | meta-inf | other
+          size_bytes       INTEGER NOT NULL,
+          compressed_bytes INTEGER NOT NULL,
+          method           TEXT NOT NULL,  -- stored | deflated
+          crc32            TEXT NOT NULL,  -- hex, from the zip header
+          sha256           TEXT,           -- of the uncompressed bytes; NULL = unreadable or over 1 GB
+          magic            TEXT,           -- content from the first bytes: dex | elf | zip | png | webp | jpeg | gif | binary-xml | resource-table | xml | json | font | text
+          resource         TEXT,           -- @layout/main: the resource this res/ file is (shrunk apps rename files)
+          config           TEXT,           -- that resource's configuration: '' default, xxxhdpi-v4, night, …
+          decoded_by       TEXT            -- manifest | resource-table | code | layouts | menus | navigation | xml-configs | drawables | assets | native | libraries | signing
+        );
+
         -- Launcher icon files: role is icon | round_icon, or <role>.background/.foreground/.monochrome for adaptive layers.
         CREATE TABLE icons (
           role       TEXT NOT NULL,
@@ -381,6 +398,8 @@ object IndexSchema {
         CREATE INDEX string_refs_string ON string_refs(string);
         CREATE INDEX string_refs_method ON string_refs(method);
         CREATE INDEX components_name ON components(name);
+        CREATE INDEX files_type ON files(type);
+        CREATE INDEX files_resource ON files(resource);
         CREATE INDEX string_resources_name ON string_resources(name);
         CREATE INDEX resource_refs_ref ON resource_refs(ref);
         CREATE INDEX permissions_name ON permissions(name);

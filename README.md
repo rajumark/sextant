@@ -28,6 +28,8 @@ sextant xref app/ com.example.Session.token
 sextant reach app/ com.example.DeepLinkActivity okhttp3/
 sextant smali app.apk com.example.LoginRepository.login
 sextant icon app.apk -o icon.png
+sextant coverage app/
+sextant files app/ --status listed --by-size
 ```
 
 It reads the APK's identity, manifest, permissions, components and signing information (since 0.1.0). Since 0.2.0 it also reads the full code structure from DEX bytecode: classes, methods, fields, call edges and string constants. Everything is written as deterministic JSON and JSONL files, and nothing is ever decompiled or run. Since 0.3.0 it also builds `index.sqlite`, so you can search and query all of it. Since 0.5.0 it also reports what the app is built with (frameworks, SDKs, exact library versions), every URL it contains, its resource values and its native code.
@@ -67,6 +69,8 @@ sextant xref    <dir> <class | field> [--limit N] [--json]
 sextant reach   <dir> <from> <to> [--depth N] [--paths N] [--json]
 sextant smali   <app.apk> <class | method>
 sextant icon    <app.apk | dir> [--round] [--layer foreground|background|monochrome] [-o file] [--json]
+sextant files   <dir> [--type TYPE] [--status decoded|listed] [--search TEXT] [--by-size] [--limit N] [--json]
+sextant coverage <dir> [--json]
 sextant mcp     [--dir <dir>] [--apk <app.apk>]
 sextant --version
 ```
@@ -87,6 +91,8 @@ sextant --version
 | `reach` | Shows call paths from an entry point (component, class or method) to targets (`Cipher.getInstance`, `okhttp3/`, a descriptor prefix). Virtual and interface calls dispatch into subclass overrides (class-hierarchy analysis); signatures with more than 25 implementations, such as `Runnable.run`, are not expanded. You get one shortest path per target method. |
 | `smali` | Prints the bytecode assembly (baksmali) of a class or method. It works where decompiling fails. `#@54` offsets are hex code units, matching the decimal `offsets` in the code files. |
 | `icon` | Finds the app icon. It lists every file behind `android:icon` (or `--round` for `android:roundIcon`) per density, with format, pixel size and byte size, decodes adaptive icons into their foreground, background and monochrome layers, marks the best file, and `-o` saves it. It works on an APK directly (fast: manifest and resources only) or on an extracted folder. |
+| `files` | Lists every file inside the APK from the index: type, size, content (dex, elf, png, binary-xml, json, …), the resource it is (shrunk apps rename `res/` files, so `res/BW.xml` shows as `@mipmap/ic_launcher`) and the decoder that read it. `--status listed` shows files no decoder reads yet; `--by-size` puts the largest first. |
+| `coverage` | Shows how much of the APK was decoded into rows: files and bytes per type, and the largest files that are only listed (size and hash). Every zip entry is always listed. |
 | `sql` | Runs read-only SQL over `index.sqlite`. It prints a table by default (`--json` gives one object per line, `--csv` gives CSV) and stops at 1,000 rows unless you pass `--limit`. `--schema` prints every table and view. |
 
 Progress and errors go to **stderr**, data goes to **stdout**, so `--json` output is always safe to pipe.

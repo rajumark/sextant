@@ -99,7 +99,7 @@ object OutputWriter {
                     sinks.isEmpty() -> Extractor.COUNT_ONLY
                     else -> TeeSink(*sinks.toTypedArray())
                 }
-            val extraction = Extractor.extract(apk, code)
+            val extraction = Extractor.extract(apk, code, listFiles = index != null)
             indexFeed?.await()
             val written = mutableListOf<Path>()
             if (codeFiles != null) {

@@ -7,7 +7,7 @@ or external) has one row in `methods`; edges point at integer ids, and the views
 and `search_items` give the readable, descriptor-based form. JSON arrays are stored as TEXT; use SQLite's
 `json_each` to expand them. Query it with `sextant sql <dir> "…"` (read-only) or any SQLite tool.
 
-Schema version: **7**
+Schema version: **8**
 (stored in `meta` as `index_schema_version`).
 
 ```sql
@@ -314,6 +314,23 @@ CREATE TABLE native_symbols (
   jni_method TEXT
 );
 
+-- Every zip entry of the APK (index schema 8): the bottom layer, so every byte is accounted for.
+-- decoded_by names the decoder that turned the file into rows; NULL = listed only. See `sextant coverage`.
+CREATE TABLE files (
+  id               INTEGER PRIMARY KEY,
+  path             TEXT NOT NULL UNIQUE,
+  type             TEXT NOT NULL,  -- manifest | resource-table | dex | resource | native-library | asset | signature | library-version | kotlin-metadata | service-loader | meta-inf | other
+  size_bytes       INTEGER NOT NULL,
+  compressed_bytes INTEGER NOT NULL,
+  method           TEXT NOT NULL,  -- stored | deflated
+  crc32            TEXT NOT NULL,  -- hex, from the zip header
+  sha256           TEXT,           -- of the uncompressed bytes; NULL = unreadable or over 1 GB
+  magic            TEXT,           -- content from the first bytes: dex | elf | zip | png | webp | jpeg | gif | binary-xml | resource-table | xml | json | font | text
+  resource         TEXT,           -- @layout/main: the resource this res/ file is (shrunk apps rename files)
+  config           TEXT,           -- that resource's configuration: '' default, xxxhdpi-v4, night, …
+  decoded_by       TEXT            -- manifest | resource-table | code | layouts | menus | navigation | xml-configs | drawables | assets | native | libraries | signing
+);
+
 -- Launcher icon files: role is icon | round_icon, or <role>.background/.foreground/.monochrome for adaptive layers.
 CREATE TABLE icons (
   role       TEXT NOT NULL,
@@ -382,6 +399,8 @@ CREATE INDEX calls_callee ON calls(callee);
 CREATE INDEX string_refs_string ON string_refs(string);
 CREATE INDEX string_refs_method ON string_refs(method);
 CREATE INDEX components_name ON components(name);
+CREATE INDEX files_type ON files(type);
+CREATE INDEX files_resource ON files(resource);
 CREATE INDEX string_resources_name ON string_resources(name);
 CREATE INDEX resource_refs_ref ON resource_refs(ref);
 CREATE INDEX permissions_name ON permissions(name);

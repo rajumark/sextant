@@ -139,6 +139,42 @@ class CliEndToEndTest {
     }
 
     @Test
+    fun `files and coverage account for every zip entry`() {
+        val out = tmp.resolve("files")
+        sextant("extract", "-q", apk("binaryeye"), "-o", out.toString()).exitCode shouldBe 0
+        val entries =
+            java.util.zip
+                .ZipFile(apk("binaryeye"))
+                .use { z -> z.entries().asSequence().count { !it.isDirectory } }
+
+        val coverage = sextant("coverage", out.toString())
+        coverage.exitCode shouldBe 0
+        coverage.stdout shouldContain "Binary Eye 1.75.5: $entries files"
+        coverage.stdout shouldContain "native-library"
+
+        val all = sextant("files", out.toString(), "--json", "--limit", "100000")
+        all.exitCode shouldBe 0
+        val rows =
+            all.stdout
+                .lines()
+                .filter { it.isNotBlank() }
+                .map { Json.parseToJsonElement(it).jsonObject }
+        rows.size shouldBe entries
+        rows.first { it["path"]!!.jsonPrimitive.content == "AndroidManifest.xml" }["decoded_by"]!!.jsonPrimitive.content shouldBe "manifest"
+        // Shrunk res/ file names map back to their resource through resources.arsc.
+        rows.filter { it["type"]!!.jsonPrimitive.content == "resource" }.all {
+            it["resource"]!!.jsonPrimitive.content.startsWith(
+                "@",
+            )
+        } shouldBe
+            true
+
+        val listed = sextant("files", out.toString(), "--status", "listed", "--type", "kotlin-metadata")
+        listed.stdout shouldContain "kotlin/kotlin.kotlin_builtins"
+        listed.stdout shouldNotContain "classes.dex"
+    }
+
+    @Test
     fun `info on a folder and on an APK give the same answer`() {
         val out = tmp.resolve("seal")
         sextant("extract", "-q", apk("seal"), "-o", out.toString()).exitCode shouldBe 0

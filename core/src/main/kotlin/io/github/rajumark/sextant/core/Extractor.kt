@@ -9,6 +9,7 @@ import io.github.rajumark.sextant.core.insights.Insights
 import io.github.rajumark.sextant.core.insights.InsightsBuilder
 import io.github.rajumark.sextant.core.insights.InsightsCollector
 import io.github.rajumark.sextant.core.insights.ResourceHarvester
+import io.github.rajumark.sextant.core.model.ApkFile
 import io.github.rajumark.sextant.core.model.AppMeta
 import io.github.rajumark.sextant.core.model.Component
 import io.github.rajumark.sextant.core.model.FeatureRecord
@@ -34,6 +35,8 @@ data class Extraction(
     val queries: List<QueryRecord> = emptyList(),
     /** res/ and assets/ (schema 8); empty when read from an older folder. */
     val resources: ResourceHarvest = ResourceHarvest(),
+    /** Every zip entry (index only); empty unless [Extractor.extract] was asked to list files. */
+    val files: List<ApkFile> = emptyList(),
 )
 
 object Extractor {
@@ -50,10 +53,12 @@ object Extractor {
 
     /**
      * @param code where to stream code records; `null` skips code extraction entirely (`meta.code` is then null).
+     * @param listFiles also list and hash every zip entry ([Extraction.files]), for the index.
      */
     fun extract(
         input: Path,
         code: CodeSink? = COUNT_ONLY,
+        listFiles: Boolean = false,
     ): Extraction {
         val warnings = mutableListOf<String>()
         // A split bundle is merged into one APK first; the signature is checked on its base APK as shipped.
@@ -105,6 +110,18 @@ object Extractor {
                 warnings += "resources could not be harvested (${e.javaClass.simpleName}: ${e.message})"
                 ResourceHarvest()
             }
+        val files =
+            if (!listFiles) {
+                emptyList()
+            } else {
+                try {
+                    val decoders = ApkFiles.decoders(codeStats, decoded.table.isNotEmpty(), signing, resources, insights)
+                    ApkFiles.markDecoded(ApkFiles.list(apk, decoded.table, warnings), decoders, signing)
+                } catch (e: Exception) {
+                    warnings += "zip entries could not be listed (${e.javaClass.simpleName}: ${e.message})"
+                    emptyList()
+                }
+            }
 
         val meta =
             AppMeta(
@@ -138,6 +155,7 @@ object Extractor {
             mapper.metadata(),
             mapper.queries(),
             resources,
+            files,
         )
     }
 }

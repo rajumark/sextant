@@ -7,6 +7,7 @@ import io.github.rajumark.sextant.core.insights.AppIcons
 import io.github.rajumark.sextant.core.insights.ComponentReviews
 import io.github.rajumark.sextant.core.insights.IconFile
 import io.github.rajumark.sextant.core.insights.Insights
+import io.github.rajumark.sextant.core.model.ApkFile
 import io.github.rajumark.sextant.core.model.CallRecord
 import io.github.rajumark.sextant.core.model.ClassRecord
 import io.github.rajumark.sextant.core.model.FieldRecord
@@ -369,6 +370,7 @@ class IndexWriter(
         insertResources(extraction.resources)
         extraction.insights?.let(::insertInsights)
         insertIcons(m.icons)
+        insertFiles(extraction.files)
         conn.prepareStatement("INSERT INTO features VALUES (?,?,?,?)").use { st ->
             for (f in extraction.features) {
                 st.setString(1, f.kind)
@@ -413,6 +415,27 @@ class IndexWriter(
                     st.setString(2, url)
                     st.addBatch()
                 }
+            }
+            st.executeBatch()
+        }
+    }
+
+    private fun insertFiles(files: List<ApkFile>) {
+        conn.prepareStatement("INSERT INTO files VALUES (?,?,?,?,?,?,?,?,?,?,?,?)").use { st ->
+            files.forEachIndexed { i, f ->
+                st.setLong(1, i + 1L)
+                st.setString(2, f.path)
+                st.setString(3, f.type)
+                st.setLong(4, f.sizeBytes)
+                st.setLong(5, f.compressedBytes)
+                st.setString(6, f.method)
+                st.setString(7, f.crc32)
+                st.setString(8, f.sha256)
+                st.setString(9, f.magic)
+                st.setString(10, f.resource)
+                st.setString(11, f.config)
+                st.setString(12, f.decodedBy)
+                st.addBatch()
             }
             st.executeBatch()
         }

@@ -75,6 +75,8 @@ fun main(args: Array<String>) {
             ResourceCommand(),
             SdkCommand(),
             DeobfCommand(),
+            FilesCommand(),
+            CoverageCommand(),
         )
     try {
         command.parse(args)

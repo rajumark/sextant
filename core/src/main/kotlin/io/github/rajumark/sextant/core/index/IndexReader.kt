@@ -1,6 +1,7 @@
 package io.github.rajumark.sextant.core.index
 
 import io.github.rajumark.sextant.core.SextantException
+import io.github.rajumark.sextant.core.model.ApkFile
 import io.github.rajumark.sextant.core.output.OutputFiles
 import io.github.rajumark.sextant.core.output.SextantJson
 import kotlinx.serialization.Serializable
@@ -75,6 +76,18 @@ data class CallerLine(
     val caller: String,
     val callee: String,
     val count: Int,
+)
+
+/** One row of `sextant coverage`: the zip entries of one type and how many a decoder read. */
+@Serializable
+data class CoverageRow(
+    val type: String,
+    val files: Int,
+    val decoded: Int,
+    val bytes: Long,
+    val decodedBytes: Long,
+    /** A few paths of this type that no decoder read. */
+    val listedOnly: List<String>,
 )
 
 /** Read-only access to index.sqlite. */
@@ -444,6 +457,108 @@ class IndexReader private constructor(
             }
         if (entries.isEmpty()) throw SextantException.input("no entry point matches '$from'", "pass a component/class name or a method")
         return graph.search(entries, reachTarget(to), maxDepth, maxPaths)
+    }
+
+    /** Zip entries, sorted by path (or by size, largest first). [decoded]: true = decoded only, false = listed only. */
+    fun files(
+        type: String? = null,
+        decoded: Boolean? = null,
+        search: String? = null,
+        bySize: Boolean = false,
+        limit: Int = Int.MAX_VALUE,
+    ): Pair<List<ApkFile>, Int> {
+        requireFiles()
+        val where = mutableListOf<String>()
+        val args = mutableListOf<String>()
+        type?.let {
+            where += "type = ?"
+            args += it
+        }
+        decoded?.let { where += if (it) "decoded_by IS NOT NULL" else "decoded_by IS NULL" }
+        search?.let {
+            where += "(path LIKE ? ESCAPE '\\' OR resource LIKE ? ESCAPE '\\')"
+            val like = "%" + likeEscape(it) + "%"
+            args += like
+            args += like
+        }
+        val filter = if (where.isEmpty()) "" else "WHERE " + where.joinToString(" AND ")
+        val total =
+            conn.prepareStatement("SELECT count(*) FROM files $filter").use { st ->
+                args.forEachIndexed { i, a -> st.setString(i + 1, a) }
+                st.executeQuery().use {
+                    it.next()
+                    it.getInt(1)
+                }
+            }
+        val order = if (bySize) "size_bytes DESC, path" else "path"
+        val rows =
+            conn.prepareStatement("SELECT * FROM files $filter ORDER BY $order LIMIT ?").use { st ->
+                args.forEachIndexed { i, a -> st.setString(i + 1, a) }
+                st.setInt(args.size + 1, limit)
+                st.executeQuery().use { rs ->
+                    rs.map {
+                        ApkFile(
+                            path = it.getString("path"),
+                            type = it.getString("type"),
+                            sizeBytes = it.getLong("size_bytes"),
+                            compressedBytes = it.getLong("compressed_bytes"),
+                            method = it.getString("method"),
+                            crc32 = it.getString("crc32"),
+                            sha256 = it.getString("sha256"),
+                            magic = it.getString("magic"),
+                            resource = it.getString("resource"),
+                            config = it.getString("config"),
+                            decodedBy = it.getString("decoded_by"),
+                        )
+                    }
+                }
+            }
+        return rows to total
+    }
+
+    /** Per file type: how many zip entries and bytes a decoder read. Largest types first. */
+    fun coverage(examples: Int = 3): List<CoverageRow> {
+        requireFiles()
+        val sql =
+            "SELECT type, count(*), count(decoded_by), sum(size_bytes), " +
+                "coalesce(sum(CASE WHEN decoded_by IS NOT NULL THEN size_bytes END), 0) FROM files GROUP BY type ORDER BY count(*) DESC, type"
+        val rows =
+            conn.createStatement().use { st ->
+                st.executeQuery(sql).use { rs ->
+                    rs.map { CoverageRow(it.getString(1), it.getInt(2), it.getInt(3), it.getLong(4), it.getLong(5), emptyList()) }
+                }
+            }
+        return conn
+            .prepareStatement(
+                "SELECT path FROM files WHERE type = ? AND decoded_by IS NULL ORDER BY size_bytes DESC, path LIMIT ?",
+            ).use { st ->
+                rows.map { row ->
+                    if (row.decoded == row.files) return@map row
+                    st.setString(1, row.type)
+                    st.setInt(2, examples)
+                    row.copy(listedOnly = st.executeQuery().use { rs -> rs.map { it.getString(1) } })
+                }
+            }
+    }
+
+    /** One value from the meta table, or null. */
+    fun meta(key: String): String? =
+        conn.prepareStatement("SELECT value FROM meta WHERE key = ?").use { st ->
+            st.setString(1, key)
+            st.executeQuery().use { rs -> if (rs.next()) rs.getString(1) else null }
+        }
+
+    private fun requireFiles() {
+        val has =
+            conn.createStatement().use { st ->
+                st.executeQuery("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'files'").use { it.next() }
+            }
+        if (!has) {
+            throw SextantException.input(
+                "this index has no files table (index schema ${meta("index_schema_version") ?: "?"}, files need 8)",
+                "run `sextant extract <app.apk> --force` again with this version",
+            )
+        }
     }
 
     override fun close() = conn.close()

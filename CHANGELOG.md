@@ -2,8 +2,10 @@
 
 All notable changes to Sextant. Versions follow semver; `schema_version` in `meta.json` tracks the output format separately.
 
-## Unreleased (schema 8, index schema 7)
+## Unreleased (schema 8, index schema 8)
 
+- **Every file in the APK is in the index** (Mission SQLite, step 1): a new `files` table in `index.sqlite` lists each zip entry with its type, size, compressed size, CRC-32, SHA-256, content detected from its first bytes, the resource it is (shrunk apps rename `res/` files, e.g. `res/BW.xml` is `@mipmap/ic_launcher`) and the decoder that read it. Written to the index only, not to JSONL.
+- **`sextant files`** lists them (`--type`, `--status decoded|listed`, `--search`, `--by-size`, `--json`); **`sextant coverage`** shows how many files and bytes of each type were decoded, and which are only listed.
 - **Split bundles:** `.apks` (bundletool, SAI), `.xapk` (APKPure) and `.apkm` (APKMirror) are accepted wherever an APK is: base and splits are merged in a local cache (code, native libraries, assets and res/ of every split), the signature is checked on the base, and `meta.json` gets a `bundle` block listing each split (abi, density, language or feature). The desktop app opens them too.
 - **`sextant grep`:** text or regex search inside decompiled Java, with class, method and line number, like jadx-gui's code search. The first search decompiles the app and caches the code locally; `--package`, `--limit`, `--json`, also an MCP tool.
 - **ProGuard/R8 mappings:** `source --mapping` and `grep --mapping` show original class, method and field names (and accept original names); `sextant deobf` translates names both ways.

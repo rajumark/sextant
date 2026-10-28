@@ -26,7 +26,7 @@ Commands:
   grep        Search decompiled Java for text: every matching line with its class, method and line number. Finds what `find` can't (code bodies, field use, API calls). The first search decompiles the app and keeps the code in a local cache, so later searches are quick; --package narrows a first search on big apps.
   insights    Show what the app is built with: frameworks, SDKs, libraries, endpoints and native code.
   endpoints   List URLs found in code strings, resources, deep links and manifest values, with their sources.
-  mcp         Run an MCP server on stdin/stdout so AI agents can extract, search and query APKs. Tools: extract, summary, find, class, callers, callees, sql, source, insights, xref, reach, smali, icon, findings, endpoints.
+  mcp         Run an MCP server on stdin/stdout so AI agents can extract, search and query APKs. Tools: extract, summary, find, class, callers, callees, sql, source, grep, insights, xref, reach, smali, icon, findings, endpoints.
   diff        Compare two extracted versions: app facts, permissions, components, deep links, SDKs, libraries, hosts, URLs, native code, packages, classes, strings and resources.
   findings    Show review findings (debuggable, cleartext, exported components, WebView bridges, weak crypto, trust-all TLS, embedded secrets, …) with evidence. They are static observations to check, not proven vulnerabilities.
   xref        Where is a class or field used: instantiations, casts, instanceof, const-class, calls into its methods, field reads and writes.
@@ -39,6 +39,8 @@ Commands:
   res         List strings (every locale, plurals, arrays), resource ids, styles and themes, drawables, layouts, menus, navigation graphs, assets and XML configs. References are shown as written and resolved; NAME shows one entry and who uses it.
   sdks        Show SDKs and libraries by role (analytics, ads, crash reporting, auth, database, UI, …) with versions when an artifact proves them. With several apps, show which SDKs appear where and filter apps by SDK, category or version.
   deobf       Look up names in a ProGuard/R8 mapping.txt, both ways: original -> obfuscated for classes, fields and methods. Pass the same file as --mapping to `source` and `grep` to read the code with original names.
+  files       List every file inside the APK: type, size, content, the resource it is (shrunk apps rename res/ files) and which decoder read it.
+  coverage    Show how much of the APK was decoded into rows: zip entries and bytes per file type, and examples of files that are only listed. Every file is always listed with its size and hash.
 ```
 
 ## extract
@@ -238,7 +240,7 @@ Arguments:
 ```text
 Usage: sextant mcp [<options>]
 
-  Run an MCP server on stdin/stdout so AI agents can extract, search and query APKs. Tools: extract, summary, find, class, callers, callees, sql, source, insights, xref, reach, smali, icon, findings, endpoints.
+  Run an MCP server on stdin/stdout so AI agents can extract, search and query APKs. Tools: extract, summary, find, class, callers, callees, sql, source, grep, insights, xref, reach, smali, icon, findings, endpoints.
 
 Options:
   --dir=<path>  Start with this extraction folder as the current app
@@ -453,4 +455,39 @@ Options:
 Arguments:
   <mappingfile>  The mapping.txt R8 or ProGuard wrote for this build
   <name>         Any part of an original or obfuscated class name, or a member name
+```
+
+## files
+
+```text
+Usage: sextant files [<options>] <dir>
+
+  List every file inside the APK: type, size, content, the resource it is (shrunk apps rename res/ files) and which decoder read it.
+
+Options:
+  --type=(manifest|resource-table|dex|resource|native-library|asset|signature|library-version|kotlin-metadata|service-loader|meta-inf|other)  Only this file type
+  --status=(decoded|listed)                                                                                                                   decoded: read by a Sextant decoder; listed: listed only
+  --search=<text>                                                                                                                             Only paths or resource names containing this text
+  --by-size                                                                                                                                   Largest files first
+  --limit=<int>                                                                                                                               Maximum rows (default 500)
+  --json                                                                                                                                      One JSON object per file
+  -h, --help                                                                                                                                  Show this message and exit
+
+Arguments:
+  <dir>  An extracted folder (or its index.sqlite)
+```
+
+## coverage
+
+```text
+Usage: sextant coverage [<options>] <dir>
+
+  Show how much of the APK was decoded into rows: zip entries and bytes per file type, and examples of files that are only listed. Every file is always listed with its size and hash.
+
+Options:
+  --json      One JSON object per file type
+  -h, --help  Show this message and exit
+
+Arguments:
+  <dir>  An extracted folder (or its index.sqlite)
 ```

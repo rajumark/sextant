@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sextant Tasks</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { color-scheme: light dark; }
+  body { margin: 0; padding: 24px 16px; font: 15px/1.6 system-ui, sans-serif; }
+  ul { max-width: 760px; margin: 0 auto; padding: 0; list-style: none; }
+  li { display: flex; gap: 12px; align-items: baseline; padding: 8px 0; border-bottom: 1px solid color-mix(in srgb, currentColor 15%, transparent); }
+  .s { flex: none; width: 110px; font-size: 12px; font-weight: 600; text-align: center; padding: 2px 0; border-radius: 4px; }
+  .todo { background: color-mix(in srgb, gray 20%, transparent); }
+  .doing { background: color-mix(in srgb, #e0a100 30%, transparent); }
+  .done { background: color-mix(in srgb, #1a9a4a 30%, transparent); }
+  li ol { margin: 4px 0 0; padding-left: 20px; font-size: 14px; }
+</style>
+</head>
+<body>
+<ul>
+  <li><span class="s done">Implemented</span><span>CLI add support for parsing strings.xml files</span></li>
+  <li><span class="s done">Implemented</span><span>CLI add support for parsing menu xml files, resolve <code>@string/…</code> references (e.g. <code>@string/menu_settings</code>) to their values and keep both the reference and the resolved value</span></li>
+  <li><span class="s done">Implemented</span><span>Menu details screen: add a visual preview of how the menu looks (we have the data); first suggest improvements for the Menus screen and the menu details page</span></li>
+  <li><span class="s done">Implemented</span><span>Desktop: every details pane shows the original source part. Entries not declared in AndroidManifest.xml show their own source file content (e.g. the menu XML) instead of "Not referenced from AndroidManifest.xml"</span></li>
+  <li><span class="s done">Implemented</span><span>Desktop: left menu has a lot of menus, organize it properly so the primary user has less to think about<ol><li>Named sections: Overview on top, then <b>Review</b> (Application, Permissions, SDKs &amp; libraries, Signing), <b>Components</b> (Activities, Services, Receivers, Providers, Aliases), <b>Resources</b> (Strings, Layouts, Menus, Navigation, Styles, Drawables, Icons, Resource IDs, Assets, XML configs), <b>Files</b> (Manifest, Output)</li><li>Each section folds open and closed; Resources starts folded; the choice is remembered; the section holding the open page always stays open</li><li>Compact rows so the whole menu fits the window without scrolling; pages with nothing in them are dimmed</li></ol></span></li>
+  <li><span class="s done">Implemented</span><span>Desktop: look at every screen and add 3 useful improvements per screen that make the primary user's life easier (rows below, one per screen)</span></li>
+  <li><span class="s done">Implemented</span><span>Home screen<ol><li>Search box over Recent analyses (name, package, version, tag)</li><li>Keyboard: ↑ ↓ move through recent analyses, Enter opens</li><li>Tag chips above the list show only analyses with that tag</li></ol></span></li>
+  <li><span class="s done">Implemented</span><span>Overview screen<ol><li>Each "Worth a look" finding opens its evidence in one click</li><li>"Copy summary" button: a Markdown report (identity, signing, flags, findings, counts) for tickets and notes</li><li>Application flag rows open the &lt;application&gt; entry in the Manifest</li></ol></span></li>
+  <li><span class="s done">Implemented</span><span>Application screen<ol><li>Search box that filters startup steps by step or class</li><li>"Copy startup order" button (numbered list)</li><li>Keyboard: ↑ ↓ move through steps, Esc closes the details</li></ol></span></li>
+  <li><span class="s done">Implemented</span><span>Permissions screen<ol><li>Each row shows the plain-language meaning instead of repeating the full name</li><li>Keyboard: ↑ ↓ move, ⌘F or / searches, Esc closes the details</li><li>"Copy list" of the shown permissions with meaning and dangerous flag, for privacy reports</li></ol></span></li>
+  <li><span class="s done">Implemented</span><span>Component screens (Activities, Services, Receivers, Providers, Aliases)<ol><li>"Open to any app" filter: exported and not protected by a permission, in one click</li><li>"Copy list" of every shown row (not only picked rows)</li><li>Row icon turns red for components any app can reach, so they stand out while scrolling</li></ol></span></li>
+  <li><span class="s done">Implemented</span><span>Manifest screen<ol><li>Filter shows the match count; Enter / ⇧Enter jump to the next / previous match</li><li>Details of a component, permission or &lt;application&gt; node get an "Open page" button</li><li>"Copy as XML" for the selected node with its children</li></ol></span></li>
+  <li><span class="s done">Implemented</span><span>Signing screen<ol><li>Plain verdict at the top: release or debug key, years left, schemes needed for the app's min SDK</li><li>Subject and issuer shown as readable fields (CN, O, OU, L, ST, C); the raw value stays copyable</li><li>"Copy signing summary" for reports (schemes, fingerprints, subject, validity)</li></ol></span></li>
+  <li><span class="s done">Implemented</span><span>Output screen<ol><li>Search box over the file list</li><li>"Only matching lines" filter for the file preview, with a match count</li><li>Copy the full path of the shown file</li></ol></span></li>
+  <li><span class="s done">Implemented</span><span>Icons screen<ol><li>"Size problems" filter: launcher files with the wrong pixel size</li><li>Summary line naming launcher densities the APK does not ship</li><li>"Copy list" of the shown icon files with density and size</li></ol></span></li>
+  <li><span class="s done">Implemented</span><span>Resource screens (SDKs &amp; libraries, Strings, Layouts, Menus, Navigation, Styles, Drawables, Resource IDs, Assets, XML configs)<ol><li>"Copy list" button: copies the shown entries (after search and filters) as text</li><li>Sort menu: default order, name A–Z, most used (references), and largest first on Assets</li><li>Reference count on each row ("N refs" from other resources and the manifest) and a "Not referenced in res/manifest" filter; code references are not counted, so it never claims an entry is unused</li></ol></span></li>
+  <li><span class="s done">Implemented</span><span>Research the best system design for the CLI: turn 100% of an APK into structured data in a single shot, stored like a database so any fact (app name, icon path, …) is fetched instantly without re-reading the APK, and cross-linked so anything can be queried across anything (e.g. which strings.xml key is used in which layout). Think from the AI agent and power-user perspective, learn from the history of similar tools, and write it up as an HTML report with the reasons behind each choice. <a href="../#design">Read the report</a></span></li>
+  <li><span class="s done">Implemented</span><span>CLI: open split app bundles (.apks, .xapk, .apkm) like a plain APK<ol><li>Read the base APK and every split inside the bundle; no need to unzip first</li><li>Split APKs (ABI, density, language, dynamic features) listed with their sizes; native libraries and code from all splits counted</li><li><code>info</code>, <code>extract</code>, <code>source</code> and the other APK commands accept a bundle</li></ol></span></li>
+  <li><span class="s done">Implemented</span><span>CLI: search inside decompiled code (like jadx-gui text search)<ol><li><code>sextant grep &lt;apk&gt; &lt;text&gt;</code>: matching lines of decompiled Java with class and line number</li><li><code>--regex</code>, <code>--package</code> to limit the search, <code>--limit</code>, <code>--json</code></li><li>Same search as an MCP tool for agents</li></ol></span></li>
+  <li><span class="s done">Implemented</span><span>CLI: readable names for obfuscated apps<ol><li>Obfuscation score in <code>info</code> and <code>summary.md</code>: share of short class names and stripped source files</li><li><code>--mapping mapping.txt</code> (ProGuard/R8) on <code>source</code> and <code>grep</code>: decompiled code shows original class, method and field names</li><li><code>sextant deobf &lt;mapping.txt&gt; &lt;name&gt;</code>: translate between obfuscated and original names both ways</li></ol></span></li>
+  <li><span class="s doing">In Progress</span><span>Mission SQLite (<a href="../">page</a>): build it solidly, end to end, in the CLI only. Plan a proper CLI on SQLite, skip JSONL and the optional extras, design the best SQLite structure, and start with the easy win before going up a level</span></li>
+  <li><span class="s done">Implemented</span><span>Make the Mission SQLite page the default index.html page with 2 tabs: current progress (with related UI) and the current design content in the second tab. Only the CLI goal; skip desktop things for now</span></li>
+  <li><span class="s done">Implemented</span><span>Progress tab: minimal stats only. How many percent of all APK data is in SQLite (100% only when all of the APK is in SQLite; a good estimate is enough), and a minimal titles-only list of what the CLI supports</span></li>
+</ul>
+</body>
+</html>

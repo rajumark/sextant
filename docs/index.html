@@ -3,40 +3,796 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mission SQLite</title>
+<meta name="description" content="Mission SQLite: progress and design of turning 100% of an APK into one cross-linked SQLite database, in the Sextant CLI.">
+<script>
+  // Apply the saved theme before first paint.
+  try { var t = localStorage.getItem('theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
 <style>
-  :root { color-scheme: light dark; }
-  body { margin: 0; padding: 24px 16px; font: 15px/1.6 system-ui, sans-serif; }
-  ul { max-width: 760px; margin: 0 auto; padding: 0; list-style: none; }
-  li { display: flex; gap: 12px; align-items: baseline; padding: 8px 0; border-bottom: 1px solid color-mix(in srgb, currentColor 15%, transparent); }
-  .s { flex: none; width: 110px; font-size: 12px; font-weight: 600; text-align: center; padding: 2px 0; border-radius: 4px; }
-  .todo { background: color-mix(in srgb, gray 20%, transparent); }
-  .doing { background: color-mix(in srgb, #e0a100 30%, transparent); }
-  .done { background: color-mix(in srgb, #1a9a4a 30%, transparent); }
-  li ol { margin: 4px 0 0; padding-left: 20px; font-size: 14px; }
+  :root {
+    --bg: #ffffff; --bg2: #f7f7f5; --bg3: #efefec; --fg: #37352f; --fg2: #6b6a66; --fg3: #9b9a97;
+    --line: #e9e9e7; --accent: #2f6fdb; --accent-bg: #e8f0fc;
+    --green: #1a8a4a; --green-bg: #e6f4ea; --amber: #b36b00; --amber-bg: #fdf3e1; --red: #c4423a; --red-bg: #fbe9e7;
+    --violet: #7b4fd1; --violet-bg: #f1ebfc; --code-bg: #f4f4f2;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #191919; --bg2: #202020; --bg3: #2a2a2a; --fg: #e6e6e4; --fg2: #a5a5a2; --fg3: #75746f;
+      --line: #2f2f2f; --accent: #6ea2f5; --accent-bg: #1c2a40;
+      --green: #4cc27e; --green-bg: #17301f; --amber: #e3a646; --amber-bg: #34280f; --red: #ef7a70; --red-bg: #3a1d1a;
+      --violet: #ad8cf2; --violet-bg: #2a2140; --code-bg: #242424;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #191919; --bg2: #202020; --bg3: #2a2a2a; --fg: #e6e6e4; --fg2: #a5a5a2; --fg3: #75746f;
+    --line: #2f2f2f; --accent: #6ea2f5; --accent-bg: #1c2a40;
+    --green: #4cc27e; --green-bg: #17301f; --amber: #e3a646; --amber-bg: #34280f; --red: #ef7a70; --red-bg: #3a1d1a;
+    --violet: #ad8cf2; --violet-bg: #2a2140; --code-bg: #242424;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.65 ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code { font: 0.86em/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; color: var(--red); }
+  pre { margin: 12px 0; padding: 14px 16px; background: var(--code-bg); border-radius: 6px; overflow-x: auto; font: 12.5px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace; }
+  pre code { background: none; padding: 0; color: var(--fg); font-size: inherit; }
+  .c { color: var(--fg3); }
+  .k { color: var(--violet); }
+
+  /* Top bar */
+  .bar { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); font-size: 14px; }
+  .bar .crumb { color: var(--fg2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar .crumb b { color: var(--fg); font-weight: 500; }
+  .bar .sp { flex: 1; }
+  .bar a { white-space: nowrap; }
+  .bar .crumb { min-width: 0; flex: 0 1 auto; }
+  @media (max-width: 520px) { .bar .crumb .home { display: none; } .bar { gap: 8px; } .theme button { padding: 3px 6px; } }
+  .theme { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+  .theme button { border: 0; background: none; color: var(--fg2); font: inherit; font-size: 12.5px; padding: 3px 9px; cursor: pointer; }
+  .theme button[aria-pressed="true"] { background: var(--bg3); color: var(--fg); }
+
+  /* Layout */
+  .wrap { display: grid; grid-template-columns: minmax(0, 1fr); max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+  @media (min-width: 1040px) { .wrap { grid-template-columns: 220px minmax(0, 760px); gap: 48px; } }
+  nav.toc { display: none; }
+  @media (min-width: 1040px) {
+    nav.toc { display: block; position: sticky; top: 64px; align-self: start; max-height: calc(100vh - 80px); overflow-y: auto; padding-top: 40px; font-size: 13px; }
+    nav.toc a { display: block; padding: 3px 8px; color: var(--fg2); border-radius: 4px; }
+    nav.toc a:hover { background: var(--bg2); text-decoration: none; }
+    nav.toc a.on { color: var(--fg); background: var(--bg2); font-weight: 500; }
+    nav.toc .h { padding: 0 8px 6px; color: var(--fg3); font-size: 11.5px; text-transform: uppercase; letter-spacing: .04em; }
+  }
+  main { min-width: 0; padding: 40px 0 120px; }
+
+  /* Article */
+  .kicker { color: var(--accent); font-size: 12.5px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
+  h1 { font-size: 36px; line-height: 1.18; margin: 8px 0 12px; letter-spacing: -0.02em; font-weight: 700; }
+  .dek { font-size: 18.5px; line-height: 1.55; color: var(--fg2); margin: 0 0 18px; }
+  .byline { display: flex; flex-wrap: wrap; gap: 6px 14px; color: var(--fg3); font-size: 13px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+  h2 { font-size: 24px; line-height: 1.3; margin: 56px 0 6px; letter-spacing: -0.01em; scroll-margin-top: 64px; }
+  h2 .n { color: var(--fg3); font-weight: 500; margin-right: 6px; }
+  h3 { font-size: 17px; margin: 28px 0 4px; }
+  p { margin: 10px 0; }
+  .lead::first-letter { float: left; font-size: 52px; line-height: 0.95; padding: 4px 8px 0 0; font-weight: 700; color: var(--accent); }
+  ul.tight, ol.tight { margin: 8px 0; padding-left: 22px; }
+  ul.tight li, ol.tight li { margin: 3px 0; }
+  hr { border: 0; border-top: 1px solid var(--line); margin: 40px 0; }
+
+  /* Notion blocks */
+  .callout { display: flex; gap: 10px; padding: 12px 14px; border-radius: 6px; background: var(--bg2); margin: 14px 0; }
+  .callout .i { flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 700; color: #fff; background: var(--accent); margin-top: 1px; }
+  .callout.g { background: var(--green-bg); } .callout.g .i { background: var(--green); }
+  .callout.a { background: var(--amber-bg); } .callout.a .i { background: var(--amber); }
+  .callout.r { background: var(--red-bg); } .callout.r .i { background: var(--red); }
+  .callout.v { background: var(--violet-bg); } .callout.v .i { background: var(--violet); }
+  .callout p:first-child { margin-top: 0; } .callout p:last-child { margin-bottom: 0; }
+  blockquote.pull { margin: 28px 0; padding: 4px 0 4px 18px; border-left: 3px solid var(--fg); font-size: 20px; line-height: 1.45; font-weight: 500; }
+  details { border: 1px solid var(--line); border-radius: 6px; margin: 10px 0; background: var(--bg); }
+  details summary { cursor: pointer; padding: 8px 12px; font-weight: 500; list-style: none; }
+  details summary::before { content: "▸"; display: inline-block; width: 16px; color: var(--fg3); transition: transform .15s; }
+  details[open] summary::before { transform: rotate(90deg); }
+  details > div { padding: 0 14px 10px; }
+  .tag { display: inline-block; font-size: 11.5px; font-weight: 600; padding: 1px 7px; border-radius: 4px; background: var(--bg3); color: var(--fg2); vertical-align: 1px; }
+  .tag.g { background: var(--green-bg); color: var(--green); }
+  .tag.a { background: var(--amber-bg); color: var(--amber); }
+  .tag.r { background: var(--red-bg); color: var(--red); }
+  .tag.b { background: var(--accent-bg); color: var(--accent); }
+
+  /* Stats */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 22px 0; }
+  .stat { border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; background: var(--bg); }
+  .stat .v { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+  .stat .l { font-size: 12.5px; color: var(--fg2); margin-top: 4px; line-height: 1.4; }
+
+  /* Tables */
+  .tw { overflow-x: auto; margin: 14px 0; border: 1px solid var(--line); border-radius: 6px; }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+  th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--bg2); font-weight: 600; color: var(--fg2); font-size: 12.5px; white-space: nowrap; }
+  tr:last-child td { border-bottom: 0; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
+
+  /* Figures */
+  figure { margin: 22px 0; }
+  figure .frame { border: 1px solid var(--line); border-radius: 8px; padding: 16px; background: var(--bg2); overflow-x: auto; }
+  figcaption { font-size: 12.5px; color: var(--fg3); margin-top: 8px; text-align: center; }
+  svg { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+  svg text { font-family: ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: var(--fg); }
+  svg .mut { fill: var(--fg2); }
+  svg .red { fill: var(--red); }
+  svg .acc { fill: var(--accent); }
+  svg .box { fill: var(--bg); stroke: var(--line); stroke-width: 1.2; }
+  svg .ln { stroke: var(--fg3); stroke-width: 1.4; fill: none; }
+
+  /* Horizontal bar chart */
+  .hbar { display: grid; grid-template-columns: 170px 1fr; gap: 8px 12px; align-items: center; font-size: 13px; }
+  .hbar .lab { color: var(--fg2); text-align: right; line-height: 1.3; }
+  .hbar .track { position: relative; height: 24px; }
+  .hbar .fill { height: 100%; border-radius: 4px; min-width: 3px; }
+  .hbar .val { position: absolute; top: 3px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  @media (max-width: 560px) { .hbar { grid-template-columns: 1fr; gap: 2px; } .hbar .lab { text-align: left; } .hbar .track { margin-bottom: 8px; } }
+
+  /* Timeline */
+  .tl { position: relative; margin: 18px 0; padding-left: 22px; }
+  .tl::before { content: ""; position: absolute; left: 6px; top: 6px; bottom: 6px; width: 2px; background: var(--line); }
+  .tl .e { position: relative; padding: 4px 0 12px; }
+  .tl .e::before { content: ""; position: absolute; left: -21px; top: 10px; width: 10px; height: 10px; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent); }
+  .tl .e.x::before { border-color: var(--violet); background: var(--violet); }
+  .tl .y { font-size: 12px; font-weight: 600; color: var(--fg3); }
+  .tl .t { font-weight: 600; }
+  .tl .d { color: var(--fg2); font-size: 14px; }
+  .tl .lesson { font-size: 13.5px; margin-top: 2px; }
+  .tl .lesson::before { content: "Lesson: "; font-weight: 600; color: var(--green); }
+
+  /* Cards */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin: 16px 0; }
+  .card { border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
+  .card h4 { margin: 0 0 4px; font-size: 14.5px; }
+  .card p { margin: 0; font-size: 13.5px; color: var(--fg2); }
+
+  /* Score grid */
+  .score { display: inline-flex; gap: 2px; vertical-align: -1px; }
+  .score i { width: 9px; height: 9px; border-radius: 2px; background: var(--bg3); }
+  .score i.on { background: var(--green); }
+  .score.lo i.on { background: var(--amber); }
+
+  .foot { color: var(--fg3); font-size: 13px; margin-top: 60px; padding-top: 16px; border-top: 1px solid var(--line); }
+  @media (max-width: 560px) { h1 { font-size: 28px; } .dek { font-size: 16.5px; } h2 { font-size: 21px; } }
+
+  /* Tabs and progress */
+  .phead { padding-bottom: 0; }
+  .phead h1 { margin-bottom: 6px; }
+  .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin: 18px 0 24px; }
+  .tabs a { padding: 8px 12px; color: var(--fg2); font-weight: 500; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .tabs a:hover { color: var(--fg); text-decoration: none; }
+  .tabs a[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--fg); }
+  .tab[hidden] { display: none; }
+  body.solo nav.toc { display: none; }
+  @media (min-width: 1040px) { body.solo .wrap { grid-template-columns: minmax(0, 760px); justify-content: center; } }
+  .mbar { height: 8px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
+  .mfill { height: 100%; background: var(--green); border-radius: 4px; }
+  .mmeta { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; color: var(--fg2); margin: 8px 0 4px; }
+  .mmeta b { color: var(--fg); }
+  h2.ph { margin-top: 36px; font-size: 20px; }
+  ol.steps { list-style: none; margin: 10px 0; padding: 0; position: relative; }
+  ol.steps::before { content: ""; position: absolute; left: 13px; top: 14px; bottom: 14px; width: 2px; background: var(--line); }
+  ol.steps > li { position: relative; padding: 0 0 18px 40px; }
+  ol.steps .sh { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  ol.steps .num { position: absolute; left: 0; top: 0; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: 13px; font-weight: 700; background: var(--bg); border: 2px solid var(--line); color: var(--fg2); }
+  ol.steps li.done .num { background: var(--green); border-color: var(--green); color: #fff; }
+  ol.steps li.next .num { border-color: var(--accent); color: var(--accent); }
+  ol.steps .st { font-weight: 600; font-size: 15.5px; }
+  ol.steps p { margin: 4px 0 6px; color: var(--fg2); font-size: 14px; }
+  ol.steps li.done p, ol.steps li.next p { color: var(--fg); }
+  .note { font-size: 13px; color: var(--fg2); }
+
+  .hero { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin: 4px 0 12px; }
+  .hero .big { font-size: 52px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
+  .hero .hl { font-size: 17px; font-weight: 500; }
+  .hero .hl span { display: block; font-size: 13px; font-weight: 400; color: var(--fg2); margin-top: 2px; }
+  .hbar.small { grid-template-columns: 150px 1fr; gap: 4px 12px; }
+  .hbar.small .track { height: 16px; }
+  .hbar.small .val { top: -1px; font-size: 12.5px; }
+  ul.chips { list-style: none; padding: 0; margin: 10px 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  ul.chips li { font-size: 13px; padding: 3px 9px 3px 8px; border-radius: 12px; background: var(--bg2); border: 1px solid var(--line); color: var(--fg2); }
+  ul.chips li::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--fg3); margin-right: 6px; vertical-align: 1px; }
+  ul.chips li.db { color: var(--fg); }
+  ul.chips li.db::before { background: var(--green); }
+  ul.slist { list-style: none; padding: 0; margin: 8px 0; font-size: 14.5px; }
+  ul.slist li { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--line); color: var(--fg2); }
+  ul.slist li span { flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 700; border: 1.5px solid var(--line); }
+  ul.slist li.done { color: var(--fg); } ul.slist li.done span { background: var(--green); border-color: var(--green); color: #fff; }
+  ul.slist li.next { color: var(--fg); } ul.slist li.next span { border-color: var(--accent); color: var(--accent); }
+  ul.slist em { margin-left: auto; font-style: normal; font-size: 12px; font-weight: 600; color: var(--fg3); }
+  ul.slist li.done em { color: var(--green); } ul.slist li.next em { color: var(--accent); }
 </style>
 </head>
 <body>
-<ul>
-  <li><span class="s done">Implemented</span><span>CLI add support for parsing strings.xml files</span></li>
-  <li><span class="s done">Implemented</span><span>CLI add support for parsing menu xml files, resolve <code>@string/…</code> references (e.g. <code>@string/menu_settings</code>) to their values and keep both the reference and the resolved value</span></li>
-  <li><span class="s done">Implemented</span><span>Menu details screen: add a visual preview of how the menu looks (we have the data); first suggest improvements for the Menus screen and the menu details page</span></li>
-  <li><span class="s done">Implemented</span><span>Desktop: every details pane shows the original source part. Entries not declared in AndroidManifest.xml show their own source file content (e.g. the menu XML) instead of "Not referenced from AndroidManifest.xml"</span></li>
-  <li><span class="s done">Implemented</span><span>Desktop: left menu has a lot of menus, organize it properly so the primary user has less to think about<ol><li>Named sections: Overview on top, then <b>Review</b> (Application, Permissions, SDKs &amp; libraries, Signing), <b>Components</b> (Activities, Services, Receivers, Providers, Aliases), <b>Resources</b> (Strings, Layouts, Menus, Navigation, Styles, Drawables, Icons, Resource IDs, Assets, XML configs), <b>Files</b> (Manifest, Output)</li><li>Each section folds open and closed; Resources starts folded; the choice is remembered; the section holding the open page always stays open</li><li>Compact rows so the whole menu fits the window without scrolling; pages with nothing in them are dimmed</li></ol></span></li>
-  <li><span class="s done">Implemented</span><span>Desktop: look at every screen and add 3 useful improvements per screen that make the primary user's life easier (rows below, one per screen)</span></li>
-  <li><span class="s done">Implemented</span><span>Home screen<ol><li>Search box over Recent analyses (name, package, version, tag)</li><li>Keyboard: ↑ ↓ move through recent analyses, Enter opens</li><li>Tag chips above the list show only analyses with that tag</li></ol></span></li>
-  <li><span class="s done">Implemented</span><span>Overview screen<ol><li>Each "Worth a look" finding opens its evidence in one click</li><li>"Copy summary" button: a Markdown report (identity, signing, flags, findings, counts) for tickets and notes</li><li>Application flag rows open the &lt;application&gt; entry in the Manifest</li></ol></span></li>
-  <li><span class="s done">Implemented</span><span>Application screen<ol><li>Search box that filters startup steps by step or class</li><li>"Copy startup order" button (numbered list)</li><li>Keyboard: ↑ ↓ move through steps, Esc closes the details</li></ol></span></li>
-  <li><span class="s done">Implemented</span><span>Permissions screen<ol><li>Each row shows the plain-language meaning instead of repeating the full name</li><li>Keyboard: ↑ ↓ move, ⌘F or / searches, Esc closes the details</li><li>"Copy list" of the shown permissions with meaning and dangerous flag, for privacy reports</li></ol></span></li>
-  <li><span class="s done">Implemented</span><span>Component screens (Activities, Services, Receivers, Providers, Aliases)<ol><li>"Open to any app" filter: exported and not protected by a permission, in one click</li><li>"Copy list" of every shown row (not only picked rows)</li><li>Row icon turns red for components any app can reach, so they stand out while scrolling</li></ol></span></li>
-  <li><span class="s done">Implemented</span><span>Manifest screen<ol><li>Filter shows the match count; Enter / ⇧Enter jump to the next / previous match</li><li>Details of a component, permission or &lt;application&gt; node get an "Open page" button</li><li>"Copy as XML" for the selected node with its children</li></ol></span></li>
-  <li><span class="s done">Implemented</span><span>Signing screen<ol><li>Plain verdict at the top: release or debug key, years left, schemes needed for the app's min SDK</li><li>Subject and issuer shown as readable fields (CN, O, OU, L, ST, C); the raw value stays copyable</li><li>"Copy signing summary" for reports (schemes, fingerprints, subject, validity)</li></ol></span></li>
-  <li><span class="s done">Implemented</span><span>Output screen<ol><li>Search box over the file list</li><li>"Only matching lines" filter for the file preview, with a match count</li><li>Copy the full path of the shown file</li></ol></span></li>
-  <li><span class="s done">Implemented</span><span>Icons screen<ol><li>"Size problems" filter: launcher files with the wrong pixel size</li><li>Summary line naming launcher densities the APK does not ship</li><li>"Copy list" of the shown icon files with density and size</li></ol></span></li>
-  <li><span class="s done">Implemented</span><span>Resource screens (SDKs &amp; libraries, Strings, Layouts, Menus, Navigation, Styles, Drawables, Resource IDs, Assets, XML configs)<ol><li>"Copy list" button: copies the shown entries (after search and filters) as text</li><li>Sort menu: default order, name A–Z, most used (references), and largest first on Assets</li><li>Reference count on each row ("N refs" from other resources and the manifest) and a "Not referenced in res/manifest" filter; code references are not counted, so it never claims an entry is unused</li></ol></span></li>
-  <li><span class="s done">Implemented</span><span>Research the best system design for the CLI: turn 100% of an APK into structured data in a single shot, stored like a database so any fact (app name, icon path, …) is fetched instantly without re-reading the APK, and cross-linked so anything can be queried across anything (e.g. which strings.xml key is used in which layout). Think from the AI agent and power-user perspective, learn from the history of similar tools, and write it up as an HTML report with the reasons behind each choice. <a href="system-design/">Read the report</a></span></li>
-  <li><span class="s done">Implemented</span><span>CLI: open split app bundles (.apks, .xapk, .apkm) like a plain APK<ol><li>Read the base APK and every split inside the bundle; no need to unzip first</li><li>Split APKs (ABI, density, language, dynamic features) listed with their sizes; native libraries and code from all splits counted</li><li><code>info</code>, <code>extract</code>, <code>source</code> and the other APK commands accept a bundle</li></ol></span></li>
-  <li><span class="s done">Implemented</span><span>CLI: search inside decompiled code (like jadx-gui text search)<ol><li><code>sextant grep &lt;apk&gt; &lt;text&gt;</code>: matching lines of decompiled Java with class and line number</li><li><code>--regex</code>, <code>--package</code> to limit the search, <code>--limit</code>, <code>--json</code></li><li>Same search as an MCP tool for agents</li></ol></span></li>
-  <li><span class="s done">Implemented</span><span>CLI: readable names for obfuscated apps<ol><li>Obfuscation score in <code>info</code> and <code>summary.md</code>: share of short class names and stripped source files</li><li><code>--mapping mapping.txt</code> (ProGuard/R8) on <code>source</code> and <code>grep</code>: decompiled code shows original class, method and field names</li><li><code>sextant deobf &lt;mapping.txt&gt; &lt;name&gt;</code>: translate between obfuscated and original names both ways</li></ol></span></li>
-</ul>
+
+<div class="bar">
+  <span class="crumb"><span class="home">Sextant / </span><b>Mission SQLite</b></span>
+  <span class="sp"></span>
+  <a href="tasks/">All tasks</a>
+  <a href="cli/">CLI docs</a>
+  <div class="theme" role="group" aria-label="Theme">
+    <button data-t="light">Light</button><button data-t="auto">Auto</button><button data-t="dark">Dark</button>
+  </div>
+</div>
+
+<div class="wrap">
+<nav class="toc" aria-label="Contents">
+  <div class="h">Contents</div>
+  <a href="#tldr">In one minute</a>
+  <a href="#today">1. Where we are today</a>
+  <a href="#history">2. What earlier tools taught us</a>
+  <a href="#store">3. Which storage</a>
+  <a href="#model">4. The data model</a>
+  <a href="#links">5. Cross-links</a>
+  <a href="#pipeline">6. Single-shot pipeline</a>
+  <a href="#instant">7. Instant answers</a>
+  <a href="#hundred">8. What “100%” means</a>
+  <a href="#agents">9. AI agent view</a>
+  <a href="#power">10. Power-user view</a>
+  <a href="#unasked">11. Things you didn't ask about</a>
+  <a href="#plan">12. Plan</a>
+</nav>
+
+<main>
+  <div class="phead">
+    <div class="kicker">Sextant CLI</div>
+    <h1>Mission SQLite</h1>
+    <p class="dek">Turn 100% of an APK into one cross-linked SQLite database in a single pass, so every fact is ready-made and any question is a query. CLI first.</p>
+  </div>
+  <nav class="tabs" role="tablist">
+    <a href="#progress" role="tab" data-tab="progress">Progress</a>
+    <a href="#design" role="tab" data-tab="design">Design</a>
+  </nav>
+<section id="tab-progress" class="tab" data-tab="progress">
+  <div class="hero">
+    <div class="big">≈ 55%</div>
+    <div class="hl">of an APK's data is in SQLite today<span>Estimate. 100% means everything inside the APK is stored as rows and linked.</span></div>
+  </div>
+  <div class="mbar"><div class="mfill" style="width:55%"></div></div>
+  <div class="mmeta"><b>Step 1 of 7 done</b><span>Index schema 8</span><span>CLI only</span></div>
+
+  <h2 class="ph">By area</h2>
+  <div class="hbar small" id="areas"></div>
+  <p class="note">Overall = weighted average: code 25, manifest 15, resource table 15, resource XML 15, cross-links 10, native 5, assets 5, file inventory 4, signing 3, other files 3.</p>
+
+  <h2 class="ph">What the CLI supports</h2>
+  <p class="note"><span class="dot" style="background:var(--green)"></span>stored in SQLite <span class="dot" style="background:var(--fg3);margin-left:12px"></span>computed on demand from the APK</p>
+  <ul class="chips">
+    <li class="db">App identity &amp; versions</li><li class="db">Signing</li><li class="db">Permissions</li><li class="db">Components &amp; verdicts</li><li class="db">Deep links</li><li class="db">Features, metadata, queries</li><li class="db">App icon</li>
+    <li class="db">Strings (all locales)</li><li class="db">Resource IDs</li><li class="db">Styles &amp; themes</li><li class="db">Drawables</li><li class="db">Layouts</li><li class="db">Menus</li><li class="db">Navigation graphs</li><li class="db">XML configs</li><li class="db">Assets</li><li class="db">Resource references</li>
+    <li class="db">Classes, methods, fields</li><li class="db">Call graph</li><li class="db">Field &amp; type references</li><li class="db">String constants</li><li class="db">Full-text search</li><li class="db">SQL queries</li>
+    <li class="db">SDKs &amp; libraries</li><li class="db">Frameworks</li><li class="db">Endpoints / URLs</li><li class="db">Native libraries &amp; JNI</li><li class="db">Security findings</li><li class="db">Every file + coverage</li>
+    <li>Startup order</li><li>Call paths (reach)</li><li>Decompiled Java</li><li>Code search (grep)</li><li>Smali</li><li>Version diff</li><li>Split bundles</li><li>ProGuard mappings</li><li>MCP for AI agents</li>
+  </ul>
+
+  <h2 class="ph">Steps</h2>
+  <ul class="slist">
+    <li class="done"><span>1</span>Every file in the APK<em>Done</em></li>
+    <li class="next"><span>2</span>APK cache: instant answers<em>Next</em></li>
+    <li><span>3</span>Code → resource links</li>
+    <li><span>4</span>Every XML node and attribute</li>
+    <li><span>5</span>Entities and links</li>
+    <li><span>6</span>SQLite is the only output</li>
+    <li><span>7</span>Self-describing database</li>
+  </ul>
+</section>
+
+<section id="tab-design" class="tab" data-tab="design">
+  <div class="kicker">Design</div>
+  <h1 style="font-size:30px">One APK in, one database out</h1>
+  <p class="dek">How Sextant should turn every byte of an APK into structured, cross-linked data in a single pass, so that any question (an app name, an icon path, which string a layout uses) is a lookup instead of a re-read.</p>
+  <div class="byline"><span>28 Oct 2026</span><span>·</span><span>Measured on real APKs from the test corpus</span><span>·</span><span>12 min read</span></div>
+
+  <h2 id="tldr" style="margin-top:32px">In one minute</h2>
+  <div class="callout g"><div class="i">✓</div><div>
+    <p><b>Recommendation:</b> make one SQLite file the only product of <code>extract</code>, keyed by the APK's SHA-256 and cached. Every CLI command, the desktop app and the MCP server read only that file. JSONL becomes an optional export.</p>
+  </div></div>
+  <ul class="tight">
+    <li><b>Store:</b> SQLite. One file, every language reads it, agents already speak SQL, and full-text search plus recursive queries are built in. <a href="#store">Why not a graph database or JSONL →</a></li>
+    <li><b>Model:</b> four layers. <i>Files</i> (every ZIP entry), <i>raw</i> (every XML node and attribute, every resource table entry, every dex item), <i>entities</i> (components, strings, layouts, classes, …), and <i>links</i> (one edge table that ties everything together). <a href="#model">→</a></li>
+    <li><b>Join key:</b> the resource ID (<code>0x7f…</code>). Manifest, layouts, menus, styles <i>and code</i> all point at resources by that number. Today the code side is missing. <a href="#links">→</a></li>
+    <li><b>Speed:</b> getting the app name takes 2.2 s from the APK and 7 ms from the database, about 320× faster. <a href="#instant">→</a></li>
+    <li><b>“100%”</b> becomes a checkable promise: a coverage table that says, for every file in the APK, which decoder read it. <a href="#hundred">→</a></li>
+  </ul>
+
+  <figure>
+    <div class="frame">
+      <svg viewBox="0 0 720 230" role="img" aria-label="An APK goes through one pass of decoders into a single app database, which serves the CLI, desktop app, MCP server and SQL users">
+        <defs>
+          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--fg3)"/></marker>
+        </defs>
+        <rect x="10" y="85" width="96" height="60" rx="8" class="box"/>
+        <text x="58" y="112" text-anchor="middle" font-weight="700" font-size="15">app.apk</text>
+        <text x="58" y="130" text-anchor="middle" class="mut" font-size="11">read once</text>
+        <path d="M106 115 H150" class="ln" marker-end="url(#ar)"/>
+        <g font-size="11.5">
+          <rect x="155" y="18" width="150" height="26" rx="5" class="box"/><text x="230" y="35" text-anchor="middle">Manifest + arsc</text>
+          <rect x="155" y="50" width="150" height="26" rx="5" class="box"/><text x="230" y="67" text-anchor="middle">Binary XML (res/)</text>
+          <rect x="155" y="82" width="150" height="26" rx="5" class="box"/><text x="230" y="99" text-anchor="middle">Dex bytecode</text>
+          <rect x="155" y="114" width="150" height="26" rx="5" class="box"/><text x="230" y="131" text-anchor="middle">Native .so (ELF)</text>
+          <rect x="155" y="146" width="150" height="26" rx="5" class="box"/><text x="230" y="163" text-anchor="middle">Assets + other files</text>
+          <rect x="155" y="178" width="150" height="26" rx="5" class="box"/><text x="230" y="195" text-anchor="middle">Signing blocks</text>
+        </g>
+        <text x="230" y="222" text-anchor="middle" class="mut" font-size="11">decoders run in parallel</text>
+        <path d="M305 111 H352" class="ln" marker-end="url(#ar)"/>
+        <rect x="356" y="62" width="150" height="100" rx="10" fill="var(--accent-bg)" stroke="var(--accent)" stroke-width="1.5"/>
+        <text x="431" y="96" text-anchor="middle" font-weight="700" font-size="15">&lt;sha256&gt;.db</text>
+        <text x="431" y="115" text-anchor="middle" class="mut" font-size="11">files · raw · entities</text>
+        <text x="431" y="130" text-anchor="middle" class="mut" font-size="11">links · derived</text>
+        <text x="431" y="148" text-anchor="middle" class="mut" font-size="11">one SQLite file</text>
+        <g font-size="12">
+          <path d="M506 90 C540 90 540 40 570 40" class="ln" marker-end="url(#ar)"/><rect x="574" y="26" width="132" height="28" rx="6" class="box"/><text x="640" y="44" text-anchor="middle">CLI commands</text>
+          <path d="M506 104 C540 104 540 86 570 86" class="ln" marker-end="url(#ar)"/><rect x="574" y="72" width="132" height="28" rx="6" class="box"/><text x="640" y="90" text-anchor="middle">Desktop app</text>
+          <path d="M506 120 C540 120 540 132 570 132" class="ln" marker-end="url(#ar)"/><rect x="574" y="118" width="132" height="28" rx="6" class="box"/><text x="640" y="136" text-anchor="middle">MCP / AI agents</text>
+          <path d="M506 134 C540 134 540 178 570 178" class="ln" marker-end="url(#ar)"/><rect x="574" y="164" width="132" height="28" rx="6" class="box"/><text x="640" y="182" text-anchor="middle">SQL / DuckDB / exports</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption>Figure 1. Read the APK once, write one database, and let everything else read that database.</figcaption>
+  </figure>
+
+  <!-- 1 -->
+  <h2 id="today"><span class="n">1</span>Where we are today</h2>
+  <p class="lead">Sextant already does most of this. <code>sextant extract</code> reads the manifest, resources, dex code, native libraries and signing, then writes about 35 JSON and JSONL files plus an <code>index.sqlite</code> with 41 tables. Commands like <code>find</code>, <code>class</code> and <code>callers</code> query that index. So the question isn't “should we build a database”. It's “what should the database be, and what should it stop being”.</p>
+  <p>I measured the current design on four apps from the test corpus:</p>
+
+  <div class="stats">
+    <div class="stat"><div class="v">3.5 s</div><div class="l">full extract of Binary Eye (8.3 MB APK, 2,936 classes)</div></div>
+    <div class="stat"><div class="v">1.3 GB</div><div class="l">output folder for Nextcloud (92 MB APK, 54k classes, 856k call edges)</div></div>
+    <div class="stat"><div class="v">≈ 2×</div><div class="l">every fact is stored twice: once in JSONL, once in SQLite</div></div>
+    <div class="stat"><div class="v">0</div><div class="l">links from code to resources in an R8-built app like Binary Eye</div></div>
+  </div>
+
+  <figure>
+    <div class="frame">
+      <div class="hbar" id="disk"></div>
+    </div>
+    <figcaption>Figure 2. Size on disk. The JSONL files and <code>index.sqlite</code> hold the same facts, so about half of every output folder is a copy.</figcaption>
+  </figure>
+
+  <h3>What works well</h3>
+  <ul class="tight">
+    <li>Normalized code tables (<code>classes</code>, <code>methods</code>, <code>calls</code> with integer IDs) and a trigram full-text index. Cross-link queries on Nextcloud return in 5–17 ms.</li>
+    <li>Resource references keep both forms, <code>raw</code> (<code>@string/pick_file</code>) and <code>resolved</code> (“Pick a file”).</li>
+    <li>Deterministic output, golden-file tests, and checks against <code>aapt2</code> and <code>dexdump</code>.</li>
+  </ul>
+  <h3>Where it falls short</h3>
+  <div class="tw"><table>
+    <tr><th>Gap</th><th>Evidence</th><th>Effect</th></tr>
+    <tr><td>Two sources of truth</td><td>JSONL ≈ 700 MB and SQLite 608 MB for Nextcloud</td><td>Twice the disk and write time; the two formats can drift apart</td></tr>
+    <tr><td>APK commands re-read the APK</td><td><code>info app.apk</code> takes 2.2 s, every time</td><td>No cache, so the same work repeats on every call</td></tr>
+    <tr><td>Code → resource links missing</td><td>Binary Eye: 0 <code>R$</code> classes, because R8 inlines IDs as constants</td><td>“Unused string” lists are wrong; can't answer “which method shows this text”</td></tr>
+    <tr><td>Not every file is indexed</td><td>Binary Eye root files (<code>kotlin/</code>, <code>org/</code>, <code>countrycodes.csv</code>) have no table</td><td>“100% of the APK” can't be checked</td></tr>
+    <tr><td>XML is kept as summaries</td><td><code>layouts</code> stores counts and JSON arrays, not each view and attribute</td><td>Can't ask “every <code>EditText</code> with <code>inputType=textPassword</code>”</td></tr>
+    <tr><td>JSON arrays inside columns</td><td><code>intent_filters</code>, <code>items</code>, <code>ids</code> are TEXT JSON</td><td>Joins need <code>json_each</code>, which is slow and hard for agents to write</td></tr>
+  </table></div>
+
+  <!-- 2 -->
+  <h2 id="history"><span class="n">2</span>What earlier tools taught us</h2>
+  <p>APK tools have grown in three waves: <b>decode to files</b>, then <b>decode to objects in memory</b>, then <b>extract to a database and query it</b>. The third wave comes from general code analysis, not Android, and it's the one that fits what you're describing.</p>
+
+  <div class="tl">
+    <div class="e"><div class="y">2009</div><div class="t">smali / baksmali, dex2jar</div><div class="d">Turn dex into assembly text or a JAR for Java decompilers.</div><div class="lesson">a lossless, low-level view is always needed as the fallback. Sextant keeps it with <code>sextant smali</code>.</div></div>
+    <div class="e"><div class="y">2010</div><div class="t">apktool</div><div class="d">Decodes resources back into a <code>res/</code> folder you can read and rebuild.</div><div class="lesson">files are good for people and diffs, but every question becomes a grep across thousands of files.</div></div>
+    <div class="e"><div class="y">2011</div><div class="t">Androguard</div><div class="d">A Python object model of the APK with cross-references, saved as a pickled session.</div><div class="lesson">cross-references are what make analysis useful, but a session that only one language can open locks other tools out.</div></div>
+    <div class="e"><div class="y">2013</div><div class="t">jadx</div><div class="d">Decompiles to Java, with a GUI, search and “find usages”.</div><div class="lesson">people love “find usages”. It's a cross-link query, and it should work across code <i>and</i> resources.</div></div>
+    <div class="e"><div class="y">2014</div><div class="t">FlowDroid (Soot), MobSF</div><div class="d">Taint analysis over a call graph; one-click security reports.</div><div class="lesson">deep analysis needs a call graph with virtual dispatch. Reports are fine for humans, but they're a dead end for scripts.</div></div>
+    <div class="e x"><div class="y">2014</div><div class="t">Joern: code property graphs</div><div class="d">Merges syntax tree, control flow and data flow into one graph you can query.</div><div class="lesson">putting <i>every</i> kind of node and edge in one graph is what makes queries across kinds possible.</div></div>
+    <div class="e x"><div class="y">2014</div><div class="t">osquery</div><div class="d">Exposes the operating system as SQL tables.</div><div class="lesson">SQL as the universal question language works, even for non-database people.</div></div>
+    <div class="e x"><div class="y">2015 → 2019</div><div class="t">Kythe (Google), LSIF (Sourcegraph)</div><div class="d">Language-neutral cross-reference graphs: every symbol has a stable ID, edges are typed.</div><div class="lesson">stable IDs for every entity are what let separate tools link to the same thing.</div></div>
+    <div class="e x"><div class="y">2019</div><div class="t">CodeQL (Semmle, then GitHub)</div><div class="d">Extract source into a database once, then run any number of queries over it.</div><div class="lesson">“extract once, query forever” is the proven model. The extractor is the hard, valuable part.</div></div>
+    <div class="e x"><div class="y">2021</div><div class="t">Glean (Meta)</div><div class="d">Stores code facts in a database with a schema and derives new facts from existing ones.</div><div class="lesson">keep <i>raw facts</i> and <i>derived facts</i> apart, so derived ones can be rebuilt without re-extracting.</div></div>
+    <div class="e"><div class="y">2026</div><div class="t">Sextant</div><div class="d">Already extracts to SQLite. The next step is to make that database complete, cached and fully linked.</div></div>
+  </div>
+  <div class="callout v"><div class="i">i</div><div><p>No Android tool fully combines the third-wave ideas (one database, stable IDs, raw vs derived facts, a coverage check) with resource-level decoding. That's the opening for Sextant.</p></div></div>
+
+  <!-- 3 -->
+  <h2 id="store"><span class="n">3</span>Which storage</h2>
+  <p>You asked which structure to use. Here are the six real options, scored against what Sextant needs. More filled squares is better.</p>
+  <div class="tw"><table>
+    <tr><th>Option</th><th>Instant lookup</th><th>Cross-link queries</th><th>One file, zero setup</th><th>Agents can use it</th><th>Size</th><th>Verdict</th></tr>
+    <tr><td><b>SQLite</b></td><td><span class="score"><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="tag g">Primary</span></td></tr>
+    <tr><td>DuckDB / Parquet</td><td><span class="score"><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="tag b">Export</span></td></tr>
+    <tr><td>Graph DB (Neo4j, Kùzu)</td><td><span class="score"><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="score lo"><i class="on"></i><i></i><i></i></span></td><td><span class="score lo"><i class="on"></i><i></i><i></i></span></td><td><span class="score lo"><i class="on"></i><i></i><i></i></span></td><td><span class="tag r">No</span></td></tr>
+    <tr><td>Datalog (Soufflé, CodeQL)</td><td><span class="score lo"><i class="on"></i><i></i><i></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="score lo"><i class="on"></i><i></i><i></i></span></td><td><span class="score lo"><i class="on"></i><i></i><i></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="tag r">No</span></td></tr>
+    <tr><td>JSONL files</td><td><span class="score lo"><i class="on"></i><i></i><i></i></span></td><td><span class="score lo"><i></i><i></i><i></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="score lo"><i class="on"></i><i></i><i></i></span></td><td><span class="tag a">Export</span></td></tr>
+    <tr><td>Decoded file tree (apktool style)</td><td><span class="score lo"><i></i><i></i><i></i></span></td><td><span class="score lo"><i></i><i></i><i></i></span></td><td><span class="score lo"><i class="on"></i><i></i><i></i></span></td><td><span class="score lo"><i class="on"></i><i></i><i></i></span></td><td><span class="score lo"><i class="on"></i><i></i><i></i></span></td><td><span class="tag a">On demand</span></td></tr>
+  </table></div>
+  <details><summary>Why SQLite wins, point by point</summary><div>
+    <ul class="tight">
+      <li><b>One file, no server.</b> You can copy it, attach it to a ticket, or hand it to an agent. A graph database needs a running service.</li>
+      <li><b>Every language reads it</b>: Kotlin, Python, Go, the <code>sqlite3</code> shell, Datasette, DuckDB (which can attach SQLite directly).</li>
+      <li><b>Graphs fit fine.</b> Recursive common table expressions walk call graphs and resource chains. Sextant's <code>callers</code> and <code>reach</code> already do this.</li>
+      <li><b>Search is built in</b> through FTS5 with trigrams, which is already used.</li>
+      <li><b>Agents know SQL</b> better than Cypher or Datalog, and can read the schema with one query.</li>
+      <li><b>It's already there.</b> The change is an evolution, not a rewrite.</li>
+    </ul>
+    <p>Where SQLite is weaker: analytics across hundreds of apps (“which SDK versions appear across my corpus”). DuckDB does that best, and it can read SQLite files directly, so offering a Parquet export covers it.</p>
+  </div></details>
+
+  <!-- 4 -->
+  <h2 id="model"><span class="n">4</span>The data model</h2>
+  <p>The model should be layered, so each layer has one job and one owner. The lower two layers are <b>facts read from the APK</b>; the upper two are <b>facts Sextant works out</b>. That split is Glean's lesson: when Sextant learns a new SDK signature, it rebuilds the derived layer from the database without opening the APK again.</p>
+
+  <figure>
+    <div class="frame">
+      <svg viewBox="0 0 700 300" role="img" aria-label="Four stacked layers: files, raw, entities and links, with derived insights on top">
+        <g font-size="12.5">
+          <rect x="20" y="10" width="660" height="50" rx="8" fill="var(--violet-bg)" stroke="var(--violet)"/>
+          <text x="40" y="32" font-weight="700">5 · Derived</text>
+          <text x="40" y="49" class="mut">sdks · libraries · frameworks · endpoints · findings · component verdicts · obfuscation score</text>
+          <text x="660" y="40" text-anchor="end" class="mut" font-size="11">rebuilt from the db</text>
+
+          <rect x="20" y="68" width="660" height="50" rx="8" fill="var(--accent-bg)" stroke="var(--accent)"/>
+          <text x="40" y="90" font-weight="700">4 · Links</text>
+          <text x="40" y="107" class="mut">one edge table: uses · inflates · calls · reads · declares · themed_by · opens · shows_text</text>
+
+          <rect x="20" y="126" width="660" height="50" rx="8" fill="var(--green-bg)" stroke="var(--green)"/>
+          <text x="40" y="148" font-weight="700">3 · Entities</text>
+          <text x="40" y="165" class="mut">app · components · permissions · resources · layouts · views · menus · classes · methods · fields · libs</text>
+
+          <rect x="20" y="184" width="660" height="50" rx="8" class="box"/>
+          <text x="40" y="206" font-weight="700">2 · Raw</text>
+          <text x="40" y="223" class="mut">xml_nodes · xml_attrs · res_entries · res_values (per config) · dex items · ELF symbols · cert fields</text>
+
+          <rect x="20" y="242" width="660" height="50" rx="8" class="box"/>
+          <text x="40" y="264" font-weight="700">1 · Files</text>
+          <text x="40" y="281" class="mut">every ZIP entry: path · size · compressed · crc · sha256 · type · parsed_by</text>
+        </g>
+        <text x="670" y="166" text-anchor="end" class="mut" font-size="11">read from the APK</text>
+      </svg>
+    </div>
+    <figcaption>Figure 3. Lower layers are exactly what the APK contains; upper layers are what Sextant concludes. Every upper row points back to a lower row as evidence.</figcaption>
+  </figure>
+
+  <h3>The rules that make it work</h3>
+  <ol class="tight">
+    <li><b>Every entity has a stable text key</b>, the same in every run and every app version: <code>res:string/app_name</code>, <code>cls:Lcom/x/Login;</code>, <code>m:Lcom/x/Login;-&gt;go()V</code>, <code>cmp:com.x.MainActivity</code>, <code>file:res/BW.xml</code>. Integer IDs stay for speed inside the file; the text key is what <code>diff</code>, agents and the desktop app pass around. (Kythe and LSIF lesson.)</li>
+    <li><b>No JSON arrays for things you'd want to join on.</b> Intent filters, layout views, menu items and style items get real rows. JSON stays only for opaque blobs nobody filters by.</li>
+    <li><b>Resource configurations are rows, not copies.</b> <code>res_values(res_id, config, value)</code> keeps <code>fr</code>, <code>night</code> and <code>sw600dp</code> next to the default, so “which strings are missing in German” is one query.</li>
+    <li><b>Keep raw and resolved side by side</b>, as Sextant already does for menus: <code>raw = @string/x</code>, <code>ref_id = 0x7f12…</code>, <code>resolved = "Pick a file"</code>.</li>
+    <li><b>Every fact says where it came from</b>: file, and offset or XML node. A finding is only as good as its evidence.</li>
+  </ol>
+
+  <details><summary>Schema sketch of the new core tables</summary><div>
+<pre><code><span class="c">-- 1 · Files: every ZIP entry, so "100%" is checkable</span>
+<span class="k">CREATE TABLE</span> files (id INTEGER PRIMARY KEY, path TEXT UNIQUE, size INT, compressed INT,
+  crc32 INT, sha256 TEXT, type TEXT, parsed_by TEXT);   <span class="c">-- parsed_by NULL = nobody read it</span>
+
+<span class="c">-- 2 · Raw: the resource table and every binary XML file, losslessly</span>
+<span class="k">CREATE TABLE</span> res_entries (res_id INTEGER PRIMARY KEY, type TEXT, name TEXT, package TEXT);
+<span class="k">CREATE TABLE</span> res_values (res_id INT, config TEXT, kind TEXT, raw TEXT, value TEXT,
+  ref_id INT, file INT REFERENCES files(id));
+<span class="k">CREATE TABLE</span> xml_nodes (id INTEGER PRIMARY KEY, file INT, parent INT, idx INT, tag TEXT, depth INT);
+<span class="k">CREATE TABLE</span> xml_attrs (node INT, ns TEXT, name TEXT, raw TEXT, type TEXT, value TEXT,
+  ref_id INT);                                          <span class="c">-- ref_id = the 0x7f… it points at</span>
+
+<span class="c">-- 3 · Entities: one registry so anything can point at anything</span>
+<span class="k">CREATE TABLE</span> entities (id INTEGER PRIMARY KEY, kind TEXT, key TEXT UNIQUE, label TEXT);
+
+<span class="c">-- 4 · Links: one edge table, with evidence</span>
+<span class="k">CREATE TABLE</span> links (src INT, rel TEXT, dst INT, file INT, node INT, method INT, offset INT);
+<span class="k">CREATE INDEX</span> links_src <span class="k">ON</span> links(src, rel);
+<span class="k">CREATE INDEX</span> links_dst <span class="k">ON</span> links(dst, rel);</code></pre>
+    <p>The existing typed tables (<code>calls</code>, <code>field_refs</code>, <code>components</code>, …) stay for the hot paths. <code>links</code> is the one place that connects <i>kinds</i>, so a generic “what links here” works for everything.</p>
+  </div></details>
+
+  <!-- 5 -->
+  <h2 id="links"><span class="n">5</span>Cross-links: the part that makes it powerful</h2>
+  <blockquote class="pull">An APK is a graph that's been flattened into a ZIP. The resource ID is the thread that ties it back together.</blockquote>
+  <p>The manifest, every layout, menu, style and navigation graph, and the code all refer to resources by the same 32-bit number, <code>0x7fTTEEEE</code> (package, type, entry). Decode that number everywhere, and every kind of file links to every other.</p>
+
+  <figure>
+    <div class="frame">
+      <svg viewBox="0 0 720 360" role="img" aria-label="Link map: manifest, components, layouts, menus, strings, drawables, styles, classes and methods connected by resource IDs; code-to-resource links are missing today">
+        <defs>
+          <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--fg3)"/></marker>
+          <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--red)"/></marker>
+        </defs>
+        <g font-size="12">
+          <!-- edges: existing -->
+          <path d="M120 60 L250 60" class="ln" marker-end="url(#a2)"/><text x="185" y="52" text-anchor="middle" class="mut" font-size="10.5">declares</text>
+          <path d="M330 78 L330 128" class="ln" marker-end="url(#a2)"/><text x="338" y="107" class="mut" font-size="10.5">theme</text>
+          <path d="M80 78 C80 200 400 220 470 290" class="ln" marker-end="url(#a2)"/><text x="160" y="190" class="mut" font-size="10.5">label, icon</text>
+          <path d="M370 145 L470 280" class="ln" marker-end="url(#a2)"/><text x="433" y="210" class="mut" font-size="10.5">items</text>
+          <path d="M560 160 L540 280" class="ln" marker-end="url(#a2)"/><text x="560" y="225" class="mut" font-size="10.5">text, hint</text>
+          <path d="M630 160 L640 280" class="ln" marker-end="url(#a2)"/><text x="645" y="225" class="mut" font-size="10.5">src</text>
+          <path d="M620 110 L620 128" class="ln" marker-end="url(#a2)"/>
+          <path d="M300 335 L460 305" class="ln" marker-end="url(#a2)"/>
+          <!-- edges: missing (code to resources) -->
+          <path d="M150 280 C200 200 470 150 520 145" stroke="var(--red)" stroke-width="1.6" stroke-dasharray="5 4" fill="none" marker-end="url(#a3)"/>
+          <text x="275" y="200" class="red" font-size="11" font-weight="600">setContentView(R.layout.x)</text>
+          <path d="M150 310 C300 330 380 320 460 312" stroke="var(--red)" stroke-width="1.6" stroke-dasharray="5 4" fill="none" marker-end="url(#a3)"/>
+          <text x="180" y="350" class="red" font-size="11" font-weight="600">getString(R.string.x) · R.menu.x</text>
+          <path d="M150 260 C200 230 270 100 260 78" stroke="var(--red)" stroke-width="1.6" stroke-dasharray="5 4" fill="none" marker-end="url(#a3)"/>
+          <text x="166" y="128" class="red" font-size="11" font-weight="600">implements</text>
+
+          <!-- nodes -->
+          <rect x="20" y="42" width="100" height="36" rx="6" class="box"/><text x="70" y="65" text-anchor="middle" font-weight="600">Manifest</text>
+          <rect x="250" y="42" width="140" height="36" rx="6" class="box"/><text x="320" y="65" text-anchor="middle" font-weight="600">Components</text>
+          <rect x="270" y="128" width="110" height="36" rx="6" class="box"/><text x="325" y="151" text-anchor="middle" font-weight="600">Styles</text>
+          <rect x="500" y="74" width="190" height="36" rx="6" class="box"/><text x="595" y="97" text-anchor="middle" font-weight="600">Menus · Navigation</text>
+          <rect x="500" y="128" width="190" height="36" rx="6" class="box"/><text x="595" y="151" text-anchor="middle" font-weight="600">Layouts → Views</text>
+          <rect x="430" y="280" width="140" height="36" rx="6" fill="var(--green-bg)" stroke="var(--green)"/><text x="500" y="303" text-anchor="middle" font-weight="600">Strings (all locales)</text>
+          <rect x="590" y="280" width="110" height="36" rx="6" fill="var(--green-bg)" stroke="var(--green)"/><text x="645" y="303" text-anchor="middle" font-weight="600">Drawables</text>
+          <rect x="20" y="250" width="130" height="80" rx="6" fill="var(--accent-bg)" stroke="var(--accent)"/><text x="85" y="280" text-anchor="middle" font-weight="600">Code</text><text x="85" y="298" text-anchor="middle" class="mut" font-size="11">classes · methods</text><text x="85" y="313" text-anchor="middle" class="mut" font-size="11">const 0x7f…</text>
+        </g>
+        <g font-size="11">
+          <line x1="470" y1="18" x2="500" y2="18" class="ln"/><text x="506" y="22" class="mut">captured today</text>
+          <line x1="590" y1="18" x2="620" y2="18" stroke="var(--red)" stroke-width="1.6" stroke-dasharray="5 4"/><text x="626" y="22" class="red">missing</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption>Figure 4. The link map. Grey links exist today in <code>resource_refs</code>. The red ones (code to resources, and component to class) are the biggest missing piece.</figcaption>
+  </figure>
+
+  <h3>Closing the code → resource gap</h3>
+  <p>In a release build, R8 removes the <code>R</code> classes and puts the numbers straight into the bytecode (<code>const v0, 0x7f12003a</code>). Binary Eye has zero <code>R$</code> classes, so today Sextant can't tell which method shows which string. Nextcloud keeps its <code>R</code> fields, with 9,363 field reads, so it half works there. Both cases are easy to cover:</p>
+  <ul class="tight">
+    <li><b>Constants:</b> while reading dex, record every <code>const</code> literal whose value is a known resource ID from <code>resources.arsc</code>. Checking against the real ID table keeps false matches near zero.</li>
+    <li><b>R fields:</b> map <code>R$string.app_name</code> reads to the same resource, using the field's constant value.</li>
+    <li><b>Call context:</b> keep the callee that receives it (<code>setContentView</code>, <code>getString</code>, <code>inflate</code>), so a link is labelled <code>inflates</code> or <code>shows_text</code>, not just “uses”.</li>
+  </ul>
+  <div class="callout r"><div class="i">!</div><div><p>Without this, “1,511 strings in Nextcloud aren't referenced anywhere” is the honest output of today's index, and it can't be trusted, because strings used only from code are counted as unused.</p></div></div>
+
+  <h3>The questions this answers</h3>
+  <p>Your example, “which <code>strings.xml</code> key is used in which layout”, becomes one join. Joins can also chain across kinds:</p>
+<pre><code><span class="c">-- Which exported screens show text that mentions "password", and in which languages is it missing?</span>
+<span class="k">SELECT</span> c.key <span class="k">AS</span> screen, s.key <span class="k">AS</span> string, missing.locales
+<span class="k">FROM</span> entities c
+<span class="k">JOIN</span> links inf <span class="k">ON</span> inf.src = c.id <span class="k">AND</span> inf.rel = 'inflates'        <span class="c">-- screen → layout</span>
+<span class="k">JOIN</span> links txt <span class="k">ON</span> txt.src = inf.dst <span class="k">AND</span> txt.rel = 'shows_text'   <span class="c">-- layout → string</span>
+<span class="k">JOIN</span> entities s <span class="k">ON</span> s.id = txt.dst
+<span class="k">JOIN</span> missing_translations missing <span class="k">ON</span> missing.res = s.key
+<span class="k">WHERE</span> c.kind = 'component' <span class="k">AND</span> c.exported <span class="k">AND</span> s.label <span class="k">LIKE</span> '%password%';</code></pre>
+  <div class="cards">
+    <div class="card"><h4>Translation</h4><p>Which strings are missing in each locale, and which screens show them.</p></div>
+    <div class="card"><h4>Dead resources</h4><p>Resources nothing points at, counting code too, so the list can be trusted.</p></div>
+    <div class="card"><h4>UI map</h4><p>Activity → layout → views → strings and icons: a full screen inventory without running the app.</p></div>
+    <div class="card"><h4>Security</h4><p>Exported component → its class → methods it reaches → <code>WebView</code> or crypto calls.</p></div>
+    <div class="card"><h4>Theming</h4><p>Which screens use which theme, and which colors change in <code>night</code>.</p></div>
+    <div class="card"><h4>Version diff</h4><p>Stable keys make “what changed between 4.2 and 4.3” a set difference.</p></div>
+  </div>
+
+  <!-- 6 -->
+  <h2 id="pipeline"><span class="n">6</span>The single-shot pipeline</h2>
+  <p>“Single shot” means the APK is opened once and nothing ever needs to open it again for a fact. The order matters, because each step needs the one before it:</p>
+  <figure>
+    <div class="frame">
+      <svg viewBox="0 0 720 150" role="img" aria-label="Five pipeline stages: inventory, resource table, decode in parallel, link, derive">
+        <defs><marker id="a4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--fg3)"/></marker></defs>
+        <g font-size="12">
+          <rect x="6" y="30" width="122" height="64" rx="8" class="box"/><text x="67" y="56" text-anchor="middle" font-weight="700">1 Inventory</text><text x="67" y="74" text-anchor="middle" class="mut" font-size="11">list + hash every</text><text x="67" y="87" text-anchor="middle" class="mut" font-size="11">ZIP entry</text>
+          <path d="M128 62 H148" class="ln" marker-end="url(#a4)"/>
+          <rect x="150" y="30" width="122" height="64" rx="8" class="box"/><text x="211" y="56" text-anchor="middle" font-weight="700">2 ID table</text><text x="211" y="74" text-anchor="middle" class="mut" font-size="11">resources.arsc →</text><text x="211" y="87" text-anchor="middle" class="mut" font-size="11">every 0x7f… name</text>
+          <path d="M272 62 H292" class="ln" marker-end="url(#a4)"/>
+          <rect x="294" y="18" width="132" height="88" rx="8" fill="var(--accent-bg)" stroke="var(--accent)"/><text x="360" y="44" text-anchor="middle" font-weight="700">3 Decode</text><text x="360" y="62" text-anchor="middle" class="mut" font-size="11">XML · dex · ELF ·</text><text x="360" y="75" text-anchor="middle" class="mut" font-size="11">assets · signing</text><text x="360" y="93" text-anchor="middle" font-size="11" class="acc">in parallel</text>
+          <path d="M426 62 H446" class="ln" marker-end="url(#a4)"/>
+          <rect x="448" y="30" width="122" height="64" rx="8" class="box"/><text x="509" y="56" text-anchor="middle" font-weight="700">4 Link</text><text x="509" y="74" text-anchor="middle" class="mut" font-size="11">resolve IDs, build</text><text x="509" y="87" text-anchor="middle" class="mut" font-size="11">the links table</text>
+          <path d="M570 62 H590" class="ln" marker-end="url(#a4)"/>
+          <rect x="592" y="30" width="122" height="64" rx="8" fill="var(--violet-bg)" stroke="var(--violet)"/><text x="653" y="56" text-anchor="middle" font-weight="700">5 Derive</text><text x="653" y="74" text-anchor="middle" class="mut" font-size="11">insights, findings</text><text x="653" y="87" text-anchor="middle" class="mut" font-size="11">(re-runnable)</text>
+        </g>
+        <text x="360" y="136" text-anchor="middle" class="mut" font-size="11.5">Steps 1–4 read the APK · step 5 reads only the database · all writes go into one transaction, indexes built at the end</text>
+      </svg>
+    </div>
+    <figcaption>Figure 5. The ID table comes first because every later decoder needs it to turn numbers into names.</figcaption>
+  </figure>
+  <ul class="tight">
+    <li><b>Write once, index last.</b> Bulk-insert into tables with no indexes inside one transaction, then build the indexes. This is the fastest way to load SQLite.</li>
+    <li><b>Write to a temp file, then rename.</b> A crash or Ctrl-C never leaves a half-built database that looks complete.</li>
+    <li><b>Expensive layers on demand.</b> Decompiled Java takes seconds per class, so it isn't part of the single shot. When <code>source</code> decompiles a class, it saves the result in a <code>decompiled</code> table, so the second request is instant.</li>
+    <li><b>Version stamps.</b> <code>meta</code> stores the extractor version and the derive version separately. A new Sextant release that only improves SDK detection re-runs step 5 in seconds instead of a full extract.</li>
+  </ul>
+
+  <!-- 7 -->
+  <h2 id="instant"><span class="n">7</span>Instant answers: the cache</h2>
+  <p>You said the app name should be ready-made, like a database entry. Here is what that's worth, measured on Binary Eye:</p>
+  <figure>
+    <div class="frame"><div class="hbar" id="speed"></div></div>
+    <figcaption>Figure 6. Time to get the app name. The 650 ms in the middle is mostly Java start-up, not the lookup itself.</figcaption>
+  </figure>
+  <p>The proposal is a <b>content-addressed cache</b>, the same trick Git and Nix use:</p>
+  <ol class="tight">
+    <li>Any command given an APK computes its SHA-256 (about 20 ms for 8 MB).</li>
+    <li>If <code>~/.cache/sextant/&lt;sha256&gt;.db</code> exists and its version matches, the command uses it. It's a lookup.</li>
+    <li>If not, Sextant runs the single-shot extract once, saves the file, and then answers.</li>
+  </ol>
+  <p>So <code>sextant info app.apk</code> is slow the first time and instant every time after, with no folder to manage. <code>-o dir/</code> still works for people who want the database next to the APK. Two different APKs can never share a database by mistake, because the key is their content, not their file name.</p>
+  <div class="callout a"><div class="i">!</div><div><p>The remaining 650 ms is JVM start-up. For true instant answers from the CLI, the options are a GraalVM native image, or keeping a small daemon running. The desktop app and the MCP server already stay running, so they get the 7 ms path for free.</p></div></div>
+
+  <!-- 8 -->
+  <h2 id="hundred"><span class="n">8</span>What “100%” really means</h2>
+  <p>“Everything the APK has” needs a definition you can check, otherwise it can't be tested. The proposal: <b>every byte belongs to a file row, and every file row says who read it.</b></p>
+  <figure>
+    <div class="frame"><div class="hbar" id="cover"></div></div>
+    <figcaption>Figure 7. Binary Eye's 930 ZIP entries by top folder. The coverage report shows how many of each type a decoder read, so gaps are visible instead of silent.</figcaption>
+  </figure>
+  <div class="tw"><table>
+    <tr><th>Level</th><th>Meaning</th><th>Example</th></tr>
+    <tr><td><span class="tag">L0</span> Listed</td><td>Path, size, hash and type are recorded</td><td>an unknown <code>.bin</code> in <code>assets/</code></td></tr>
+    <tr><td><span class="tag b">L1</span> Decoded</td><td>Contents are turned into rows, losslessly</td><td>every node and attribute of <code>res/layout/main.xml</code></td></tr>
+    <tr><td><span class="tag g">L2</span> Linked</td><td>Rows are connected to other entities</td><td>that layout's <code>@string</code> and its activity</td></tr>
+    <tr><td><span class="tag a">L3</span> Understood</td><td>Sextant draws conclusions from it</td><td>“this layout is a login form”</td></tr>
+  </table></div>
+  <p><code>sextant coverage app.db</code> would print a short table: entries per type and the share at each level. “100%” then means <b>100% at L0, and L1 for every known format</b>. It's an honest number that can go in CI, and the existing corpus of 46 real APKs is exactly the test set to measure it on.</p>
+  <details><summary>Formats still to decode losslessly</summary><div>
+    <ul class="tight">
+      <li>Every binary XML attribute, including unknown ones and their typed values (dimension, color, enum, flags).</li>
+      <li><code>META-INF/*.version</code>, <code>*.kotlin_module</code>, <code>*.properties</code>, service loader files (<code>META-INF/services/*</code>).</li>
+      <li>Baseline profiles (<code>assets/dexopt/baseline.prof</code>): they list the methods the app runs at start-up.</li>
+      <li>Fonts, raw resources, databases and nested APKs, ZIPs or dex files inside <code>assets/</code>: list, hash, and recurse where it makes sense.</li>
+      <li>Splits of a bundle (<code>.apks</code>, <code>.xapk</code>) as one app with a <code>split</code> column on <code>files</code>.</li>
+    </ul>
+  </div></details>
+
+  <!-- 9 -->
+  <h2 id="agents"><span class="n">9</span>From an AI agent's point of view</h2>
+  <p>An agent has a small context window, pays for every token, and can't see a GUI. What helps it most is different from what helps a person:</p>
+  <div class="cards">
+    <div class="card"><h4>One handle</h4><p>“Here's <code>app.db</code>” is all it needs. No folder of 35 files to explore, no 700 MB of JSONL to read.</p></div>
+    <div class="card"><h4>Self-describing schema</h4><p>A <code>schema_docs</code> table inside the database explains every table and column, so the agent learns it with one query.</p></div>
+    <div class="card"><h4>Search → show → links</h4><p>Three moves cover almost everything: find an entity, see it, follow its links. Each returns a stable key it can pass on.</p></div>
+    <div class="card"><h4>Small answers</h4><p>Counts first, with <code>--limit</code> and pagination. Long values are cut with a note saying how to get the rest.</p></div>
+    <div class="card"><h4>Evidence in every answer</h4><p>File and offset or XML node, so the agent can cite it and a person can verify it.</p></div>
+    <div class="card"><h4>Read-only SQL</h4><p>The escape hatch for questions no tool anticipated. Already exists as <code>sextant sql</code>.</p></div>
+  </div>
+  <div class="callout"><div class="i">→</div><div><p>The MCP server should get a generic <code>links(key, rel?, direction?)</code> tool. With it, an agent can walk from a string to a layout to an activity to a method without knowing any table names.</p></div></div>
+
+  <!-- 10 -->
+  <h2 id="power"><span class="n">10</span>From a power user's point of view</h2>
+  <ul class="tight">
+    <li><b>Many apps at once.</b> SQLite's <code>ATTACH</code> opens several app databases in one session: “which of my 46 apps ship OkHttp below 4.12” is one query. For hundreds of apps, export to Parquet and use DuckDB.</li>
+    <li><b>Saved queries.</b> <code>sextant q unused-strings app.db</code> runs a named SQL file. Users can add their own, the way CodeQL query packs work.</li>
+    <li><b>Familiar tools.</b> The <code>sqlite3</code> shell, Datasette (a web UI for any SQLite file), Python and pandas all work out of the box.</li>
+    <li><b>Exports for other formats.</b> <code>sextant export --jsonl | --parquet | --res-tree</code>. JSONL for jq and grep, Parquet for analytics, a decoded <code>res/</code> tree (apktool style) for reading XML by eye.</li>
+    <li><b>Desktop app on the same file.</b> The desktop app, CLI and MCP all read one database, so they can never disagree.</li>
+  </ul>
+
+  <!-- 11 -->
+  <h2 id="unasked"><span class="n">11</span>Things you didn't ask about, but should decide now</h2>
+  <div class="tw"><table>
+    <tr><th>Topic</th><th>Why it matters</th><th>Proposal</th></tr>
+    <tr><td><b>Schema versions</b></td><td>Old databases will meet new Sextant releases</td><td>Version in <code>meta</code>; a mismatch means re-derive or re-extract automatically</td></tr>
+    <tr><td><b>Hostile APKs</b></td><td>Malware uses ZIP bombs, broken XML and huge string pools to crash tools</td><td>Size and count limits per decoder; a failure becomes a warning row, never a crash</td></tr>
+    <tr><td><b>Secrets in the database</b></td><td>The database holds every API key the APK holds</td><td>Say so in the docs; offer <code>--redact</code> on export before sharing</td></tr>
+    <tr><td><b>Obfuscation</b></td><td>Names like <code>a.b.c</code> make links hard to read</td><td>Load <code>mapping.txt</code> as a name layer (<code>original_name</code> column), never rewriting the facts</td></tr>
+    <tr><td><b>Size</b></td><td>Nextcloud's index is 608 MB</td><td>Drop JSONL copies, store call offsets compactly, make bulky tables optional</td></tr>
+    <tr><td><b>Determinism</b></td><td>Diffs and tests need byte-stable output</td><td>Sorted inserts, stable keys, no timestamps inside fact tables</td></tr>
+    <tr><td><b>Concurrency</b></td><td>The desktop app and CLI may read while extract writes</td><td>Readers open read-only; extract writes to a temp file and renames when done</td></tr>
+    <tr><td><b>Testing “100%”</b></td><td>Claims need proof</td><td>Coverage report in CI over the real-APK corpus; cross-checks against <code>aapt2</code> and <code>dexdump</code> continue</td></tr>
+  </table></div>
+
+  <!-- 12 -->
+  <h2 id="plan"><span class="n">12</span>Plan</h2>
+  <p>Each step ships on its own, end to end in the CLI, and keeps every existing command working. The files table comes first because it is the bottom layer everything else points at.</p>
+  <div class="tw"><table>
+    <tr><th>#</th><th>Step</th><th>Unlocks</th><th>Status</th></tr>
+    <tr><td class="num">1</td><td><code>files</code> table (every zip entry: type, size, CRC, SHA-256, content, resource name, decoder) with <code>sextant files</code> and <code>sextant coverage</code></td><td>A checkable “100%”, and shrunk file names mapped back to resources</td><td><span class="tag g">Done</span></td></tr>
+    <tr><td class="num">2</td><td>APK cache keyed by SHA-256; APK commands use the cached index</td><td>Instant repeat answers</td><td><span class="tag">Next</span></td></tr>
+    <tr><td class="num">3</td><td>Resource ID constants and <code>R</code> fields in code → resource links</td><td>Correct unused lists, “which method shows this text”</td><td><span class="tag">Planned</span></td></tr>
+    <tr><td class="num">4</td><td><code>xml_nodes</code> / <code>xml_attrs</code> for every binary XML file; <code>res_values</code> per config</td><td>Queries over any view or attribute</td><td><span class="tag">Planned</span></td></tr>
+    <tr><td class="num">5</td><td><code>entities</code> + <code>links</code>, and a generic <code>links</code> command</td><td>Cross-kind queries</td><td><span class="tag">Planned</span></td></tr>
+    <tr><td class="num">6</td><td>Commands read SQLite instead of JSONL; JSONL is no longer written</td><td>Half the disk, one source of truth</td><td><span class="tag">Planned</span></td></tr>
+    <tr><td class="num">7</td><td>Split the derive stage; <code>schema_docs</code> table; saved queries</td><td>Fast upgrades, self-describing database</td><td><span class="tag">Planned</span></td></tr>
+  </table></div>
+  <h3>Step 1 result</h3>
+  <p>Measured with <code>sextant coverage</code> on real apps. Every zip entry is listed; the share below is what a decoder turned into rows.</p>
+  <div class="tw"><table>
+    <tr><th>App</th><th>Files</th><th>Files decoded</th><th>Bytes decoded</th><th>Biggest gap</th></tr>
+    <tr><td>Binary Eye 1.75.5</td><td class="num">930</td><td class="num">66.6%</td><td class="num">87.3%</td><td>196 color state lists, 76 anim/animator/interpolator files</td></tr>
+    <tr><td>Bluesky 1.136.0</td><td class="num">2,482</td><td class="num">65.8%</td><td class="num">97.3%</td><td>small res/ and META-INF files</td></tr>
+    <tr><td>Nextcloud 35.0.1</td><td class="num">3,172</td><td class="num">43.1%</td><td class="num">94.9%</td><td>files packed from library JARs</td></tr>
+  </table></div>
+  <p>All 824 <code>res/</code> files of Binary Eye map back to a resource name, even though R8 renamed them (<code>res/BW.xml</code> is <code>@mipmap/ic_launcher</code>). Hashing every entry adds about 0.3 s on the 283 MB Bluesky APK.</p>
+  <div class="callout g"><div class="i">✓</div><div><p><b>In short:</b> Sextant already has the hard part, a careful extractor tested on real apps. The design change is to treat the database as <i>the</i> product: complete (every file), connected (every resource ID decoded everywhere, including code), cached (by content hash) and self-describing (so agents need no manual).</p></div></div>
+
+  <div class="foot">Measurements: Sextant 1.0.0-dev on macOS, apps from <code>fixtures/external</code> (Binary Eye 1.75.5, Nextcloud, Anki, Bitwarden, Aurora Store). Timings are wall-clock with a warm file cache. · <a href="tasks/">All tasks</a> · <a href="cli/">CLI docs</a></div>
+</section>
+</main>
+</div>
+
+<script>
+  // Theme switcher: light, dark, or follow the system.
+  (function () {
+    var btns = document.querySelectorAll('.theme button');
+    function set(t) {
+      if (t === 'auto') document.documentElement.removeAttribute('data-theme');
+      else document.documentElement.setAttribute('data-theme', t);
+      try { t === 'auto' ? localStorage.removeItem('theme') : localStorage.setItem('theme', t); } catch (e) {}
+      btns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.t === t)); });
+    }
+    var cur = document.documentElement.getAttribute('data-theme') || 'auto';
+    btns.forEach(function (b) { b.addEventListener('click', function () { set(b.dataset.t); }); });
+    set(cur);
+  })();
+
+  // Horizontal bar charts.
+  function bars(id, rows, max, fmt) {
+    var el = document.getElementById(id);
+    rows.forEach(function (r) {
+      var lab = document.createElement('div'); lab.className = 'lab'; lab.innerHTML = r[0];
+      var tr = document.createElement('div'); tr.className = 'track';
+      var pct = Math.max(0.6, r[1] / max * 100);
+      var f = document.createElement('div'); f.className = 'fill'; f.style.width = Math.min(pct, 82) + '%'; f.style.background = r[2];
+      var v = document.createElement('div'); v.className = 'val'; v.textContent = fmt(r[1]); v.style.left = 'calc(' + Math.min(pct, 82) + '% + 8px)';
+      tr.appendChild(f); tr.appendChild(v); el.appendChild(lab); el.appendChild(tr);
+    });
+  }
+  bars('disk', [
+    ['Nextcloud APK', 92, 'var(--fg3)'],
+    ['Nextcloud JSONL', 700, 'var(--amber)'],
+    ['Nextcloud index.sqlite', 608, 'var(--accent)'],
+    ['Bitwarden APK', 68, 'var(--fg3)'],
+    ['Bitwarden JSONL', 168, 'var(--amber)'],
+    ['Bitwarden index.sqlite', 176, 'var(--accent)']
+  ], 700, function (v) { return v + ' MB'; });
+  bars('speed', [
+    ['<code>info app.apk</code><br>re-reads the APK', 2245, 'var(--red)'],
+    ['<code>info app/</code><br>CLI on the folder', 656, 'var(--amber)'],
+    ['SQLite lookup<br>(desktop, MCP, cache)', 7, 'var(--green)']
+  ], 2245, function (v) { return v.toLocaleString() + ' ms'; });
+  bars('cover', [
+    ['res/', 824, 'var(--green)'],
+    ['META-INF/', 66, 'var(--amber)'],
+    ['lib/ (native)', 12, 'var(--green)'],
+    ['kotlin/', 8, 'var(--red)'],
+    ['org/', 7, 'var(--red)'],
+    ['assets/', 3, 'var(--green)'],
+    ['root files', 6, 'var(--amber)']
+  ], 824, function (v) { return v + ' entries'; });
+
+  // Highlight the current section in the contents.
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a'));
+    var map = {}; links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+    if (!('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { links.forEach(function (a) { a.classList.remove('on'); }); var a = map[e.target.id]; if (a) a.classList.add('on'); } });
+    }, { rootMargin: '-10% 0px -80% 0px' });
+    document.querySelectorAll('h2[id]').forEach(function (h) { io.observe(h); });
+  })();
+
+  // Tabs: #progress (default) or #design; a section anchor such as #model opens the Design tab.
+  (function () {
+    var tabs = document.querySelectorAll('.tabs a');
+    function show(name, scrollTo) {
+      document.querySelectorAll('section.tab').forEach(function (t) { t.hidden = t.dataset.tab !== name; });
+      tabs.forEach(function (a) { a.setAttribute('aria-selected', String(a.dataset.tab === name)); });
+      document.body.classList.toggle('solo', name !== 'design');
+      if (scrollTo) { var el = document.getElementById(scrollTo); if (el) el.scrollIntoView(); } else { window.scrollTo(0, 0); }
+    }
+    function route() {
+      var h = location.hash.slice(1);
+      if (h === 'design') return show('design');
+      var el = h && document.getElementById(h);
+      if (el && el.closest('#tab-design')) return show('design', h);
+      show('progress');
+    }
+    window.addEventListener('hashchange', route);
+    route();
+  })();
+  bars('areas', [
+    ['File inventory', 100, 'var(--green)'],
+    ['Manifest', 90, 'var(--green)'],
+    ['Signing', 70, 'var(--accent)'],
+    ['Resource table', 60, 'var(--accent)'],
+    ['Code (dex)', 50, 'var(--accent)'],
+    ['Resource XML files', 40, 'var(--amber)'],
+    ['Native libraries', 40, 'var(--amber)'],
+    ['Assets', 30, 'var(--amber)'],
+    ['Cross-links', 30, 'var(--amber)'],
+    ['Other files', 20, 'var(--red)']
+  ], 100, function (v) { return v + '%'; });
+</script>
 </body>
 </html>
