@@ -109,7 +109,11 @@ fun CommandPalette(ws: WorkspaceState) {
         ws.paletteOpen = false
     }
     Dialog(onDismissRequest = ::close) {
-        Surface(shape = MaterialTheme.shapes.extraLarge, color = MaterialTheme.colorScheme.surfaceContainerHigh, modifier = Modifier.width(640.dp)) {
+        Surface(
+            shape = MaterialTheme.shapes.extraLarge,
+            color = MaterialTheme.colorScheme.surfaceContainerHigh,
+            modifier = Modifier.width(640.dp),
+        ) {
             Column(
                 Modifier.padding(16.dp).onPreviewKeyEvent { e ->
                     if (e.type != KeyEventType.KeyDown) return@onPreviewKeyEvent false
@@ -146,7 +150,13 @@ fun CommandPalette(ws: WorkspaceState) {
                             colors =
                                 ListItemDefaults.colors(
                                     containerColor =
-                                        if (i == index) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceContainerHigh,
+                                        if (i ==
+                                            index
+                                        ) {
+                                            MaterialTheme.colorScheme.secondaryContainer
+                                        } else {
+                                            MaterialTheme.colorScheme.surfaceContainerHigh
+                                        },
                                 ),
                             modifier =
                                 Modifier.clip(MaterialTheme.shapes.large).clickable {

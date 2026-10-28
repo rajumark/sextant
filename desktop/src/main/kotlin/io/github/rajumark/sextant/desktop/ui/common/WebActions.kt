@@ -69,7 +69,14 @@ fun WebActions(
                     menuOpen = false
                     // Gemini cannot take a question in its address, so the question is copied for pasting.
                     copyToClipboard(question)
-                    if (openInBrowser("https://gemini.google.com/app")) notify("Question copied. Paste it into Gemini.") else notify("Could not open a browser")
+                    if (openInBrowser(
+                            "https://gemini.google.com/app",
+                        )
+                    ) {
+                        notify("Question copied. Paste it into Gemini.")
+                    } else {
+                        notify("Could not open a browser")
+                    }
                 })
             }
         }

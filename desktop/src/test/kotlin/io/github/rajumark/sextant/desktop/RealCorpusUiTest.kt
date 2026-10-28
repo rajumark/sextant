@@ -12,6 +12,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.io.path.isDirectory
 import kotlin.io.path.name
+import kotlin.test.AfterTest
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
@@ -25,6 +26,15 @@ class RealCorpusUiTest {
 
     /** A few varied apps also get their screenshots kept for review. */
     private val keep = setOf("signal", "fluffychat", "termuxapi", "bitwarden", "duckduckgo")
+
+    /** Fallback folders for fresh analyses are large, so they are removed after each test. */
+    private val temps = mutableListOf<Path>()
+
+    @AfterTest
+    fun removeTempFolders() {
+        temps.forEach { it.toFile().deleteRecursively() }
+        temps.clear()
+    }
 
     @Test
     fun `every corpus app renders on every screen`() {
@@ -40,7 +50,7 @@ class RealCorpusUiTest {
             println("skipped: no golden folders in $golden")
             return
         }
-        val repo = CoreRepository(MemoryStore(), Files.createTempDirectory("sextant-fallback"))
+        val repo = CoreRepository(MemoryStore(), Files.createTempDirectory("sextant-fallback").also { temps.add(it) })
         val failures = mutableListOf<String>()
         val openMillis = linkedMapOf<String, Long>()
         for (dir in dirs) {
@@ -80,9 +90,12 @@ class RealCorpusUiTest {
     /** Fresh analyses (not golden folders) so resource, SDK and startup pages render real data; screenshots are kept. */
     @Test
     fun `fresh analyses render every page with real data`() {
-        val apks = listOf("bitwarden", "binaryeye").map { Path.of(System.getProperty("sextant.corpus") ?: "../fixtures/external").resolve("$it.apk") }
+        val apks =
+            listOf("bitwarden", "binaryeye").map {
+                Path.of(System.getProperty("sextant.corpus") ?: "../fixtures/external").resolve("$it.apk")
+            }
         if (apks.any { !Files.exists(it) }) return println("skipped: corpus APKs missing")
-        val repo = CoreRepository(MemoryStore(), Files.createTempDirectory("sextant-fresh"))
+        val repo = CoreRepository(MemoryStore(), Files.createTempDirectory("sextant-fresh").also { temps.add(it) })
         val dir = File(outDir, "fresh").apply { mkdirs() }
         val failures = mutableListOf<String>()
         for (apk in apks) {
@@ -93,14 +106,35 @@ class RealCorpusUiTest {
                     val ws = state.workspace!!
                     ws.destination = dest
                     for (type in ComponentType.entries) {
-                        ws.componentPage(type).selected = analysis.components.filter { it.type == type }.maxByOrNull { it.tags.size }?.name
+                        ws.componentPage(type).selected =
+                            analysis.components
+                                .filter { it.type == type }
+                                .maxByOrNull { it.tags.size }
+                                ?.name
                     }
-                    ws.selectedStartupStep = analysis.startup?.steps?.lastOrNull()?.order
+                    ws.selectedStartupStep =
+                        analysis.startup
+                            ?.steps
+                            ?.lastOrNull()
+                            ?.order
                     ws.resourcePage(Destination.Strings).selected = analysis.stringKeys.firstOrNull { "used" in it.flags }?.name
-                    ws.resourcePage(Destination.Layouts).selected = analysis.resources.layouts.maxByOrNull { it.viewCount }?.name
-                    ws.resourcePage(Destination.Menus).selected = analysis.resources.menus.firstOrNull()?.name
-                    ws.resourcePage(Destination.XmlConfigs).selected = analysis.resources.xml.firstOrNull { it.kind == "network-security-config" }?.name
-                    ws.resourcePage(Destination.Sdks).selected = analysis.sdks?.entries?.firstOrNull { it.version != null && it.kind == "sdk" }?.name
+                    ws.resourcePage(Destination.Layouts).selected =
+                        analysis.resources.layouts
+                            .maxByOrNull { it.viewCount }
+                            ?.name
+                    ws.resourcePage(Destination.Menus).selected =
+                        analysis.resources.menus
+                            .firstOrNull()
+                            ?.name
+                    ws.resourcePage(Destination.XmlConfigs).selected =
+                        analysis.resources.xml
+                            .firstOrNull { it.kind == "network-security-config" }
+                            ?.name
+                    ws.resourcePage(Destination.Sdks).selected =
+                        analysis.sdks
+                            ?.entries
+                            ?.firstOrNull { it.version != null && it.kind == "sdk" }
+                            ?.name
                     val png = renderPng(frames = 20, frameNanos = 50_000_000L) { App(state) }
                     File(dir, "${apk.fileName.toString().removeSuffix(".apk")}-${dest.name.lowercase()}.png").writeBytes(png)
                 }.onFailure { failures += "${apk.fileName}/${dest.name}: ${it::class.simpleName}: ${it.message}" }

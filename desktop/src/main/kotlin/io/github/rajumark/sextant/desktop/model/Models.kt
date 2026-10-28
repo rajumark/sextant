@@ -22,7 +22,9 @@ data class Analysis(
     /** The `<application>` element's own attributes as declared, for its "Manifest entry". */
     val applicationXml: String? = null,
     /** res/ and assets/ as harvested by core (`sextant res`); empty for sample data and pre-schema-8 folders. */
-    val resources: io.github.rajumark.sextant.core.model.ResourceHarvest = io.github.rajumark.sextant.core.model.ResourceHarvest(),
+    val resources: io.github.rajumark.sextant.core.model.ResourceHarvest =
+        io.github.rajumark.sextant.core.model
+            .ResourceHarvest(),
     /** SDKs and libraries with roles and versions (`sextant sdks`); null when insights were not extracted. */
     val sdks: io.github.rajumark.sextant.core.insights.SdkProfile? = null,
     /** Strings grouped per key with locales, flags and users (`sextant res … string-keys`). */

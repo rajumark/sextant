@@ -56,7 +56,10 @@ private fun methodsFor(
 ) = when {
     step.what.startsWith("Application.") -> {
         val name = step.what.substringAfter("Application.")
-        s.methods.filter { m -> m.method.substringAfter("->").startsWith("$name(") && s.superclasses.any { m.method.startsWith(descriptorOf(it)) } }
+        s.methods.filter { m ->
+            m.method.substringAfter("->").startsWith("$name(") &&
+                s.superclasses.any { m.method.startsWith(descriptorOf(it)) }
+        }
     }
     else -> s.methods.filter { it.method.startsWith(descriptorOf(step.target) + "->") }
 }
@@ -85,13 +88,25 @@ fun ApplicationScreen(ws: WorkspaceState) {
                     s.applicationClass?.let { "Custom Application class · ${s.steps.size} startup steps" } ?: "No custom Application class",
                 )
                 Spacer(Modifier.height(12.dp))
-                Surface(color = MaterialTheme.colorScheme.surfaceContainerHigh, shape = MaterialTheme.shapes.large, modifier = Modifier.fillMaxWidth()) {
+                Surface(
+                    color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                    shape = MaterialTheme.shapes.large,
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
                     Column(Modifier.padding(16.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            MonoLine(s.applicationClass ?: "android.app.Application", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f))
+                            MonoLine(
+                                s.applicationClass ?: "android.app.Application",
+                                color = MaterialTheme.colorScheme.onSurface,
+                                modifier = Modifier.weight(1f),
+                            )
                             s.applicationClass?.let { CopyButton(it, "class name") }
                         }
-                        if (s.superclasses.size > 1) KeyValueRow("Extends", s.superclasses.drop(1).joinToString(" → "), mono = true, keyWidth = 120.dp)
+                        if (s.superclasses.size >
+                            1
+                        ) {
+                            KeyValueRow("Extends", s.superclasses.drop(1).joinToString(" → "), mono = true, keyWidth = 120.dp)
+                        }
                         s.appComponentFactory?.let { KeyValueRow("Component factory", it, mono = true, keyWidth = 120.dp) }
                         s.zygotePreload?.let { KeyValueRow("Zygote preload", it, mono = true, keyWidth = 120.dp) }
                         s.backupAgent?.let { KeyValueRow("Backup agent", it, mono = true, keyWidth = 120.dp) }
@@ -145,7 +160,11 @@ fun ApplicationScreen(ws: WorkspaceState) {
         },
         detail = {
             if (selected == null) {
-                EmptyState(Icons.Outlined.TouchApp, "Select a startup step", "Its class, the calls it makes and its manifest entry appear here.")
+                EmptyState(
+                    Icons.Outlined.TouchApp,
+                    "Select a startup step",
+                    "Its class, the calls it makes and its manifest entry appear here.",
+                )
             } else {
                 StepDetail(ws, s, selected)
             }
@@ -185,7 +204,13 @@ private fun StepDetail(
             KeyValueRow("SDK", p.sdk)
             if (p.initializers.isNotEmpty()) {
                 SubsectionLabel("androidx.startup initializers · ${p.initializers.size}")
-                p.initializers.forEach { MonoLine(it, color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.padding(vertical = 2.dp)) }
+                p.initializers.forEach {
+                    MonoLine(
+                        it,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.padding(vertical = 2.dp),
+                    )
+                }
             }
         }
 
@@ -205,7 +230,10 @@ private fun StepDetail(
             }
             if (m.more > 0) Text("… ${m.more} more", style = MaterialTheme.typography.bodySmall)
         }
-        if (methods.isEmpty() && s.codeIndexed && step.what.trim().let { it.startsWith("Application.") || it.contains("onCreate") || it.contains("create") }) {
+        if (methods.isEmpty() &&
+            s.codeIndexed &&
+            step.what.trim().let { it.startsWith("Application.") || it.contains("onCreate") || it.contains("create") }
+        ) {
             SubsectionLabel("Calls")
             Text("Not overridden in app code: the framework default runs.", style = MaterialTheme.typography.bodyMedium)
         }
@@ -238,12 +266,21 @@ private fun StepDetail(
 private fun explain(step: StartupStep): String {
     val w = step.what.trim()
     return when {
-        w.startsWith("Zygote") -> "Runs once in the app zygote before any app process forks from it; used to preload code for isolated services."
-        w.startsWith("AppComponentFactory") -> "Android asks this factory to create the Application, activities, services, receivers and providers."
-        w == "Application.attachBaseContext" -> "First app code to run in the process, before any content provider; often installs multidex, crash handlers or locale wrappers."
-        w.startsWith("ContentProvider") -> "Every provider of the main process is created before Application.onCreate, in initOrder order; many SDKs start themselves this way."
+        w.startsWith(
+            "Zygote",
+        ) -> "Runs once in the app zygote before any app process forks from it; used to preload code for isolated services."
+        w.startsWith(
+            "AppComponentFactory",
+        ) -> "Android asks this factory to create the Application, activities, services, receivers and providers."
+        w == "Application.attachBaseContext" ->
+            "First app code to run in the process, before any content provider; often installs multidex, crash handlers or locale wrappers."
+        w.startsWith(
+            "ContentProvider",
+        ) ->
+            "Every provider of the main process is created before Application.onCreate, in initOrder order; many SDKs start themselves this way."
         w.contains("Initializer") -> "Run by androidx.startup's InitializationProvider during its onCreate."
-        w == "Application.onCreate" -> "Runs after all providers; apps usually start SDKs, logging, dependency injection and background work here."
+        w == "Application.onCreate" ->
+            "Runs after all providers; apps usually start SDKs, logging, dependency injection and background work here."
         else -> ""
     }
 }

@@ -2,7 +2,6 @@ package io.github.rajumark.sextant.desktop.ui.screens
 
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,49 +9,36 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.GppMaybe
-import androidx.compose.material.icons.outlined.Lightbulb
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Policy
-import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.SearchOff
 import androidx.compose.material.icons.outlined.TouchApp
-import androidx.compose.material3.Button
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import io.github.rajumark.sextant.desktop.copyToClipboard
 import io.github.rajumark.sextant.desktop.data.ManifestFormat
 import io.github.rajumark.sextant.desktop.data.PermissionBank
 import io.github.rajumark.sextant.desktop.model.Permission
 import io.github.rajumark.sextant.desktop.model.PermissionKind
-import io.github.rajumark.sextant.desktop.openInBrowser
 import io.github.rajumark.sextant.desktop.ui.common.CodeBlock
 import io.github.rajumark.sextant.desktop.ui.common.CopyButton
 import io.github.rajumark.sextant.desktop.ui.common.EmptyState
 import io.github.rajumark.sextant.desktop.ui.common.IconBadge
 import io.github.rajumark.sextant.desktop.ui.common.KeyValueRow
 import io.github.rajumark.sextant.desktop.ui.common.ListDetail
-import io.github.rajumark.sextant.desktop.ui.common.LocalNotifier
 import io.github.rajumark.sextant.desktop.ui.common.MonoLine
 import io.github.rajumark.sextant.desktop.ui.common.SubsectionLabel
 import io.github.rajumark.sextant.desktop.ui.common.Syntax
@@ -62,7 +48,6 @@ import io.github.rajumark.sextant.desktop.ui.common.WebActions
 import io.github.rajumark.sextant.desktop.ui.common.highlighted
 import io.github.rajumark.sextant.desktop.ui.workspace.PermissionFilter
 import io.github.rajumark.sextant.desktop.ui.workspace.WorkspaceState
-import io.github.rajumark.sextant.desktop.urlQuery
 
 private val Permission.selectionKey: String get() = "${kind.wire}|$name"
 

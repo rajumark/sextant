@@ -38,7 +38,6 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -87,7 +86,16 @@ import io.github.rajumark.sextant.desktop.ui.workspace.WorkspaceState
 /** The verdicts worth a summary chip on each page, in order. Counts and meanings come from core. */
 private fun summaryTags(type: ComponentType): List<String> =
     when (type) {
-        ComponentType.Activity -> listOf("launcher", "deep-link", "app-link", "hidden-entry", "task-hijack", "lock-screen", "exported-by-default")
+        ComponentType.Activity ->
+            listOf(
+                "launcher",
+                "deep-link",
+                "app-link",
+                "hidden-entry",
+                "task-hijack",
+                "lock-screen",
+                "exported-by-default",
+            )
         ComponentType.ActivityAlias -> listOf("launcher", "deep-link", "app-link", "hidden-entry", "exported-by-default")
         ComponentType.Service -> listOf("unguarded", "sensitive-role", "system-role", "foreground", "isolated", "direct-boot")
         ComponentType.Receiver -> listOf("unguarded", "sensitive-role", "system-role", "boot", "direct-boot", "exported-by-default")
@@ -125,7 +133,10 @@ private fun sorted(
         ComponentSort.Risk -> list.sortedWith(compareByDescending<AppComponent> { riskScore(it) }.thenBy { it.simpleName.lowercase() })
         ComponentSort.Name -> list.sortedBy { it.simpleName.lowercase() }
         ComponentSort.Package -> list.sortedWith(compareBy<AppComponent> { it.packagePath }.thenBy { it.simpleName.lowercase() })
-        ComponentSort.Filters -> list.sortedWith(compareByDescending<AppComponent> { it.intentFilters.size }.thenBy { it.simpleName.lowercase() })
+        ComponentSort.Filters ->
+            list.sortedWith(
+                compareByDescending<AppComponent> { it.intentFilters.size }.thenBy { it.simpleName.lowercase() },
+            )
     }
 
 /** A row in the list: a package header (when grouping) or a component. */
@@ -163,7 +174,17 @@ fun TypedComponentScreen(
     val base = remember(ws.analysis, type) { ws.analysis.components.filter { it.type == type } }
     val q = page.query.trim()
     val filtered =
-        remember(base, q, page.exported, page.guardedOnly, page.disabledOnly, page.customLaunchModeOnly, page.customProcessOnly, page.tags, page.sort) {
+        remember(
+            base,
+            q,
+            page.exported,
+            page.guardedOnly,
+            page.disabledOnly,
+            page.customLaunchModeOnly,
+            page.customProcessOnly,
+            page.tags,
+            page.sort,
+        ) {
             sorted(base.filter { (q.isEmpty() || it.matches(q)) && page.accepts(it) }, page.sort)
         }
     val lines =
@@ -186,7 +207,12 @@ fun TypedComponentScreen(
     // Keep the selected row in view when it changes from the keyboard or another screen.
     LaunchedEffect(page.selected, lines) {
         val i = lines.indexOfFirst { it is Line.Item && it.c.name == page.selected }
-        if (i >= 0 && page.listState.layoutInfo.visibleItemsInfo.none { it.index == i && it.offset >= 0 }) page.listState.animateScrollToItem(i)
+        if (i >= 0 &&
+            page.listState.layoutInfo.visibleItemsInfo
+                .none { it.index == i && it.offset >= 0 }
+        ) {
+            page.listState.animateScrollToItem(i)
+        }
     }
 
     fun select(c: AppComponent) {
@@ -253,8 +279,28 @@ fun TypedComponentScreen(
                                 if (e.type != KeyEventType.KeyDown) return@onPreviewKeyEvent false
                                 val i = visible.indexOfFirst { it.name == page.selected }
                                 when (e.key) {
-                                    Key.DirectionDown -> visible.getOrNull(if (i < 0) 0 else (i + 1).coerceAtMost(visible.lastIndex))?.let { page.selected = it.name }
-                                    Key.DirectionUp -> visible.getOrNull(if (i < 0) 0 else (i - 1).coerceAtLeast(0))?.let { page.selected = it.name }
+                                    Key.DirectionDown ->
+                                        visible
+                                            .getOrNull(
+                                                if (i <
+                                                    0
+                                                ) {
+                                                    0
+                                                } else {
+                                                    (i + 1).coerceAtMost(visible.lastIndex)
+                                                },
+                                            )?.let { page.selected = it.name }
+                                    Key.DirectionUp ->
+                                        visible
+                                            .getOrNull(
+                                                if (i <
+                                                    0
+                                                ) {
+                                                    0
+                                                } else {
+                                                    (i - 1).coerceAtLeast(0)
+                                                },
+                                            )?.let { page.selected = it.name }
                                     Key.MoveHome -> visible.firstOrNull()?.let { page.selected = it.name }
                                     Key.MoveEnd -> visible.lastOrNull()?.let { page.selected = it.name }
                                     Key.Escape -> if (page.multi.isNotEmpty()) page.multi = emptySet() else page.selected = null
@@ -268,9 +314,10 @@ fun TypedComponentScreen(
                     ) {
                         items(lines, key = { it.key }) { line ->
                             when (line) {
-                                is Line.Header -> PackageHeader(line) {
-                                    page.collapsed = if (line.open) page.collapsed + line.pkg else page.collapsed - line.pkg
-                                }
+                                is Line.Header ->
+                                    PackageHeader(line) {
+                                        page.collapsed = if (line.open) page.collapsed + line.pkg else page.collapsed - line.pkg
+                                    }
                                 is Line.Item -> ComponentRow(ws, page, line.c, page.groupByPackage) { select(line.c) }
                             }
                         }
@@ -304,7 +351,11 @@ private fun SummaryStrip(
 ) {
     val counts = summaryTags(type).map { t -> t to base.count { t in it.tags } }.filter { it.second > 0 }
     if (counts.isEmpty()) return
-    FlowRow(Modifier.fillMaxWidth().padding(top = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    FlowRow(
+        Modifier.fillMaxWidth().padding(top = 12.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
         counts.forEach { (t, n) ->
             val on = t in page.tags
             FilterChip(
@@ -392,7 +443,11 @@ private fun MultiBar(
     notify: (String) -> Unit,
 ) {
     val picked = base.filter { it.name in page.multi }
-    Surface(color = MaterialTheme.colorScheme.secondaryContainer, shape = MaterialTheme.shapes.medium, modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) {
+    Surface(
+        color = MaterialTheme.colorScheme.secondaryContainer,
+        shape = MaterialTheme.shapes.medium,
+        modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+    ) {
         Row(Modifier.padding(horizontal = 12.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
             Text("${picked.size} selected", style = MaterialTheme.typography.labelLarge, modifier = Modifier.weight(1f))
             TextButton(onClick = {
@@ -418,9 +473,17 @@ internal object Export {
         listOf(
             c.type.wire,
             c.name,
-            if (!c.exported) "no" else if (c.exportedSource.wire == "default") "default" else "yes",
+            if (!c.exported) {
+                "no"
+            } else if (c.exportedSource.wire == "default") {
+                "default"
+            } else {
+                "yes"
+            },
             c.tags.joinToString(","),
-            c.deepLinks.firstOrNull() ?: c.authorities.firstOrNull() ?: c.facts.entryPoints.firstOrNull().orEmpty(),
+            c.deepLinks.firstOrNull() ?: c.authorities.firstOrNull() ?: c.facts.entryPoints
+                .firstOrNull()
+                .orEmpty(),
         )
 
     private val HEADER = listOf("type", "name", "exported", "tags", "entry")
@@ -465,8 +528,12 @@ private fun ComponentRow(
     ContextMenuArea(items = {
         buildList {
             add(ContextMenuItem("Copy class name") { copyToClipboard(c.name).also { notify("Copied class name") } })
-            c.facts.adb.firstOrNull()?.let { (_, cmd) -> add(ContextMenuItem("Copy adb command") { copyToClipboard(cmd).also { notify("Copied adb command") } }) }
-            c.deepLinks.firstOrNull()?.let { l -> add(ContextMenuItem("Copy first deep link") { copyToClipboard(l).also { notify("Copied link") } }) }
+            c.facts.adb.firstOrNull()?.let { (_, cmd) ->
+                add(ContextMenuItem("Copy adb command") { copyToClipboard(cmd).also { notify("Copied adb command") } })
+            }
+            c.deepLinks.firstOrNull()?.let { l ->
+                add(ContextMenuItem("Copy first deep link") { copyToClipboard(l).also { notify("Copied link") } })
+            }
             add(ContextMenuItem("View in Manifest") { ws.showComponentInManifest(c.name) })
             c.targetActivity?.let { t -> add(ContextMenuItem("Open target activity") { ws.showComponent(t) }) }
             add(

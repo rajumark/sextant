@@ -173,7 +173,11 @@ fun ComponentDetail(
         SubsectionLabel("Entry points")
         if (f.entryPoints.isEmpty()) {
             Text(
-                if (c.exported) "No intent filters: any app can still start it with an explicit intent." else "No intent filters: only this app can start it.",
+                if (c.exported) {
+                    "No intent filters: any app can still start it with an explicit intent."
+                } else {
+                    "No intent filters: only this app can start it."
+                },
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -197,7 +201,11 @@ fun ComponentDetail(
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp)) {
                     Icon(Icons.Outlined.VerifiedUser, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
                     Spacer(Modifier.width(10.dp))
-                    MonoLine("https://$h/.well-known/assetlinks.json", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f))
+                    MonoLine(
+                        "https://$h/.well-known/assetlinks.json",
+                        color = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.weight(1f),
+                    )
                     CopyButton("https://$h/.well-known/assetlinks.json", "assetlinks URL")
                 }
             }
@@ -340,7 +348,13 @@ private fun IntentFilterCard(
             if (f.actions.isNotEmpty()) FilterLine("action", f.actions.map { it.removePrefix("android.intent.action.") })
             if (f.categories.isNotEmpty()) FilterLine("category", f.categories.map { it.removePrefix("android.intent.category.") })
             if (f.data.isNotEmpty()) {
-                FilterLine("data", f.data.map { d -> d.uri ?: d.mimeType ?: listOfNotNull(d.scheme, d.host).joinToString("://").ifEmpty { "…" } })
+                FilterLine(
+                    "data",
+                    f.data.map { d ->
+                        d.uri ?: d.mimeType
+                            ?: listOfNotNull(d.scheme, d.host).joinToString("://").ifEmpty { "…" }
+                    },
+                )
             }
         }
     }
