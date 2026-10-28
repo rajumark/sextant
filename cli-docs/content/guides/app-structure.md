@@ -166,6 +166,20 @@ network_security_config  default  network-security-config  base-cleartext=true u
 
 The same data is in the SQLite file (`string_resources`, `resource_ids`, `styles`, `drawables`, `layouts`, `menus`, `navigation_destinations`, `assets`, `xml_configs`, `resource_refs`); see [Output](../reference/output.md) and the [index schema](../reference/index-schema.md).
 
+## Any XML file
+
+`res` summarizes the resource kinds people ask about most. `xml` shows every binary XML file of the APK exactly as stored, node by node, including drawables, color state lists, animations and the manifest:
+
+```bash
+sextant xml app.apk @layout/activity_main          # by resource (every configuration)
+sextant xml app.apk res/BW.xml                     # by path inside the APK (shrunk names work)
+sextant xml app.apk AndroidManifest.xml
+sextant xml app.apk --tag EditText --attr android:inputType --value Password   # every password field
+sextant xml app.apk --tag WebView                  # every WebView declared in a layout
+```
+
+`--tag` also matches class names that end in it, so `EditText` finds `TextInputEditText` and `AppCompatEditText`. The rows are in `xml_nodes` and `xml_attrs`; `xml_attrs.ref` holds the resource a value points at, so joins with `string_resources` or `resource_values` work directly.
+
 ## SDKs and versions
 
 ```bash

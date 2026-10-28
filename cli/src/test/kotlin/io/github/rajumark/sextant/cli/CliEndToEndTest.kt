@@ -381,6 +381,24 @@ class CliEndToEndTest {
     }
 
     @Test
+    fun `xml prints any binary XML file and finds elements across all of them`() {
+        val file = extracted("binaryeye")
+        val menu = sextant("xml", file, "@menu/fragment_encode")
+        menu.exitCode shouldBe 0
+        menu.stdout shouldContain "android:title=\"@string/pick_file\""
+        sextant("xml", file, "AndroidManifest.xml").stdout shouldContain "package=\"de.markusfisch.android.binaryeye\""
+        val found = sextant("xml", file, "--tag", "vector", "--json", "--limit", "3")
+        found.exitCode shouldBe 0
+        found.stdout
+            .lines()
+            .filter { it.isNotBlank() }
+            .size shouldBe 3
+        found.stderr shouldContain "of"
+        sextant("xml", file).exitCode shouldBe 1
+        sextant("xml", file, "@layout/nope").exitCode shouldBe 2
+    }
+
+    @Test
     fun `extract stores insights and resources in the SQLite file`() {
         val file = extracted("binaryeye")
         for (table in listOf("libraries", "sdks", "endpoints", "resources", "string_resources", "layouts")) {

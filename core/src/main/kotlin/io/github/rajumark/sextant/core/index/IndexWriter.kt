@@ -2,6 +2,7 @@ package io.github.rajumark.sextant.core.index
 
 import io.github.rajumark.sextant.core.CodeSink
 import io.github.rajumark.sextant.core.Extraction
+import io.github.rajumark.sextant.core.RawXml
 import io.github.rajumark.sextant.core.SextantException
 import io.github.rajumark.sextant.core.insights.AppIcons
 import io.github.rajumark.sextant.core.insights.ComponentReviews
@@ -21,6 +22,7 @@ import io.github.rajumark.sextant.core.model.ResourceHarvest
 import io.github.rajumark.sextant.core.model.ResourceUseRecord
 import io.github.rajumark.sextant.core.model.StringRecord
 import io.github.rajumark.sextant.core.model.TypeRefRecord
+import io.github.rajumark.sextant.core.model.XmlNode
 import io.github.rajumark.sextant.core.output.InfoReports
 import io.github.rajumark.sextant.core.output.SextantJson
 import io.github.rajumark.sextant.core.output.makeReadable
@@ -372,6 +374,7 @@ class IndexWriter(
         extraction.insights?.let(::insertInsights)
         insertIcons(m.icons)
         insertFiles(extraction.files)
+        insertRaw(extraction)
         Records.write(conn, extraction)
         conn.prepareStatement("INSERT INTO features VALUES (?,?,?,?)").use { st ->
             for (f in extraction.features) {
@@ -419,6 +422,71 @@ class IndexWriter(
                 }
             }
             st.executeBatch()
+        }
+    }
+
+    private fun insertRaw(extraction: Extraction) {
+        val fileIds = extraction.files.withIndex().associate { (i, f) -> f.path to i + 1L }
+        var nextNode = 1L
+        conn.prepareStatement("INSERT INTO xml_nodes VALUES (?,?,?,?,?,?,?,?)").use { nodes ->
+            conn.prepareStatement("INSERT INTO xml_attrs VALUES (?,?,?,?)").use { attrs ->
+                for (doc in extraction.raw.xml) {
+                    var seq = 0
+
+                    fun visit(
+                        n: XmlNode,
+                        parent: Long?,
+                        depth: Int,
+                    ) {
+                        val id = nextNode++
+                        nodes.setLong(1, id)
+                        fileIds[doc.path]?.let { nodes.setLong(2, it) } ?: nodes.setNull(2, java.sql.Types.INTEGER)
+                        nodes.setString(3, doc.path)
+                        parent?.let { nodes.setLong(4, it) } ?: nodes.setNull(4, java.sql.Types.INTEGER)
+                        nodes.setInt(5, depth)
+                        nodes.setInt(6, seq++)
+                        nodes.setString(7, n.tag)
+                        nodes.setString(8, n.attributes["#text"])
+                        nodes.addBatch()
+                        for ((name, value) in n.attributes) {
+                            if (name == "#text") continue
+                            attrs.setLong(1, id)
+                            attrs.setString(2, name)
+                            attrs.setString(3, value)
+                            attrs.setString(4, RawXml.ref(value))
+                            attrs.addBatch()
+                        }
+                        n.children.forEach { visit(it, id, depth + 1) }
+                    }
+                    visit(doc.root, null, 0)
+                }
+                nodes.executeBatch()
+                attrs.executeBatch()
+            }
+        }
+        conn.prepareStatement("INSERT INTO resource_values VALUES (?,?,?,?,?,?)").use { values ->
+            conn.prepareStatement("INSERT INTO resource_bag_items VALUES (?,?,?,?,?)").use { items ->
+                for (r in extraction.raw.resourceTable) {
+                    val id = "0x%08x".format(r.id)
+                    values.setString(1, id)
+                    values.setString(2, r.type)
+                    values.setString(3, r.name)
+                    values.setString(4, r.config)
+                    values.setString(5, r.value)
+                    values.setString(6, r.parent)
+                    values.addBatch()
+                    r.items.forEachIndexed { i, (key, value) ->
+                        items.setString(1, id)
+                        items.setString(2, r.config)
+                        items.setInt(3, i)
+                        items.setString(4, key)
+                        items.setString(5, value)
+                        items.addBatch()
+                    }
+                }
+                values.executeBatch()
+                items.executeBatch()
+            }
         }
     }
 

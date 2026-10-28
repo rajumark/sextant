@@ -806,6 +806,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#any-xml-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Any XML file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#sdks-and-versions" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1338,6 +1349,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#any-xml-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Any XML file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#sdks-and-versions" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1610,26 +1632,35 @@
 </code></pre></div>
 <p><code>res assets</code> flags assets whose bytes are DEX, ELF or zip under another name as <strong>hidden code</strong>.</p>
 <p>The same data is in the SQLite file (<code>string_resources</code>, <code>resource_ids</code>, <code>styles</code>, <code>drawables</code>, <code>layouts</code>, <code>menus</code>, <code>navigation_destinations</code>, <code>assets</code>, <code>xml_configs</code>, <code>resource_refs</code>); see <a href="../../reference/output/">Output</a> and the <a href="../../reference/index-schema/">index schema</a>.</p>
-<h2 id="sdks-and-versions">SDKs and versions<a class="headerlink" href="#sdks-and-versions" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sextant<span class="w"> </span>sdks<span class="w"> </span>app.sqlite
+<h2 id="any-xml-file">Any XML file<a class="headerlink" href="#any-xml-file" title="Permanent link">&para;</a></h2>
+<p><code>res</code> summarizes the resource kinds people ask about most. <code>xml</code> shows every binary XML file of the APK exactly as stored, node by node, including drawables, color state lists, animations and the manifest:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sextant<span class="w"> </span>xml<span class="w"> </span>app.apk<span class="w"> </span>@layout/activity_main<span class="w">          </span><span class="c1"># by resource (every configuration)</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>sextant<span class="w"> </span>xml<span class="w"> </span>app.apk<span class="w"> </span>res/BW.xml<span class="w">                     </span><span class="c1"># by path inside the APK (shrunk names work)</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>sextant<span class="w"> </span>xml<span class="w"> </span>app.apk<span class="w"> </span>AndroidManifest.xml
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>sextant<span class="w"> </span>xml<span class="w"> </span>app.apk<span class="w"> </span>--tag<span class="w"> </span>EditText<span class="w"> </span>--attr<span class="w"> </span>android:inputType<span class="w"> </span>--value<span class="w"> </span>Password<span class="w">   </span><span class="c1"># every password field</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>sextant<span class="w"> </span>xml<span class="w"> </span>app.apk<span class="w"> </span>--tag<span class="w"> </span>WebView<span class="w">                  </span><span class="c1"># every WebView declared in a layout</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>com.x8bit.bitwarden 2024.10.0
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>Roles: analytics, auth, cryptography, image-loading, platform, push, reactive, serialization, ui
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>## SDKs (11)
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>category       sdk                        version  classes  evidence
-<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>analytics      Microsoft App Center       ?        221
-<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>platform       Firebase Core              17.1.0   59       firebase-components.properties
-<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>serialization  Gson                       2.10.1   217      META-INF/maven/com.google.code.gson/gson/pom.properties
-<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>ui             Material Components        1.9.0    1307     META-INF/com.google.android.material_material.version
-<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>...
+<p><code>--tag</code> also matches class names that end in it, so <code>EditText</code> finds <code>TextInputEditText</code> and <code>AppCompatEditText</code>. The rows are in <code>xml_nodes</code> and <code>xml_attrs</code>; <code>xml_attrs.ref</code> holds the resource a value points at, so joins with <code>string_resources</code> or <code>resource_values</code> work directly.</p>
+<h2 id="sdks-and-versions">SDKs and versions<a class="headerlink" href="#sdks-and-versions" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>sextant<span class="w"> </span>sdks<span class="w"> </span>app.sqlite
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>com.x8bit.bitwarden 2024.10.0
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>Roles: analytics, auth, cryptography, image-loading, platform, push, reactive, serialization, ui
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>## SDKs (11)
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>category       sdk                        version  classes  evidence
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>analytics      Microsoft App Center       ?        221
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>platform       Firebase Core              17.1.0   59       firebase-components.properties
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>serialization  Gson                       2.10.1   217      META-INF/maven/com.google.code.gson/gson/pom.properties
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>ui             Material Components        1.9.0    1307     META-INF/com.google.android.material_material.version
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>...
 </code></pre></div>
 <p>A version is shown only when an artifact in the APK proves it: META-INF <code>*.version</code> files, Maven <code>pom.properties</code>, Play services and Firebase <code>.properties</code> files, or OkHttp's user agent string. Otherwise the version is <code>?</code>. Sextant never guesses one from class names.</p>
 <p>With several apps, <code>sdks</code> shows which SDKs appear where, and the filters select apps:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>sextant<span class="w"> </span>sdks<span class="w"> </span>apps/*/<span class="w">                                   </span><span class="c1"># SDK × app overview</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>sextant<span class="w"> </span>sdks<span class="w"> </span>apps/*/<span class="w"> </span>--category<span class="w"> </span>ads<span class="w">                    </span><span class="c1"># apps that contain an ads SDK</span>
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>sextant<span class="w"> </span>sdks<span class="w"> </span>apps/*/<span class="w"> </span>--sdk<span class="w"> </span>okhttp<span class="w"> </span>--below<span class="w"> </span><span class="m">4</span>.9.0<span class="w">        </span><span class="c1"># apps with OkHttp older than 4.9.0</span>
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>sextant<span class="w"> </span>sdks<span class="w"> </span>apps/*/<span class="w"> </span>--sdk<span class="w"> </span>firebase<span class="w"> </span>--sdk<span class="w"> </span>sentry<span class="w"> </span>--json
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>sextant<span class="w"> </span>sdks<span class="w"> </span>apps/*/<span class="w">                                   </span><span class="c1"># SDK × app overview</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>sextant<span class="w"> </span>sdks<span class="w"> </span>apps/*/<span class="w"> </span>--category<span class="w"> </span>ads<span class="w">                    </span><span class="c1"># apps that contain an ads SDK</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>sextant<span class="w"> </span>sdks<span class="w"> </span>apps/*/<span class="w"> </span>--sdk<span class="w"> </span>okhttp<span class="w"> </span>--below<span class="w"> </span><span class="m">4</span>.9.0<span class="w">        </span><span class="c1"># apps with OkHttp older than 4.9.0</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>sextant<span class="w"> </span>sdks<span class="w"> </span>apps/*/<span class="w"> </span>--sdk<span class="w"> </span>firebase<span class="w"> </span>--sdk<span class="w"> </span>sentry<span class="w"> </span>--json
 </code></pre></div>
 <p><code>--category</code> and <code>--sdk</code> can be repeated; every one must match. <code>--below</code> needs exactly one <code>--sdk</code> and skips apps where that SDK's version is unknown.</p>
 

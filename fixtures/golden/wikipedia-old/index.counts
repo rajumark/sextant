@@ -26,8 +26,10 @@ navigation_destinations 0
 permissions 18
 queries 2
 records 143
+resource_bag_items 25824
 resource_ids 13798
 resource_refs 15943
+resource_values 204911
 resources 5163
 sdks 16
 string_refs 40150
@@ -35,5 +37,7 @@ string_resources 202550
 strings 22541
 styles 1856
 type_refs 77952
+xml_attrs 40562
 xml_configs 21
+xml_nodes 11722
 search 369424

@@ -96,6 +96,7 @@ fun main(args: Array<String>) {
             FilesCommand(),
             CoverageCommand(),
             CacheCommand(),
+            XmlCommand(),
         )
     try {
         command.parse(args)

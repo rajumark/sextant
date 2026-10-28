@@ -70,7 +70,7 @@ object ApkFiles {
         signing: Signing?,
         resources: ResourceHarvest,
         insights: Insights?,
-    ): Map<String, String> {
+    ): MutableMap<String, String> {
         val map = LinkedHashMap<String, String>()
         map["AndroidManifest.xml"] = "manifest"
         if (resourceTable) map["resources.arsc"] = "resource-table"

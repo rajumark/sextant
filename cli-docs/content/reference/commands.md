@@ -42,6 +42,7 @@ Commands:
   files       List every file inside the APK: type, size, content, the resource it is (shrunk apps rename res/ files) and which decoder read it.
   coverage    Show how much of the APK was decoded into rows: zip entries and bytes per file type, and examples of files that are only listed. Every file is always listed with its size and hash.
   cache       List the indexes Sextant keeps for APKs given directly to a command (one per APK, keyed by its SHA-256), or delete them with --clear. Set SEXTANT_CACHE to move the folder.
+  xml         Print any XML file of the APK (manifest, layouts, menus, drawables, colors, animations, …) as stored in SQLite, or find elements across all of them with --tag, --attr and --value.
 ```
 
 ## extract
@@ -503,4 +504,24 @@ Options:
   --clear     Delete every cached index
   --json      One JSON object per cached index
   -h, --help  Show this message and exit
+```
+
+## xml
+
+```text
+Usage: sextant xml [<options>] <target> [<file>]
+
+  Print any XML file of the APK (manifest, layouts, menus, drawables, colors, animations, …) as stored in SQLite, or find elements across all of them with --tag, --attr and --value.
+
+Options:
+  --tag=<text>    Find elements whose tag is or ends with this, e.g. EditText also finds TextInputEditText
+  --attr=<text>   Find elements with this attribute, e.g. android:inputType
+  --value=<text>  Only attributes whose value contains this text
+  --limit=<int>   Maximum rows (default 200)
+  --json          One JSON object per hit, or the tree as JSON
+  -h, --help      Show this message and exit
+
+Arguments:
+  <target>  An APK (indexed once, then cached) or a .sqlite file from sextant extract
+  <file>    A file inside the APK (res/BW.xml, AndroidManifest.xml) or a resource (@layout/main)
 ```

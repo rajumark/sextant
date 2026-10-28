@@ -25,6 +25,8 @@ The file holds everything Sextant reads from the APK, in two forms:
 | `call_edges`, `string_uses`, `search_items` | the same edges and search hits with readable names (views) |
 | `libraries`, `frameworks`, `sdks`, `endpoints`, `endpoint_sources`, `findings`, `finding_evidence` | insights, each with its evidence |
 | `native_libraries`, `native_symbols` | native code, with JNI symbols mapped to Java |
+| `xml_nodes`, `xml_attrs` | every binary XML file (manifest, layouts, menus, drawables, colors, animations, …) node by node and attribute by attribute, with `ref` for values that point at a resource; `sextant xml` prints a file rebuilt from them |
+| `resource_values`, `resource_bag_items` | `resources.arsc` in every configuration: values and file paths, and the items of styles, plurals, arrays and attrs |
 | `files` | every file inside the APK: type, size, CRC-32, SHA-256, content, resource name and the decoder that read it |
 | `records` | full records: manifest tree, permissions, components, features, metadata, queries, resources, insights |
 | `search` | FTS5 trigram index over names, strings, resources, endpoints, SDKs, libraries and native symbols |
@@ -63,6 +65,10 @@ SELECT "from" AS method, attribute AS call FROM resource_refs WHERE ref = '@stri
 
 -- Which Java methods are implemented in native code?
 SELECT jni_class, jni_method, library FROM native_symbols WHERE jni_class IS NOT NULL;
+
+-- Every password field in every layout
+SELECT n.path, n.tag FROM xml_nodes n JOIN xml_attrs a ON a.node = n.id
+WHERE a.name = 'android:inputType' AND a.value LIKE '%Password%';
 
 -- Which files did no decoder read?
 SELECT type, path, size_bytes FROM files WHERE decoded_by IS NULL ORDER BY size_bytes DESC;

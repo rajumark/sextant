@@ -7,7 +7,7 @@ or external) has one row in `methods`; edges point at integer ids, and the views
 and `search_items` give the readable, descriptor-based form. JSON arrays are stored as TEXT; use SQLite's
 `json_each` to expand them. Query it with `sextant sql <dir> "…"` (read-only) or any SQLite tool.
 
-Schema version: **9**
+Schema version: **10**
 (stored in `meta` as `index_schema_version`).
 
 ```sql
@@ -331,6 +331,43 @@ CREATE TABLE files (
   decoded_by       TEXT            -- manifest | resource-table | code | layouts | menus | navigation | xml-configs | drawables | assets | native | libraries | signing
 );
 
+-- The raw layer (index schema 10): every binary XML file of the APK (manifest, layouts, menus, drawables, colors,
+-- animations, …) node by node, so any view or attribute can be queried. `sextant xml` prints a file rebuilt from these rows.
+CREATE TABLE xml_nodes (
+  id     INTEGER PRIMARY KEY,
+  file   INTEGER,                 -- files.id
+  path   TEXT NOT NULL,           -- the file inside the APK, e.g. res/BW.xml
+  parent INTEGER,                 -- xml_nodes.id; NULL for the root element
+  depth  INTEGER NOT NULL,        -- 0 for the root
+  seq    INTEGER NOT NULL,        -- document order within the file
+  tag    TEXT NOT NULL,           -- LinearLayout, com.app.ui.Card, item, vector, …
+  text   TEXT                     -- element text, when it has no child elements
+);
+CREATE TABLE xml_attrs (
+  node  INTEGER NOT NULL,         -- xml_nodes.id
+  name  TEXT NOT NULL,            -- android:text, app:layout_constraintTop_toTopOf, …
+  value TEXT NOT NULL,            -- as decoded: @string/title, 16.0dip, #ff000000, match_parent
+  ref   TEXT                      -- the resource it points at (@string/title, ?attr/colorPrimary, @android:color/white); NULL for plain values
+);
+
+-- resources.arsc in every configuration (index schema 10). Simple values and file paths in resource_values;
+-- bags (styles, plurals, arrays, attr enums and flags) item by item in resource_bag_items.
+CREATE TABLE resource_values (
+  id     TEXT NOT NULL,           -- 0x7f0e001c
+  type   TEXT NOT NULL,
+  name   TEXT NOT NULL,
+  config TEXT NOT NULL,           -- '' default, fr, night, xxhdpi-v4, …
+  value  TEXT,                    -- the value, or the file path for file resources; NULL for bags
+  parent TEXT                     -- bags: parent style
+);
+CREATE TABLE resource_bag_items (
+  id     TEXT NOT NULL,           -- resource_values.id
+  config TEXT NOT NULL,
+  seq    INTEGER NOT NULL,
+  key    TEXT NOT NULL,           -- style attribute, plural quantity, array index or enum/flag name
+  value  TEXT NOT NULL
+);
+
 -- Full records (index schema 9): every manifest, resource and insight record exactly as Sextant built it, one JSON
 -- row each, so a command can rebuild the whole extraction from this file alone. The tables above are the
 -- queryable view of the same facts. kind: manifest | permission | component | feature | metadata | query | resources | insights
@@ -409,6 +446,13 @@ CREATE INDEX string_refs_string ON string_refs(string);
 CREATE INDEX string_refs_method ON string_refs(method);
 CREATE INDEX components_name ON components(name);
 CREATE INDEX files_type ON files(type);
+CREATE INDEX xml_nodes_file ON xml_nodes(path);
+CREATE INDEX xml_nodes_tag ON xml_nodes(tag);
+CREATE INDEX xml_attrs_node ON xml_attrs(node);
+CREATE INDEX xml_attrs_name ON xml_attrs(name);
+CREATE INDEX xml_attrs_ref ON xml_attrs(ref);
+CREATE INDEX resource_values_name ON resource_values(type, name);
+CREATE INDEX resource_bag_items_id ON resource_bag_items(id);
 CREATE INDEX files_resource ON files(resource);
 CREATE INDEX string_resources_name ON string_resources(name);
 CREATE INDEX resource_refs_ref ON resource_refs(ref);

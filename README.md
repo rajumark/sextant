@@ -71,6 +71,7 @@ sextant xref    <app.apk | app.sqlite> <class | field> [--limit N] [--json]
 sextant reach   <app.apk | app.sqlite> <from> <to> [--depth N] [--paths N] [--json]
 sextant smali   <app.apk> <class | method>
 sextant icon    <app.apk | app.sqlite> [--round] [--layer foreground|background|monochrome] [-o file] [--json]
+sextant xml     <app.apk | app.sqlite> [<file | @resource>] [--tag TAG] [--attr NAME] [--value TEXT] [--limit N] [--json]
 sextant files   <app.apk | app.sqlite> [--type TYPE] [--status decoded|listed] [--search TEXT] [--by-size] [--limit N] [--json]
 sextant coverage <app.apk | app.sqlite> [--json]
 sextant cache   [--clear] [--json]
@@ -96,6 +97,7 @@ Every command takes either the `.sqlite` file from `extract` or the APK itself. 
 | `reach` | Shows call paths from an entry point (component, class or method) to targets (`Cipher.getInstance`, `okhttp3/`, a descriptor prefix). Virtual and interface calls dispatch into subclass overrides (class-hierarchy analysis); signatures with more than 25 implementations, such as `Runnable.run`, are not expanded. You get one shortest path per target method. |
 | `smali` | Prints the bytecode assembly (baksmali) of a class or method. It works where decompiling fails. `#@54` offsets are hex code units, matching the decimal `offsets` in the code files. |
 | `icon` | Finds the app icon. It lists every file behind `android:icon` (or `--round` for `android:roundIcon`) per density, with format, pixel size and byte size, decodes adaptive icons into their foreground, background and monochrome layers, marks the best file, and `-o` saves it. It works on an APK directly (from the cache when indexed, else manifest and resources only) or on a `.sqlite` file. |
+| `xml` | Prints any XML file of the APK (manifest, layouts, menus, drawables, colors, animations, …) rebuilt from the `xml_nodes` and `xml_attrs` tables, by path (`res/BW.xml`) or resource (`@layout/main`, every configuration). With `--tag`, `--attr` and `--value` it finds elements across all files instead: `--tag EditText --attr android:inputType --value Password` lists every password field. `--tag` also matches class names that end in it (`TextInputEditText`). |
 | `files` | Lists every file inside the APK from the index: type, size, content (dex, elf, png, binary-xml, json, …), the resource it is (shrunk apps rename `res/` files, so `res/BW.xml` shows as `@mipmap/ic_launcher`) and the decoder that read it. `--status listed` shows files no decoder reads yet; `--by-size` puts the largest first. |
 | `coverage` | Shows how much of the APK was decoded into rows: files and bytes per type, and the largest files that are only listed (size and hash). Every zip entry is always listed. |
 | `cache` | Lists the indexes built for APKs given directly to a command (app, version, size, state), or deletes them with `--clear`. |
@@ -130,6 +132,8 @@ Progress and errors go to **stderr**, data goes to **stdout**, so `--json` outpu
 | `call_edges`, `string_uses`, `search_items` | the same edges and search hits with readable names (views) |
 | `libraries`, `frameworks`, `sdks`, `endpoints`, `endpoint_sources`, `findings`, `finding_evidence` | insights, each with its evidence |
 | `native_libraries`, `native_symbols` | native code, with JNI symbols mapped to Java |
+| `xml_nodes`, `xml_attrs` | every binary XML file (manifest, layouts, menus, drawables, colors, animations, …) node by node and attribute by attribute, with `ref` for values that point at a resource |
+| `resource_values`, `resource_bag_items` | `resources.arsc` in every configuration: values and file paths, and the items of styles, plurals, arrays and attrs |
 | `files` | every file inside the APK: type, size, hashes, content, resource name and the decoder that read it |
 | `records` | full records (manifest tree, permissions, components, resources, insights) |
 | `search` | FTS5 trigram index over names, strings, resources, endpoints, SDKs, libraries and native symbols |
@@ -166,6 +170,10 @@ SELECT value, method FROM string_uses WHERE value LIKE 'https://%';
 
 -- Which Java methods are implemented in native code?
 SELECT jni_class, jni_method, library FROM native_symbols WHERE jni_class IS NOT NULL;
+
+-- Every password field in every layout
+SELECT n.path, n.tag FROM xml_nodes n JOIN xml_attrs a ON a.node = n.id
+WHERE a.name = 'android:inputType' AND a.value LIKE '%Password%';
 
 -- Which files did no decoder read?
 SELECT type, path, size_bytes FROM files WHERE decoded_by IS NULL ORDER BY size_bytes DESC;

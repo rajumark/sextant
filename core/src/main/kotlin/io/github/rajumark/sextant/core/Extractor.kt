@@ -39,6 +39,8 @@ data class Extraction(
     val resources: ResourceHarvest = ResourceHarvest(),
     /** Every zip entry (index only); empty unless [Extractor.extract] was asked to list files. */
     val files: List<ApkFile> = emptyList(),
+    /** Every binary XML file node by node and the resource table in every configuration (index only, written to tables). */
+    val raw: RawLayer = RawLayer(),
 )
 
 object Extractor {
@@ -116,13 +118,18 @@ object Extractor {
         // Code is a referrer too: which methods load which resources.
         val codeRefs = CodeResourceRefs.of(resourceUses.uses, decoded.table)
         val resources = if (codeRefs.isEmpty()) harvested else harvested.copy(refs = harvested.refs + codeRefs)
+        var raw = RawLayer()
         val files =
             if (!listFiles) {
                 emptyList()
             } else {
                 try {
+                    val listed = ApkFiles.list(apk, decoded.table, warnings)
+                    val xml = ZipFile(apk.toFile()).use { RawXml.decode(it, decoded.root, listed, decoded.decodeXml, warnings) }
+                    raw = RawLayer(xml, decoded.table)
                     val decoders = ApkFiles.decoders(codeStats, decoded.table.isNotEmpty(), signing, resources, insights)
-                    ApkFiles.markDecoded(ApkFiles.list(apk, decoded.table, warnings), decoders, signing)
+                    xml.forEach { decoders.putIfAbsent(it.path, "xml") }
+                    ApkFiles.markDecoded(listed, decoders, signing)
                 } catch (e: Exception) {
                     warnings += "zip entries could not be listed (${e.javaClass.simpleName}: ${e.message})"
                     emptyList()
@@ -162,6 +169,7 @@ object Extractor {
             mapper.queries(),
             resources,
             files,
+            raw,
         )
     }
 }

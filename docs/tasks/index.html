@@ -44,6 +44,7 @@
   <li><span class="s done">Implemented</span><span>Mission SQLite step 2: instant answers. Any command given an APK builds its SQLite index once (keyed by the APK's SHA-256) and reuses it after, so <code>sextant info app.apk</code> is slow once and instant after</span></li>
   <li><span class="s done">Implemented</span><span>Mission SQLite step 3: APK in, SQLite out. <code>extract</code> writes one <code>.sqlite</code> file and no JSONL; every command reads an APK or that file</span></li>
   <li><span class="s done">Implemented</span><span>Mission SQLite step 4: code → resource links. Every resource ID the code uses (<code>const 0x7f…</code> or an <code>R$type.name</code> field), with the call that receives it (<code>setContentView</code>, <code>getString</code>, <code>inflate</code>), stored as a resource reference, so "which method shows this string" is one query and unused lists are trustworthy</span></li>
+  <li><span class="s done">Implemented</span><span>Mission SQLite step 5: every XML node and attribute. Every binary XML file in the APK (manifest, layouts, menus, drawables, colors, animations, …) stored node by node and attribute by attribute, and every resource value in every configuration, so any view or attribute can be queried</span></li>
 </ul>
 </body>
 </html>

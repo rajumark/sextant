@@ -14,6 +14,7 @@ import io.github.rajumark.sextant.core.model.ResourceHarvest
 import io.github.rajumark.sextant.core.model.XmlNode
 import io.github.rajumark.sextant.core.output.SextantJson
 import io.kotest.assertions.withClue
+import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.nullable
@@ -30,8 +31,19 @@ class RoundTripTest {
         val file = dir.resolve("$id.sqlite")
         try {
             val written = IndexBuilder.build(CorpusApks.require(id), file)
-            val read = IndexReader.open(file).use { it.extraction() }
-            for ((part, json) in PARTS) withClue("$id $part") { json(read) shouldBe json(written) }
+            IndexReader.open(file).use { index ->
+                val read = index.extraction()
+                for ((part, json) in PARTS) withClue("$id $part") { json(read) shouldBe json(written) }
+                // The raw layer: every binary XML file rebuilt from xml_nodes / xml_attrs equals the decoded file.
+                written.raw.xml.size shouldBeGreaterThan 1
+                for (doc in written.raw.xml) {
+                    withClue("$id ${doc.path}") {
+                        SextantJson.compact.encodeToString(XmlNode.serializer().nullable, index.xmlTree(doc.path)) shouldBe
+                            SextantJson.compact.encodeToString(XmlNode.serializer(), doc.root)
+                    }
+                }
+                index.query("SELECT count(*) FROM resource_values").rows[0][0] shouldBe written.raw.resourceTable.size
+            }
         } finally {
             Files.deleteIfExists(file)
             Files.deleteIfExists(dir)

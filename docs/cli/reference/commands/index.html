@@ -1252,6 +1252,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#xml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        xml
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1854,6 +1865,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#xml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        xml
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1915,6 +1937,7 @@
 <a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>  files       List every file inside the APK: type, size, content, the resource it is (shrunk apps rename res/ files) and which decoder read it.
 <a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>  coverage    Show how much of the APK was decoded into rows: zip entries and bytes per file type, and examples of files that are only listed. Every file is always listed with its size and hash.
 <a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>  cache       List the indexes Sextant keeps for APKs given directly to a command (one per APK, keyed by its SHA-256), or delete them with --clear. Set SEXTANT_CACHE to move the folder.
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>  xml         Print any XML file of the APK (manifest, layouts, menus, drawables, colors, animations, …) as stored in SQLite, or find elements across all of them with --tag, --attr and --value.
 </code></pre></div>
 <h2 id="extract">extract<a class="headerlink" href="#extract" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Usage: sextant extract [&lt;options&gt;] &lt;apk&gt;
@@ -2295,6 +2318,23 @@
 <a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>  --clear     Delete every cached index
 <a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a>  --json      One JSON object per cached index
 <a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a>  -h, --help  Show this message and exit
+</code></pre></div>
+<h2 id="xml">xml<a class="headerlink" href="#xml" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>Usage: sextant xml [&lt;options&gt;] &lt;target&gt; [&lt;file&gt;]
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>  Print any XML file of the APK (manifest, layouts, menus, drawables, colors, animations, …) as stored in SQLite, or find elements across all of them with --tag, --attr and --value.
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>
+<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>Options:
+<a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>  --tag=&lt;text&gt;    Find elements whose tag is or ends with this, e.g. EditText also finds TextInputEditText
+<a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>  --attr=&lt;text&gt;   Find elements with this attribute, e.g. android:inputType
+<a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a>  --value=&lt;text&gt;  Only attributes whose value contains this text
+<a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a>  --limit=&lt;int&gt;   Maximum rows (default 200)
+<a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a>  --json          One JSON object per hit, or the tree as JSON
+<a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a>  -h, --help      Show this message and exit
+<a id="__codelineno-28-12" name="__codelineno-28-12" href="#__codelineno-28-12"></a>
+<a id="__codelineno-28-13" name="__codelineno-28-13" href="#__codelineno-28-13"></a>Arguments:
+<a id="__codelineno-28-14" name="__codelineno-28-14" href="#__codelineno-28-14"></a>  &lt;target&gt;  An APK (indexed once, then cached) or a .sqlite file from sextant extract
+<a id="__codelineno-28-15" name="__codelineno-28-15" href="#__codelineno-28-15"></a>  &lt;file&gt;    A file inside the APK (res/BW.xml, AndroidManifest.xml) or a resource (@layout/main)
 </code></pre></div>
 
 

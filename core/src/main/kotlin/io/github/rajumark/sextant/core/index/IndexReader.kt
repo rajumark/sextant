@@ -4,6 +4,7 @@ import io.github.rajumark.sextant.core.Extraction
 import io.github.rajumark.sextant.core.SextantException
 import io.github.rajumark.sextant.core.model.ApkFile
 import io.github.rajumark.sextant.core.model.AppMeta
+import io.github.rajumark.sextant.core.model.XmlNode
 import io.github.rajumark.sextant.core.output.OutputFiles
 import io.github.rajumark.sextant.core.output.SextantJson
 import kotlinx.serialization.Serializable
@@ -90,6 +91,17 @@ data class CoverageRow(
     val decodedBytes: Long,
     /** A few paths of this type that no decoder read. */
     val listedOnly: List<String>,
+)
+
+/** One element found by `sextant xml --tag/--attr/--value`. */
+@Serializable
+data class XmlHit(
+    val path: String,
+    val resource: String?,
+    val tag: String,
+    /** The matching attribute, or null when only the tag was asked for. */
+    val attribute: String?,
+    val value: String?,
 )
 
 /** Read-only access to index.sqlite. */
@@ -572,6 +584,127 @@ class IndexReader private constructor(
             st.setString(1, name)
             st.executeQuery().use { it.next() }
         }
+
+    /**
+     * Paths of the binary XML files that match [target]: a path inside the APK (`res/BW.xml`, `AndroidManifest.xml`)
+     * or a resource (`@layout/activity_main`, every configuration, default first).
+     */
+    fun xmlPaths(target: String): List<String> {
+        requireTable("xml_nodes", "XML nodes need 10")
+        val sql =
+            if (target.startsWith("@")) {
+                "SELECT DISTINCT n.path FROM xml_nodes n JOIN files f ON f.id = n.file WHERE f.resource = ? ORDER BY f.config != '', f.config"
+            } else {
+                "SELECT DISTINCT path FROM xml_nodes WHERE path = ?"
+            }
+        return conn.prepareStatement(sql).use { st ->
+            st.setString(1, target)
+            st.executeQuery().use { rs -> rs.map { it.getString(1) } }
+        }
+    }
+
+    /** The file at [path], rebuilt from xml_nodes and xml_attrs. */
+    fun xmlTree(path: String): XmlNode? {
+        requireTable("xml_nodes", "XML nodes need 10")
+
+        class Row(
+            val id: Long,
+            val parent: Long?,
+            val tag: String,
+            val text: String?,
+        )
+        val rows =
+            conn.prepareStatement("SELECT id, parent, tag, text FROM xml_nodes WHERE path = ? ORDER BY seq").use { st ->
+                st.setString(1, path)
+                st.executeQuery().use { rs ->
+                    rs.map { Row(it.getLong(1), it.getLong(2).takeUnless { _ -> it.wasNull() }, it.getString(3), it.getString(4)) }
+                }
+            }
+        if (rows.isEmpty()) return null
+        val attrs = HashMap<Long, MutableMap<String, String>>()
+        conn
+            .prepareStatement(
+                "SELECT a.node, a.name, a.value FROM xml_attrs a JOIN xml_nodes n ON n.id = a.node WHERE n.path = ? ORDER BY a.rowid",
+            ).use { st ->
+                st.setString(1, path)
+                st.executeQuery().use { rs ->
+                    while (rs.next()) {
+                        attrs.getOrPut(rs.getLong(1)) { linkedMapOf() }[rs.getString(2)] =
+                            rs.getString(3)
+                    }
+                }
+            }
+        val children = rows.groupBy { it.parent }
+
+        fun build(r: Row): XmlNode {
+            val a = attrs[r.id].orEmpty().toMutableMap()
+            r.text?.let { a["#text"] = it }
+            return XmlNode(r.tag, a, children[r.id].orEmpty().map(::build))
+        }
+        return build(rows.first { it.parent == null })
+    }
+
+    /**
+     * Elements across every XML file: by [tag] (exact, or ending in it: EditText finds TextInputEditText), [attribute] name and a
+     * substring of its [value]. Without an attribute or value, one row per element.
+     */
+    fun xmlFind(
+        tag: String?,
+        attribute: String?,
+        value: String?,
+        limit: Int,
+    ): Pair<List<XmlHit>, Int> {
+        requireTable("xml_nodes", "XML nodes need 10")
+        val where = mutableListOf<String>()
+        val args = mutableListOf<String>()
+        tag?.let {
+            where += "(n.tag = ? OR n.tag LIKE ? ESCAPE '\\')"
+            args += it
+            args += "%" + likeEscape(it)
+        }
+        val withAttr = attribute != null || value != null
+        attribute?.let {
+            where += "a.name = ?"
+            args += it
+        }
+        value?.let {
+            where += "a.value LIKE ? ESCAPE '\\'"
+            args += "%" + likeEscape(it) + "%"
+        }
+        val from =
+            "FROM xml_nodes n LEFT JOIN files f ON f.id = n.file" + if (withAttr) " JOIN xml_attrs a ON a.node = n.id" else ""
+        val filter = if (where.isEmpty()) "" else "WHERE " + where.joinToString(" AND ")
+        val total =
+            conn.prepareStatement("SELECT count(*) $from $filter").use { st ->
+                args.forEachIndexed { i, a -> st.setString(i + 1, a) }
+                st.executeQuery().use {
+                    it.next()
+                    it.getInt(1)
+                }
+            }
+        val columns = if (withAttr) "n.path, f.resource, n.tag, a.name, a.value" else "n.path, f.resource, n.tag, NULL, NULL"
+        val hits =
+            conn.prepareStatement("SELECT $columns $from $filter ORDER BY n.path, n.seq LIMIT ?").use { st ->
+                args.forEachIndexed { i, a -> st.setString(i + 1, a) }
+                st.setInt(args.size + 1, limit)
+                st.executeQuery().use { rs ->
+                    rs.map { XmlHit(it.getString(1), it.getString(2), it.getString(3), it.getString(4), it.getString(5)) }
+                }
+            }
+        return hits to total
+    }
+
+    private fun requireTable(
+        name: String,
+        need: String,
+    ) {
+        if (!hasTable(name)) {
+            throw SextantException.input(
+                "this index has no $name table (index schema ${meta("index_schema_version") ?: "?"}; $need)",
+                "run `sextant extract <app.apk> --force` again with this version, or pass the APK",
+            )
+        }
+    }
 
     /** One value from the meta table, or null. */
     fun meta(key: String): String? =
