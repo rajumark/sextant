@@ -445,7 +445,10 @@ class CliEndToEndTest {
         fromApk.stdout shouldContain "## Startup order"
         fromApk.stdout shouldContain "No code index"
         val fromFolder = sextant("app", "--json", extracted("bitwarden"))
-        Json.parseToJsonElement(fromFolder.stdout).jsonObject["code_indexed"]!!.jsonPrimitive.content shouldBe "true"
+        Json
+            .parseToJsonElement(fromFolder.stdout)
+            .jsonObject["code_indexed"]!!
+            .jsonPrimitive.content shouldBe "true"
     }
 
     @Test

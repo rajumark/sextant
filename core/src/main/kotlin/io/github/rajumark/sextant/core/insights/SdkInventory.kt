@@ -50,7 +50,8 @@ object SdkInventory {
             "Firebase Auth" to listOf("com.google.firebase:firebase-auth"),
             "Firebase Firestore" to listOf("com.google.firebase:firebase-firestore"),
             "Google Mobile Ads (AdMob)" to listOf("com.google.android.gms:play-services-ads"),
-            "Google Play Services Base" to listOf("com.google.android.gms:play-services-base", "com.google.android.gms:play-services-basement"),
+            "Google Play Services Base" to
+                listOf("com.google.android.gms:play-services-base", "com.google.android.gms:play-services-basement"),
             "Google Maps" to listOf("com.google.android.gms:play-services-maps"),
             "Google Sign-In" to listOf("com.google.android.gms:play-services-auth"),
             "Google Play Billing" to listOf("com.android.billingclient:billing"),
@@ -79,27 +80,65 @@ object SdkInventory {
     /** Library group → category, for artifacts no SDK rule claims. Longest prefix wins. */
     private val GROUP_CATEGORY =
         listOf(
-            "androidx.compose" to "ui", "androidx.appcompat" to "ui", "androidx.constraintlayout" to "ui", "androidx.recyclerview" to "ui",
-            "com.google.android.material" to "ui", "androidx.fragment" to "ui", "androidx.activity" to "ui", "androidx.navigation" to "ui",
-            "androidx.room" to "database", "androidx.sqlite" to "database", "androidx.datastore" to "storage", "androidx.work" to "background-work",
-            "androidx.camera" to "media", "androidx.media3" to "media", "androidx.media" to "media", "androidx.biometric" to "auth",
-            "androidx.security" to "cryptography", "androidx.credentials" to "auth", "androidx.browser" to "browser",
-            "androidx.lifecycle" to "architecture", "androidx.savedstate" to "architecture", "androidx.startup" to "architecture",
-            "com.google.firebase" to "firebase", "com.google.android.gms" to "google-play-services", "com.google.mlkit" to "machine-learning",
-            "kotlinx" to "kotlin", "org.jetbrains.kotlinx" to "kotlin", "com.squareup.okhttp3" to "networking", "com.squareup.retrofit2" to "networking",
-            "com.google.code.gson" to "serialization", "com.google.protobuf" to "serialization", "com.google.dagger" to "dependency-injection",
+            "androidx.compose" to "ui",
+            "androidx.appcompat" to "ui",
+            "androidx.constraintlayout" to "ui",
+            "androidx.recyclerview" to "ui",
+            "com.google.android.material" to "ui",
+            "androidx.fragment" to "ui",
+            "androidx.activity" to "ui",
+            "androidx.navigation" to "ui",
+            "androidx.room" to "database",
+            "androidx.sqlite" to "database",
+            "androidx.datastore" to "storage",
+            "androidx.work" to "background-work",
+            "androidx.camera" to "media",
+            "androidx.media3" to "media",
+            "androidx.media" to "media",
+            "androidx.biometric" to "auth",
+            "androidx.security" to "cryptography",
+            "androidx.credentials" to "auth",
+            "androidx.browser" to "browser",
+            "androidx.lifecycle" to "architecture",
+            "androidx.savedstate" to "architecture",
+            "androidx.startup" to "architecture",
+            "com.google.firebase" to "firebase",
+            "com.google.android.gms" to "google-play-services",
+            "com.google.mlkit" to "machine-learning",
+            "kotlinx" to "kotlin",
+            "org.jetbrains.kotlinx" to "kotlin",
+            "com.squareup.okhttp3" to "networking",
+            "com.squareup.retrofit2" to "networking",
+            "com.google.code.gson" to "serialization",
+            "com.google.protobuf" to "serialization",
+            "com.google.dagger" to "dependency-injection",
             "androidx" to "androidx",
         ).sortedByDescending { it.first.length }
 
     /** Reads an extracted folder's meta.json, insights/sdks.jsonl and insights/libraries.jsonl. */
     fun fromFolder(dir: java.nio.file.Path): SdkProfile {
-        val meta = SextantJson.reader.decodeFromString(AppMeta.serializer(), java.nio.file.Files.readString(dir.resolve(OutputFiles.META)))
+        val meta =
+            SextantJson.reader.decodeFromString(
+                AppMeta.serializer(),
+                java.nio.file.Files
+                    .readString(dir.resolve(OutputFiles.META)),
+            )
 
         fun <T> lines(
             name: String,
             parse: (String) -> T,
         ) = dir.resolve(name).let { f ->
-            if (java.nio.file.Files.isRegularFile(f)) java.nio.file.Files.readAllLines(f).filter { it.isNotBlank() }.map(parse) else emptyList()
+            if (java.nio.file.Files.isRegularFile(
+                    f,
+                )
+            ) {
+                java.nio.file.Files
+                    .readAllLines(f)
+                    .filter { it.isNotBlank() }
+                    .map(parse)
+            } else {
+                emptyList()
+            }
         }
         return of(
             dir.fileName.toString(),
@@ -110,7 +149,8 @@ object SdkInventory {
         )
     }
 
-    fun categoryOfGroup(group: String): String = GROUP_CATEGORY.firstOrNull { group == it.first || group.startsWith(it.first + ".") }?.second ?: "library"
+    fun categoryOfGroup(group: String): String =
+        GROUP_CATEGORY.firstOrNull { group == it.first || group.startsWith(it.first + ".") }?.second ?: "library"
 
     fun of(
         app: String,
@@ -123,7 +163,12 @@ object SdkInventory {
         val claimed = HashSet<String>()
         val entries = mutableListOf<SdkEntry>()
         for (s in sdks) {
-            val matches = ARTIFACTS[s.name].orEmpty().flatMap { prefix -> coords.keys.filter { it.startsWith(prefix) } }.distinct().sorted()
+            val matches =
+                ARTIFACTS[s.name]
+                    .orEmpty()
+                    .flatMap { prefix -> coords.keys.filter { it.startsWith(prefix) } }
+                    .distinct()
+                    .sorted()
             claimed += matches
             val best = matches.firstNotNullOfOrNull { coords[it] }
             entries += SdkEntry(s.name, "sdk", s.category, best?.version, best?.evidence, s.classes, matches, s.packages)
@@ -137,7 +182,11 @@ object SdkInventory {
             packageName,
             versionName,
             entries.sortedWith(compareBy({ it.kind }, { it.category }, { it.name })),
-            entries.filter { it.kind == "sdk" }.map { it.category }.distinct().sorted(),
+            entries
+                .filter { it.kind == "sdk" }
+                .map { it.category }
+                .distinct()
+                .sorted(),
         )
     }
 
@@ -159,6 +208,12 @@ object SdkInventory {
         }
         val sa = '-' in a
         val sb = '-' in b
-        return if (sa == sb) 0 else if (sa) -1 else 1
+        return if (sa == sb) {
+            0
+        } else if (sa) {
+            -1
+        } else {
+            1
+        }
     }
 }

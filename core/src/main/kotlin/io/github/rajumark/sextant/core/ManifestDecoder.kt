@@ -214,7 +214,11 @@ object ManifestDecoder {
         val text = StringBuilder()
         for (i in 0 until nodes.length) {
             val node = nodes.item(i)
-            if (node is Element) children += toNode(node) else if (node.nodeType == org.w3c.dom.Node.TEXT_NODE) text.append(node.nodeValue)
+            if (node is Element) {
+                children += toNode(node)
+            } else if (node.nodeType == org.w3c.dom.Node.TEXT_NODE) {
+                text.append(node.nodeValue)
+            }
         }
         // Element text matters in res/xml configs (<domain>example.org</domain>); manifests have none.
         if (children.isEmpty() && text.isNotBlank()) attrs["#text"] = text.toString().trim()

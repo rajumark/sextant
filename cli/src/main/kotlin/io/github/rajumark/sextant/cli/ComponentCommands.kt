@@ -26,7 +26,8 @@ import java.nio.file.Files
 import java.nio.file.Path
 
 /** Components need only the manifest: an APK is read without its code, so this is fast even for large apps. */
-private fun load(target: Path): Extraction = if (Files.isDirectory(target)) OutputReader.read(target) else Extractor.extract(target, code = null)
+private fun load(target: Path): Extraction =
+    if (Files.isDirectory(target)) OutputReader.read(target) else Extractor.extract(target, code = null)
 
 /** The component, its review, and the `<activity>` attributes that are set, as one JSON object. */
 private fun json(
@@ -44,8 +45,10 @@ private fun json(
 /** `sextant components <apk|dir>`: every manifest component with its verdict tags, filterable. */
 class ComponentsCommand : CoreCliktCommand(name = "components") {
     private val target by argument(help = "An extracted folder, or an APK (analyzed in memory, nothing written)").path()
-    private val types by option("--type", help = "Only this type; repeat for several (activity includes aliases with --type activity-alias)")
-        .choice(*InfoReports.TYPES.toTypedArray())
+    private val types by option(
+        "--type",
+        help = "Only this type; repeat for several (activity includes aliases with --type activity-alias)",
+    ).choice(*InfoReports.TYPES.toTypedArray())
         .multiple()
     private val tags by option("--tag", help = "Only components with this verdict; repeat to require several")
         .choice(*ComponentReview.TAGS.toTypedArray())
@@ -80,7 +83,13 @@ class ComponentsCommand : CoreCliktCommand(name = "components") {
                             listOf(
                                 c.type,
                                 c.name,
-                                if (!c.exported) "no" else if (c.exportedSource == "default") "default" else "yes",
+                                if (!c.exported) {
+                                    "no"
+                                } else if (c.exportedSource == "default") {
+                                    "default"
+                                } else {
+                                    "yes"
+                                },
                                 r.tags.joinToString(","),
                                 r.deepLinks.firstOrNull() ?: c.authorities.firstOrNull() ?: r.entryPoints.firstOrNull() ?: "",
                             )
@@ -115,7 +124,14 @@ class ComponentCommand : CoreCliktCommand(name = "component") {
         guarded {
             val extraction = load(target)
             val all = extraction.components
-            val matches = all.filter { it.name == name }.ifEmpty { all.filter { it.name.endsWith(if (name.startsWith('.')) name else ".$name") } }
+            val matches =
+                all.filter { it.name == name }.ifEmpty {
+                    all.filter {
+                        it.name.endsWith(
+                            if (name.startsWith('.')) name else ".$name",
+                        )
+                    }
+                }
             val c =
                 when (matches.size) {
                     1 -> matches.single()
@@ -134,7 +150,14 @@ class ComponentCommand : CoreCliktCommand(name = "component") {
                 return@guarded
             }
             println("${c.name}  (${c.type})")
-            val exported = if (!c.exported) "no" else if (c.exportedSource == "default") "yes, by default" else "yes"
+            val exported =
+                if (!c.exported) {
+                    "no"
+                } else if (c.exportedSource == "default") {
+                    "yes, by default"
+                } else {
+                    "yes"
+                }
             println("Exported: $exported · enabled: ${if (c.enabled) "yes" else "no"}")
             section("Verdicts", r.tags.map { "$it: ${r.reasons.getValue(it)}" }.ifEmpty { listOf("none") })
             val props =
@@ -153,7 +176,11 @@ class ComponentCommand : CoreCliktCommand(name = "component") {
             if (r.aliases.isNotEmpty()) section("Aliases pointing here", r.aliases)
             section(
                 "Entry points",
-                r.entryPoints.ifEmpty { listOf("No intent filters: only explicit intents" + if (c.exported) " (from any app)." else " from this app.") },
+                r.entryPoints.ifEmpty {
+                    listOf(
+                        "No intent filters: only explicit intents" + if (c.exported) " (from any app)." else " from this app.",
+                    )
+                },
             )
             if (r.deepLinks.isNotEmpty()) section("Deep links", r.deepLinks)
             if (r.appLinkHosts.isNotEmpty()) section("App Link hosts (need /.well-known/assetlinks.json)", r.appLinkHosts)

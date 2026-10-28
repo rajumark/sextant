@@ -30,18 +30,65 @@ import java.util.zip.ZipFile
 object ResourceHarvester {
     private val ZIP_FORMATS =
         setOf(
-            "ja", "xpi", "crx", "odp", "ods", "odt", "odg", "pptx", "xlsx", "docx", "epub", "lottie", "mbtiles", "kmz", "obb",
-            "ttf", "woff", "pkpass", "sketch", "usdz", "3mf", "whl", "nupkg", "war", "ear",
+            "ja",
+            "xpi",
+            "crx",
+            "odp",
+            "ods",
+            "odt",
+            "odg",
+            "pptx",
+            "xlsx",
+            "docx",
+            "epub",
+            "lottie",
+            "mbtiles",
+            "kmz",
+            "obb",
+            "ttf",
+            "woff",
+            "pkpass",
+            "sketch",
+            "usdz",
+            "3mf",
+            "whl",
+            "nupkg",
+            "war",
+            "ear",
         )
     private const val MAX_FILE_BYTES = 4L * 1024 * 1024
     private const val MAX_VIEWS = 2000
     private val FRAMEWORK_VIEW = Regex("""^(android\.|androidx\.|com\.google\.android\.material\.)|^[A-Z][A-Za-z]*$""")
-    private val PLURAL = mapOf(0x01000004 to "other", 0x01000005 to "zero", 0x01000006 to "one", 0x01000007 to "two", 0x01000008 to "few", 0x01000009 to "many")
+    private val PLURAL =
+        mapOf(
+            0x01000004 to "other",
+            0x01000005 to "zero",
+            0x01000006 to "one",
+            0x01000007 to "two",
+            0x01000008 to "few",
+            0x01000009 to "many",
+        )
+
     /** Layout attributes worth keeping, by local name (shrunk resources drop the android: prefix). */
     private val LAYOUT_ATTRS =
         setOf(
-            "text", "hint", "contentDescription", "src", "srcCompat", "onClick", "layout", "name", "class", "style", "title",
-            "tooltipText", "navGraph", "inputType", "autofillHints", "importantForAutofill", "password",
+            "text",
+            "hint",
+            "contentDescription",
+            "src",
+            "srcCompat",
+            "onClick",
+            "layout",
+            "name",
+            "class",
+            "style",
+            "title",
+            "tooltipText",
+            "navGraph",
+            "inputType",
+            "autofillHints",
+            "importantForAutofill",
+            "password",
         )
 
     fun harvest(
@@ -65,8 +112,9 @@ object ResourceHarvester {
         val ids =
             table
                 .groupBy { it.id }
-                .map { (id, entries) -> ResourceIdRecord("0x%08x".format(id), entries[0].type, entries[0].name, entries.map { it.config }.distinct().sorted()) }
-                .sortedBy { it.id }
+                .map { (id, entries) ->
+                    ResourceIdRecord("0x%08x".format(id), entries[0].type, entries[0].name, entries.map { it.config }.distinct().sorted())
+                }.sortedBy { it.id }
 
         val strings =
             table
@@ -75,18 +123,35 @@ object ResourceHarvester {
                     val locale = decoded.locale(e.config)
                     when {
                         e.value != null -> listOf(StringResource(e.name, "string", e.config, locale, null, e.value))
-                        e.type == "plurals" -> e.items.map { (k, v) -> StringResource(e.name, "plurals", e.config, locale, PLURAL[k.toIntOrNull() ?: -1] ?: k, v) }
+                        e.type == "plurals" ->
+                            e.items.map { (k, v) ->
+                                StringResource(
+                                    e.name,
+                                    "plurals",
+                                    e.config,
+                                    locale,
+                                    PLURAL[k.toIntOrNull() ?: -1] ?: k,
+                                    v,
+                                )
+                            }
                         else -> e.items.mapIndexed { i, (_, v) -> StringResource(e.name, "array", e.config, locale, i.toString(), v) }
                     }
                 }.sortedWith(compareBy({ it.name }, { it.config }, { it.item?.padStart(6, '0') ?: "" }))
 
         val themeUsers = mutableMapOf<String, MutableList<String>>()
+
         fun walkManifest(n: XmlNode) {
             n.a("theme")?.let { t ->
                 val who = if (n.tag == "application") "application" else "${n.tag} ${n.a("name") ?: ""}"
                 themeUsers.getOrPut(t.removePrefix("@").removePrefix("style/")) { mutableListOf() } += who
             }
-            n.attributes.forEach { (k, v) -> if (v.startsWith("@") && !v.startsWith("@android")) refs += ResourceRef(v, "manifest", "${n.tag} ${n.a("name") ?: ""}".trim(), k) }
+            n.attributes.forEach { (k, v) ->
+                if (v.startsWith("@") &&
+                    !v.startsWith("@android")
+                ) {
+                    refs += ResourceRef(v, "manifest", "${n.tag} ${n.a("name") ?: ""}".trim(), k)
+                }
+            }
             n.children.forEach(::walkManifest)
         }
         walkManifest(decoded.root)
@@ -209,9 +274,32 @@ object ResourceHarvester {
             if (n.tag == "fragment" || n.tag.endsWith("FragmentContainerView")) (n.a("name") ?: n.a("class"))?.let { fragments += it }
             if (n.tag == "include") n.a("layout")?.let { includes += it }
             if (n.tag == "view") n.a("class")?.let { if (!FRAMEWORK_VIEW.containsMatchIn(it)) custom += it }
-            if (views.size < MAX_VIEWS) views += LayoutView(d, n.tag, id, n.attributes.filterKeys { it.substringAfter(':') in LAYOUT_ATTRS }.map { (k, v) -> value(k, v) })
+            if (views.size <
+                MAX_VIEWS
+            ) {
+                views +=
+                    LayoutView(
+                        d,
+                        n.tag,
+                        id,
+                        n.attributes.filterKeys { it.substringAfter(':') in LAYOUT_ATTRS }.map { (k, v) ->
+                            value(k, v)
+                        },
+                    )
+            }
         }
-        return LayoutRecord(e.name, e.config, path, root.tag, views.size, ids.distinct(), custom.toList(), fragments.toList(), includes.toList(), views)
+        return LayoutRecord(
+            e.name,
+            e.config,
+            path,
+            root.tag,
+            views.size,
+            ids.distinct(),
+            custom.toList(),
+            fragments.toList(),
+            includes.toList(),
+            views,
+        )
     }
 
     private fun menu(
@@ -256,9 +344,18 @@ object ResourceHarvester {
                     kind = n.tag,
                     className = n.a("name"),
                     label = n.a("label")?.let { value("android:label", it) },
-                    actions = n.children.filter { it.tag == "action" }.map { a -> NavAction(id(a.a("id")), id(a.a("destination")), id(a.a("popUpTo"))) },
+                    actions =
+                        n.children.filter { it.tag == "action" }.map { a ->
+                            NavAction(id(a.a("id")), id(a.a("destination")), id(a.a("popUpTo")))
+                        },
                     deepLinks = n.children.filter { it.tag.equals("deepLink", true) }.mapNotNull { it.a("uri") ?: it.a("action") },
-                    arguments = n.children.filter { it.tag == "argument" }.mapNotNull { a -> a.a("name")?.let { it + (a.a("argType")?.let { t -> ": $t" } ?: "") } },
+                    arguments =
+                        n.children.filter { it.tag == "argument" }.mapNotNull { a ->
+                            a.a("name")?.let {
+                                it +
+                                    (a.a("argType")?.let { t -> ": $t" } ?: "")
+                            }
+                        },
                 )
         }
         return NavigationRecord(e.name, path, id(root.a("startDestination")), dests)
@@ -299,13 +396,29 @@ object ResourceHarvester {
         zip: ZipFile,
         a: java.util.zip.ZipEntry,
     ): AssetRecord {
-        val ext = a.name.substringAfterLast('/').substringAfterLast('.', "").lowercase()
+        val ext =
+            a.name
+                .substringAfterLast('/')
+                .substringAfterLast('.', "")
+                .lowercase()
         val head = runCatching { zip.getInputStream(a).use { it.readNBytes(4) } }.getOrDefault(ByteArray(0))
         val magic =
             when {
-                head.size >= 4 && head[0] == 'd'.code.toByte() && head[1] == 'e'.code.toByte() && head[2] == 'x'.code.toByte() && head[3] == 0x0a.toByte() -> "dex"
-                head.size >= 4 && head[0] == 0x7f.toByte() && head[1] == 'E'.code.toByte() && head[2] == 'L'.code.toByte() && head[3] == 'F'.code.toByte() -> "elf"
-                head.size >= 4 && head[0] == 'P'.code.toByte() && head[1] == 'K'.code.toByte() && head[2] == 3.toByte() && head[3] == 4.toByte() -> "zip"
+                head.size >= 4 &&
+                    head[0] == 'd'.code.toByte() &&
+                    head[1] == 'e'.code.toByte() &&
+                    head[2] == 'x'.code.toByte() &&
+                    head[3] == 0x0a.toByte() -> "dex"
+                head.size >= 4 &&
+                    head[0] == 0x7f.toByte() &&
+                    head[1] == 'E'.code.toByte() &&
+                    head[2] == 'L'.code.toByte() &&
+                    head[3] == 'F'.code.toByte() -> "elf"
+                head.size >= 4 &&
+                    head[0] == 'P'.code.toByte() &&
+                    head[1] == 'K'.code.toByte() &&
+                    head[2] == 3.toByte() &&
+                    head[3] == 4.toByte() -> "zip"
                 else -> null
             }
         val kind =
@@ -343,13 +456,23 @@ internal object ImageSize {
 
         fun u24le(i: Int) = u16le(i) or ((b[i + 2].toInt() and 0xff) shl 16)
 
-        fun u32be(i: Int) = ((b[i].toInt() and 0xff) shl 24) or ((b[i + 1].toInt() and 0xff) shl 16) or ((b[i + 2].toInt() and 0xff) shl 8) or (b[i + 3].toInt() and 0xff)
-        if (b.size >= 24 && b[1] == 'P'.code.toByte() && b[2] == 'N'.code.toByte() && b[3] == 'G'.code.toByte()) return u32be(16) to u32be(20)
+        fun u32be(i: Int) =
+            ((b[i].toInt() and 0xff) shl 24) or ((b[i + 1].toInt() and 0xff) shl 16) or ((b[i + 2].toInt() and 0xff) shl 8) or
+                (b[i + 3].toInt() and 0xff)
+        if (b.size >= 24 &&
+            b[1] == 'P'.code.toByte() &&
+            b[2] == 'N'.code.toByte() &&
+            b[3] == 'G'.code.toByte()
+        ) {
+            return u32be(16) to u32be(20)
+        }
         if (b.size >= 30 && String(b, 0, 4, Charsets.US_ASCII) == "RIFF" && String(b, 8, 4, Charsets.US_ASCII) == "WEBP") {
             return when (String(b, 12, 4, Charsets.US_ASCII)) {
                 "VP8X" -> (u24le(24) + 1) to (u24le(27) + 1)
                 "VP8L" -> {
-                    val bits = (b[21].toInt() and 0xff) or ((b[22].toInt() and 0xff) shl 8) or ((b[23].toInt() and 0xff) shl 16) or ((b[24].toInt() and 0xff) shl 24)
+                    val bits =
+                        (b[21].toInt() and 0xff) or ((b[22].toInt() and 0xff) shl 8) or ((b[23].toInt() and 0xff) shl 16) or
+                            ((b[24].toInt() and 0xff) shl 24)
                     ((bits and 0x3fff) + 1) to (((bits shr 14) and 0x3fff) + 1)
                 }
                 "VP8 " -> (u16le(26) and 0x3fff) to (u16le(28) and 0x3fff)
@@ -382,7 +505,16 @@ internal object XmlSummaries {
             "network-security-config" -> {
                 val base = root.children.firstOrNull { it.tag == "base-config" }
                 out["base-cleartext"] = base?.a("cleartextTrafficPermitted") ?: "default"
-                val baseAnchors = base?.children?.filter { it.tag == "trust-anchors" }?.flatMap { it.children }?.mapNotNull { it.a("src") }.orEmpty()
+                val baseAnchors =
+                    base
+                        ?.children
+                        ?.filter { it.tag == "trust-anchors" }
+                        ?.flatMap { it.children }
+                        ?.mapNotNull {
+                            it.a(
+                                "src",
+                            )
+                        }.orEmpty()
                 if ("user" in baseAnchors) out["user-certs"] = "trusted for every domain"
                 val domains = all("domain-config")
                 out["domain-configs"] = domains.size.toString()
@@ -392,7 +524,17 @@ internal object XmlSummaries {
                         .flatMap { d -> d.children.filter { it.tag == "domain" }.mapNotNull { it.attributes["#text"] } }
                 if (clear.isNotEmpty()) out["cleartext-domains"] = clear.joinToString()
                 val pinned = all("pin-set").size
-                if (pinned > 0) out["pinned-domains"] = domains.filter { d -> d.children.any { it.tag == "pin-set" } }.flatMap { d -> d.children.filter { it.tag == "domain" }.mapNotNull { it.attributes["#text"] } }.joinToString()
+                if (pinned >
+                    0
+                ) {
+                    out["pinned-domains"] =
+                        domains
+                            .filter { d ->
+                                d.children.any { it.tag == "pin-set" }
+                            }.flatMap { d ->
+                                d.children.filter { it.tag == "domain" }.mapNotNull { it.attributes["#text"] }
+                            }.joinToString()
+                }
                 out["pin-sets"] = all("pin-set").size.toString()
                 val anchors = all("certificates").mapNotNull { it.a("src") }.distinct()
                 out["trust-anchors"] = anchors.joinToString().ifEmpty { "default" }
@@ -407,8 +549,12 @@ internal object XmlSummaries {
             "locale-config" -> out["locales"] = all("locale").mapNotNull { it.a("name") }.joinToString()
             "shortcuts" -> out["shortcuts"] = all("shortcut").size.toString()
             "accessibility-service" ->
-                root.attributes.filterKeys { it.endsWith("canRetrieveWindowContent") || it.endsWith("accessibilityEventTypes") || it.endsWith("canPerformGestures") }
-                    .forEach { (k, v) -> out[k.substringAfter(':')] = v }
+                root.attributes
+                    .filterKeys {
+                        it.endsWith("canRetrieveWindowContent") ||
+                            it.endsWith("accessibilityEventTypes") ||
+                            it.endsWith("canPerformGestures")
+                    }.forEach { (k, v) -> out[k.substringAfter(':')] = v }
             else -> out["root"] = root.tag
         }
         return out

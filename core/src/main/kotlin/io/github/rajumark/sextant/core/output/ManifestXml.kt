@@ -48,21 +48,48 @@ object ManifestXml {
     ) {
         val pad = "    ".repeat(depth)
         val text = n.attributes["#text"]
-        val attrs = (if (declareNamespace) listOf("xmlns:android" to ANDROID_NS) else emptyList()) + n.attributes.toList().filter { it.first != "#text" }
+        val attrs =
+            (if (declareNamespace) listOf("xmlns:android" to ANDROID_NS) else emptyList()) +
+                n.attributes.toList().filter { it.first != "#text" }
         out.append(pad).append('<').append(n.tag)
         if (attrs.size <= 1) {
-            attrs.forEach { (k, v) -> out.append(' ').append(k).append("=\"").append(escape(v)).append('"') }
+            attrs.forEach { (k, v) ->
+                out
+                    .append(' ')
+                    .append(k)
+                    .append("=\"")
+                    .append(escape(v))
+                    .append('"')
+            }
         } else {
-            attrs.forEach { (k, v) -> out.append('\n').append(pad).append("    ").append(k).append("=\"").append(escape(v)).append('"') }
+            attrs.forEach { (k, v) ->
+                out
+                    .append('\n')
+                    .append(pad)
+                    .append("    ")
+                    .append(k)
+                    .append("=\"")
+                    .append(escape(v))
+                    .append('"')
+            }
         }
         if (text != null) {
-            out.append('>').append(escape(text)).append("</").append(n.tag).append(">\n")
+            out
+                .append('>')
+                .append(escape(text))
+                .append("</")
+                .append(n.tag)
+                .append(">\n")
         } else if (n.children.isEmpty()) {
             out.append(" />\n")
         } else {
             out.append(">\n")
             n.children.forEach { write(it, depth + 1, false, out) }
-            out.append(pad).append("</").append(n.tag).append(">\n")
+            out
+                .append(pad)
+                .append("</")
+                .append(n.tag)
+                .append(">\n")
         }
     }
 

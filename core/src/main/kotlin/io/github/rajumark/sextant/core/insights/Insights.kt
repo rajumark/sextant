@@ -57,7 +57,8 @@ class InsightsCollector : CodeSink {
 
     override fun string(record: StringRecord) {
         if (record.value.startsWith("okhttp/") && record.value.length < 24 && libraryVersions.none { it.artifact == "okhttp" }) {
-            libraryVersions += LibraryRecord("com.squareup.okhttp3", "okhttp", record.value.removePrefix("okhttp/"), "code string in ${record.method}")
+            libraryVersions +=
+                LibraryRecord("com.squareup.okhttp3", "okhttp", record.value.removePrefix("okhttp/"), "code string in ${record.method}")
         }
         for (url in Urls.find(record.value)) {
             val methods = codeUrls.getOrPut(url) { TreeSet() }
@@ -200,7 +201,11 @@ object InsightsBuilder {
                 }
                 // Google Play services and Firebase ship `play-services-base.properties` (version=, client=) at the root.
                 if ('/' !in name && name.endsWith(".properties") && entry.size in 1..4096) {
-                    val props = zip.getInputStream(entry).use { it.readNBytes(4096).decodeToString() }.lines().associate { it.substringBefore('=').trim() to it.substringAfter('=', "").trim() }
+                    val props =
+                        zip.getInputStream(entry).use { it.readNBytes(4096).decodeToString() }.lines().associate {
+                            it.substringBefore('=').trim() to
+                                it.substringAfter('=', "").trim()
+                        }
                     val client = props["client"]
                     val version = props["version"]
                     if (client != null && !version.isNullOrEmpty()) {
@@ -216,7 +221,11 @@ object InsightsBuilder {
                 }
                 // Maven artifacts keep META-INF/maven/<group>/<artifact>/pom.properties.
                 if (name.startsWith("META-INF/maven/") && name.endsWith("/pom.properties") && entry.size in 1..4096) {
-                    val props = zip.getInputStream(entry).use { it.readNBytes(4096).decodeToString() }.lines().associate { it.substringBefore('=').trim() to it.substringAfter('=', "").trim() }
+                    val props =
+                        zip.getInputStream(entry).use { it.readNBytes(4096).decodeToString() }.lines().associate {
+                            it.substringBefore('=').trim() to
+                                it.substringAfter('=', "").trim()
+                        }
                     val g = props["groupId"]
                     val a = props["artifactId"]
                     val v = props["version"]

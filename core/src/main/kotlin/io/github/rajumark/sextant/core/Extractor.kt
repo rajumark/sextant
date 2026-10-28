@@ -8,6 +8,7 @@ import io.github.rajumark.sextant.core.insights.Icons
 import io.github.rajumark.sextant.core.insights.Insights
 import io.github.rajumark.sextant.core.insights.InsightsBuilder
 import io.github.rajumark.sextant.core.insights.InsightsCollector
+import io.github.rajumark.sextant.core.insights.ResourceHarvester
 import io.github.rajumark.sextant.core.model.AppMeta
 import io.github.rajumark.sextant.core.model.Component
 import io.github.rajumark.sextant.core.model.FeatureRecord
@@ -15,7 +16,6 @@ import io.github.rajumark.sextant.core.model.MetadataRecord
 import io.github.rajumark.sextant.core.model.Permission
 import io.github.rajumark.sextant.core.model.QueryRecord
 import io.github.rajumark.sextant.core.model.ResourceHarvest
-import io.github.rajumark.sextant.core.insights.ResourceHarvester
 import io.github.rajumark.sextant.core.model.ToolInfo
 import io.github.rajumark.sextant.core.model.XmlNode
 import java.nio.file.Path
@@ -123,6 +123,16 @@ object Extractor {
                 icons = icons,
                 warnings = warnings.distinct().sorted(),
             )
-        return Extraction(meta, decoded.root, permissions, components, insights, mapper.features(), mapper.metadata(), mapper.queries(), resources)
+        return Extraction(
+            meta,
+            decoded.root,
+            permissions,
+            components,
+            insights,
+            mapper.features(),
+            mapper.metadata(),
+            mapper.queries(),
+            resources,
+        )
     }
 }

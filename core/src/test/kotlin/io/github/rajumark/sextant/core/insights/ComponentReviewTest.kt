@@ -107,7 +107,13 @@ class ComponentReviewTest {
                     XmlNode(
                         "application",
                         emptyMap(),
-                        listOf(XmlNode("activity", mapOf("android:name" to ".Main"), listOf(XmlNode("intent-filter", emptyMap(), emptyList())))),
+                        listOf(
+                            XmlNode(
+                                "activity",
+                                mapOf("android:name" to ".Main"),
+                                listOf(XmlNode("intent-filter", emptyMap(), emptyList())),
+                            ),
+                        ),
                     ),
                 ),
             )

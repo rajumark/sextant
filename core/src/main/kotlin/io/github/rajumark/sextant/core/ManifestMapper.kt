@@ -355,7 +355,13 @@ class ManifestMapper(
             showOnLockScreen = bool(node.android("showOnLockScreen")),
             enableOnBackInvokedCallback = bool(node.android("enableOnBackInvokedCallback")),
             banner = node.android("banner"),
-            windowLayout = node.child("layout")?.attributes?.mapKeys { it.key.removePrefix("android:") }?.toSortedMap().orEmpty(),
+            windowLayout =
+                node
+                    .child("layout")
+                    ?.attributes
+                    ?.mapKeys { it.key.removePrefix("android:") }
+                    ?.toSortedMap()
+                    .orEmpty(),
             foregroundServiceType = node.android("foregroundServiceType"),
             isolatedProcess = bool(node.android("isolatedProcess")),
             externalService = bool(node.android("externalService")),

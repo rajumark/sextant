@@ -34,7 +34,10 @@ object StringCatalog {
     fun of(h: ResourceHarvest): List<StringKey> {
         // Libraries (AppCompat, Material) bring far more locales than the app translates. The app's own locale set is the
         // locales most translated keys have, so library-only locales do not mark every app string as untranslated.
-        val keyLocales = h.strings.filter { it.locale != null }.groupBy { it.name }.mapValues { (_, rs) -> rs.mapNotNull { it.locale }.toSet() }
+        val keyLocales =
+            h.strings.filter { it.locale != null }.groupBy { it.name }.mapValues { (_, rs) ->
+                rs.mapNotNull { it.locale }.toSet()
+            }
         val appLocales =
             keyLocales.values
                 .flatten()
@@ -44,33 +47,37 @@ object StringCatalog {
                 .keys
                 .sorted()
         val refs = h.refs.groupBy { it.ref }
-        return h.strings.groupBy { it.name }.map { (name, rows) ->
-            val kind = rows.first().kind
-            val byConfig =
-                rows.groupBy { it.config }.mapValues { (_, items) ->
-                    when (kind) {
-                        "plurals" -> (items.firstOrNull { it.item == "other" } ?: items.first()).value
-                        "array" -> items.joinToString(" · ") { it.value }
-                        else -> items.first().value
+        return h.strings
+            .groupBy { it.name }
+            .map { (name, rows) ->
+                val kind = rows.first().kind
+                val byConfig =
+                    rows
+                        .groupBy { it.config }
+                        .mapValues { (_, items) ->
+                            when (kind) {
+                                "plurals" -> (items.firstOrNull { it.item == "other" } ?: items.first()).value
+                                "array" -> items.joinToString(" · ") { it.value }
+                                else -> items.first().value
+                            }
+                        }.toSortedMap(compareBy<String> { it.isNotEmpty() }.thenBy { it })
+                val value = byConfig[""] ?: byConfig.values.first()
+                val locales = rows.mapNotNull { it.locale }.distinct().sorted()
+                val usedBy = (refs["@string/$name"].orEmpty() + refs["@plurals/$name"].orEmpty() + refs["@array/$name"].orEmpty())
+                val all = byConfig.values.joinToString("\n")
+                val flags =
+                    buildList {
+                        add(if (usedBy.isEmpty()) "unused" else "used")
+                        if (URL.containsMatchIn(all)) add("url")
+                        if (EMAIL.containsMatchIn(all)) add("email")
+                        if (Findings.secretRule(value) != null) add("secret-like")
+                        if (FORMAT.containsMatchIn(value)) add("format")
+                        if (HTML.containsMatchIn(value)) add("html")
+                        // No translation at all usually means translatable="false" (URLs, keys); only partial ones are gaps.
+                        if (locales.isNotEmpty() && !locales.containsAll(appLocales)) add("untranslated")
+                        if (value.isBlank()) add("empty")
                     }
-                }.toSortedMap(compareBy<String> { it.isNotEmpty() }.thenBy { it })
-            val value = byConfig[""] ?: byConfig.values.first()
-            val locales = rows.mapNotNull { it.locale }.distinct().sorted()
-            val usedBy = (refs["@string/$name"].orEmpty() + refs["@plurals/$name"].orEmpty() + refs["@array/$name"].orEmpty())
-            val all = byConfig.values.joinToString("\n")
-            val flags =
-                buildList {
-                    add(if (usedBy.isEmpty()) "unused" else "used")
-                    if (URL.containsMatchIn(all)) add("url")
-                    if (EMAIL.containsMatchIn(all)) add("email")
-                    if (Findings.secretRule(value) != null) add("secret-like")
-                    if (FORMAT.containsMatchIn(value)) add("format")
-                    if (HTML.containsMatchIn(value)) add("html")
-                    // No translation at all usually means translatable="false" (URLs, keys); only partial ones are gaps.
-                    if (locales.isNotEmpty() && !locales.containsAll(appLocales)) add("untranslated")
-                    if (value.isBlank()) add("empty")
-                }
-            StringKey(name, kind, value, byConfig, locales, appLocales - locales.toSet(), flags, usedBy)
-        }.sortedBy { it.name }
+                StringKey(name, kind, value, byConfig, locales, appLocales - locales.toSet(), flags, usedBy)
+            }.sortedBy { it.name }
     }
 }

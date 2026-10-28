@@ -24,8 +24,14 @@ import kotlin.io.path.name
  */
 class SdkCommand : CoreCliktCommand(name = "sdks") {
     private val targets by argument(help = "Extracted folders and/or APKs (APKs are analyzed in memory)").path().multiple(required = true)
-    private val categories by option("--category", help = "Only apps that have an SDK in this category; repeat to require several (ads, analytics, …)").multiple()
-    private val sdks by option("--sdk", help = "Only apps that contain this SDK or library (name or group:artifact, case-insensitive substring); repeat to require several").multiple()
+    private val categories by option(
+        "--category",
+        help = "Only apps that have an SDK in this category; repeat to require several (ads, analytics, …)",
+    ).multiple()
+    private val sdks by option(
+        "--sdk",
+        help = "Only apps that contain this SDK or library (name or group:artifact, case-insensitive substring); repeat to require several",
+    ).multiple()
     private val below by option("--below", help = "With one --sdk: only apps whose version of it is lower than this (e.g. 4.9.0)")
     private val json by option("--json", help = "One JSON object per app (its SDK profile)").flag()
 
@@ -41,7 +47,18 @@ class SdkCommand : CoreCliktCommand(name = "sdks") {
                 profiles.filter { p ->
                     p.categories.containsAll(categories) &&
                         sdks.all { q -> matching(p, q).isNotEmpty() } &&
-                        (below == null || matching(p, sdks.single()).any { e -> e.version?.let { v -> SdkInventory.compareVersions(v, below!!)?.let { it < 0 } } == true })
+                        (
+                            below == null ||
+                                matching(p, sdks.single()).any { e ->
+                                    e.version?.let { v ->
+                                        SdkInventory.compareVersions(v, below!!)?.let {
+                                            it <
+                                                0
+                                        }
+                                    } ==
+                                        true
+                                }
+                        )
                 }
             when {
                 json -> shown.forEach { println(SextantJson.compact.encodeToString(SdkProfile.serializer(), it)) }
@@ -54,7 +71,11 @@ class SdkCommand : CoreCliktCommand(name = "sdks") {
     private fun matching(
         p: SdkProfile,
         q: String,
-    ): List<SdkEntry> = p.entries.filter { it.name.contains(q, ignoreCase = true) || it.artifacts.any { a -> a.contains(q, ignoreCase = true) } }
+    ): List<SdkEntry> =
+        p.entries.filter {
+            it.name.contains(q, ignoreCase = true) ||
+                it.artifacts.any { a -> a.contains(q, ignoreCase = true) }
+        }
 
     private fun profile(target: Path): SdkProfile {
         if (!Files.isDirectory(target)) {
@@ -73,12 +94,34 @@ class SdkCommand : CoreCliktCommand(name = "sdks") {
             val sdkRows = p.entries.filter { it.kind == "sdk" }
             appendLine("## SDKs (${sdkRows.size})")
             if (sdkRows.isNotEmpty()) {
-                append(Table.render(listOf("category", "sdk", "version", "classes", "evidence"), sdkRows.map { listOf(it.category, it.name, it.version ?: "?", it.classes.toString(), it.versionEvidence.orEmpty()) }))
+                append(
+                    Table.render(
+                        listOf("category", "sdk", "version", "classes", "evidence"),
+                        sdkRows.map {
+                            listOf(
+                                it.category,
+                                it.name,
+                                it.version ?: "?",
+                                it.classes.toString(),
+                                it.versionEvidence.orEmpty(),
+                            )
+                        },
+                    ),
+                )
             }
             val libs = p.entries.filter { it.kind == "library" }
             appendLine()
             appendLine("## Libraries with versions (${libs.size})")
-            if (libs.isNotEmpty()) append(Table.render(listOf("category", "library", "version", "evidence"), libs.map { listOf(it.category, it.name, it.version.orEmpty(), it.versionEvidence.orEmpty()) }))
+            if (libs.isNotEmpty()) {
+                append(
+                    Table.render(
+                        listOf("category", "library", "version", "evidence"),
+                        libs.map {
+                            listOf(it.category, it.name, it.version.orEmpty(), it.versionEvidence.orEmpty())
+                        },
+                    ),
+                )
+            }
         }
 
     private fun across(profiles: List<SdkProfile>) =
@@ -86,10 +129,14 @@ class SdkCommand : CoreCliktCommand(name = "sdks") {
             val rows =
                 profiles
                     .flatMap { p -> p.entries.filter { it.kind == "sdk" || sdks.isNotEmpty() }.map { p to it } }
-                    .filter { (_, e) -> sdks.isEmpty() || sdks.any { q -> e.name.contains(q, true) || e.artifacts.any { a -> a.contains(q, true) } } }
-                    .groupBy { it.second.name }
+                    .filter { (_, e) ->
+                        sdks.isEmpty() ||
+                            sdks.any { q -> e.name.contains(q, true) || e.artifacts.any { a -> a.contains(q, true) } }
+                    }.groupBy { it.second.name }
                     .entries
-                    .sortedWith(compareByDescending<Map.Entry<String, List<Pair<SdkProfile, SdkEntry>>>> { it.value.size }.thenBy { it.key })
+                    .sortedWith(
+                        compareByDescending<Map.Entry<String, List<Pair<SdkProfile, SdkEntry>>>> { it.value.size }.thenBy { it.key },
+                    )
             append(
                 Table.render(
                     listOf("sdk", "category", "apps", "versions", "in"),

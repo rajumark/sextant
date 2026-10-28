@@ -114,7 +114,11 @@ object AppStartups {
             val targets =
                 startClasses.flatMap { c ->
                     listOf("${desc(c)}->attachBaseContext(Landroid/content/Context;)V", "${desc(c)}->onCreate()V")
-                } + providers.flatMap { listOf("${desc(it.name)}->onCreate()Z") + it.initializers.map { i -> "${desc(i)}->create(Landroid/content/Context;)Ljava/lang/Object;" } }
+                } +
+                    providers.flatMap {
+                        listOf("${desc(it.name)}->onCreate()Z") +
+                            it.initializers.map { i -> "${desc(i)}->create(Landroid/content/Context;)Ljava/lang/Object;" }
+                    }
             for (t in targets) {
                 val id = index.resolveMethods(t).firstOrNull()?.first ?: continue
                 val tree = index.callTree(id, Direction.CALLEES, DEPTH, FAN_OUT)
@@ -140,7 +144,12 @@ object AppStartups {
 
     private fun desc(className: String) = "L" + className.replace('.', '/') + ";"
 
-    private fun className(descriptor: String) = descriptor.substringBefore("->").removePrefix("L").removeSuffix(";").replace('/', '.')
+    private fun className(descriptor: String) =
+        descriptor
+            .substringBefore("->")
+            .removePrefix("L")
+            .removeSuffix(";")
+            .replace('/', '.')
 
     /** The class and its superclasses, following the index until a class it does not define (a framework class). */
     private fun chain(
@@ -151,7 +160,11 @@ object AppStartups {
         var current = start
         repeat(12) {
             val r = index.query("SELECT superclass FROM classes WHERE name = '${current.replace("'", "''")}'", 1)
-            val sup = r.rows.firstOrNull()?.firstOrNull()?.toString() ?: return out
+            val sup =
+                r.rows
+                    .firstOrNull()
+                    ?.firstOrNull()
+                    ?.toString() ?: return out
             val name = sup.removePrefix("L").removeSuffix(";").replace('/', '.')
             out += name
             current = name

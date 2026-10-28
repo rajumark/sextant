@@ -111,14 +111,20 @@ object ComponentReviews {
                 }
         }
         role(c)?.let { (role, sensitive) -> reasons[if (sensitive) "sensitive-role" else "system-role"] = role }
-        val bootActions = c.intentFilters.flatMap { it.actions }.filter { it in BOOT_ACTIONS }.distinct()
+        val bootActions =
+            c.intentFilters
+                .flatMap { it.actions }
+                .filter { it in BOOT_ACTIONS }
+                .distinct()
         if (c.type == "receiver" && bootActions.isNotEmpty()) {
-            reasons["boot"] = "Runs after boot (${bootActions.joinToString { it.substringAfterLast('.') }}): the app starts without being opened."
+            reasons["boot"] =
+                "Runs after boot (${bootActions.joinToString { it.substringAfterLast('.') }}): the app starts without being opened."
         }
         c.foregroundServiceType?.let { reasons["foreground"] = "Foreground service ($it): runs with a visible notification." }
         taskHijackReason(c, packageName)?.let { reasons["task-hijack"] = it }
         if (activity && (c.showWhenLocked == true || c.showOnLockScreen == true)) {
-            reasons["lock-screen"] = (if (c.showWhenLocked == true) "showWhenLocked" else "showOnLockScreen") + "=true: shown above the lock screen."
+            reasons["lock-screen"] =
+                (if (c.showWhenLocked == true) "showWhenLocked" else "showOnLockScreen") + "=true: shown above the lock screen."
         }
         if (c.type == "provider" && c.grantUriPermissions == true) {
             reasons["uri-grants"] =
@@ -189,7 +195,8 @@ object ComponentReviews {
             "android.permission.BIND_TEXT_SERVICE" to ("Spell checker." to false),
             "android.permission.BIND_PRINT_SERVICE" to ("Print service." to false),
             "android.permission.BIND_NFC_SERVICE" to ("NFC host card emulation." to false),
-            "android.permission.BIND_TELECOM_CONNECTION_SERVICE" to ("Calling (ConnectionService): places calls through the system dialer." to false),
+            "android.permission.BIND_TELECOM_CONNECTION_SERVICE" to
+                ("Calling (ConnectionService): places calls through the system dialer." to false),
             "android.permission.BIND_CONTROLS" to ("Device controls (smart-home tiles)." to false),
             "android.permission.BIND_COMPANION_DEVICE_SERVICE" to ("Companion device service." to false),
             "android.permission.BIND_CONDITION_PROVIDER_SERVICE" to ("Do Not Disturb condition provider." to false),
@@ -304,7 +311,10 @@ object ComponentReviews {
                         "relinquishTaskIdentity" to c.relinquishTaskIdentity,
                         "showOnLockScreen" to c.showOnLockScreen,
                         "enableOnBackInvokedCallback" to c.enableOnBackInvokedCallback,
-                        "layout" to c.windowLayout.entries.joinToString(" ") { "${it.key}=${it.value}" }.ifEmpty { null },
+                        "layout" to
+                            c.windowLayout.entries
+                                .joinToString(" ") { "${it.key}=${it.value}" }
+                                .ifEmpty { null },
                         "banner" to c.banner,
                     )
                 "service" ->
