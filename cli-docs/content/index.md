@@ -42,6 +42,14 @@ sextant findings app/ --severity medium  # what should a reviewer look at?
 
     [:octicons-arrow-right-24: Security review](guides/security-review.md)
 
+-   :material-sitemap-outline: **Components, startup, resources, SDKs**
+
+    ---
+
+    Verdicts with reasons for every component, the startup order and the SDKs it starts, strings in every locale, layouts, `res/xml` configs, and SDK versions proven by artifacts.
+
+    [:octicons-arrow-right-24: Components, startup, resources and SDKs](guides/app-structure.md)
+
 -   :material-robot-outline: **Built for AI agents**
 
     ---

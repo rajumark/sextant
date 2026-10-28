@@ -77,6 +77,7 @@ nav:
       - Security review: guides/security-review.md
       - Comparing versions: guides/diff.md
       - Insights and app icons: guides/insights.md
+      - Components, startup, resources and SDKs: guides/app-structure.md
       - AI agents and MCP: guides/ai-agents.md
       - Scripting with JSON and SQL: guides/scripting.md
   - Reference:

@@ -538,6 +538,8 @@
       
         
       
+        
+      
     
     
     
@@ -682,6 +684,34 @@
     
   
     Insights and app icons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/app-structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Components, startup, resources and SDKs
   
 
     
@@ -1157,6 +1187,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#unreleased-schema-8-index-schema-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unreleased (schema 8, index schema 7)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#100-first-public-release" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1320,6 +1361,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#unreleased-schema-8-index-schema-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unreleased (schema 8, index schema 7)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#100-first-public-release" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1462,6 +1514,17 @@
 
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
 <p>All notable changes to Sextant. Versions follow semver; <code>schema_version</code> in <code>meta.json</code> tracks the output format separately.</p>
+<h2 id="unreleased-schema-8-index-schema-7">Unreleased (schema 8, index schema 7)<a class="headerlink" href="#unreleased-schema-8-index-schema-7" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Component verdicts:</strong> 18 tags with a reason each, the same in the CLI and the desktop app: launcher, app-link, deep-link, hidden-entry, unguarded, sensitive-role, system-role, boot, foreground, task-hijack, lock-screen, uri-grants, file-provider, isolated, direct-boot, exported-by-default, guarded, disabled.</li>
+<li><strong><code>sextant components</code></strong> (filter by type, tag, exported, search) and <strong><code>sextant component</code></strong> (verdicts and reasons, attributes, entry points in plain words, deep links, App Link hosts, aliases, adb commands, the exact manifest entry).</li>
+<li><strong><code>sextant app</code>:</strong> the Application class and the startup order (AppComponentFactory, attachBaseContext, content providers by initOrder with androidx.startup initializers, onCreate); with an extracted folder, the calls of each step and the SDKs started at launch.</li>
+<li><strong><code>sextant res</code>:</strong> strings in every locale (plurals, arrays), resource ids, styles and themes, drawables, layouts, menus, navigation graphs, assets and res/xml configs, plus <code>string-keys</code> (used/unused, URL, email, key-like, format, untranslated) and <code>refs</code> (who uses which resource). References keep their <code>@type/name</code> and the resolved value. Written to <code>resources/*.jsonl</code> and new index tables (<code>string_resources</code>, <code>resource_ids</code>, <code>styles</code>, <code>drawables</code>, <code>layouts</code>, <code>menus</code>, <code>navigation_destinations</code>, <code>assets</code>, <code>xml_configs</code>, <code>resource_refs</code>).</li>
+<li><strong>res/xml summaries:</strong> network security config (cleartext, pins, user CAs, debug overrides), backup and data-extraction rules, FileProvider paths. Assets whose bytes are DEX, ELF or zip under another name are flagged as hidden code.</li>
+<li><strong><code>sextant sdks</code>:</strong> SDKs and libraries by role with versions from META-INF <code>*.version</code>, Maven <code>pom.properties</code>, Play services/Firebase <code>.properties</code> and OkHttp's user agent; across many apps with <code>--category</code>, <code>--sdk</code> and <code>--below VERSION</code>.</li>
+<li><strong>Manifest coverage:</strong> every remaining <code>&lt;activity&gt;</code>, <code>&lt;service&gt;</code>, <code>&lt;provider&gt;</code>, <code>&lt;application&gt;</code>, <code>&lt;uses-permission&gt;</code> and <code>&lt;permission&gt;</code> attribute and <code>&lt;attribution&gt;</code> tags are structured; a corpus test fails on any attribute that is neither structured nor deliberately raw.</li>
+<li><strong>Desktop:</strong> Activities, Services, Receivers, Providers and Aliases rebuilt on the verdicts (summary strip, filters with counts, sort, group by package, multi-select copy, context menu, keyboard), the Components page removed, a ⌘K command palette, and new Application, SDKs &amp; libraries and nine resource pages. Every detail pane has a Manifest entry and Search on web / Ask AI.</li>
+</ul>
 <h2 id="100-first-public-release">1.0.0: first public release<a class="headerlink" href="#100-first-public-release" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>CLI 1.0.0:</strong> everything built in 0.1.0 to 0.10.0 (see CHANGELOG.md). One <code>sextant-1.0.0.zip</code> runs on macOS, Linux and Windows with Java 17 or newer.</li>

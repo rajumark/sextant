@@ -28,6 +28,16 @@ app/
     findings.jsonl    ← review points with evidence
   resources/
     values.jsonl      ← default strings, bools, integers, colors, dimens
+    strings.jsonl     ← strings, plurals and arrays in every locale
+    ids.jsonl         ← resource ids (R.id)
+    styles.jsonl      ← styles and themes with parents and items
+    drawables.jsonl   ← drawables and mipmaps per configuration: path, format, size
+    layouts.jsonl     ← layouts: root, views with attributes, ids, custom views, fragments, includes
+    menus.jsonl       ← menu items
+    navigation.jsonl  ← navigation graph destinations
+    assets.jsonl      ← files under assets/: kind, size, hidden code flagged
+    xml.jsonl         ← res/xml configs with a summary (network security, backup, FileProvider paths, …)
+    refs.jsonl        ← who references which resource (`@type/name`)
   native/
     libraries.jsonl   ← .so files per ABI: size, sha256, exported symbols, JNI methods
     symbols.jsonl     ← exported functions; JNI symbols mapped to Java
@@ -42,7 +52,7 @@ app/
 - **IDs are smali descriptors**: `Lcom/a/B;` (class), `Lcom/a/B;->m(I)V` (method), `Lcom/a/B;->f:I` (field).
 - **Offsets** in `code/*.jsonl` are 16-bit code units (decimal), the same unit `dexdump` and `smali` (`#@hex`) use. At most 32 are kept per record; `count` is always exact.
 - **Strings** with unpaired UTF-16 surrogates (possible in DEX) are written as `\uXXXX` escapes, so the files stay valid UTF-8.
-- **`schema_version`** in `meta.json` changes only when the shape of the files changes, independently of the tool version (currently **7**).
+- **`schema_version`** in `meta.json` changes only when the shape of the files changes, independently of the tool version (currently **8**).
 
 ## meta.json
 
@@ -123,4 +133,4 @@ app/
 
 ## insights, resources and native
 
-See [Insights and app icons](../guides/insights.md) and [Review findings](findings.md) for what these contain; each line carries the evidence it is based on.
+See [Insights and app icons](../guides/insights.md), [Components, startup, resources and SDKs](../guides/app-structure.md) and [Review findings](findings.md) for what these contain; each line carries the evidence it is based on.

@@ -540,6 +540,8 @@
       
         
       
+        
+      
     
     
     
@@ -684,6 +686,34 @@
     
   
     Insights and app icons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/app-structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Components, startup, resources and SDKs
   
 
     
@@ -1401,10 +1431,20 @@
 <a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>    findings.jsonl    ← review points with evidence
 <a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>  resources/
 <a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>    values.jsonl      ← default strings, bools, integers, colors, dimens
-<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>  native/
-<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    libraries.jsonl   ← .so files per ABI: size, sha256, exported symbols, JNI methods
-<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    symbols.jsonl     ← exported functions; JNI symbols mapped to Java
-<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>  index.sqlite        ← all of the above, normalized, with full-text search
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    strings.jsonl     ← strings, plurals and arrays in every locale
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    ids.jsonl         ← resource ids (R.id)
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    styles.jsonl      ← styles and themes with parents and items
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>    drawables.jsonl   ← drawables and mipmaps per configuration: path, format, size
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>    layouts.jsonl     ← layouts: root, views with attributes, ids, custom views, fragments, includes
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>    menus.jsonl       ← menu items
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>    navigation.jsonl  ← navigation graph destinations
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>    assets.jsonl      ← files under assets/: kind, size, hidden code flagged
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>    xml.jsonl         ← res/xml configs with a summary (network security, backup, FileProvider paths, …)
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>    refs.jsonl        ← who references which resource (`@type/name`)
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>  native/
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>    libraries.jsonl   ← .so files per ABI: size, sha256, exported symbols, JNI methods
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>    symbols.jsonl     ← exported functions; JNI symbols mapped to Java
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>  index.sqlite        ← all of the above, normalized, with full-text search
 </code></pre></div>
 <p><code>--no-code</code> skips <code>code/</code> (and code-based insights); <code>--no-index</code> skips <code>index.sqlite</code>.</p>
 <h2 id="conventions">Conventions<a class="headerlink" href="#conventions" title="Permanent link">&para;</a></h2>
@@ -1413,7 +1453,7 @@
 <li><strong>IDs are smali descriptors</strong>: <code>Lcom/a/B;</code> (class), <code>Lcom/a/B;-&gt;m(I)V</code> (method), <code>Lcom/a/B;-&gt;f:I</code> (field).</li>
 <li><strong>Offsets</strong> in <code>code/*.jsonl</code> are 16-bit code units (decimal), the same unit <code>dexdump</code> and <code>smali</code> (<code>#@hex</code>) use. At most 32 are kept per record; <code>count</code> is always exact.</li>
 <li><strong>Strings</strong> with unpaired UTF-16 surrogates (possible in DEX) are written as <code>\uXXXX</code> escapes, so the files stay valid UTF-8.</li>
-<li><strong><code>schema_version</code></strong> in <code>meta.json</code> changes only when the shape of the files changes, independently of the tool version (currently <strong>7</strong>).</li>
+<li><strong><code>schema_version</code></strong> in <code>meta.json</code> changes only when the shape of the files changes, independently of the tool version (currently <strong>8</strong>).</li>
 </ul>
 <h2 id="metajson">meta.json<a class="headerlink" href="#metajson" title="Permanent link">&para;</a></h2>
 <table>
@@ -1519,7 +1559,7 @@
 <li>Code files are large for big apps because every line is self-contained (Signal: ~470 MB). <code>index.sqlite</code> is the compact, normalized form.</li>
 </ul>
 <h2 id="insights-resources-and-native">insights, resources and native<a class="headerlink" href="#insights-resources-and-native" title="Permanent link">&para;</a></h2>
-<p>See <a href="../../guides/insights/">Insights and app icons</a> and <a href="../findings/">Review findings</a> for what these contain; each line carries the evidence it is based on.</p>
+<p>See <a href="../../guides/insights/">Insights and app icons</a>, <a href="../../guides/app-structure/">Components, startup, resources and SDKs</a> and <a href="../findings/">Review findings</a> for what these contain; each line carries the evidence it is based on.</p>
 
 
 
