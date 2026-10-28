@@ -169,7 +169,13 @@
         "package": "androidx.lifecycle",
         "classes": 35
       }
-    ]
+    ],
+    "obfuscation": {
+      "short_named_classes": 2486,
+      "default_package_classes": 5,
+      "source_file_stripped": 3022,
+      "level": "heavy"
+    }
   },
   "insights": {
     "libraries": 62,

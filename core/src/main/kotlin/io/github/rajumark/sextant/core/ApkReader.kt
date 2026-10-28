@@ -52,7 +52,7 @@ object ApkReader {
                 zip.getEntry("AndroidManifest.xml")
                     ?: throw SextantException.input(
                         "$path has no AndroidManifest.xml",
-                        "this looks like a zip file but not an APK; split bundles (.apks/.xapk/.aab) are not supported yet",
+                        "this looks like a zip file but not an APK; split bundles (.apks/.xapk/.apkm) are read, .aab is not (build APKs from it with bundletool)",
                     )
             val manifest = zip.getInputStream(manifestEntry).use { readCapped(it, MAX_MANIFEST_BYTES, "AndroidManifest.xml") }
             val resourceTable =
@@ -61,7 +61,7 @@ object ApkReader {
                 }
             ApkContents(
                 path = path,
-                file = FileInfo(name = path.fileName.toString(), sizeBytes = Files.size(path), sha256 = sha256(path)),
+                file = fileInfo(path),
                 layout =
                     Layout(
                         dexFiles = names.count { DEX_ENTRY.matches(it) },
@@ -89,6 +89,8 @@ object ApkReader {
         }
         return bytes
     }
+
+    fun fileInfo(path: Path) = FileInfo(name = path.fileName.toString(), sizeBytes = Files.size(path), sha256 = sha256(path))
 
     fun sha256(path: Path): String {
         val digest = MessageDigest.getInstance("SHA-256")

@@ -150,13 +150,13 @@ class AppState(
                     }
                 }
             }
-            path.name.endsWith(".apk", ignoreCase = true) -> analyze(path)
-            path.name.substringAfterLast('.').lowercase() in setOf("xapk", "apks", "apkm", "aab") ->
+            path.name.substringAfterLast('.').lowercase() in setOf("apk", "apks", "xapk", "apkm") -> analyze(path)
+            path.name.endsWith(".aab", ignoreCase = true) ->
                 problem =
                     Problem(
-                        "Split APK bundles aren't supported yet",
-                        "${path.name} is a bundle of several APKs. Sextant reads one .apk at a time.",
-                        "Unzip the bundle and open base.apk (it holds the manifest and most of the code).",
+                        "App Bundles (.aab) can't be opened directly",
+                        "${path.name} is the upload format for Google Play, not an installable APK.",
+                        "Build APKs from it with bundletool (build-apks), then open the .apks file.",
                     )
             else -> problem = Problem("Not an APK", "${path.name} is not an .apk file or a Sextant output folder.", null)
         }

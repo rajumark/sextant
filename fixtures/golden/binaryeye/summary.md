@@ -13,6 +13,7 @@ Extracted by sextant <version> · schema 8 · sha256 568cec6598dbf42fbde9071af87
 ## Code
 - 2936 classes · 16824 methods · 9584 fields · 0 Kotlin classes (0%)
 - 55703 call edges (89433 call sites) · 7571 distinct string constants
+- Obfuscation: heavy · 89% short class names · 2,606 in the default package · source files stripped (100%)
 - Biggest packages: (default) (2606), androidx.camera.camera2.internal.compat.quirk (48), de.tsenger.vdstools (25), de.tsenger.vdstools.generic (24), androidx.appcompat.widget (19), de.tsenger.vdstools.idb (17), androidx.preference (15), androidx.lifecycle (14)
 
 ## Insights

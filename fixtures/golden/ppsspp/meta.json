@@ -178,7 +178,13 @@
         "package": "androidx.activity",
         "classes": 24
       }
-    ]
+    ],
+    "obfuscation": {
+      "short_named_classes": 0,
+      "default_package_classes": 0,
+      "source_file_stripped": 141,
+      "level": "none"
+    }
   },
   "insights": {
     "libraries": 21,

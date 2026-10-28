@@ -38,7 +38,8 @@ data class Extraction(
 
 object Extractor {
     /** Just the launcher icons of an APK: decodes the manifest and resources only (fast). */
-    fun icons(apk: Path): AppIcons {
+    fun icons(input: Path): AppIcons {
+        val apk = Bundles.open(input).apk
         val contents = ApkReader.read(apk)
         val decoded = ManifestDecoder.decode(contents.manifest, contents.resourceTable, mutableListOf())
         return ZipFile(apk.toFile()).use { Icons.resolve(it, decoded.root, decoded.resources, decoded.decodeXml) }
@@ -51,17 +52,20 @@ object Extractor {
      * @param code where to stream code records; `null` skips code extraction entirely (`meta.code` is then null).
      */
     fun extract(
-        apk: Path,
+        input: Path,
         code: CodeSink? = COUNT_ONLY,
     ): Extraction {
         val warnings = mutableListOf<String>()
+        // A split bundle is merged into one APK first; the signature is checked on its base APK as shipped.
+        val opened = Bundles.open(input)
+        val apk = opened.apk
         val contents = ApkReader.read(apk)
         val decoded = ManifestDecoder.decode(contents.manifest, contents.resourceTable, warnings)
         val mapper = ManifestMapper(decoded.root, decoded.resources, warnings)
         val facts = mapper.facts()
         val permissions = mapper.permissions()
         val components = mapper.components()
-        val signing = SigningReader.read(apk, warnings)
+        val signing = SigningReader.read(opened.signed, warnings)
         val collector = InsightsCollector()
         val findingsCollector = FindingsCollector()
         val codeStats = code?.let { CodeExtractor.extract(apk, TeeSink(it, collector, findingsCollector), warnings) }
@@ -106,7 +110,7 @@ object Extractor {
             AppMeta(
                 schemaVersion = Sextant.SCHEMA_VERSION,
                 tool = ToolInfo(Sextant.NAME, Sextant.version),
-                file = contents.file,
+                file = if (opened.bundle != null) ApkReader.fileInfo(input) else contents.file,
                 `package` = facts.packageName,
                 versionName = facts.versionName,
                 versionCode = facts.versionCode,
@@ -118,6 +122,7 @@ object Extractor {
                 flags = facts.flags,
                 signing = signing,
                 layout = contents.layout,
+                bundle = opened.bundle,
                 code = codeStats,
                 insights = insights.stats,
                 icons = icons,

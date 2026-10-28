@@ -13,6 +13,7 @@ Extracted by sextant <version> · schema 8 · sha256 ca05d8f4ec364f84bde1946738e
 ## Code
 - 28397 classes · 217006 methods · 122237 fields · 8101 Kotlin classes (28%)
 - 558702 call edges (743986 call sites) · 54506 distinct string constants
+- Obfuscation: none · 0% short class names
 - Biggest packages: net.osmand.core.jni (813), net.osmand.binary (442), androidx.compose.ui.platform (265), com.google.protobuf (252), androidx.compose.runtime (239), net.osmand.plus.search.dialogs (237), net.osmand.plus.routepreparationmenu (228), io.github.cosinekitty.astronomy (216)
 
 ## Insights

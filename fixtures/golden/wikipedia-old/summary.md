@@ -13,6 +13,7 @@ Extracted by sextant <version> · schema 8 · sha256 4602977099bff12bf24afbbe5a5
 ## Code
 - 11545 classes · 55073 methods · 42282 fields · 0 Kotlin classes (0%)
 - 222930 call edges (366563 call sites) · 22541 distinct string constants
+- Obfuscation: none · 1% short class names · source files stripped (100%)
 - Biggest packages: androidx.compose.material3 (225), org.wikipedia.feed (184), org.wikipedia.dataclient.mwapi (147), org.wikipedia.readinglist (142), androidx.appcompat.widget (131), org.wikipedia.views (125), androidx.paging (123), org.jsoup.parser (117)
 
 ## Insights

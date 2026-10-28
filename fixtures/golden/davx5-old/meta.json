@@ -174,7 +174,13 @@
         "package": "at.bitfire.davdroid.sync",
         "classes": 102
       }
-    ]
+    ],
+    "obfuscation": {
+      "short_named_classes": 201,
+      "default_package_classes": 49,
+      "source_file_stripped": 9227,
+      "level": "none"
+    }
   },
   "insights": {
     "libraries": 109,

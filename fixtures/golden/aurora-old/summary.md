@@ -13,6 +13,7 @@ Extracted by sextant <version> · schema 8 · sha256 fd4d2d4cfb4a4d77766930f722c
 ## Code
 - 15546 classes · 98530 methods · 45238 fields · 0 Kotlin classes (0%)
 - 229239 call edges (308067 call sites) · 14862 distinct string constants
+- Obfuscation: heavy · 74% short class names · source files stripped (100%)
 - Biggest packages: com.aurora.gplayapi (1253), com.google.protobuf (540), i1 (499), i3 (266), c1 (232), g5 (191), q1 (189), g0 (183)
 
 ## Insights

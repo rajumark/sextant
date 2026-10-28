@@ -13,6 +13,7 @@ Extracted by sextant <version> · schema 8 · sha256 b6469d2888970b0c87df0c9eb47
 ## Code
 - 246 classes · 1488 methods · 871 fields · 0 Kotlin classes (0%)
 - 4118 call edges (5755 call sites) · 664 distinct string constants
+- Obfuscation: none · 0% short class names
 - Biggest packages: org.libsdl.app (45), org.minidns.record (35), org.minidns (23), org.minidns.dnssec (21), org.supertuxkart.stk (18), org.minidns.dnslabel (12), org.minidns.iterative (12), org.minidns.util (12)
 
 ## Insights

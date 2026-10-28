@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.PathParser
 import androidx.compose.ui.unit.dp
+import io.github.rajumark.sextant.core.Bundles
 import io.github.rajumark.sextant.core.ManifestDecoder
 import io.github.rajumark.sextant.core.model.XmlNode
 import io.github.rajumark.sextant.desktop.model.ManifestNode
@@ -20,7 +21,8 @@ object IconAssets {
     private val zips = ConcurrentHashMap<String, ZipFile>()
     private val decoders = ConcurrentHashMap<String, (ByteArray) -> XmlNode?>()
 
-    private fun zip(apk: Path): ZipFile = zips.computeIfAbsent(apk.toString()) { ZipFile(apk.toFile()) }
+    // A split bundle is read through its merged APK, where the icon files of every split are.
+    private fun zip(apk: Path): ZipFile = zips.computeIfAbsent(apk.toString()) { ZipFile(Bundles.open(apk).apk.toFile()) }
 
     /** The file's bytes inside the APK, or null when it is not there. */
     fun bytes(

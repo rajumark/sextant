@@ -170,7 +170,13 @@
         "package": "n1",
         "classes": 39
       }
-    ]
+    ],
+    "obfuscation": {
+      "short_named_classes": 2071,
+      "default_package_classes": 0,
+      "source_file_stripped": 2514,
+      "level": "heavy"
+    }
   },
   "insights": {
     "libraries": 0,

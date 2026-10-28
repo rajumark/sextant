@@ -1,6 +1,8 @@
 package io.github.rajumark.sextant.core.mcp
 
+import io.github.rajumark.sextant.core.CodeGrep
 import io.github.rajumark.sextant.core.Extractor
+import io.github.rajumark.sextant.core.ProguardMapping
 import io.github.rajumark.sextant.core.SextantException
 import io.github.rajumark.sextant.core.SmaliPrinter
 import io.github.rajumark.sextant.core.SourceDecompiler
@@ -150,12 +152,50 @@ class SextantTools(
                 listOf(
                     Param("target", "string", "com.a.B, Lcom/a/B;, Lcom/a/B;->m(I)V or com.a.B.m", required = true),
                     Param("apk", "string", "APK path (defaults to the session APK)"),
+                    Param("mapping", "string", "ProGuard/R8 mapping.txt path: show original names (target may then be an original name)"),
                 ),
             ) { args ->
                 val apkPath =
                     args.string("apk")?.let { Paths.get(it) } ?: apk
                         ?: throw SextantException.input("no APK in this session", "pass `apk`, or call `extract` first")
-                SourceDecompiler.decompile(apkPath, args.string("target")!!).code
+                SourceDecompiler
+                    .decompile(
+                        apkPath,
+                        args.string("target")!!,
+                        args.string("mapping")?.let { ProguardMapping.read(Paths.get(it)) },
+                    ).code
+            },
+            McpTool(
+                "grep",
+                "Search decompiled Java for text: matching lines with class, method and line number. Finds code bodies and API " +
+                    "calls that `find` can't. The first search decompiles the app (cached locally); pass `package` to narrow it.",
+                listOf(
+                    Param("text", "string", "Text to find (case-insensitive), or a regular expression with regex=true", required = true),
+                    Param("regex", "boolean", "Treat text as a regular expression"),
+                    Param("package", "string", "Only classes whose name starts with this"),
+                    Param("limit", "integer", "Maximum matching lines (default 100)"),
+                    Param("mapping", "string", "ProGuard/R8 mapping.txt path: show original names"),
+                    Param("apk", "string", "APK path (defaults to the session APK)"),
+                ),
+            ) { args ->
+                val apkPath =
+                    args.string("apk")?.let { Paths.get(it) } ?: apk
+                        ?: throw SextantException.input("no APK in this session", "pass `apk`, or call `extract` first")
+                val text = args.string("text")!!
+                val pattern =
+                    if (args.bool("regex")) Regex(text, RegexOption.IGNORE_CASE) else Regex(Regex.escape(text), RegexOption.IGNORE_CASE)
+                val mappingPath = args.string("mapping")?.let { Paths.get(it) }
+                val r =
+                    CodeGrep.search(
+                        apkPath,
+                        pattern,
+                        args.string("package"),
+                        args.int("limit", 100),
+                        mappingPath?.let { ProguardMapping.read(it) },
+                    )
+                r.hits.joinToString("\n") { h -> "${h.method ?: h.classDescriptor}:${h.line}: ${h.text}" }.ifEmpty { "no matches" } +
+                    "\n(${r.hits.size} lines in ${r.classesSearched} classes" + (if (r.truncated) ", stopped at limit" else "") +
+                    (if (r.failed.isNotEmpty()) ", ${r.failed.size} classes could not be decompiled" else "") + ")"
             },
             McpTool(
                 "insights",

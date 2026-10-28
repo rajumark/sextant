@@ -13,6 +13,7 @@ Extracted by sextant <version> · schema 8 · sha256 bd0ac8cb9ddff42e1c316e37ee1
 ## Code
 - 11204 classes · 69251 methods · 40925 fields · 492 Kotlin classes (4%)
 - 221437 call edges (331605 call sites) · 24050 distinct string constants
+- Obfuscation: heavy · 89% short class names · 9,550 in the default package · source files stripped (100%)
 - Biggest packages: (default) (9550), com.google.protobuf (120), anki.scheduler (74), org.chromium.support_lib_boundary (65), anki.stats (54), com.ichi2.anki.dialogs (40), j$.nio.file (39), com.ichi2.anki (38)
 
 ## Insights

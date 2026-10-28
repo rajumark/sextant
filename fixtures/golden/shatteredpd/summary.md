@@ -13,6 +13,7 @@ Extracted by sextant <version> · schema 8 · sha256 ceef4cdd4beddcb3d85379ac004
 ## Code
 - 3215 classes · 17014 methods · 8956 fields · 0 Kotlin classes (0%)
 - 56311 call edges (85229 call sites) · 6201 distinct string constants
+- Obfuscation: light · 10% short class names · 324 in the default package · source files stripped (100%)
 - Biggest packages: (default) (324), com.shatteredpixel.shatteredpixeldungeon.windows (281), com.shatteredpixel.shatteredpixeldungeon.actors.mobs (194), com.shatteredpixel.shatteredpixeldungeon.sprites (157), com.shatteredpixel.shatteredpixeldungeon.ui (149), com.shatteredpixel.shatteredpixeldungeon.scenes (140), com.shatteredpixel.shatteredpixeldungeon.actors.buffs (130), com.shatteredpixel.shatteredpixeldungeon.levels (87)
 
 ## Insights

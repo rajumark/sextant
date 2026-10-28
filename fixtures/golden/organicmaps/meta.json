@@ -181,7 +181,13 @@
         "package": "androidx.preference",
         "classes": 83
       }
-    ]
+    ],
+    "obfuscation": {
+      "short_named_classes": 488,
+      "default_package_classes": 0,
+      "source_file_stripped": 667,
+      "level": "light"
+    }
   },
   "insights": {
     "libraries": 68,

@@ -13,6 +13,7 @@ Extracted by sextant <version> · schema 8 · sha256 7fbfaee87f3402f7c4b269ac42a
 ## Code
 - 53 classes · 192 methods · 518 fields · 0 Kotlin classes (0%)
 - 851 call edges (1525 call sites) · 76 distinct string constants
+- Obfuscation: none · 0% short class names
 - Biggest packages: org.billthefarmer.tuner (53)
 
 ## Insights

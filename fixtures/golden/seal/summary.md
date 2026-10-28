@@ -13,6 +13,7 @@ Extracted by sextant <version> · schema 8 · sha256 095c2275152653155219d0f276f
 ## Code
 - 6124 classes · 31212 methods · 29952 fields · 0 Kotlin classes (0%)
 - 114844 call edges (180290 call sites) · 9933 distinct string constants
+- Obfuscation: none · 0% short class names · source files stripped (100%)
 - Biggest packages: androidx.compose.material3 (338), androidx.appcompat.widget (140), androidx.compose.ui.platform (124), androidx.compose.foundation (105), androidx.compose.foundation.gestures (105), androidx.compose.runtime (101), com.junkfood.seal.util (98), androidx.compose.foundation.layout (97)
 
 ## Insights

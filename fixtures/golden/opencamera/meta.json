@@ -176,7 +176,13 @@
         "package": "androidx.media",
         "classes": 89
       }
-    ]
+    ],
+    "obfuscation": {
+      "short_named_classes": 0,
+      "default_package_classes": 0,
+      "source_file_stripped": 278,
+      "level": "none"
+    }
   },
   "insights": {
     "libraries": 36,

@@ -13,6 +13,7 @@ Extracted by sextant <version> · schema 8 · sha256 b1c0cb010b6f188b301c2029053
 ## Code
 - 77871 classes · 455333 methods · 218138 fields · 49092 Kotlin classes (63%)
 - 1109018 call edges (1558111 call sites) · 61441 distinct string constants
+- Obfuscation: none · 0% short class names
 - Biggest packages: metro.hints (2607), androidx.compose.material3 (1946), com.duckduckgo.app.browser (1017), com.google.common.collect (1011), androidx.datastore.preferences.protobuf (523), com.duckduckgo.app.di (479), androidx.compose.foundation.layout (472), com.duckduckgo.sync.impl (455)
 
 ## Insights

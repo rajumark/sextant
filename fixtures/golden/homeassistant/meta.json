@@ -182,7 +182,13 @@
         "package": "androidx.compose.foundation.layout",
         "classes": 489
       }
-    ]
+    ],
+    "obfuscation": {
+      "short_named_classes": 17,
+      "default_package_classes": 0,
+      "source_file_stripped": 2221,
+      "level": "none"
+    }
   },
   "insights": {
     "libraries": 123,

@@ -13,6 +13,7 @@ Extracted by sextant <version> · schema 8 · sha256 55f8774f2b89046ccc1a7aa3147
 ## Code
 - 38359 classes · 209124 methods · 98390 fields · 1888 Kotlin classes (4%)
 - 524901 call edges (746049 call sites) · 44379 distinct string constants
+- Obfuscation: heavy · 68% short class names · source files stripped (100%)
 - Biggest packages: n1 (1204), sg (739), ja (611), ia (599), fa (498), ea (427), io.sentry (385), ka (361)
 
 ## Insights

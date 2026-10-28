@@ -175,7 +175,13 @@
         "package": "com.google.android.material.transition",
         "classes": 50
       }
-    ]
+    ],
+    "obfuscation": {
+      "short_named_classes": 12611,
+      "default_package_classes": 12255,
+      "source_file_stripped": 16451,
+      "level": "heavy"
+    }
   },
   "insights": {
     "libraries": 108,

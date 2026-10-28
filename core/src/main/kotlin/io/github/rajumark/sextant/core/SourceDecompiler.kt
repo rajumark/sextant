@@ -20,27 +20,50 @@ data class DecompiledSource(
  * Names are not deobfuscated, so they match the descriptors in the index.
  */
 object SourceDecompiler {
-    fun decompile(
+    /**
+     * jadx loaded for [apk] (a bundle is read through its merged APK). With a [mapping], decompiled code shows the
+     * original names; lookups still use the obfuscated names, as in the index.
+     */
+    fun open(
         apk: Path,
-        target: String,
-    ): DecompiledSource {
-        if (!Files.isRegularFile(apk)) throw SextantException.input("$apk is not a file", "`source` needs the APK itself")
+        mapping: ProguardMapping? = null,
+        threads: Int = 1,
+    ): JadxDecompiler {
+        if (!Files.isRegularFile(apk)) throw SextantException.input("$apk is not a file", "decompiling needs the APK itself")
         val args =
             JadxArgs().apply {
-                setInputFile(apk.toFile())
+                setInputFile(Bundles.open(apk).apk.toFile())
                 setSkipResources(true)
                 setDeobfuscationOn(false)
                 setShowInconsistentCode(true)
-                setThreadsCount(1)
+                setThreadsCount(threads)
+                mapping?.let { setCodeData(it.codeData()) }
             }
-        return JadxDecompiler(args).use { jadx ->
-            try {
-                jadx.load()
-            } catch (e: Exception) {
-                throw SextantException.input("jadx could not load $apk: ${e.message}", cause = e)
-            }
+        val jadx = JadxDecompiler(args)
+        try {
+            jadx.load()
+        } catch (e: Exception) {
+            jadx.close()
+            throw SextantException.input("jadx could not load $apk: ${e.message}", cause = e)
+        }
+        return jadx
+    }
+
+    fun decompile(
+        apk: Path,
+        target: String,
+        mapping: ProguardMapping? = null,
+    ): DecompiledSource {
+        // With a mapping, an original class name (com.app.Login) is accepted and looked up by its obfuscated name.
+        val resolved =
+            mapping?.let { m ->
+                val (cls, member) = splitTarget(target)
+                val dotted = CodeExtractor.className(cls)
+                m.obfuscated(dotted)?.let { obf -> "L${obf.replace('.', '/')};" + (member?.let { "->$it" } ?: "") }
+            } ?: target
+        return open(apk, mapping).use { jadx ->
             // `com.a.B.m` is ambiguous: try it as a class first, then as class `com.a.B` + method `m`.
-            val candidates = listOf(splitTarget(target)) + methodFallback(target)
+            val candidates = listOf(splitTarget(resolved)) + methodFallback(resolved)
             val found =
                 candidates.firstNotNullOfOrNull { (c, m) ->
                     jadx.searchJavaClassOrItsParentByOrigFullName(CodeExtractor.className(c))?.let { Triple(c, m, it) }

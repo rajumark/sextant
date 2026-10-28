@@ -179,7 +179,13 @@
         "package": "com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee",
         "classes": 61
       }
-    ]
+    ],
+    "obfuscation": {
+      "short_named_classes": 332,
+      "default_package_classes": 324,
+      "source_file_stripped": 3215,
+      "level": "light"
+    }
   },
   "insights": {
     "libraries": 9,

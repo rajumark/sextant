@@ -59,6 +59,7 @@ fun main(args: Array<String>) {
             CallersCommand(),
             CalleesCommand(),
             SourceCommand(),
+            GrepCommand(),
             InsightsCommand(),
             EndpointsCommand(),
             McpCommand(),
@@ -73,6 +74,7 @@ fun main(args: Array<String>) {
             AppCommand(),
             ResourceCommand(),
             SdkCommand(),
+            DeobfCommand(),
         )
     try {
         command.parse(args)

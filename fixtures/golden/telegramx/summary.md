@@ -13,6 +13,7 @@ Extracted by sextant <version> · schema 8 · sha256 5a6f13f790ce889b2984f0303ee
 ## Code
 - 12141 classes · 66756 methods · 50619 fields · 0 Kotlin classes (0%)
 - 228925 call edges (346486 call sites) · 29481 distinct string constants
+- Obfuscation: heavy · 58% short class names · 6,735 in the default package · source files stripped (100%)
 - Biggest packages: (default) (6735), org.drinkless.tdlib (3600), org.webrtc (355), j$.util.stream (263), j$.util (91), com.coremedia.iso.boxes (64), org.osmdroid.views.overlay (55), androidx.camera.camera2.compat.quirk (53)
 
 ## Insights

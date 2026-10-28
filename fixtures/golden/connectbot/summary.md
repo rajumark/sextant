@@ -13,6 +13,7 @@ Extracted by sextant <version> · schema 8 · sha256 96cf501a83e89284ff3ec93ac06
 ## Code
 - 6697 classes · 30361 methods · 23127 fields · 0 Kotlin classes (0%)
 - 105815 call edges (169371 call sites) · 9906 distinct string constants
+- Obfuscation: none · 0% short class names · source files stripped (100%)
 - Biggest packages: org.conscrypt (442), androidx.compose.material3 (312), org.connectbot.terminal (293), org.connectbot.service (155), org.connectbot.ui.components (127), org.connectbot.ui.screens.settings (118), androidx.compose.foundation.gestures (115), androidx.appcompat.widget (114)
 
 ## Insights

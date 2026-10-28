@@ -182,7 +182,13 @@
         "package": "j$.time",
         "classes": 30
       }
-    ]
+    ],
+    "obfuscation": {
+      "short_named_classes": 10069,
+      "default_package_classes": 9550,
+      "source_file_stripped": 11204,
+      "level": "heavy"
+    }
   },
   "insights": {
     "libraries": 91,

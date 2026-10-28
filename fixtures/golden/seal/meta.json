@@ -171,7 +171,13 @@
         "package": "androidx.compose.animation.core",
         "classes": 77
       }
-    ]
+    ],
+    "obfuscation": {
+      "short_named_classes": 2,
+      "default_package_classes": 0,
+      "source_file_stripped": 6124,
+      "level": "none"
+    }
   },
   "insights": {
     "libraries": 91,

@@ -18,12 +18,12 @@ fun copyToClipboard(text: String) {
     runCatching { Toolkit.getDefaultToolkit().systemClipboard.setContents(StringSelection(text), null) }
 }
 
-/** Native "open" dialog filtered to .apk files. Returns null when the user cancels. */
+/** Native "open" dialog filtered to APKs and split bundles (.apks, .xapk, .apkm). Returns null when the user cancels. */
 fun chooseApkFile(owner: java.awt.Frame?): java.nio.file.Path? {
     val dialog = java.awt.FileDialog(owner, "Open APK", java.awt.FileDialog.LOAD)
     // Start in Downloads, where most APKs land; fall back to the home folder if it does not exist.
     dialog.directory = downloadsDir().toString()
-    dialog.setFilenameFilter { _, name -> name.endsWith(".apk", ignoreCase = true) }
+    dialog.setFilenameFilter { _, name -> name.substringAfterLast('.').lowercase() in setOf("apk", "apks", "xapk", "apkm") }
     dialog.isVisible = true
     val file = dialog.file ?: return null
     return java.nio.file.Path

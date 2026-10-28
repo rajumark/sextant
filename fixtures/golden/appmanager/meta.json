@@ -179,7 +179,13 @@
         "package": "androidx.recyclerview.widget",
         "classes": 203
       }
-    ]
+    ],
+    "obfuscation": {
+      "short_named_classes": 17,
+      "default_package_classes": 0,
+      "source_file_stripped": 7473,
+      "level": "none"
+    }
   },
   "insights": {
     "libraries": 0,

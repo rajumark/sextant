@@ -178,7 +178,13 @@
         "package": "androidx.datastore.preferences.protobuf",
         "classes": 360
       }
-    ]
+    ],
+    "obfuscation": {
+      "short_named_classes": 17,
+      "default_package_classes": 0,
+      "source_file_stripped": 66011,
+      "level": "none"
+    }
   },
   "insights": {
     "libraries": 78,

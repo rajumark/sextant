@@ -13,6 +13,7 @@ Extracted by sextant <version> · schema 8 · sha256 78f330b9e23c94bd3d5958bd707
 ## Code
 - 2029 classes · 8673 methods · 6032 fields · 0 Kotlin classes (0%)
 - 34129 call edges (59210 call sites) · 5928 distinct string constants
+- Obfuscation: heavy · 87% short class names · 1,759 in the default package · source files stripped (100%)
 - Biggest packages: (default) (1759), org.chromium.support_lib_boundary (58), dev.re7gog.shizuku_apk_installer (19), com.dexterous.flutterlocalnotifications.models (17), androidx.preference (14), android.support.v4.media (11), com.github.dart_lang.jni (10), androidx.media (9)
 
 ## Insights

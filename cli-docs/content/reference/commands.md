@@ -22,7 +22,8 @@ Commands:
   class       Show a class: hierarchy, fields, methods, who calls it and the strings it uses.
   callers     Show who calls a method, as a tree. Calls through an interface or superclass are recorded against that base method.
   callees     Show what a method calls, as a tree. External (framework/library) methods are leaves.
-  source      Print decompiled Java (jadx) for one class or method. Names are kept as in the bytecode, matching the index.
+  source      Print decompiled Java (jadx) for one class or method. Names are kept as in the bytecode, matching the index, unless --mapping gives the originals.
+  grep        Search decompiled Java for text: every matching line with its class, method and line number. Finds what `find` can't (code bodies, field use, API calls). The first search decompiles the app and keeps the code in a local cache, so later searches are quick; --package narrows a first search on big apps.
   insights    Show what the app is built with: frameworks, SDKs, libraries, endpoints and native code.
   endpoints   List URLs found in code strings, resources, deep links and manifest values, with their sources.
   mcp         Run an MCP server on stdin/stdout so AI agents can extract, search and query APKs. Tools: extract, summary, find, class, callers, callees, sql, source, insights, xref, reach, smali, icon, findings, endpoints.
@@ -37,6 +38,7 @@ Commands:
   app         Show the Application class and the startup order: AppComponentFactory, attachBaseContext, content providers (androidx.startup initializers), onCreate; with an extracted folder, also their calls and the SDKs they start.
   res         List strings (every locale, plurals, arrays), resource ids, styles and themes, drawables, layouts, menus, navigation graphs, assets and XML configs. References are shown as written and resolved; NAME shows one entry and who uses it.
   sdks        Show SDKs and libraries by role (analytics, ads, crash reporting, auth, database, UI, …) with versions when an artifact proves them. With several apps, show which SDKs appear where and filter apps by SDK, category or version.
+  deobf       Look up names in a ProGuard/R8 mapping.txt, both ways: original -> obfuscated for classes, fields and methods. Pass the same file as --mapping to `source` and `grep` to read the code with original names.
 ```
 
 ## extract
@@ -166,14 +168,37 @@ Arguments:
 ```text
 Usage: sextant source [<options>] <apk> <target>
 
-  Print decompiled Java (jadx) for one class or method. Names are kept as in the bytecode, matching the index.
+  Print decompiled Java (jadx) for one class or method. Names are kept as in the bytecode, matching the index, unless --mapping gives the originals.
 
 Options:
-  -h, --help  Show this message and exit
+  --mapping=<path>  ProGuard/R8 mapping.txt: show original class, method and field names; TARGET may then use the original name
+  -h, --help        Show this message and exit
 
 Arguments:
   <apk>     The APK (decompiling needs the bytecode)
   <target>  Class (com.a.B, Lcom/a/B;) or method (Lcom/a/B;->m(I)V, Lcom/a/B;->m, com.a.B.m)
+```
+
+## grep
+
+```text
+Usage: sextant grep [<options>] <apk> <text>
+
+  Search decompiled Java for text: every matching line with its class, method and line number. Finds what `find` can't (code bodies, field use, API calls). The first search decompiles the app and keeps the code in a local cache, so later searches are quick; --package narrows a first search on big apps.
+
+Options:
+  --regex           Treat TEXT as a regular expression
+  --case            Match case
+  --package=<text>  Only classes whose name starts with this, e.g. com.app (much faster on big apps)
+  --limit=<int>     Stop after this many matching lines (default 200)
+  --mapping=<path>  ProGuard/R8 mapping.txt: search and show original names
+  --json            One JSON object per match
+  --no-cache        Don't read or write the local cache of decompiled code
+  -h, --help        Show this message and exit
+
+Arguments:
+  <apk>   The APK or split bundle (searching needs the bytecode)
+  <text>  Text to find in the code (case-insensitive), or a regular expression with --regex
 ```
 
 ## insights
@@ -412,4 +437,20 @@ Options:
 
 Arguments:
   <targets>  Extracted folders and/or APKs (APKs are analyzed in memory)
+```
+
+## deobf
+
+```text
+Usage: sextant deobf [<options>] <mappingfile> <name>
+
+  Look up names in a ProGuard/R8 mapping.txt, both ways: original -> obfuscated for classes, fields and methods. Pass the same file as --mapping to `source` and `grep` to read the code with original names.
+
+Options:
+  --limit=<int>  Maximum lines (default 100)
+  -h, --help     Show this message and exit
+
+Arguments:
+  <mappingfile>  The mapping.txt R8 or ProGuard wrote for this build
+  <name>         Any part of an original or obfuscated class name, or a member name
 ```

@@ -13,6 +13,7 @@ Extracted by sextant <version> · schema 8 · sha256 8fd4d86de9497d3afecc0bad201
 ## Code
 - 54323 classes · 345508 methods · 186079 fields · 18102 Kotlin classes (33%)
 - 856166 call edges (1169086 call sites) · 68736 distinct string constants
+- Obfuscation: none · 0% short class names
 - Biggest packages: androidx.compose.material3 (1946), com.google.common.collect (1007), com.nextcloud.client.di (869), androidx.media3.session (752), org.bouncycastle.jcajce.provider.symmetric (615), freemarker.core (607), androidx.compose.foundation.layout (476), dynamiccolor (471)
 
 ## Insights

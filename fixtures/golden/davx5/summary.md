@@ -13,6 +13,7 @@ Extracted by sextant <version> · schema 8 · sha256 41cf9832d97c31e3fc694e5c66b
 ## Code
 - 9243 classes · 44527 methods · 30521 fields · 0 Kotlin classes (0%)
 - 155135 call edges (249098 call sites) · 16665 distinct string constants
+- Obfuscation: none · 2% short class names · 49 in the default package · source files stripped (100%)
 - Biggest packages: org.conscrypt (441), androidx.compose.material3 (301), net.fortuna.ical4j.model.property (165), org.xbill.DNS (156), net.fortuna.ical4j.model (149), androidx.compose.foundation.gestures (126), at.bitfire.davdroid.ui (125), androidx.appcompat.widget (112)
 
 ## Insights

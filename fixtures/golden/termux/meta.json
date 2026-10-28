@@ -173,7 +173,13 @@
         "package": "kotlinx.coroutines.internal",
         "classes": 42
       }
-    ]
+    ],
+    "obfuscation": {
+      "short_named_classes": 0,
+      "default_package_classes": 1,
+      "source_file_stripped": 74,
+      "level": "none"
+    }
   },
   "insights": {
     "libraries": 36,

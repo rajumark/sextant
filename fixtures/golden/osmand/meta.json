@@ -181,7 +181,13 @@
         "package": "net.osmand.plus.settings.fragments",
         "classes": 200
       }
-    ]
+    ],
+    "obfuscation": {
+      "short_named_classes": 110,
+      "default_package_classes": 0,
+      "source_file_stripped": 701,
+      "level": "none"
+    }
   },
   "insights": {
     "libraries": 87,

@@ -108,10 +108,12 @@ class CoreRepository(
         return empty || dir.resolve(OutputFiles.META).exists()
     }
 
-    /** The CLI writes `<name>.sextant/` beside `<name>.apk`; find that APK again so "Analyze again" works. */
+    /** The CLI writes `<name>.sextant/` beside `<name>.apk` (or a bundle); find that file again so "Analyze again" works. */
     private fun apkNextTo(dir: Path): Path? {
-        val apk = dir.parent?.resolve(dir.fileName.toString().removeSuffix(".sextant") + ".apk") ?: return null
-        return apk.takeIf { Files.isRegularFile(it) }
+        val stem = dir.fileName.toString().removeSuffix(".sextant")
+        return listOf("apk", "apks", "xapk", "apkm").firstNotNullOfOrNull { ext ->
+            dir.parent?.resolve("$stem.$ext")?.takeIf { Files.isRegularFile(it) }
+        }
     }
 
     private inline fun <T> failures(block: () -> T): T =

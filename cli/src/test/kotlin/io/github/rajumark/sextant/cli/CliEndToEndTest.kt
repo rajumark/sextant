@@ -413,6 +413,37 @@ class CliEndToEndTest {
     }
 
     @Test
+    fun `grep searches decompiled code, deobf reads a mapping, info shows obfuscation`() {
+        val hits = sextant("grep", apk("binaryeye"), "V().X", "--no-cache")
+        hits.exitCode shouldBe 0
+        hits.stdout shouldContain "yi0.S:36: if (this.j.e && !V().X.keySet().contains(strE)) {"
+        hits.stderr shouldContain "3 matching lines in"
+        sextant("grep", apk("binaryeye"), "(", "--regex", "--no-cache").exitCode shouldBe 1
+        val mapping = tmp.resolve("mapping.txt")
+        Files.writeString(mapping, "kotlinx.serialization.json.internal.JsonTreeDecoder -> yi0:\n    int position -> m\n")
+        sextant("deobf", mapping.toString(), "yi0").stdout shouldContain "kotlinx.serialization.json.internal.JsonTreeDecoder -> yi0"
+        val src =
+            sextant("source", apk("binaryeye"), "kotlinx.serialization.json.internal.JsonTreeDecoder", "--mapping", mapping.toString())
+        src.exitCode shouldBe 0
+        src.stdout shouldContain "public int position;"
+        sextant("info", apk("binaryeye")).stdout shouldContain "Obfuscation  heavy"
+    }
+
+    @Test
+    fun `a split bundle reads like its base APK`() {
+        val bundle = tmp.resolve("binaryeye.apkm")
+        java.util.zip.ZipOutputStream(Files.newOutputStream(bundle)).use { out ->
+            out.putNextEntry(java.util.zip.ZipEntry("base.apk"))
+            Files.copy(Path.of(apk("binaryeye")), out)
+            out.closeEntry()
+        }
+        val info = sextant("info", bundle.toString())
+        info.exitCode shouldBe 0
+        info.stdout shouldContain "de.markusfisch.android.binaryeye"
+        info.stdout shouldContain "Bundle       apkm · base base.apk · 0 splits"
+    }
+
+    @Test
     fun `icon command lists files and saves the best bitmap`() {
         val result = sextant("icon", apk("signal"))
         result.exitCode shouldBe 0

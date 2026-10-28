@@ -175,7 +175,13 @@
         "package": "com.hiennv.flutter_callkit_incoming",
         "classes": 94
       }
-    ]
+    ],
+    "obfuscation": {
+      "short_named_classes": 6595,
+      "default_package_classes": 0,
+      "source_file_stripped": 9957,
+      "level": "heavy"
+    }
   },
   "insights": {
     "libraries": 64,

@@ -13,6 +13,7 @@ Extracted by sextant <version> · schema 8 · sha256 6ce8ee6c3a5a76ab2928f3f3b6e
 ## Code
 - 66011 classes · 447460 methods · 258973 fields · 0 Kotlin classes (0%)
 - 960687 call edges (1242811 call sites) · 69933 distinct string constants
+- Obfuscation: none · 0% short class names · source files stripped (100%)
 - Biggest packages: com.dropbox.core.v2.teamlog (2178), org.checkerframework.com.google.common.collect (1226), com.google.common.collect (972), com.dropbox.core.v2.team (679), androidx.media3.session (635), com.dropbox.core.v2.files (559), com.dropbox.core.v2.sharing (501), org.matrix.rustcomponents.sdk.crypto (496)
 
 ## Insights

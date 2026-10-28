@@ -13,6 +13,7 @@ Extracted by sextant <version> · schema 8 · sha256 ce1a8222a1f9a59cdde0816a64a
 ## Code
 - 2514 classes · 13411 methods · 7981 fields · 0 Kotlin classes (0%)
 - 48046 call edges (69299 call sites) · 6400 distinct string constants
+- Obfuscation: heavy · 82% short class names · source files stripped (100%)
 - Biggest packages: j$.util.stream (274), org.joinmastodon.android.model (169), k1 (110), n2 (110), f (80), j$.util (71), w1 (70), org.joinmastodon.android.api (64)
 
 ## Insights

@@ -144,13 +144,13 @@ class UiFlowTest {
         }
 
     @Test
-    fun `dropping a split bundle says how to proceed`() =
+    fun `dropping an app bundle says how to proceed`() =
         runComposeUiTest {
             val state = testState()
             setContent { App(state) }
-            state.openPath(Path.of("/tmp/app.xapk"))
+            state.openPath(Path.of("/tmp/app.aab"))
             waitForIdle()
-            onNodeWithText("Split APK bundles aren't supported yet").assertIsDisplayed()
+            onNodeWithText("App Bundles (.aab) can't be opened directly").assertIsDisplayed()
         }
 
     @Test

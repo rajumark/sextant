@@ -14,6 +14,7 @@ Extracted by sextant <version> · schema 8 · sha256 4497dbbf81906df52e59ed387a5
 ## Code
 - 3327 classes · 20075 methods · 9729 fields · 0 Kotlin classes (0%)
 - 52326 call edges (67750 call sites) · 4585 distinct string constants
+- Obfuscation: none · 0% short class names · source files stripped (100%)
 - Biggest packages: com.termux.api.apis (238), androidx.appcompat.widget (205), androidx.core.view (170), androidx.fragment.app (123), androidx.recyclerview.widget (108), androidx.lifecycle (92), androidx.appcompat.app (84), androidx.preference (84)
 
 ## Insights

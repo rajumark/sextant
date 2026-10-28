@@ -80,6 +80,7 @@ nav:
       - Components, startup, resources and SDKs: guides/app-structure.md
       - AI agents and MCP: guides/ai-agents.md
       - Scripting with JSON and SQL: guides/scripting.md
+      - Code search, obfuscated apps and bundles: guides/obfuscated-code.md
   - Reference:
       - Commands: reference/commands.md
       - Output files: reference/output.md

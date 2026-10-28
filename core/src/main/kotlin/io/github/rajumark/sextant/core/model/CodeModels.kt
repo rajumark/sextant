@@ -104,6 +104,34 @@ data class CodeStats(
     val duplicateClasses: Int,
     val unreadableMethods: Int,
     val topPackages: List<PackageCount>,
+    /** How much of the code was renamed by R8/ProGuard. */
+    val obfuscation: Obfuscation? = null,
+)
+
+/** "heavy · 61% short class names · 2,301 in the default package · source files stripped (99%)", or null for older folders. */
+fun CodeStats.obfuscationText(): String? {
+    val o = obfuscation ?: return null
+
+    fun pct(n: Int) = if (classes == 0) "0%" else "${n * 100 / classes}%"
+    return buildList {
+        add(o.level)
+        add("${pct(o.shortNamedClasses)} short class names")
+        if (o.defaultPackageClasses > 0) add("%,d in the default package".format(o.defaultPackageClasses))
+        if (o.sourceFileStripped * 2 > classes) add("source files stripped (${pct(o.sourceFileStripped)})")
+    }.joinToString(" · ")
+}
+
+/**
+ * Signs of obfuscation, counted over every class. Short names (`a`, `yi0`) and classes moved to the default package
+ * come from renaming; a stripped source file (`SourceFile`, `r8-map-id-…`) only hides file names.
+ */
+@Serializable
+data class Obfuscation(
+    val shortNamedClasses: Int,
+    val defaultPackageClasses: Int,
+    val sourceFileStripped: Int,
+    /** none, light (5–30% short names) or heavy (over 30%). */
+    val level: String,
 )
 
 @Serializable

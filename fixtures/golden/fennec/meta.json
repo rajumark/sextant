@@ -172,7 +172,13 @@
         "package": "androidx.compose.foundation.text",
         "classes": 246
       }
-    ]
+    ],
+    "obfuscation": {
+      "short_named_classes": 0,
+      "default_package_classes": 0,
+      "source_file_stripped": 810,
+      "level": "none"
+    }
   },
   "insights": {
     "libraries": 118,

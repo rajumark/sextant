@@ -540,6 +540,8 @@
       
         
       
+        
+      
     
     
     
@@ -768,6 +770,34 @@
     
   
     Scripting with JSON and SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/obfuscated-code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Code search, obfuscated apps and bundles
   
 
     
@@ -1516,7 +1546,15 @@
 <p>All notable changes to Sextant. Versions follow semver; <code>schema_version</code> in <code>meta.json</code> tracks the output format separately.</p>
 <h2 id="unreleased-schema-8-index-schema-7">Unreleased (schema 8, index schema 7)<a class="headerlink" href="#unreleased-schema-8-index-schema-7" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Component verdicts:</strong> 18 tags with a reason each, the same in the CLI and the desktop app: launcher, app-link, deep-link, hidden-entry, unguarded, sensitive-role, system-role, boot, foreground, task-hijack, lock-screen, uri-grants, file-provider, isolated, direct-boot, exported-by-default, guarded, disabled.</li>
+<li><strong>Split bundles:</strong> <code>.apks</code> (bundletool, SAI), <code>.xapk</code> (APKPure) and <code>.apkm</code> (APKMirror) are accepted wherever an APK is: base and splits are merged in a local cache (code, native libraries, assets and res/ of every split), the signature is checked on the base, and <code>meta.json</code> gets a <code>bundle</code> block listing each split (abi, density, language or feature). The desktop app opens them too.</li>
+<li><strong><code>sextant grep</code>:</strong> text or regex search inside decompiled Java, with class, method and line number, like jadx-gui's code search. The first search decompiles the app and caches the code locally; <code>--package</code>, <code>--limit</code>, <code>--json</code>, also an MCP tool.</li>
+<li><strong>ProGuard/R8 mappings:</strong> <code>source --mapping</code> and <code>grep --mapping</code> show original class, method and field names (and accept original names); <code>sextant deobf</code> translates names both ways.</li>
+<li>
+<p><strong>Obfuscation score:</strong> <code>meta.json</code> <code>code.obfuscation</code> (short-named classes, default-package classes, stripped source files, level none/light/heavy), shown in <code>info</code> and <code>summary.md</code>.</p>
+</li>
+<li>
+<p><strong>Component verdicts:</strong> 18 tags with a reason each, the same in the CLI and the desktop app: launcher, app-link, deep-link, hidden-entry, unguarded, sensitive-role, system-role, boot, foreground, task-hijack, lock-screen, uri-grants, file-provider, isolated, direct-boot, exported-by-default, guarded, disabled.</p>
+</li>
 <li><strong><code>sextant components</code></strong> (filter by type, tag, exported, search) and <strong><code>sextant component</code></strong> (verdicts and reasons, attributes, entry points in plain words, deep links, App Link hosts, aliases, adb commands, the exact manifest entry).</li>
 <li><strong><code>sextant app</code>:</strong> the Application class and the startup order (AppComponentFactory, attachBaseContext, content providers by initOrder with androidx.startup initializers, onCreate); with an extracted folder, the calls of each step and the SDKs started at launch.</li>
 <li><strong><code>sextant res</code>:</strong> strings in every locale (plurals, arrays), resource ids, styles and themes, drawables, layouts, menus, navigation graphs, assets and res/xml configs, plus <code>string-keys</code> (used/unused, URL, email, key-like, format, untranslated) and <code>refs</code> (who uses which resource). References keep their <code>@type/name</code> and the resolved value. Written to <code>resources/*.jsonl</code> and new index tables (<code>string_resources</code>, <code>resource_ids</code>, <code>styles</code>, <code>drawables</code>, <code>layouts</code>, <code>menus</code>, <code>navigation_destinations</code>, <code>assets</code>, <code>xml_configs</code>, <code>resource_refs</code>).</li>

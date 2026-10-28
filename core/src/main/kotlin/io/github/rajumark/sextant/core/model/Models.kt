@@ -1,6 +1,8 @@
 package io.github.rajumark.sextant.core.model
 
 import io.github.rajumark.sextant.core.insights.AppIcons
+import kotlinx.serialization.EncodeDefault
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 
 // Property order here is the key order in the output files. Keep it stable.
@@ -22,6 +24,10 @@ data class AppMeta(
     val flags: AppFlags,
     val signing: Signing,
     val layout: Layout,
+    /** Set only when the input was a split bundle (.apks/.xapk/.apkm); left out of meta.json for a plain APK. */
+    @OptIn(ExperimentalSerializationApi::class)
+    @EncodeDefault(EncodeDefault.Mode.NEVER)
+    val bundle: BundleInfo? = null,
     val code: CodeStats?,
     val insights: InsightStats?,
     /** Launcher icons resolved to files (schema 6). */
@@ -125,6 +131,25 @@ data class Certificate(
 data class Layout(
     val dexFiles: Int,
     val nativeAbis: List<String>,
+)
+
+/** A split bundle: its format, which entry is the base APK, and every split APK in it. */
+@Serializable
+data class BundleInfo(
+    /** apks (bundletool, SAI), xapk (APKPure) or apkm (APKMirror). */
+    val format: String,
+    val base: String,
+    val splits: List<BundleSplit>,
+)
+
+@Serializable
+data class BundleSplit(
+    val name: String,
+    /** abi, density, language or feature. */
+    val kind: String,
+    /** The configuration in the name, e.g. arm64_v8a, xxhdpi, fr; null for a feature module. */
+    val config: String?,
+    val sizeBytes: Long,
 )
 
 @Serializable

@@ -13,6 +13,7 @@ Extracted by sextant <version> · schema 8 · sha256 72aab4912b08431a2340fc1fb1f
 ## Code
 - 9686 classes · 61470 methods · 28190 fields · 0 Kotlin classes (0%)
 - 151318 call edges (198921 call sites) · 15733 distinct string constants
+- Obfuscation: heavy · 64% short class names · source files stripped (100%)
 - Biggest packages: org.webrtc (430), androidx.appcompat.widget (201), com.facebook.react.uimanager (201), androidx.core.view (191), com.facebook.react.bridge (175), com.horcrux.svg (164), com.facebook.react.devsupport (155), com.facebook.imagepipeline.producers (138)
 
 ## Insights

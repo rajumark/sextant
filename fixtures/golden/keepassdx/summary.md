@@ -13,6 +13,7 @@ Extracted by sextant <version> · schema 8 · sha256 0c52db962ec434eacae760ba8a9
 ## Code
 - 18277 classes · 120999 methods · 84485 fields · 5020 Kotlin classes (27%)
 - 305687 call edges (412519 call sites) · 21991 distinct string constants
+- Obfuscation: none · 0% short class names
 - Biggest packages: org.bouncycastle.jcajce.provider.symmetric (563), com.kunzisoft.keepass.activities (328), kotlinx.coroutines.flow (296), com.kunzisoft.keepass.viewmodels (295), org.bouncycastle.jcajce.provider.digest (268), androidx.appcompat.widget (246), androidx.core.app (221), com.kunzisoft.keepass.activities.fragments (219)
 
 ## Insights

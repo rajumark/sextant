@@ -13,6 +13,7 @@ Extracted by sextant <version> · schema 8 · sha256 fd9c75d90d0f4a7c132b9b4a5a2
 ## Code
 - 16451 classes · 99878 methods · 48275 fields · 0 Kotlin classes (0%)
 - 234974 call edges (319480 call sites) · 13754 distinct string constants
+- Obfuscation: heavy · 76% short class names · 12,255 in the default package · source files stripped (100%)
 - Biggest packages: (default) (12255), com.aurora.gplayapi (1260), com.google.protobuf (534), com.aurora.store.compose.navigation (192), androidx.recyclerview.widget (108), com.google.gson.internal.bind (98), com.google.android.material.internal (91), com.aurora.gplayapi.data.models (77)
 
 ## Insights

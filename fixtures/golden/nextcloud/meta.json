@@ -180,7 +180,13 @@
         "package": "kotlinx.coroutines.flow",
         "classes": 339
       }
-    ]
+    ],
+    "obfuscation": {
+      "short_named_classes": 0,
+      "default_package_classes": 0,
+      "source_file_stripped": 8167,
+      "level": "none"
+    }
   },
   "insights": {
     "libraries": 104,

@@ -21,7 +21,7 @@ object SmaliPrinter {
         val warnings = mutableListOf<String>()
         val def =
             CodeExtractor
-                .loadDexFiles(apk, warnings)
+                .loadDexFiles(Bundles.open(apk).apk, warnings)
                 .firstNotNullOfOrNull { (_, dex) -> dex.classes.firstOrNull { it.type == classDescriptor } }
                 ?: throw SextantException.input(
                     "class $classDescriptor not found in $apk",

@@ -4,6 +4,11 @@ All notable changes to Sextant. Versions follow semver; `schema_version` in `met
 
 ## Unreleased (schema 8, index schema 7)
 
+- **Split bundles:** `.apks` (bundletool, SAI), `.xapk` (APKPure) and `.apkm` (APKMirror) are accepted wherever an APK is: base and splits are merged in a local cache (code, native libraries, assets and res/ of every split), the signature is checked on the base, and `meta.json` gets a `bundle` block listing each split (abi, density, language or feature). The desktop app opens them too.
+- **`sextant grep`:** text or regex search inside decompiled Java, with class, method and line number, like jadx-gui's code search. The first search decompiles the app and caches the code locally; `--package`, `--limit`, `--json`, also an MCP tool.
+- **ProGuard/R8 mappings:** `source --mapping` and `grep --mapping` show original class, method and field names (and accept original names); `sextant deobf` translates names both ways.
+- **Obfuscation score:** `meta.json` `code.obfuscation` (short-named classes, default-package classes, stripped source files, level none/light/heavy), shown in `info` and `summary.md`.
+
 - **Component verdicts:** 18 tags with a reason each, the same in the CLI and the desktop app: launcher, app-link, deep-link, hidden-entry, unguarded, sensitive-role, system-role, boot, foreground, task-hijack, lock-screen, uri-grants, file-provider, isolated, direct-boot, exported-by-default, guarded, disabled.
 - **`sextant components`** (filter by type, tag, exported, search) and **`sextant component`** (verdicts and reasons, attributes, entry points in plain words, deep links, App Link hosts, aliases, adb commands, the exact manifest entry).
 - **`sextant app`:** the Application class and the startup order (AppComponentFactory, attachBaseContext, content providers by initOrder with androidx.startup initializers, onCreate); with an extracted folder, the calls of each step and the SDKs started at launch.

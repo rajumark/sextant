@@ -542,6 +542,8 @@
       
         
       
+        
+      
     
     
     
@@ -770,6 +772,34 @@
     
   
     Scripting with JSON and SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/obfuscated-code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Code search, obfuscated apps and bundles
   
 
     
@@ -1345,13 +1375,14 @@
 <li><strong>Reflection, dynamic loading and native calls</strong> are invisible to call trees and <code>reach</code>. A <code>Class.forName("…")</code> shows up as a string, not as an edge.</li>
 <li><strong>Virtual dispatch</strong> is approximated. <code>callers</code> records calls against the method named in the bytecode (often an interface or superclass method). <code>reach</code> expands into overrides using the class hierarchy, but doesn't expand signatures with more than 25 implementations, to avoid connecting unrelated code.</li>
 <li><strong>Framework callbacks</strong> (<code>onClick</code>, <code>onReceive</code>, lifecycle methods) are not linked to the code that registers them.</li>
-<li><strong>Obfuscated names</strong> stay obfuscated. Sextant doesn't guess original names; it uses the names in the bytecode so they match <code>smali</code>, <code>source</code> and the index.</li>
+<li><strong>Obfuscated names</strong> stay obfuscated in the index. Sextant doesn't guess original names. With the build's own <code>mapping.txt</code>, <code>source --mapping</code> and <code>grep --mapping</code> show the original names, and <code>deobf</code> translates names both ways; the index keeps the bytecode names.</li>
 <li><strong>Decompiling</strong> (<code>source</code>) uses jadx and can fail on unusual bytecode. <code>smali</code> always works.</li>
 <li><strong>Flutter, React Native, Unity and other non-Java code</strong> is detected and its native libraries and assets are listed, but Dart snapshots, Hermes bytecode and IL2CPP code aren't decompiled.</li>
 </ul>
 <h2 id="input">Input<a class="headerlink" href="#input" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Split APKs and bundles</strong> (<code>.apks</code>, <code>.xapk</code>, <code>.aab</code>) aren't read directly. Extract the base APK and pass that.</li>
+<li><strong>Split bundles</strong> (<code>.apks</code>, <code>.xapk</code>, <code>.apkm</code>) are read: the base APK and its splits are merged into one APK in a local cache. Code, native libraries, assets and res/ files of every split are included, but only the base's <code>resources.arsc</code> is decoded, so values that exist only in a density or language split aren't resolved. The signature is checked on the base APK. Encrypted <code>.apkm</code> files and <code>.aab</code> (Play upload format; build APKs from it with <code>bundletool build-apks</code>) aren't read.</li>
+<li><strong>Code search</strong> (<code>grep</code>) decompiles every class once and keeps the code in the local cache (about 300 MB for Signal's 41,000 classes; the first search takes a few minutes on such an app). Classes jadx can't decompile are counted in the summary line and are not searched.</li>
 <li><strong>Resources</strong> use the default configuration for values (strings, bools, …). Icons are resolved for every configuration.</li>
 <li>Very large inputs are capped as a zip-bomb guard (manifest 32 MB, <code>resources.arsc</code> 512 MB, each dex 256 MB, each native library 256 MB).</li>
 </ul>

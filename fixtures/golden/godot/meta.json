@@ -176,7 +176,13 @@
         "package": "kotlin",
         "classes": 115
       }
-    ]
+    ],
+    "obfuscation": {
+      "short_named_classes": 0,
+      "default_package_classes": 0,
+      "source_file_stripped": 4430,
+      "level": "none"
+    }
   },
   "insights": {
     "libraries": 27,

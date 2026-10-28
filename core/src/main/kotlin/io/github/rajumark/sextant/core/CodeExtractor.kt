@@ -29,6 +29,7 @@ import io.github.rajumark.sextant.core.model.FieldRecord
 import io.github.rajumark.sextant.core.model.FieldRefRecord
 import io.github.rajumark.sextant.core.model.MAX_OFFSETS
 import io.github.rajumark.sextant.core.model.MethodRecord
+import io.github.rajumark.sextant.core.model.Obfuscation
 import io.github.rajumark.sextant.core.model.PackageCount
 import io.github.rajumark.sextant.core.model.StringRecord
 import io.github.rajumark.sextant.core.model.TypeRefRecord
@@ -84,6 +85,10 @@ object CodeExtractor {
             val record = classRecord(def, dexName)
             packages.merge(record.`package`, 1, Int::plus)
             if (record.kotlin) counter.kotlin++
+            if (looksRenamed(record.name)) counter.shortNamed++
+            if (record.`package`.isEmpty()) counter.defaultPackage++
+            val src = record.sourceFile
+            if (src == null || src == "SourceFile" || src.startsWith("r8-map-id-")) counter.sourceStripped++
             sink.classRecord(record)
             counter.classes++
 
@@ -127,6 +132,19 @@ object CodeExtractor {
                     .sortedWith(compareByDescending<Map.Entry<String, Int>> { it.value }.thenBy { it.key })
                     .take(TOP_PACKAGES)
                     .map { PackageCount(it.key, it.value) },
+            obfuscation =
+                Obfuscation(
+                    shortNamedClasses = counter.shortNamed,
+                    defaultPackageClasses = counter.defaultPackage,
+                    sourceFileStripped = counter.sourceStripped,
+                    level =
+                        when {
+                            counter.classes == 0 -> "none"
+                            counter.shortNamed * 100 / counter.classes > 30 -> "heavy"
+                            counter.shortNamed * 100 / counter.classes >= 5 -> "light"
+                            else -> "none"
+                        },
+                ),
         )
     }
 
@@ -302,6 +320,11 @@ object CodeExtractor {
 
     private const val TOP_PACKAGES = 15
 
+    private val RENAMED = Regex("[a-z]{1,3}[0-9]{0,2}")
+
+    /** `a.b.c`, `yi0` or `a.b$c`: the outer simple name is what R8/ProGuard give renamed classes. */
+    internal fun looksRenamed(className: String): Boolean = RENAMED.matches(className.substringAfterLast('.').substringBefore('$'))
+
     private class Counter {
         var classes = 0
         var methods = 0
@@ -313,6 +336,9 @@ object CodeExtractor {
         var unreadable = 0
         var fieldRefs = 0
         var typeRefs = 0
+        var shortNamed = 0
+        var defaultPackage = 0
+        var sourceStripped = 0
         val distinctStrings = HashSet<String>()
     }
 }

@@ -13,6 +13,7 @@ Extracted by sextant <version> · schema 8 · sha256 e011983cdea2946711dd6ff35b0
 ## Code
 - 29869 classes · 151676 methods · 75716 fields · 22503 Kotlin classes (75%)
 - 545097 call edges (1036668 call sites) · 30373 distinct string constants
+- Obfuscation: none · 0% short class names
 - Biggest packages: androidx.compose.material.icons.filled (2132), androidx.compose.material.icons.outlined (2132), androidx.compose.material.icons.rounded (2132), androidx.compose.material.icons.sharp (2132), androidx.compose.material.icons.twotone (2132), androidx.compose.material3 (1426), androidx.compose.foundation.layout (389), androidx.compose.ui.platform (329)
 
 ## Insights

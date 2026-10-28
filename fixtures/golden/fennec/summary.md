@@ -14,6 +14,7 @@ Extracted by sextant <version> · schema 8 · sha256 dc2b6d74e575cf4ca2b1b21f7c9
 ## Code
 - 39888 classes · 149542 methods · 107094 fields · 0 Kotlin classes (0%)
 - 429740 call edges (600943 call sites) · 33110 distinct string constants
+- Obfuscation: none · 0% short class names
 - Biggest packages: org.mozilla.fenix.GleanMetrics (1079), org.mozilla.geckoview (787), org.mozilla.fenix.nimbus (579), androidx.compose.material3 (565), androidx.media3.session (476), org.mozilla.fenix.bookmarks (471), mozilla.telemetry.glean.internal (437), org.mozilla.fenix.browser (363)
 
 ## Insights

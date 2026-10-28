@@ -7,6 +7,7 @@ import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.types.choice
 import com.github.ajalt.clikt.parameters.types.path
+import io.github.rajumark.sextant.core.Bundles
 import io.github.rajumark.sextant.core.Extractor
 import io.github.rajumark.sextant.core.SextantException
 import io.github.rajumark.sextant.core.insights.AppIcons
@@ -106,7 +107,7 @@ class IconCommand : CoreCliktCommand(name = "icon") {
                 "try --layer foreground, or --round; vector drawables are compiled binary XML",
             )
         }
-        ZipFile(target.toFile()).use { zip ->
+        ZipFile(Bundles.open(target).apk.toFile()).use { zip ->
             val entry = zip.getEntry(path) ?: throw SextantException.input("$path is not in the APK")
             zip.getInputStream(entry).use { input -> Files.newOutputStream(dest).use { input.copyTo(it) } }
         }

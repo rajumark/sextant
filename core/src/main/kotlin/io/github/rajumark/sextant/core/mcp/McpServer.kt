@@ -193,3 +193,5 @@ fun JsonObject.int(
     name: String,
     default: Int,
 ): Int = (this[name] as? JsonPrimitive)?.contentOrNull?.toIntOrNull() ?: default
+
+fun JsonObject.bool(name: String): Boolean = (this[name] as? JsonPrimitive)?.contentOrNull?.toBooleanStrictOrNull() ?: false

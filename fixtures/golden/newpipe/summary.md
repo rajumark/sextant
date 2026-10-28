@@ -13,6 +13,7 @@ Extracted by sextant <version> · schema 8 · sha256 1d66d19eedbab969b1be2e44e0e
 ## Code
 - 10671 classes · 65538 methods · 41554 fields · 0 Kotlin classes (0%)
 - 198555 call edges (283950 call sites) · 21502 distinct string constants
+- Obfuscation: light · 6% short class names · source files stripped (100%)
 - Biggest packages: org.mozilla.javascript (290), j$.util.stream (284), com.google.android.exoplayer2 (254), androidx.compose.material3 (139), androidx.appcompat.widget (135), androidx.compose.ui.platform (129), com.google.android.exoplayer2.source (123), com.google.android.exoplayer2.upstream (122)
 
 ## Insights

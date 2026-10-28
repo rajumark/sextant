@@ -13,6 +13,7 @@ Extracted by sextant <version> · schema 8 · sha256 82ec3568fba2aa5295b9aae8b76
 ## Code
 - 3022 classes · 16233 methods · 12095 fields · 0 Kotlin classes (0%)
 - 61557 call edges (98209 call sites) · 8846 distinct string constants
+- Obfuscation: heavy · 82% short class names · 5 in the default package · source files stripped (100%)
 - Biggest packages: k (107), B0 (79), androidx.datastore.preferences.protobuf (69), W2 (67), K (64), l0 (64), k4 (62), e0 (54)
 
 ## Insights

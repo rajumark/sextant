@@ -174,7 +174,13 @@
         "package": "org.minidns.cache",
         "classes": 5
       }
-    ]
+    ],
+    "obfuscation": {
+      "short_named_classes": 0,
+      "default_package_classes": 0,
+      "source_file_stripped": 4,
+      "level": "none"
+    }
   },
   "insights": {
     "libraries": 0,

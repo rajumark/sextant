@@ -1,9 +1,11 @@
 package io.github.rajumark.sextant.core.output
 
+import io.github.rajumark.sextant.core.Bundles
 import io.github.rajumark.sextant.core.Extraction
 import io.github.rajumark.sextant.core.model.AppMeta
 import io.github.rajumark.sextant.core.model.Component
 import io.github.rajumark.sextant.core.model.IntentFilter
+import io.github.rajumark.sextant.core.model.obfuscationText
 import kotlinx.serialization.Serializable
 
 /** Compact overview of an extraction: what `info --json` prints and what summary.md is built from. */
@@ -126,6 +128,7 @@ object SummaryWriter {
             )
             m.icons?.icon?.let { appendLine("- Icon: ${IconText.describe(it)}") }
             appendLine("- Layout: ${m.layout.dexFiles} dex · ABIs: ${m.layout.nativeAbis.joinToString().ifEmpty { "none" }}")
+            m.bundle?.let { appendLine("- Bundle: ${Bundles.describe(it)}") }
             m.code?.let { code ->
                 appendLine()
                 appendLine("## Code")
@@ -136,6 +139,7 @@ object SummaryWriter {
                 appendLine(
                     "- ${code.callEdges} call edges (${code.callSites} call sites) · ${code.distinctStrings} distinct string constants",
                 )
+                code.obfuscationText()?.let { appendLine("- Obfuscation: $it") }
                 appendLine(
                     "- Biggest packages: " +
                         code.topPackages.take(8).joinToString { "${it.`package`.ifEmpty { "(default)" }} (${it.classes})" },

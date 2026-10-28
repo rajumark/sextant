@@ -180,7 +180,13 @@
         "package": "org.osmdroid.views",
         "classes": 27
       }
-    ]
+    ],
+    "obfuscation": {
+      "short_named_classes": 7153,
+      "default_package_classes": 6735,
+      "source_file_stripped": 12141,
+      "level": "heavy"
+    }
   },
   "insights": {
     "libraries": 53,

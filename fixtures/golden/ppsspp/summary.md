@@ -13,6 +13,7 @@ Extracted by sextant <version> · schema 8 · sha256 44e1ecb9268702fb65adcee14cf
 ## Code
 - 1401 classes · 12394 methods · 8211 fields · 0 Kotlin classes (0%)
 - 28533 call edges (35042 call sites) · 2250 distinct string constants
+- Obfuscation: none · 0% short class names
 - Biggest packages: androidx.appcompat.widget (201), androidx.core.app (102), androidx.core.view (89), androidx.appcompat.app (86), androidx.fragment.app (76), androidx.annotation (59), androidx.lifecycle (55), org.ppsspp.ppsspp (50)
 
 ## Insights

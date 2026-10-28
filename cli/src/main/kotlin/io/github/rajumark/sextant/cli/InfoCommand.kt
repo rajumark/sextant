@@ -6,8 +6,10 @@ import com.github.ajalt.clikt.parameters.arguments.argument
 import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.types.path
+import io.github.rajumark.sextant.core.Bundles
 import io.github.rajumark.sextant.core.Extraction
 import io.github.rajumark.sextant.core.Extractor
+import io.github.rajumark.sextant.core.model.obfuscationText
 import io.github.rajumark.sextant.core.output.IconText
 import io.github.rajumark.sextant.core.output.InfoReport
 import io.github.rajumark.sextant.core.output.InfoReports
@@ -57,6 +59,7 @@ class InfoCommand : CoreCliktCommand(name = "info") {
                 "Exported" to "${c.exported} components · ${c.withDeepLinks} with deep links",
                 "Launcher" to r.launcher.joinToString().ifEmpty { "none" },
                 "DEX / ABIs" to "${m.layout.dexFiles} dex · ${m.layout.nativeAbis.joinToString().ifEmpty { "no native code" }}",
+                *listOfNotNull(m.bundle?.let { "Bundle" to Bundles.describe(it) }).toTypedArray(),
                 "Icon" to (m.icons?.icon?.let { IconText.describe(it) } ?: "not set"),
                 "Manifest" to
                     (
@@ -84,6 +87,7 @@ class InfoCommand : CoreCliktCommand(name = "info") {
                         }
                             ?: "not extracted (--no-code)"
                     ),
+                *listOfNotNull(m.code?.obfuscationText()?.let { "Obfuscation" to it }).toTypedArray(),
             )
         return buildString {
             rows.forEach { (k, v) -> appendLine("%-12s %s".format(k, v)) }

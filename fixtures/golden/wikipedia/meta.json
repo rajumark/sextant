@@ -174,7 +174,13 @@
         "package": "com.caverock.androidsvg",
         "classes": 91
       }
-    ]
+    ],
+    "obfuscation": {
+      "short_named_classes": 118,
+      "default_package_classes": 0,
+      "source_file_stripped": 11545,
+      "level": "none"
+    }
   },
   "insights": {
     "libraries": 110,
