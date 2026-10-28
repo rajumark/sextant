@@ -45,6 +45,7 @@ class CliEndToEndTest {
         val java = File(System.getProperty("java.home"), "bin/java").path
         val process =
             ProcessBuilder(listOf(java, "-jar", jar) + args)
+                .also { it.environment()["SEXTANT_CACHE"] = tmp.resolve("index-cache").toString() }
                 .directory(cwd.toFile())
                 .redirectError(tmp.resolve("stderr.txt").toFile())
                 .start()
@@ -172,6 +173,28 @@ class CliEndToEndTest {
         val listed = sextant("files", out.toString(), "--status", "listed", "--type", "kotlin-metadata")
         listed.stdout shouldContain "kotlin/kotlin.kotlin_builtins"
         listed.stdout shouldNotContain "classes.dex"
+    }
+
+    @Test
+    fun `an APK given to an index command is indexed once and then read from the cache`() {
+        val first = sextant("find", apk("binaryeye"), "Cipher", "--limit", "1")
+        first.exitCode shouldBe 0
+        first.stderr shouldContain "Indexing binaryeye.apk once"
+        val second = sextant("coverage", apk("binaryeye"))
+        second.exitCode shouldBe 0
+        second.stderr shouldNotContain "Indexing"
+        second.stdout shouldContain "Binary Eye 1.75.5"
+
+        val cache = sextant("cache")
+        cache.stdout shouldContain "Binary Eye"
+        cache.stdout shouldContain "ready"
+        sextant("cache", "--clear").exitCode shouldBe 0
+        sextant("cache").stdout shouldContain "No cached indexes yet"
+
+        val notApk = tmp.resolve("notes.txt").also { Files.writeString(it, "hello") }
+        val bad = sextant("info", notApk.toString())
+        bad.exitCode shouldBe 2
+        bad.stderr shouldNotContain "Indexing"
     }
 
     @Test

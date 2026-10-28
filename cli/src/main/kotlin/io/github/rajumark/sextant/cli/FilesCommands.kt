@@ -10,7 +10,6 @@ import com.github.ajalt.clikt.parameters.types.choice
 import com.github.ajalt.clikt.parameters.types.int
 import com.github.ajalt.clikt.parameters.types.path
 import io.github.rajumark.sextant.core.index.CoverageRow
-import io.github.rajumark.sextant.core.index.IndexReader
 import io.github.rajumark.sextant.core.model.ApkFile
 import io.github.rajumark.sextant.core.output.SextantJson
 import java.util.Locale
@@ -33,7 +32,7 @@ private val FILE_TYPES =
 
 /** `sextant files <dir>`: every zip entry of the APK, from index.sqlite. */
 class FilesCommand : CoreCliktCommand(name = "files") {
-    private val dir by argument(help = "An extracted folder (or its index.sqlite)").path()
+    private val dir by argument(help = INDEX_INPUT).path()
     private val type by option("--type", help = "Only this file type").choice(*FILE_TYPES.toTypedArray())
     private val status by option("--status", help = "decoded: read by a Sextant decoder; listed: listed only").choice("decoded", "listed")
     private val search by option("--search", help = "Only paths or resource names containing this text")
@@ -47,7 +46,7 @@ class FilesCommand : CoreCliktCommand(name = "files") {
 
     override fun run() =
         guarded {
-            IndexReader.open(dir).use { index ->
+            openIndex(dir).use { index ->
                 val (files, total) = index.files(type, status?.let { it == "decoded" }, search, bySize, limit)
                 if (json) {
                     files.forEach { println(SextantJson.compact.encodeToString(ApkFile.serializer(), it)) }
@@ -72,7 +71,7 @@ class FilesCommand : CoreCliktCommand(name = "files") {
 
 /** `sextant coverage <dir>`: how much of the APK Sextant decoded, per file type. */
 class CoverageCommand : CoreCliktCommand(name = "coverage") {
-    private val dir by argument(help = "An extracted folder (or its index.sqlite)").path()
+    private val dir by argument(help = INDEX_INPUT).path()
     private val json by option("--json", help = "One JSON object per file type").flag()
 
     override fun help(context: Context) =
@@ -81,7 +80,7 @@ class CoverageCommand : CoreCliktCommand(name = "coverage") {
 
     override fun run() =
         guarded {
-            IndexReader.open(dir).use { index ->
+            openIndex(dir).use { index ->
                 val rows = index.coverage()
                 if (json) {
                     rows.forEach { println(SextantJson.compact.encodeToString(CoverageRow.serializer(), it)) }
@@ -138,7 +137,7 @@ class CoverageCommand : CoreCliktCommand(name = "coverage") {
         }
 }
 
-private fun size(bytes: Long): String =
+internal fun size(bytes: Long): String =
     when {
         bytes < 1024 -> "$bytes B"
         bytes < 1024 * 1024 -> "%.1f KB".format(Locale.ROOT, bytes / 1024.0)

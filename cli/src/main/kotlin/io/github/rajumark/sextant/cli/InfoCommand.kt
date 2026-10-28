@@ -8,7 +8,6 @@ import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.types.path
 import io.github.rajumark.sextant.core.Bundles
 import io.github.rajumark.sextant.core.Extraction
-import io.github.rajumark.sextant.core.Extractor
 import io.github.rajumark.sextant.core.model.obfuscationText
 import io.github.rajumark.sextant.core.output.IconText
 import io.github.rajumark.sextant.core.output.InfoReport
@@ -18,14 +17,15 @@ import io.github.rajumark.sextant.core.output.SextantJson
 import java.nio.file.Files
 
 class InfoCommand : CoreCliktCommand(name = "info") {
-    private val target by argument(help = "An extracted folder, or an APK (analyzed in memory, nothing written)").path()
+    private val target by argument(help = "An APK (indexed once, then cached) or an extracted folder").path()
     private val json by option("--json", help = "Machine-readable JSON on stdout").flag()
 
     override fun help(context: Context) = "Show a short summary of an APK or an extracted folder."
 
     override fun run() =
         guarded {
-            val extraction = if (Files.isDirectory(target)) OutputReader.read(target) else Extractor.extract(target)
+            val extraction =
+                if (Files.isDirectory(target)) OutputReader.read(target) else openIndex(target).use { it.manifestExtraction() }
             val report = InfoReports.of(extraction)
             if (json) println(SextantJson.compact.encodeToString(InfoReport.serializer(), report)) else print(human(report, extraction))
         }

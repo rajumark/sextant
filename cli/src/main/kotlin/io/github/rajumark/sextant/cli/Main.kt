@@ -9,10 +9,12 @@ import com.github.ajalt.clikt.parameters.options.versionOption
 import io.github.rajumark.sextant.core.ExitCode
 import io.github.rajumark.sextant.core.Sextant
 import io.github.rajumark.sextant.core.SextantException
+import io.github.rajumark.sextant.core.index.IndexReader
 import java.io.BufferedOutputStream
 import java.io.FileDescriptor
 import java.io.FileOutputStream
 import java.io.PrintStream
+import java.nio.file.Path
 import kotlin.system.exitProcess
 
 class SextantCommand : CoreCliktCommand(name = Sextant.NAME) {
@@ -24,6 +26,12 @@ class SextantCommand : CoreCliktCommand(name = Sextant.NAME) {
 
     override fun run() = Unit
 }
+
+/** Opens an extracted folder, its index.sqlite, or an APK (indexed once, then read from the cache); a build is announced on stderr. */
+internal fun openIndex(path: Path): IndexReader = IndexReader.open(path) { System.err.println(it) }
+
+/** Help text for commands that take any of those. */
+internal const val INDEX_INPUT = "An APK (indexed once, then cached), an extracted folder or its index.sqlite"
 
 /** Runs [block], turning expected failures into a clean message and the documented exit code. */
 internal fun <T> guarded(block: () -> T): T =
@@ -77,6 +85,7 @@ fun main(args: Array<String>) {
             DeobfCommand(),
             FilesCommand(),
             CoverageCommand(),
+            CacheCommand(),
         )
     try {
         command.parse(args)

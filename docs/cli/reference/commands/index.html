@@ -1241,6 +1241,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cache
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1832,6 +1843,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cache
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1892,6 +1914,7 @@
 <a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>  deobf       Look up names in a ProGuard/R8 mapping.txt, both ways: original -&gt; obfuscated for classes, fields and methods. Pass the same file as --mapping to `source` and `grep` to read the code with original names.
 <a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>  files       List every file inside the APK: type, size, content, the resource it is (shrunk apps rename res/ files) and which decoder read it.
 <a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>  coverage    Show how much of the APK was decoded into rows: zip entries and bytes per file type, and examples of files that are only listed. Every file is always listed with its size and hash.
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>  cache       List the indexes Sextant keeps for APKs given directly to a command (one per APK, keyed by its SHA-256), or delete them with --clear. Set SEXTANT_CACHE to move the folder.
 </code></pre></div>
 <h2 id="extract">extract<a class="headerlink" href="#extract" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Usage: sextant extract [&lt;options&gt;] &lt;apk&gt;
@@ -1919,7 +1942,7 @@
 <a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>  -h, --help  Show this message and exit
 <a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
 <a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>Arguments:
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>  &lt;target&gt;  An extracted folder, or an APK (analyzed in memory, nothing written)
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>  &lt;target&gt;  An APK (indexed once, then cached) or an extracted folder
 </code></pre></div>
 <h2 id="sql">sql<a class="headerlink" href="#sql" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Usage: sextant sql [&lt;options&gt;] &lt;dir&gt; [&lt;query&gt;]
@@ -1933,7 +1956,7 @@
 <a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>  -h, --help     Show this message and exit
 <a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
 <a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>Arguments:
-<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>  &lt;dir&gt;    An extracted folder (or its index.sqlite)
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>  &lt;dir&gt;    An APK (indexed once, then cached), an extracted folder or its index.sqlite
 <a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>  &lt;query&gt;  SQL to run (read-only)
 </code></pre></div>
 <h2 id="find">find<a class="headerlink" href="#find" title="Permanent link">&para;</a></h2>
@@ -1948,7 +1971,7 @@
 <a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>  -h, --help                                                                                                                             Show this message and exit
 <a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
 <a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>Arguments:
-<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>  &lt;dir&gt;   An extracted folder
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>  &lt;dir&gt;   An APK (indexed once, then cached), an extracted folder or its index.sqlite
 <a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>  &lt;text&gt;  Text to find (any part of a name or string)
 </code></pre></div>
 <h2 id="class">class<a class="headerlink" href="#class" title="Permanent link">&para;</a></h2>
@@ -1961,7 +1984,7 @@
 <a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>  -h, --help  Show this message and exit
 <a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
 <a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>Arguments:
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>  &lt;dir&gt;   An extracted folder
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>  &lt;dir&gt;   An APK (indexed once, then cached), an extracted folder or its index.sqlite
 <a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>  &lt;name&gt;  Class name: com.app.Login, Lcom/app/Login; or just Login
 </code></pre></div>
 <h2 id="callers">callers<a class="headerlink" href="#callers" title="Permanent link">&para;</a></h2>
@@ -1976,7 +1999,7 @@
 <a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>  -h, --help         Show this message and exit
 <a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>
 <a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>Arguments:
-<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>  &lt;dir&gt;     An extracted folder
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>  &lt;dir&gt;     An APK (indexed once, then cached), an extracted folder or its index.sqlite
 <a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>  &lt;method&gt;  Method: Lcom/a/B;-&gt;m(I)V, Lcom/a/B;-&gt;m, com.a.B.m, B.m or just m
 </code></pre></div>
 <h2 id="callees">callees<a class="headerlink" href="#callees" title="Permanent link">&para;</a></h2>
@@ -1991,7 +2014,7 @@
 <a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>  -h, --help         Show this message and exit
 <a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
 <a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>Arguments:
-<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>  &lt;dir&gt;     An extracted folder
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>  &lt;dir&gt;     An APK (indexed once, then cached), an extracted folder or its index.sqlite
 <a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>  &lt;method&gt;  Method: Lcom/a/B;-&gt;m(I)V, Lcom/a/B;-&gt;m, com.a.B.m, B.m or just m
 </code></pre></div>
 <h2 id="source">source<a class="headerlink" href="#source" title="Permanent link">&para;</a></h2>
@@ -2036,7 +2059,7 @@
 <a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>  -h, --help  Show this message and exit
 <a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
 <a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>Arguments:
-<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>  &lt;dir&gt;  An extracted folder
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>  &lt;dir&gt;  An APK (indexed once, then cached), an extracted folder or its index.sqlite
 </code></pre></div>
 <h2 id="endpoints">endpoints<a class="headerlink" href="#endpoints" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Usage: sextant endpoints [&lt;options&gt;] &lt;dir&gt;
@@ -2050,7 +2073,7 @@
 <a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>  -h, --help     Show this message and exit
 <a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>
 <a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>Arguments:
-<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>  &lt;dir&gt;  An extracted folder
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>  &lt;dir&gt;  An APK (indexed once, then cached), an extracted folder or its index.sqlite
 </code></pre></div>
 <h2 id="mcp">mcp<a class="headerlink" href="#mcp" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Usage: sextant mcp [&lt;options&gt;]
@@ -2089,7 +2112,7 @@
 <a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>  -h, --help                         Show this message and exit
 <a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>
 <a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>Arguments:
-<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>  &lt;dir&gt;  An extracted folder
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>  &lt;dir&gt;  An APK (indexed once, then cached), an extracted folder or its index.sqlite
 </code></pre></div>
 <h2 id="xref">xref<a class="headerlink" href="#xref" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Usage: sextant xref [&lt;options&gt;] &lt;dir&gt; &lt;target&gt;
@@ -2102,7 +2125,7 @@
 <a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>  -h, --help     Show this message and exit
 <a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>
 <a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>Arguments:
-<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>  &lt;dir&gt;     An extracted folder
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>  &lt;dir&gt;     An APK (indexed once, then cached), an extracted folder or its index.sqlite
 <a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>  &lt;target&gt;  Class (com.a.B, Lcom/a/B;, B) or field (Lcom/a/B;-&gt;f:I, Lcom/a/B;-&gt;f, com.a.B.f)
 </code></pre></div>
 <h2 id="reach">reach<a class="headerlink" href="#reach" title="Permanent link">&para;</a></h2>
@@ -2117,7 +2140,7 @@
 <a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>  -h, --help     Show this message and exit
 <a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>
 <a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>Arguments:
-<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>  &lt;dir&gt;   An extracted folder
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>  &lt;dir&gt;   An APK (indexed once, then cached), an extracted folder or its index.sqlite
 <a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>  &lt;from&gt;  Entry point: a component/class (com.a.LoginActivity) or a method
 <a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>  &lt;to&gt;    Target: Ljavax/crypto/Cipher;-&gt;getInstance, Cipher.getInstance, okhttp3/ or a method name
 </code></pre></div>
@@ -2146,7 +2169,7 @@
 <a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>  -h, --help                                  Show this message and exit
 <a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>
 <a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>Arguments:
-<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>  &lt;target&gt;  An APK (fast: manifest + resources only) or an extracted folder
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>  &lt;target&gt;  An APK (from the index cache when present, else manifest + resources only) or an extracted folder
 </code></pre></div>
 <h2 id="components">components<a class="headerlink" href="#components" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>Usage: sextant components [&lt;options&gt;] &lt;target&gt;
@@ -2250,7 +2273,7 @@
 <a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>  -h, --help                                                                                                                                  Show this message and exit
 <a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a>
 <a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a>Arguments:
-<a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a>  &lt;dir&gt;  An extracted folder (or its index.sqlite)
+<a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a>  &lt;dir&gt;  An APK (indexed once, then cached), an extracted folder or its index.sqlite
 </code></pre></div>
 <h2 id="coverage">coverage<a class="headerlink" href="#coverage" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>Usage: sextant coverage [&lt;options&gt;] &lt;dir&gt;
@@ -2262,7 +2285,17 @@
 <a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>  -h, --help  Show this message and exit
 <a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>
 <a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>Arguments:
-<a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a>  &lt;dir&gt;  An extracted folder (or its index.sqlite)
+<a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a>  &lt;dir&gt;  An APK (indexed once, then cached), an extracted folder or its index.sqlite
+</code></pre></div>
+<h2 id="cache">cache<a class="headerlink" href="#cache" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>Usage: sextant cache [&lt;options&gt;]
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>  List the indexes Sextant keeps for APKs given directly to a command (one per APK, keyed by its SHA-256), or delete them with --clear. Set SEXTANT_CACHE to move the folder.
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>Options:
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>  --clear     Delete every cached index
+<a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a>  --json      One JSON object per cached index
+<a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a>  -h, --help  Show this message and exit
 </code></pre></div>
 
 

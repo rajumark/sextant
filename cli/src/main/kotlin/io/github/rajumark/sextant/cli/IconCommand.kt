@@ -10,6 +10,7 @@ import com.github.ajalt.clikt.parameters.types.path
 import io.github.rajumark.sextant.core.Bundles
 import io.github.rajumark.sextant.core.Extractor
 import io.github.rajumark.sextant.core.SextantException
+import io.github.rajumark.sextant.core.index.IndexCache
 import io.github.rajumark.sextant.core.insights.AppIcons
 import io.github.rajumark.sextant.core.insights.IconFile
 import io.github.rajumark.sextant.core.insights.IconRef
@@ -22,7 +23,9 @@ import java.util.zip.ZipFile
 
 /** `sextant icon <apk|dir>`: the app's launcher icon files, the best one, and optionally save it. */
 class IconCommand : CoreCliktCommand(name = "icon") {
-    private val target by argument(help = "An APK (fast: manifest + resources only) or an extracted folder").path()
+    private val target by argument(
+        help = "An APK (from the index cache when present, else manifest + resources only) or an extracted folder",
+    ).path()
     private val round by option("--round", help = "Use android:roundIcon instead of android:icon").flag()
     private val layer by option(
         "--layer",
@@ -40,7 +43,9 @@ class IconCommand : CoreCliktCommand(name = "icon") {
             val isApk = Files.isRegularFile(target)
             val icons =
                 if (isApk) {
-                    Extractor.icons(target)
+                    // A cached index answers at once; otherwise read only the manifest and resources (no full extract).
+                    IndexCache.cached(target)?.let { cached -> openIndex(cached).use { it.manifestExtraction().meta.icons } }
+                        ?: Extractor.icons(target)
                 } else {
                     val metaFile = target.resolve(OutputFiles.META)
                     if (!Files.isRegularFile(metaFile)) throw SextantException.input("$target is not an APK or an extraction folder")

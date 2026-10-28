@@ -259,7 +259,7 @@
     <div class="hl">of an APK's data is in SQLite today<span>Estimate. 100% means everything inside the APK is stored as rows and linked.</span></div>
   </div>
   <div class="mbar"><div class="mfill" style="width:55%"></div></div>
-  <div class="mmeta"><b>Step 1 of 7 done</b><span>Index schema 8</span><span>CLI only</span></div>
+  <div class="mmeta"><b>Step 2 of 7 done</b><span>Index schema 8</span><span>CLI only</span></div>
 
   <h2 class="ph">By area</h2>
   <div class="hbar small" id="areas"></div>
@@ -271,18 +271,18 @@
     <li class="db">App identity &amp; versions</li><li class="db">Signing</li><li class="db">Permissions</li><li class="db">Components &amp; verdicts</li><li class="db">Deep links</li><li class="db">Features, metadata, queries</li><li class="db">App icon</li>
     <li class="db">Strings (all locales)</li><li class="db">Resource IDs</li><li class="db">Styles &amp; themes</li><li class="db">Drawables</li><li class="db">Layouts</li><li class="db">Menus</li><li class="db">Navigation graphs</li><li class="db">XML configs</li><li class="db">Assets</li><li class="db">Resource references</li>
     <li class="db">Classes, methods, fields</li><li class="db">Call graph</li><li class="db">Field &amp; type references</li><li class="db">String constants</li><li class="db">Full-text search</li><li class="db">SQL queries</li>
-    <li class="db">SDKs &amp; libraries</li><li class="db">Frameworks</li><li class="db">Endpoints / URLs</li><li class="db">Native libraries &amp; JNI</li><li class="db">Security findings</li><li class="db">Every file + coverage</li>
+    <li class="db">SDKs &amp; libraries</li><li class="db">Frameworks</li><li class="db">Endpoints / URLs</li><li class="db">Native libraries &amp; JNI</li><li class="db">Security findings</li><li class="db">Every file + coverage</li><li class="db">APK index cache</li>
     <li>Startup order</li><li>Call paths (reach)</li><li>Decompiled Java</li><li>Code search (grep)</li><li>Smali</li><li>Version diff</li><li>Split bundles</li><li>ProGuard mappings</li><li>MCP for AI agents</li>
   </ul>
 
   <h2 class="ph">Steps</h2>
   <ul class="slist">
     <li class="done"><span>1</span>Every file in the APK<em>Done</em></li>
-    <li class="next"><span>2</span>APK cache: instant answers<em>Next</em></li>
-    <li><span>3</span>Code → resource links</li>
-    <li><span>4</span>Every XML node and attribute</li>
-    <li><span>5</span>Entities and links</li>
-    <li><span>6</span>SQLite is the only output</li>
+    <li class="done"><span>2</span>APK cache: instant answers<em>Done</em></li>
+    <li class="next"><span>3</span>SQLite is the only output<em>Next</em></li>
+    <li><span>4</span>Code → resource links</li>
+    <li><span>5</span>Every XML node and attribute</li>
+    <li><span>6</span>Entities and links</li>
     <li><span>7</span>Self-describing database</li>
   </ul>
 </section>
@@ -295,10 +295,10 @@
 
   <h2 id="tldr" style="margin-top:32px">In one minute</h2>
   <div class="callout g"><div class="i">✓</div><div>
-    <p><b>Recommendation:</b> make one SQLite file the only product of <code>extract</code>, keyed by the APK's SHA-256 and cached. Every CLI command, the desktop app and the MCP server read only that file. JSONL becomes an optional export.</p>
+    <p><b>Recommendation:</b> make one SQLite file the only product of <code>extract</code>, keyed by the APK's SHA-256 and cached. Every CLI command and the MCP server read only that file. No JSONL, no output folder: APK in, SQLite out.</p>
   </div></div>
   <ul class="tight">
-    <li><b>Store:</b> SQLite. One file, every language reads it, agents already speak SQL, and full-text search plus recursive queries are built in. <a href="#store">Why not a graph database or JSONL →</a></li>
+    <li><b>Store:</b> SQLite. One file, every language reads it, agents already speak SQL, and full-text search plus recursive queries are built in. <a href="#store">Why not a graph database →</a></li>
     <li><b>Model:</b> four layers. <i>Files</i> (every ZIP entry), <i>raw</i> (every XML node and attribute, every resource table entry, every dex item), <i>entities</i> (components, strings, layouts, classes, …), and <i>links</i> (one edge table that ties everything together). <a href="#model">→</a></li>
     <li><b>Join key:</b> the resource ID (<code>0x7f…</code>). Manifest, layouts, menus, styles <i>and code</i> all point at resources by that number. Today the code side is missing. <a href="#links">→</a></li>
     <li><b>Speed:</b> getting the app name takes 2.2 s from the APK and 7 ms from the database, about 320× faster. <a href="#instant">→</a></li>
@@ -334,7 +334,7 @@
           <path d="M506 90 C540 90 540 40 570 40" class="ln" marker-end="url(#ar)"/><rect x="574" y="26" width="132" height="28" rx="6" class="box"/><text x="640" y="44" text-anchor="middle">CLI commands</text>
           <path d="M506 104 C540 104 540 86 570 86" class="ln" marker-end="url(#ar)"/><rect x="574" y="72" width="132" height="28" rx="6" class="box"/><text x="640" y="90" text-anchor="middle">Desktop app</text>
           <path d="M506 120 C540 120 540 132 570 132" class="ln" marker-end="url(#ar)"/><rect x="574" y="118" width="132" height="28" rx="6" class="box"/><text x="640" y="136" text-anchor="middle">MCP / AI agents</text>
-          <path d="M506 134 C540 134 540 178 570 178" class="ln" marker-end="url(#ar)"/><rect x="574" y="164" width="132" height="28" rx="6" class="box"/><text x="640" y="182" text-anchor="middle">SQL / DuckDB / exports</text>
+          <path d="M506 134 C540 134 540 178 570 178" class="ln" marker-end="url(#ar)"/><rect x="574" y="164" width="132" height="28" rx="6" class="box"/><text x="640" y="182" text-anchor="middle">sqlite3 / any SQL tool</text>
         </g>
       </svg>
     </div>
@@ -343,22 +343,13 @@
 
   <!-- 1 -->
   <h2 id="today"><span class="n">1</span>Where we are today</h2>
-  <p class="lead">Sextant already does most of this. <code>sextant extract</code> reads the manifest, resources, dex code, native libraries and signing, then writes about 35 JSON and JSONL files plus an <code>index.sqlite</code> with 41 tables. Commands like <code>find</code>, <code>class</code> and <code>callers</code> query that index. So the question isn't “should we build a database”. It's “what should the database be, and what should it stop being”.</p>
+  <p class="lead">Sextant already does most of this. <code>sextant extract</code> reads the manifest, resources, dex code, native libraries and signing, then writes about 35 JSON and JSONL files plus an <code>index.sqlite</code> with 41 tables. Mission SQLite drops the JSON and JSONL files: the <code>.sqlite</code> file becomes the whole output. Commands like <code>find</code>, <code>class</code> and <code>callers</code> query that index. So the question isn't “should we build a database”. It's “what should the database be, and what should it stop being”.</p>
   <p>I measured the current design on four apps from the test corpus:</p>
 
   <div class="stats">
     <div class="stat"><div class="v">3.5 s</div><div class="l">full extract of Binary Eye (8.3 MB APK, 2,936 classes)</div></div>
-    <div class="stat"><div class="v">1.3 GB</div><div class="l">output folder for Nextcloud (92 MB APK, 54k classes, 856k call edges)</div></div>
-    <div class="stat"><div class="v">≈ 2×</div><div class="l">every fact is stored twice: once in JSONL, once in SQLite</div></div>
     <div class="stat"><div class="v">0</div><div class="l">links from code to resources in an R8-built app like Binary Eye</div></div>
   </div>
-
-  <figure>
-    <div class="frame">
-      <div class="hbar" id="disk"></div>
-    </div>
-    <figcaption>Figure 2. Size on disk. The JSONL files and <code>index.sqlite</code> hold the same facts, so about half of every output folder is a copy.</figcaption>
-  </figure>
 
   <h3>What works well</h3>
   <ul class="tight">
@@ -369,7 +360,7 @@
   <h3>Where it falls short</h3>
   <div class="tw"><table>
     <tr><th>Gap</th><th>Evidence</th><th>Effect</th></tr>
-    <tr><td>Two sources of truth</td><td>JSONL ≈ 700 MB and SQLite 608 MB for Nextcloud</td><td>Twice the disk and write time; the two formats can drift apart</td></tr>
+    <tr><td>Two copies of every fact</td><td>Nextcloud: 1.3 GB output folder, 608 MB of it SQLite</td><td>Twice the disk and write time; removed in step 3 (SQLite only)</td></tr>
     <tr><td>APK commands re-read the APK</td><td><code>info app.apk</code> takes 2.2 s, every time</td><td>No cache, so the same work repeats on every call</td></tr>
     <tr><td>Code → resource links missing</td><td>Binary Eye: 0 <code>R$</code> classes, because R8 inlines IDs as constants</td><td>“Unused string” lists are wrong; can't answer “which method shows this text”</td></tr>
     <tr><td>Not every file is indexed</td><td>Binary Eye root files (<code>kotlin/</code>, <code>org/</code>, <code>countrycodes.csv</code>) have no table</td><td>“100% of the APK” can't be checked</td></tr>
@@ -402,11 +393,9 @@
   <div class="tw"><table>
     <tr><th>Option</th><th>Instant lookup</th><th>Cross-link queries</th><th>One file, zero setup</th><th>Agents can use it</th><th>Size</th><th>Verdict</th></tr>
     <tr><td><b>SQLite</b></td><td><span class="score"><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="tag g">Primary</span></td></tr>
-    <tr><td>DuckDB / Parquet</td><td><span class="score"><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="tag b">Export</span></td></tr>
     <tr><td>Graph DB (Neo4j, Kùzu)</td><td><span class="score"><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="score lo"><i class="on"></i><i></i><i></i></span></td><td><span class="score lo"><i class="on"></i><i></i><i></i></span></td><td><span class="score lo"><i class="on"></i><i></i><i></i></span></td><td><span class="tag r">No</span></td></tr>
     <tr><td>Datalog (Soufflé, CodeQL)</td><td><span class="score lo"><i class="on"></i><i></i><i></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="score lo"><i class="on"></i><i></i><i></i></span></td><td><span class="score lo"><i class="on"></i><i></i><i></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="tag r">No</span></td></tr>
-    <tr><td>JSONL files</td><td><span class="score lo"><i class="on"></i><i></i><i></i></span></td><td><span class="score lo"><i></i><i></i><i></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="score"><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="score lo"><i class="on"></i><i></i><i></i></span></td><td><span class="tag a">Export</span></td></tr>
-    <tr><td>Decoded file tree (apktool style)</td><td><span class="score lo"><i></i><i></i><i></i></span></td><td><span class="score lo"><i></i><i></i><i></i></span></td><td><span class="score lo"><i class="on"></i><i></i><i></i></span></td><td><span class="score lo"><i class="on"></i><i></i><i></i></span></td><td><span class="score lo"><i class="on"></i><i></i><i></i></span></td><td><span class="tag a">On demand</span></td></tr>
+    <tr><td>Decoded file tree (apktool style)</td><td><span class="score lo"><i></i><i></i><i></i></span></td><td><span class="score lo"><i></i><i></i><i></i></span></td><td><span class="score lo"><i class="on"></i><i></i><i></i></span></td><td><span class="score lo"><i class="on"></i><i></i><i></i></span></td><td><span class="score lo"><i class="on"></i><i></i><i></i></span></td><td><span class="tag r">No</span></td></tr>
   </table></div>
   <details><summary>Why SQLite wins, point by point</summary><div>
     <ul class="tight">
@@ -417,7 +406,7 @@
       <li><b>Agents know SQL</b> better than Cypher or Datalog, and can read the schema with one query.</li>
       <li><b>It's already there.</b> The change is an evolution, not a rewrite.</li>
     </ul>
-    <p>Where SQLite is weaker: analytics across hundreds of apps (“which SDK versions appear across my corpus”). DuckDB does that best, and it can read SQLite files directly, so offering a Parquet export covers it.</p>
+    <p>Where SQLite is weaker: heavy analytics across hundreds of apps at once. <code>ATTACH</code> covers dozens of app databases in one query, which is enough for Sextant; anything bigger is out of scope.</p>
   </div></details>
 
   <!-- 4 -->
@@ -452,7 +441,7 @@
         <text x="670" y="166" text-anchor="end" class="mut" font-size="11">read from the APK</text>
       </svg>
     </div>
-    <figcaption>Figure 3. Lower layers are exactly what the APK contains; upper layers are what Sextant concludes. Every upper row points back to a lower row as evidence.</figcaption>
+    <figcaption>Figure 2. Lower layers are exactly what the APK contains; upper layers are what Sextant concludes. Every upper row points back to a lower row as evidence.</figcaption>
   </figure>
 
   <h3>The rules that make it work</h3>
@@ -533,7 +522,7 @@
         </g>
       </svg>
     </div>
-    <figcaption>Figure 4. The link map. Grey links exist today in <code>resource_refs</code>. The red ones (code to resources, and component to class) are the biggest missing piece.</figcaption>
+    <figcaption>Figure 3. The link map. Grey links exist today in <code>resource_refs</code>. The red ones (code to resources, and component to class) are the biggest missing piece.</figcaption>
   </figure>
 
   <h3>Closing the code → resource gap</h3>
@@ -585,7 +574,7 @@
         <text x="360" y="136" text-anchor="middle" class="mut" font-size="11.5">Steps 1–4 read the APK · step 5 reads only the database · all writes go into one transaction, indexes built at the end</text>
       </svg>
     </div>
-    <figcaption>Figure 5. The ID table comes first because every later decoder needs it to turn numbers into names.</figcaption>
+    <figcaption>Figure 4. The ID table comes first because every later decoder needs it to turn numbers into names.</figcaption>
   </figure>
   <ul class="tight">
     <li><b>Write once, index last.</b> Bulk-insert into tables with no indexes inside one transaction, then build the indexes. This is the fastest way to load SQLite.</li>
@@ -599,7 +588,7 @@
   <p>You said the app name should be ready-made, like a database entry. Here is what that's worth, measured on Binary Eye:</p>
   <figure>
     <div class="frame"><div class="hbar" id="speed"></div></div>
-    <figcaption>Figure 6. Time to get the app name. The 650 ms in the middle is mostly Java start-up, not the lookup itself.</figcaption>
+    <figcaption>Figure 5. Time to get the app name of Binary Eye, measured with the step 2 cache. The 370 ms is mostly Java start-up; the lookup itself is 7 ms.</figcaption>
   </figure>
   <p>The proposal is a <b>content-addressed cache</b>, the same trick Git and Nix use:</p>
   <ol class="tight">
@@ -607,7 +596,7 @@
     <li>If <code>~/.cache/sextant/&lt;sha256&gt;.db</code> exists and its version matches, the command uses it. It's a lookup.</li>
     <li>If not, Sextant runs the single-shot extract once, saves the file, and then answers.</li>
   </ol>
-  <p>So <code>sextant info app.apk</code> is slow the first time and instant every time after, with no folder to manage. <code>-o dir/</code> still works for people who want the database next to the APK. Two different APKs can never share a database by mistake, because the key is their content, not their file name.</p>
+  <p>So <code>sextant info app.apk</code> is slow the first time and instant every time after, with no folder to manage. <code>sextant extract app.apk -o app.sqlite</code> writes the same file wherever you want it. Two different APKs can never share a database by mistake, because the key is their content, not their file name.</p>
   <div class="callout a"><div class="i">!</div><div><p>The remaining 650 ms is JVM start-up. For true instant answers from the CLI, the options are a GraalVM native image, or keeping a small daemon running. The desktop app and the MCP server already stay running, so they get the 7 ms path for free.</p></div></div>
 
   <!-- 8 -->
@@ -615,7 +604,7 @@
   <p>“Everything the APK has” needs a definition you can check, otherwise it can't be tested. The proposal: <b>every byte belongs to a file row, and every file row says who read it.</b></p>
   <figure>
     <div class="frame"><div class="hbar" id="cover"></div></div>
-    <figcaption>Figure 7. Binary Eye's 930 ZIP entries by top folder. The coverage report shows how many of each type a decoder read, so gaps are visible instead of silent.</figcaption>
+    <figcaption>Figure 6. Binary Eye's 930 ZIP entries by top folder. The coverage report shows how many of each type a decoder read, so gaps are visible instead of silent.</figcaption>
   </figure>
   <div class="tw"><table>
     <tr><th>Level</th><th>Meaning</th><th>Example</th></tr>
@@ -639,7 +628,7 @@
   <h2 id="agents"><span class="n">9</span>From an AI agent's point of view</h2>
   <p>An agent has a small context window, pays for every token, and can't see a GUI. What helps it most is different from what helps a person:</p>
   <div class="cards">
-    <div class="card"><h4>One handle</h4><p>“Here's <code>app.db</code>” is all it needs. No folder of 35 files to explore, no 700 MB of JSONL to read.</p></div>
+    <div class="card"><h4>One handle</h4><p>“Here's <code>app.db</code>” is all it needs. One file, nothing else to explore.</p></div>
     <div class="card"><h4>Self-describing schema</h4><p>A <code>schema_docs</code> table inside the database explains every table and column, so the agent learns it with one query.</p></div>
     <div class="card"><h4>Search → show → links</h4><p>Three moves cover almost everything: find an entity, see it, follow its links. Each returns a stable key it can pass on.</p></div>
     <div class="card"><h4>Small answers</h4><p>Counts first, with <code>--limit</code> and pagination. Long values are cut with a note saying how to get the rest.</p></div>
@@ -651,10 +640,9 @@
   <!-- 10 -->
   <h2 id="power"><span class="n">10</span>From a power user's point of view</h2>
   <ul class="tight">
-    <li><b>Many apps at once.</b> SQLite's <code>ATTACH</code> opens several app databases in one session: “which of my 46 apps ship OkHttp below 4.12” is one query. For hundreds of apps, export to Parquet and use DuckDB.</li>
+    <li><b>Many apps at once.</b> SQLite's <code>ATTACH</code> opens several app databases in one session: “which of my 46 apps ship OkHttp below 4.12” is one query.</li>
     <li><b>Saved queries.</b> <code>sextant q unused-strings app.db</code> runs a named SQL file. Users can add their own, the way CodeQL query packs work.</li>
     <li><b>Familiar tools.</b> The <code>sqlite3</code> shell, Datasette (a web UI for any SQLite file), Python and pandas all work out of the box.</li>
-    <li><b>Exports for other formats.</b> <code>sextant export --jsonl | --parquet | --res-tree</code>. JSONL for jq and grep, Parquet for analytics, a decoded <code>res/</code> tree (apktool style) for reading XML by eye.</li>
     <li><b>Desktop app on the same file.</b> The desktop app, CLI and MCP all read one database, so they can never disagree.</li>
   </ul>
 
@@ -664,9 +652,9 @@
     <tr><th>Topic</th><th>Why it matters</th><th>Proposal</th></tr>
     <tr><td><b>Schema versions</b></td><td>Old databases will meet new Sextant releases</td><td>Version in <code>meta</code>; a mismatch means re-derive or re-extract automatically</td></tr>
     <tr><td><b>Hostile APKs</b></td><td>Malware uses ZIP bombs, broken XML and huge string pools to crash tools</td><td>Size and count limits per decoder; a failure becomes a warning row, never a crash</td></tr>
-    <tr><td><b>Secrets in the database</b></td><td>The database holds every API key the APK holds</td><td>Say so in the docs; offer <code>--redact</code> on export before sharing</td></tr>
+    <tr><td><b>Secrets in the database</b></td><td>The database holds every API key the APK holds</td><td>Say so in the docs; a <code>--redact</code> option that masks them in a copy before sharing</td></tr>
     <tr><td><b>Obfuscation</b></td><td>Names like <code>a.b.c</code> make links hard to read</td><td>Load <code>mapping.txt</code> as a name layer (<code>original_name</code> column), never rewriting the facts</td></tr>
-    <tr><td><b>Size</b></td><td>Nextcloud's index is 608 MB</td><td>Drop JSONL copies, store call offsets compactly, make bulky tables optional</td></tr>
+    <tr><td><b>Size</b></td><td>Nextcloud's index is 608 MB</td><td>Write only SQLite, store call offsets compactly, make bulky tables optional</td></tr>
     <tr><td><b>Determinism</b></td><td>Diffs and tests need byte-stable output</td><td>Sorted inserts, stable keys, no timestamps inside fact tables</td></tr>
     <tr><td><b>Concurrency</b></td><td>The desktop app and CLI may read while extract writes</td><td>Readers open read-only; extract writes to a temp file and renames when done</td></tr>
     <tr><td><b>Testing “100%”</b></td><td>Claims need proof</td><td>Coverage report in CI over the real-APK corpus; cross-checks against <code>aapt2</code> and <code>dexdump</code> continue</td></tr>
@@ -678,11 +666,11 @@
   <div class="tw"><table>
     <tr><th>#</th><th>Step</th><th>Unlocks</th><th>Status</th></tr>
     <tr><td class="num">1</td><td><code>files</code> table (every zip entry: type, size, CRC, SHA-256, content, resource name, decoder) with <code>sextant files</code> and <code>sextant coverage</code></td><td>A checkable “100%”, and shrunk file names mapped back to resources</td><td><span class="tag g">Done</span></td></tr>
-    <tr><td class="num">2</td><td>APK cache keyed by SHA-256; APK commands use the cached index</td><td>Instant repeat answers</td><td><span class="tag">Next</span></td></tr>
-    <tr><td class="num">3</td><td>Resource ID constants and <code>R</code> fields in code → resource links</td><td>Correct unused lists, “which method shows this text”</td><td><span class="tag">Planned</span></td></tr>
-    <tr><td class="num">4</td><td><code>xml_nodes</code> / <code>xml_attrs</code> for every binary XML file; <code>res_values</code> per config</td><td>Queries over any view or attribute</td><td><span class="tag">Planned</span></td></tr>
-    <tr><td class="num">5</td><td><code>entities</code> + <code>links</code>, and a generic <code>links</code> command</td><td>Cross-kind queries</td><td><span class="tag">Planned</span></td></tr>
-    <tr><td class="num">6</td><td>Commands read SQLite instead of JSONL; JSONL is no longer written</td><td>Half the disk, one source of truth</td><td><span class="tag">Planned</span></td></tr>
+    <tr><td class="num">2</td><td>APK cache keyed by SHA-256; APK commands use the cached index</td><td>Instant repeat answers</td><td><span class="tag g">Done</span></td></tr>
+    <tr><td class="num">3</td><td>SQLite is the only output: <code>extract</code> writes one <code>.sqlite</code> file and every command reads an APK or that file</td><td>APK in, SQLite out; one source of truth</td><td><span class="tag">Next</span></td></tr>
+    <tr><td class="num">4</td><td>Resource ID constants and <code>R</code> fields in code → resource links</td><td>Correct unused lists, “which method shows this text”</td><td><span class="tag">Planned</span></td></tr>
+    <tr><td class="num">5</td><td><code>xml_nodes</code> / <code>xml_attrs</code> for every binary XML file; <code>res_values</code> per config</td><td>Queries over any view or attribute</td><td><span class="tag">Planned</span></td></tr>
+    <tr><td class="num">6</td><td><code>entities</code> + <code>links</code>, and a generic <code>links</code> command</td><td>Cross-kind queries</td><td><span class="tag">Planned</span></td></tr>
     <tr><td class="num">7</td><td>Split the derive stage; <code>schema_docs</code> table; saved queries</td><td>Fast upgrades, self-describing database</td><td><span class="tag">Planned</span></td></tr>
   </table></div>
   <h3>Step 1 result</h3>
@@ -728,18 +716,11 @@
       tr.appendChild(f); tr.appendChild(v); el.appendChild(lab); el.appendChild(tr);
     });
   }
-  bars('disk', [
-    ['Nextcloud APK', 92, 'var(--fg3)'],
-    ['Nextcloud JSONL', 700, 'var(--amber)'],
-    ['Nextcloud index.sqlite', 608, 'var(--accent)'],
-    ['Bitwarden APK', 68, 'var(--fg3)'],
-    ['Bitwarden JSONL', 168, 'var(--amber)'],
-    ['Bitwarden index.sqlite', 176, 'var(--accent)']
-  ], 700, function (v) { return v + ' MB'; });
   bars('speed', [
-    ['<code>info app.apk</code><br>re-reads the APK', 2245, 'var(--red)'],
-    ['<code>info app/</code><br>CLI on the folder', 656, 'var(--amber)'],
-    ['SQLite lookup<br>(desktop, MCP, cache)', 7, 'var(--green)']
+    ['<code>info app.apk</code><br>before the cache', 2245, 'var(--red)'],
+    ['<code>info app.apk</code><br>first run, builds the index', 1660, 'var(--amber)'],
+    ['<code>info app.apk</code><br>every run after', 370, 'var(--green)'],
+    ['SQLite lookup alone', 7, 'var(--green)']
   ], 2245, function (v) { return v.toLocaleString() + ' ms'; });
   bars('cover', [
     ['res/', 824, 'var(--green)'],

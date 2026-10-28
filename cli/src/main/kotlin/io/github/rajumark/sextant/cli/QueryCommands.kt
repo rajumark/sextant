@@ -14,7 +14,6 @@ import com.github.ajalt.clikt.parameters.types.path
 import io.github.rajumark.sextant.core.ExitCode
 import io.github.rajumark.sextant.core.SextantException
 import io.github.rajumark.sextant.core.index.ClassReport
-import io.github.rajumark.sextant.core.index.IndexReader
 import io.github.rajumark.sextant.core.index.IndexSchema
 import io.github.rajumark.sextant.core.index.QueryResult
 import io.github.rajumark.sextant.core.index.SearchHit
@@ -28,7 +27,7 @@ import kotlinx.serialization.json.JsonPrimitive
 
 /** `sextant sql <dir> "<query>"`: read-only SQL over index.sqlite. */
 class SqlCommand : CoreCliktCommand(name = "sql") {
-    private val dir by argument(help = "An extracted folder (or its index.sqlite)").path()
+    private val dir by argument(help = INDEX_INPUT).path()
     private val query by argument(help = "SQL to run (read-only)").optional()
     private val format by option(help = "Output format").switch("--json" to "json", "--csv" to "csv").default("table")
     private val schema by option("--schema", help = "Print the tables and views instead of running a query").flag()
@@ -38,7 +37,7 @@ class SqlCommand : CoreCliktCommand(name = "sql") {
 
     override fun run() =
         guarded {
-            IndexReader.open(dir).use { index ->
+            openIndex(dir).use { index ->
                 if (schema) {
                     print(index.schema())
                     return@use
@@ -69,7 +68,7 @@ class SqlCommand : CoreCliktCommand(name = "sql") {
 
 /** `sextant find <dir> <text>`: substring search over every name and string constant. */
 class FindCommand : CoreCliktCommand(name = "find") {
-    private val dir by argument(help = "An extracted folder").path()
+    private val dir by argument(help = INDEX_INPUT).path()
     private val text by argument(help = "Text to find (any part of a name or string)")
     private val kind by option("--kind", help = "Only this kind")
         .choice(*IndexSchema.KINDS.toTypedArray())
@@ -82,7 +81,7 @@ class FindCommand : CoreCliktCommand(name = "find") {
 
     override fun run() =
         guarded {
-            IndexReader.open(dir).use { index ->
+            openIndex(dir).use { index ->
                 val hits = index.search(text, kind, limit)
                 for (hit in hits) {
                     val users = if (hit.kind == "string") index.stringUsers(hit.ref, 3) else emptyList()
@@ -120,7 +119,7 @@ data class FindHit(
 
 /** `sextant class <dir> <name>`: everything about one class. */
 class ClassCommand : CoreCliktCommand(name = "class") {
-    private val dir by argument(help = "An extracted folder").path()
+    private val dir by argument(help = INDEX_INPUT).path()
     private val name by argument(help = "Class name: com.app.Login, Lcom/app/Login; or just Login")
     private val json by option("--json", help = "Machine-readable JSON").flag()
 
@@ -128,7 +127,7 @@ class ClassCommand : CoreCliktCommand(name = "class") {
 
     override fun run() =
         guarded {
-            IndexReader.open(dir).use { index ->
+            openIndex(dir).use { index ->
                 val matches = index.findClasses(name)
                 when {
                     matches.isEmpty() -> throw SextantException.input(

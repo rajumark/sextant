@@ -54,26 +54,29 @@ cli/build/install/sextant/bin/sextant --help
 ```text
 sextant extract <app.apk> [-o <dir>] [--force] [--quiet] [--no-code] [--no-index]
 sextant info    <dir | app.apk> [--json]
-sextant find    <dir> <text> [--kind class|method|field|string|component|permission|deep_link] [--limit N] [--json]
-sextant class   <dir> <name> [--json]
-sextant sql     <dir> "<query>" [--json | --csv] [--limit N]
-sextant sql     <dir> --schema
-sextant callers <dir> <method> [--depth N] [--fan-out N] [--json]
-sextant callees <dir> <method> [--depth N] [--fan-out N] [--json]
+sextant find    <app.apk | dir> <text> [--kind class|method|field|string|component|permission|deep_link] [--limit N] [--json]
+sextant class   <app.apk | dir> <name> [--json]
+sextant sql     <app.apk | dir> "<query>" [--json | --csv] [--limit N]
+sextant sql     <app.apk | dir> --schema
+sextant callers <app.apk | dir> <method> [--depth N] [--fan-out N] [--json]
+sextant callees <app.apk | dir> <method> [--depth N] [--fan-out N] [--json]
 sextant source  <app.apk> <class | method>
-sextant insights  <dir> [--json]
-sextant endpoints <dir> [--host TEXT] [--limit N] [--json]
+sextant insights  <app.apk | dir> [--json]
+sextant endpoints <app.apk | dir> [--host TEXT] [--limit N] [--json]
 sextant diff    <old-dir> <new-dir> [--show N] [--json]
-sextant findings <dir> [--severity info|low|medium|high] [--json]
-sextant xref    <dir> <class | field> [--limit N] [--json]
-sextant reach   <dir> <from> <to> [--depth N] [--paths N] [--json]
+sextant findings <app.apk | dir> [--severity info|low|medium|high] [--json]
+sextant xref    <app.apk | dir> <class | field> [--limit N] [--json]
+sextant reach   <app.apk | dir> <from> <to> [--depth N] [--paths N] [--json]
 sextant smali   <app.apk> <class | method>
 sextant icon    <app.apk | dir> [--round] [--layer foreground|background|monochrome] [-o file] [--json]
-sextant files   <dir> [--type TYPE] [--status decoded|listed] [--search TEXT] [--by-size] [--limit N] [--json]
-sextant coverage <dir> [--json]
+sextant files   <app.apk | dir> [--type TYPE] [--status decoded|listed] [--search TEXT] [--by-size] [--limit N] [--json]
+sextant coverage <app.apk | dir> [--json]
+sextant cache   [--clear] [--json]
 sextant mcp     [--dir <dir>] [--apk <app.apk>]
 sextant --version
 ```
+
+Every command that reads the index (`find`, `class`, `sql`, `callers`, `callees`, `insights`, `endpoints`, `findings`, `xref`, `reach`, `files`, `coverage`) and `info` also take an APK directly. The first time, Sextant indexes it once into a cache keyed by the APK's SHA-256 (SQLite only, no folder to manage); every later command on the same APK reads that index at once. `sextant cache` lists the cached indexes and `--clear` deletes them; `SEXTANT_CACHE` moves the folder. A new Sextant version rebuilds an index on next use.
 
 | Command | What it does |
 |---|---|
@@ -93,6 +96,7 @@ sextant --version
 | `icon` | Finds the app icon. It lists every file behind `android:icon` (or `--round` for `android:roundIcon`) per density, with format, pixel size and byte size, decodes adaptive icons into their foreground, background and monochrome layers, marks the best file, and `-o` saves it. It works on an APK directly (fast: manifest and resources only) or on an extracted folder. |
 | `files` | Lists every file inside the APK from the index: type, size, content (dex, elf, png, binary-xml, json, …), the resource it is (shrunk apps rename `res/` files, so `res/BW.xml` shows as `@mipmap/ic_launcher`) and the decoder that read it. `--status listed` shows files no decoder reads yet; `--by-size` puts the largest first. |
 | `coverage` | Shows how much of the APK was decoded into rows: files and bytes per type, and the largest files that are only listed (size and hash). Every zip entry is always listed. |
+| `cache` | Lists the indexes built for APKs given directly to a command (app, version, size, state), or deletes them with `--clear`. |
 | `sql` | Runs read-only SQL over `index.sqlite`. It prints a table by default (`--json` gives one object per line, `--csv` gives CSV) and stops at 1,000 rows unless you pass `--limit`. `--schema` prints every table and view. |
 
 Progress and errors go to **stderr**, data goes to **stdout**, so `--json` output is always safe to pipe.

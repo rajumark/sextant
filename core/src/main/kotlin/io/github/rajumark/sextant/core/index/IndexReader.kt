@@ -1,7 +1,18 @@
 package io.github.rajumark.sextant.core.index
 
+import io.github.rajumark.sextant.core.Extraction
 import io.github.rajumark.sextant.core.SextantException
 import io.github.rajumark.sextant.core.model.ApkFile
+import io.github.rajumark.sextant.core.model.AppMeta
+import io.github.rajumark.sextant.core.model.Component
+import io.github.rajumark.sextant.core.model.FeatureRecord
+import io.github.rajumark.sextant.core.model.IntentData
+import io.github.rajumark.sextant.core.model.IntentFilter
+import io.github.rajumark.sextant.core.model.MetadataRecord
+import io.github.rajumark.sextant.core.model.PathPermission
+import io.github.rajumark.sextant.core.model.Permission
+import io.github.rajumark.sextant.core.model.QueryRecord
+import io.github.rajumark.sextant.core.model.XmlNode
 import io.github.rajumark.sextant.core.output.OutputFiles
 import io.github.rajumark.sextant.core.output.SextantJson
 import kotlinx.serialization.Serializable
@@ -100,8 +111,20 @@ class IndexReader private constructor(
         private const val CLASS_SUFFIX =
             "SELECT descriptor FROM classes WHERE name LIKE ? ESCAPE '\\' OR name = ? ORDER BY descriptor LIMIT 50"
 
-        fun open(dir: Path): IndexReader {
-            val file = if (Files.isDirectory(dir)) dir.resolve(OutputFiles.INDEX) else dir
+        /**
+         * Opens an extracted folder, an index.sqlite file, or an APK. An APK is read through [IndexCache]: built once,
+         * then reused; [onBuild] is told before a build starts.
+         */
+        fun open(
+            dir: Path,
+            onBuild: (String) -> Unit = {},
+        ): IndexReader {
+            val file =
+                when {
+                    Files.isDirectory(dir) -> dir.resolve(OutputFiles.INDEX)
+                    Files.isRegularFile(dir) && !isSqlite(dir) -> IndexCache.index(dir, onBuild)
+                    else -> dir
+                }
             if (!Files.isRegularFile(file)) {
                 throw SextantException.input("no index at $file", "run `sextant extract <app.apk>` (0.3.0 or newer) to build index.sqlite")
             }
@@ -111,6 +134,10 @@ class IndexReader private constructor(
                 }
             return IndexReader(config.createConnection("jdbc:sqlite:$file"))
         }
+
+        /** True when [file] starts with the SQLite header (an index.sqlite rather than an APK). */
+        private fun isSqlite(file: Path): Boolean =
+            Files.newInputStream(file).use { input -> String(input.readNBytes(16), Charsets.ISO_8859_1) == "SQLite format 3\u0000" }
     }
 
     /** Runs any read-only SQL. At most [limit] rows are returned. */
@@ -539,6 +566,98 @@ class IndexReader private constructor(
                     row.copy(listedOnly = st.executeQuery().use { rs -> rs.map { it.getString(1) } })
                 }
             }
+    }
+
+    /**
+     * The manifest-level part of an extraction, read back from SQLite: meta, permissions, components (the indexed
+     * columns and intent filters), features, metadata and queries. Enough for `info`; [Extraction.manifest] is an
+     * empty node and resources, insights and files are left empty.
+     */
+    fun manifestExtraction(): Extraction {
+        val metaJson = meta("meta_json") ?: throw SextantException.input("this index has no meta_json", "re-extract the APK")
+        val meta = SextantJson.reader.decodeFromString(AppMeta.serializer(), metaJson)
+        val strings = ListSerializer(String.serializer())
+        val filters = ListSerializer(IntentFilter.serializer())
+        val pathPermissions = ListSerializer(PathPermission.serializer())
+        val intentData = ListSerializer(IntentData.serializer())
+
+        fun <T> rows(
+            sql: String,
+            row: (ResultSet) -> T,
+        ): List<T> = conn.createStatement().use { st -> st.executeQuery(sql).use { it.map(row) } }
+
+        fun ResultSet.bool(column: String): Boolean? = getInt(column).let { v -> if (wasNull()) null else v != 0 }
+        val permissions =
+            rows("SELECT * FROM permissions ORDER BY rowid") {
+                Permission(
+                    name = it.getString("name"),
+                    kind = it.getString("kind"),
+                    maxSdk = it.getInt("max_sdk").takeUnless { _ -> it.wasNull() },
+                    dangerous = it.getInt("dangerous") != 0,
+                    protectionLevel = it.getString("protection_level"),
+                    custom = it.getInt("custom") != 0,
+                    impliedBy = it.getString("implied_by"),
+                )
+            }
+        val components =
+            rows("SELECT * FROM components ORDER BY rowid") {
+                Component(
+                    type = it.getString("type"),
+                    name = it.getString("name"),
+                    exported = it.getInt("exported") != 0,
+                    exportedSource = it.getString("exported_source"),
+                    enabled = it.getInt("enabled") != 0,
+                    permission = it.getString("permission"),
+                    process = it.getString("process"),
+                    launcher = it.getInt("launcher") != 0,
+                    targetActivity = it.getString("target_activity"),
+                    authorities = SextantJson.reader.decodeFromString(strings, it.getString("authorities")),
+                    intentFilters = SextantJson.reader.decodeFromString(filters, it.getString("intent_filters")),
+                    readPermission = it.getString("read_permission"),
+                    writePermission = it.getString("write_permission"),
+                    grantUriPermissions = it.bool("grant_uri_permissions"),
+                    pathPermissions = SextantJson.reader.decodeFromString(pathPermissions, it.getString("path_permissions")),
+                    launchMode = it.getString("launch_mode"),
+                    taskAffinity = it.getString("task_affinity"),
+                    foregroundServiceType = it.getString("foreground_service_type"),
+                    isolatedProcess = it.bool("isolated_process"),
+                    directBootAware = it.bool("direct_boot_aware"),
+                    label = it.getString("label"),
+                )
+            }
+        val features =
+            rows("SELECT * FROM features ORDER BY rowid") {
+                FeatureRecord(it.getString("kind"), it.getString("name"), it.bool("required"), it.getString("version"))
+            }
+        val metadata =
+            rows("SELECT * FROM metadata ORDER BY rowid") {
+                MetadataRecord(
+                    it.getString("scope"),
+                    it.getString("kind"),
+                    it.getString("name"),
+                    it.getString("value"),
+                    it.getString("resource"),
+                )
+            }
+        val queries =
+            rows("SELECT * FROM queries ORDER BY rowid") {
+                QueryRecord(
+                    it.getString("kind"),
+                    it.getString("name"),
+                    SextantJson.reader.decodeFromString(strings, it.getString("actions")),
+                    SextantJson.reader.decodeFromString(strings, it.getString("categories")),
+                    SextantJson.reader.decodeFromString(intentData, it.getString("data")),
+                )
+            }
+        return Extraction(
+            meta = meta,
+            manifest = XmlNode("manifest", emptyMap(), emptyList()),
+            permissions = permissions,
+            components = components,
+            features = features,
+            metadata = metadata,
+            queries = queries,
+        )
     }
 
     /** One value from the meta table, or null. */

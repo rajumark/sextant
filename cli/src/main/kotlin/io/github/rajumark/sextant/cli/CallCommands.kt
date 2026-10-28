@@ -13,7 +13,6 @@ import io.github.rajumark.sextant.core.SextantException
 import io.github.rajumark.sextant.core.index.CallNode
 import io.github.rajumark.sextant.core.index.CallTreeText
 import io.github.rajumark.sextant.core.index.Direction
-import io.github.rajumark.sextant.core.index.IndexReader
 import io.github.rajumark.sextant.core.index.ReachResult
 import io.github.rajumark.sextant.core.index.XrefRow
 import io.github.rajumark.sextant.core.output.SextantJson
@@ -24,7 +23,7 @@ abstract class CallTreeCommand(
     name: String,
     private val direction: Direction,
 ) : CoreCliktCommand(name = name) {
-    private val dir by argument(help = "An extracted folder").path()
+    private val dir by argument(help = INDEX_INPUT).path()
     private val method by argument(help = "Method: Lcom/a/B;->m(I)V, Lcom/a/B;->m, com.a.B.m, B.m or just m")
     private val depth by option("--depth", "-d", help = "How many levels to follow (default 3)").int().restrictTo(1..20).default(3)
     private val fanOut by option("--fan-out", help = "Maximum children per method (default 15)").int().restrictTo(1..1000).default(15)
@@ -32,7 +31,7 @@ abstract class CallTreeCommand(
 
     override fun run() =
         guarded {
-            IndexReader.open(dir).use { index ->
+            openIndex(dir).use { index ->
                 val matches = index.resolveMethods(method)
                 if (matches.isEmpty()) {
                     throw SextantException.input("no method matches '$method'", "try `sextant find $dir $method --kind method`")
@@ -65,7 +64,7 @@ class CalleesCommand : CallTreeCommand("callees", Direction.CALLEES) {
 
 /** `sextant xref <dir> <class|field>`: where a class or field is used. */
 class XrefCommand : CoreCliktCommand(name = "xref") {
-    private val dir by argument(help = "An extracted folder").path()
+    private val dir by argument(help = INDEX_INPUT).path()
     private val target by argument(help = "Class (com.a.B, Lcom/a/B;, B) or field (Lcom/a/B;->f:I, Lcom/a/B;->f, com.a.B.f)")
     private val limit by option("--limit", help = "Maximum rows (default 200)").int().default(200)
     private val json by option("--json", help = "One JSON object per row").flag()
@@ -75,7 +74,7 @@ class XrefCommand : CoreCliktCommand(name = "xref") {
 
     override fun run() =
         guarded {
-            IndexReader.open(dir).use { index ->
+            openIndex(dir).use { index ->
                 val rows = index.xref(target, limit)
                 if (json) {
                     rows.forEach { println(SextantJson.compact.encodeToString(XrefRow.serializer(), it)) }
@@ -94,7 +93,7 @@ class XrefCommand : CoreCliktCommand(name = "xref") {
 
 /** `sextant reach <dir> <from> <to>`: call paths from an entry point to target methods. */
 class ReachCommand : CoreCliktCommand(name = "reach") {
-    private val dir by argument(help = "An extracted folder").path()
+    private val dir by argument(help = INDEX_INPUT).path()
     private val from by argument(help = "Entry point: a component/class (com.a.LoginActivity) or a method")
     private val to by argument(help = "Target: Ljavax/crypto/Cipher;->getInstance, Cipher.getInstance, okhttp3/ or a method name")
     private val depth by option("--depth", help = "Maximum call depth (default 10)").int().restrictTo(1..50).default(10)
@@ -107,7 +106,7 @@ class ReachCommand : CoreCliktCommand(name = "reach") {
 
     override fun run() =
         guarded {
-            IndexReader.open(dir).use { index ->
+            openIndex(dir).use { index ->
                 val result = index.reach(from, to, depth, paths)
                 if (json) {
                     println(SextantJson.compact.encodeToString(ReachResult.serializer(), result))

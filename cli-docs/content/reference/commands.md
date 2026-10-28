@@ -41,6 +41,7 @@ Commands:
   deobf       Look up names in a ProGuard/R8 mapping.txt, both ways: original -> obfuscated for classes, fields and methods. Pass the same file as --mapping to `source` and `grep` to read the code with original names.
   files       List every file inside the APK: type, size, content, the resource it is (shrunk apps rename res/ files) and which decoder read it.
   coverage    Show how much of the APK was decoded into rows: zip entries and bytes per file type, and examples of files that are only listed. Every file is always listed with its size and hash.
+  cache       List the indexes Sextant keeps for APKs given directly to a command (one per APK, keyed by its SHA-256), or delete them with --clear. Set SEXTANT_CACHE to move the folder.
 ```
 
 ## extract
@@ -74,7 +75,7 @@ Options:
   -h, --help  Show this message and exit
 
 Arguments:
-  <target>  An extracted folder, or an APK (analyzed in memory, nothing written)
+  <target>  An APK (indexed once, then cached) or an extracted folder
 ```
 
 ## sql
@@ -91,7 +92,7 @@ Options:
   -h, --help     Show this message and exit
 
 Arguments:
-  <dir>    An extracted folder (or its index.sqlite)
+  <dir>    An APK (indexed once, then cached), an extracted folder or its index.sqlite
   <query>  SQL to run (read-only)
 ```
 
@@ -109,7 +110,7 @@ Options:
   -h, --help                                                                                                                             Show this message and exit
 
 Arguments:
-  <dir>   An extracted folder
+  <dir>   An APK (indexed once, then cached), an extracted folder or its index.sqlite
   <text>  Text to find (any part of a name or string)
 ```
 
@@ -125,7 +126,7 @@ Options:
   -h, --help  Show this message and exit
 
 Arguments:
-  <dir>   An extracted folder
+  <dir>   An APK (indexed once, then cached), an extracted folder or its index.sqlite
   <name>  Class name: com.app.Login, Lcom/app/Login; or just Login
 ```
 
@@ -143,7 +144,7 @@ Options:
   -h, --help         Show this message and exit
 
 Arguments:
-  <dir>     An extracted folder
+  <dir>     An APK (indexed once, then cached), an extracted folder or its index.sqlite
   <method>  Method: Lcom/a/B;->m(I)V, Lcom/a/B;->m, com.a.B.m, B.m or just m
 ```
 
@@ -161,7 +162,7 @@ Options:
   -h, --help         Show this message and exit
 
 Arguments:
-  <dir>     An extracted folder
+  <dir>     An APK (indexed once, then cached), an extracted folder or its index.sqlite
   <method>  Method: Lcom/a/B;->m(I)V, Lcom/a/B;->m, com.a.B.m, B.m or just m
 ```
 
@@ -215,7 +216,7 @@ Options:
   -h, --help  Show this message and exit
 
 Arguments:
-  <dir>  An extracted folder
+  <dir>  An APK (indexed once, then cached), an extracted folder or its index.sqlite
 ```
 
 ## endpoints
@@ -232,7 +233,7 @@ Options:
   -h, --help     Show this message and exit
 
 Arguments:
-  <dir>  An extracted folder
+  <dir>  An APK (indexed once, then cached), an extracted folder or its index.sqlite
 ```
 
 ## mcp
@@ -280,7 +281,7 @@ Options:
   -h, --help                         Show this message and exit
 
 Arguments:
-  <dir>  An extracted folder
+  <dir>  An APK (indexed once, then cached), an extracted folder or its index.sqlite
 ```
 
 ## xref
@@ -296,7 +297,7 @@ Options:
   -h, --help     Show this message and exit
 
 Arguments:
-  <dir>     An extracted folder
+  <dir>     An APK (indexed once, then cached), an extracted folder or its index.sqlite
   <target>  Class (com.a.B, Lcom/a/B;, B) or field (Lcom/a/B;->f:I, Lcom/a/B;->f, com.a.B.f)
 ```
 
@@ -314,7 +315,7 @@ Options:
   -h, --help     Show this message and exit
 
 Arguments:
-  <dir>   An extracted folder
+  <dir>   An APK (indexed once, then cached), an extracted folder or its index.sqlite
   <from>  Entry point: a component/class (com.a.LoginActivity) or a method
   <to>    Target: Ljavax/crypto/Cipher;->getInstance, Cipher.getInstance, okhttp3/ or a method name
 ```
@@ -349,7 +350,7 @@ Options:
   -h, --help                                  Show this message and exit
 
 Arguments:
-  <target>  An APK (fast: manifest + resources only) or an extracted folder
+  <target>  An APK (from the index cache when present, else manifest + resources only) or an extracted folder
 ```
 
 ## components
@@ -474,7 +475,7 @@ Options:
   -h, --help                                                                                                                                  Show this message and exit
 
 Arguments:
-  <dir>  An extracted folder (or its index.sqlite)
+  <dir>  An APK (indexed once, then cached), an extracted folder or its index.sqlite
 ```
 
 ## coverage
@@ -489,5 +490,18 @@ Options:
   -h, --help  Show this message and exit
 
 Arguments:
-  <dir>  An extracted folder (or its index.sqlite)
+  <dir>  An APK (indexed once, then cached), an extracted folder or its index.sqlite
+```
+
+## cache
+
+```text
+Usage: sextant cache [<options>]
+
+  List the indexes Sextant keeps for APKs given directly to a command (one per APK, keyed by its SHA-256), or delete them with --clear. Set SEXTANT_CACHE to move the folder.
+
+Options:
+  --clear     Delete every cached index
+  --json      One JSON object per cached index
+  -h, --help  Show this message and exit
 ```

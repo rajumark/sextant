@@ -25,14 +25,14 @@ import kotlinx.serialization.json.jsonPrimitive
 
 /** `sextant insights <dir>`: frameworks, SDKs, libraries, hosts and native code at a glance. */
 class InsightsCommand : CoreCliktCommand(name = "insights") {
-    private val dir by argument(help = "An extracted folder").path()
+    private val dir by argument(help = INDEX_INPUT).path()
     private val json by option("--json", help = "One JSON object").flag()
 
     override fun help(context: Context) = "Show what the app is built with: frameworks, SDKs, libraries, endpoints and native code."
 
     override fun run() =
         guarded {
-            IndexReader.open(dir).use { index ->
+            openIndex(dir).use { index ->
                 val sections =
                     linkedMapOf(
                         "frameworks" to "SELECT name, evidence FROM frameworks ORDER BY name",
@@ -79,7 +79,7 @@ class InsightsCommand : CoreCliktCommand(name = "insights") {
 
 /** `sextant endpoints <dir>`: every URL with where it comes from. */
 class EndpointsCommand : CoreCliktCommand(name = "endpoints") {
-    private val dir by argument(help = "An extracted folder").path()
+    private val dir by argument(help = INDEX_INPUT).path()
     private val host by option("--host", help = "Only URLs whose host contains this text")
     private val limit by option("--limit", help = "Maximum URLs (default 200)").int().default(200)
     private val json by option("--json", help = "One JSON object per URL").flag()
@@ -88,7 +88,7 @@ class EndpointsCommand : CoreCliktCommand(name = "endpoints") {
 
     override fun run() =
         guarded {
-            IndexReader.open(dir).use { index ->
+            openIndex(dir).use { index ->
                 val filter = host?.let { "WHERE e.host LIKE '%' || ${SqlJson.literal(it)} || '%'" } ?: ""
                 val r =
                     index.query(
@@ -116,7 +116,7 @@ class EndpointsCommand : CoreCliktCommand(name = "endpoints") {
 
 /** `sextant findings <dir>`: review points with their evidence; `--sarif` for code scanning, `--fail-on` for CI. */
 class FindingsCommand : CoreCliktCommand(name = "findings") {
-    private val dir by argument(help = "An extracted folder").path()
+    private val dir by argument(help = INDEX_INPUT).path()
     private val severity by option(
         "--severity",
         help = "Minimum severity to show",
@@ -135,7 +135,7 @@ class FindingsCommand : CoreCliktCommand(name = "findings") {
     override fun run() =
         guarded {
             if (json && sarif) throw UsageError("--json and --sarif can't be used together")
-            val all = IndexReader.open(dir).use { index -> readFindings(index) to apkName(index) }
+            val all = openIndex(dir).use { index -> readFindings(index) to apkName(index) }
             val (findings, apk) = all
             val shown = findings.filter { atLeast(it.severity, severity) }
             when {
