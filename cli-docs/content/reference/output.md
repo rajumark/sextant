@@ -20,7 +20,7 @@ The file holds everything Sextant reads from the APK, in two forms:
 |---|---|
 | `meta` | package, versions, SDKs, sha256, label, and the full app metadata (signing, flags, icons, counts, warnings) as `meta_json` |
 | `permissions`, `components`, `deep_links`, `features`, `metadata`, `queries` | the manifest; the full decoded tree is in `records` (`kind = 'manifest'`) |
-| `string_resources`, `resource_ids`, `resources`, `styles`, `drawables`, `layouts`, `menus`, `navigation_destinations`, `assets`, `xml_configs`, `resource_refs`, `icons` | resources in every locale, and who refers to what |
+| `string_resources`, `resource_ids`, `resources`, `styles`, `drawables`, `layouts`, `menus`, `navigation_destinations`, `assets`, `xml_configs`, `resource_refs`, `icons` | resources in every locale, and who refers to what: layouts, menus, styles, the manifest and code |
 | `classes`, `methods`, `fields`, `calls`, `strings`, `string_refs`, `field_refs`, `type_refs` | code structure from DEX bytecode, edges by integer id |
 | `call_edges`, `string_uses`, `search_items` | the same edges and search hits with readable names (views) |
 | `libraries`, `frameworks`, `sdks`, `endpoints`, `endpoint_sources`, `findings`, `finding_evidence` | insights, each with its evidence |
@@ -57,6 +57,9 @@ SELECT type, name FROM components WHERE exported = 1 AND enabled = 1 AND permiss
 
 -- Which layouts use the string app_name?
 SELECT "from" FROM resource_refs WHERE ref = '@string/app_name' AND from_kind = 'layout';
+
+-- Which methods show the string app_name, and with which call?
+SELECT "from" AS method, attribute AS call FROM resource_refs WHERE ref = '@string/app_name' AND from_kind = 'code';
 
 -- Which Java methods are implemented in native code?
 SELECT jni_class, jni_method, library FROM native_symbols WHERE jni_class IS NOT NULL;

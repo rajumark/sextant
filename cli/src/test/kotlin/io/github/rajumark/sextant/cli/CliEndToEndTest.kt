@@ -1,6 +1,7 @@
 package io.github.rajumark.sextant.cli
 
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
+import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldBeEmpty
 import io.kotest.matchers.string.shouldContain
@@ -367,6 +368,16 @@ class CliEndToEndTest {
         endpoints.exitCode shouldBe 0
         endpoints.stdout shouldContain "https://markusfisch.de/BinaryEye"
         endpoints.stdout shouldContain "CameraActivity;->onResume()V"
+    }
+
+    @Test
+    fun `code is a resource referrer, even in an R8 build without R classes`() {
+        val file = extracted("binaryeye")
+        val count = sextant("sql", file, "SELECT count(*) AS n FROM resource_refs WHERE from_kind = 'code'").stdout.lines()[2].trim()
+        count.toInt() shouldBeGreaterThan 500
+        val detail = sextant("res", file, "strings", "error_no_content")
+        detail.exitCode shouldBe 0
+        detail.stdout shouldContain "code Lde/markusfisch/android/binaryeye/activity/PickActivity;->onCreate"
     }
 
     @Test

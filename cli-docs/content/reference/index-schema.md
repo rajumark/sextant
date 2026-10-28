@@ -132,7 +132,7 @@ CREATE TABLE xml_configs (
 );
 CREATE TABLE resource_refs (
   ref       TEXT NOT NULL,          -- @string/app_name
-  from_kind TEXT NOT NULL,          -- layout | menu | navigation | xml | style | manifest
+  from_kind TEXT NOT NULL,          -- layout | menu | navigation | xml | style | manifest | code (from = method, attribute = the first call after the id is loaded, usually the one it is passed to)
   "from"    TEXT NOT NULL,
   attribute TEXT NOT NULL
 );

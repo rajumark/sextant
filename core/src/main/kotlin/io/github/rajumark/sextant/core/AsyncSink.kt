@@ -5,6 +5,7 @@ import io.github.rajumark.sextant.core.model.ClassRecord
 import io.github.rajumark.sextant.core.model.FieldRecord
 import io.github.rajumark.sextant.core.model.FieldRefRecord
 import io.github.rajumark.sextant.core.model.MethodRecord
+import io.github.rajumark.sextant.core.model.ResourceUseRecord
 import io.github.rajumark.sextant.core.model.StringRecord
 import io.github.rajumark.sextant.core.model.TypeRefRecord
 import java.util.concurrent.ArrayBlockingQueue
@@ -43,6 +44,8 @@ class AsyncSink(
 
     override fun typeRef(record: TypeRefRecord) = put(record)
 
+    override fun resourceUse(record: ResourceUseRecord) = put(record)
+
     private fun put(record: Any) {
         // Stop feeding a worker that has already failed; the error surfaces in await().
         while (failure == null) {
@@ -62,6 +65,7 @@ class AsyncSink(
                     is StringRecord -> delegate.string(r)
                     is FieldRefRecord -> delegate.fieldRef(r)
                     is TypeRefRecord -> delegate.typeRef(r)
+                    is ResourceUseRecord -> delegate.resourceUse(r)
                 }
             }
         } catch (e: Throwable) {

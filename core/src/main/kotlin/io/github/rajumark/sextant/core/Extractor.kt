@@ -2,6 +2,7 @@ package io.github.rajumark.sextant.core
 
 import io.github.rajumark.sextant.core.index.TeeSink
 import io.github.rajumark.sextant.core.insights.AppIcons
+import io.github.rajumark.sextant.core.insights.CodeResourceRefs
 import io.github.rajumark.sextant.core.insights.Findings
 import io.github.rajumark.sextant.core.insights.FindingsCollector
 import io.github.rajumark.sextant.core.insights.Icons
@@ -9,6 +10,7 @@ import io.github.rajumark.sextant.core.insights.Insights
 import io.github.rajumark.sextant.core.insights.InsightsBuilder
 import io.github.rajumark.sextant.core.insights.InsightsCollector
 import io.github.rajumark.sextant.core.insights.ResourceHarvester
+import io.github.rajumark.sextant.core.insights.ResourceUseCollector
 import io.github.rajumark.sextant.core.model.ApkFile
 import io.github.rajumark.sextant.core.model.AppMeta
 import io.github.rajumark.sextant.core.model.Component
@@ -73,7 +75,8 @@ object Extractor {
         val signing = SigningReader.read(opened.signed, warnings)
         val collector = InsightsCollector()
         val findingsCollector = FindingsCollector()
-        val codeStats = code?.let { CodeExtractor.extract(apk, TeeSink(it, collector, findingsCollector), warnings) }
+        val resourceUses = ResourceUseCollector()
+        val codeStats = code?.let { CodeExtractor.extract(apk, TeeSink(it, collector, findingsCollector, resourceUses), warnings) }
         val insightsStart = System.nanoTime()
         val built = InsightsBuilder.build(apk, decoded.root, components, decoded.resources, collector.takeIf { code != null }, warnings)
         val findings =
@@ -103,13 +106,16 @@ object Extractor {
                 null
             }
         if (facts.packageName == null) warnings += "manifest has no package attribute"
-        val resources =
+        val harvested =
             try {
                 ZipFile(apk.toFile()).use { ResourceHarvester.harvest(it, decoded) }
             } catch (e: Exception) {
                 warnings += "resources could not be harvested (${e.javaClass.simpleName}: ${e.message})"
                 ResourceHarvest()
             }
+        // Code is a referrer too: which methods load which resources.
+        val codeRefs = CodeResourceRefs.of(resourceUses.uses, decoded.table)
+        val resources = if (codeRefs.isEmpty()) harvested else harvested.copy(refs = harvested.refs + codeRefs)
         val files =
             if (!listFiles) {
                 emptyList()

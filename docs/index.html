@@ -255,11 +255,11 @@
   </nav>
 <section id="tab-progress" class="tab" data-tab="progress">
   <div class="hero">
-    <div class="big">≈ 57%</div>
+    <div class="big">≈ 60%</div>
     <div class="hl">of an APK's data is in SQLite today<span>Estimate. 100% means everything inside the APK is stored as rows and linked.</span></div>
   </div>
-  <div class="mbar"><div class="mfill" style="width:57%"></div></div>
-  <div class="mmeta"><b>Step 3 of 7 done</b><span>Index schema 9</span><span>CLI only</span></div>
+  <div class="mbar"><div class="mfill" style="width:60%"></div></div>
+  <div class="mmeta"><b>Step 4 of 7 done</b><span>Index schema 9</span><span>CLI only</span></div>
 
   <h2 class="ph">By area</h2>
   <div class="hbar small" id="areas"></div>
@@ -271,7 +271,7 @@
     <li class="db">App identity &amp; versions</li><li class="db">Signing</li><li class="db">Permissions</li><li class="db">Components &amp; verdicts</li><li class="db">Deep links</li><li class="db">Features, metadata, queries</li><li class="db">App icon</li>
     <li class="db">Strings (all locales)</li><li class="db">Resource IDs</li><li class="db">Styles &amp; themes</li><li class="db">Drawables</li><li class="db">Layouts</li><li class="db">Menus</li><li class="db">Navigation graphs</li><li class="db">XML configs</li><li class="db">Assets</li><li class="db">Resource references</li>
     <li class="db">Classes, methods, fields</li><li class="db">Call graph</li><li class="db">Field &amp; type references</li><li class="db">String constants</li><li class="db">Full-text search</li><li class="db">SQL queries</li>
-    <li class="db">SDKs &amp; libraries</li><li class="db">Frameworks</li><li class="db">Endpoints / URLs</li><li class="db">Native libraries &amp; JNI</li><li class="db">Security findings</li><li class="db">Every file + coverage</li><li class="db">APK index cache</li>
+    <li class="db">SDKs &amp; libraries</li><li class="db">Frameworks</li><li class="db">Endpoints / URLs</li><li class="db">Native libraries &amp; JNI</li><li class="db">Security findings</li><li class="db">Every file + coverage</li><li class="db">APK index cache</li><li class="db">Code → resource links</li>
     <li class="db">Startup order</li><li class="db">Call paths (reach)</li><li class="db">Version diff</li><li class="db">Split bundles</li><li class="db">MCP for AI agents</li><li class="db">One-file output</li><li>Decompiled Java</li><li>Code search (grep)</li><li>Smali</li><li>ProGuard mappings</li>
   </ul>
 
@@ -280,8 +280,8 @@
     <li class="done"><span>1</span>Every file in the APK<em>Done</em></li>
     <li class="done"><span>2</span>APK cache: instant answers<em>Done</em></li>
     <li class="done"><span>3</span>SQLite is the only output<em>Done</em></li>
-    <li class="next"><span>4</span>Code → resource links<em>Next</em></li>
-    <li><span>5</span>Every XML node and attribute</li>
+    <li class="done"><span>4</span>Code → resource links<em>Done</em></li>
+    <li class="next"><span>5</span>Every XML node and attribute<em>Next</em></li>
     <li><span>6</span>Entities and links</li>
     <li><span>7</span>Self-describing database</li>
   </ul>
@@ -362,7 +362,7 @@
     <tr><th>Gap</th><th>Evidence</th><th>Effect</th></tr>
     <tr><td>Two copies of every fact</td><td>Nextcloud: 1.3 GB output folder, 608 MB of it SQLite</td><td>Twice the disk and write time. <span class="tag g">Fixed in step 3</span></td></tr>
     <tr><td>APK commands re-read the APK</td><td><code>info app.apk</code> takes 2.2 s, every time</td><td>No cache, so the same work repeats on every call. <span class="tag g">Fixed in step 2</span></td></tr>
-    <tr><td>Code → resource links missing</td><td>Binary Eye: 0 <code>R$</code> classes, because R8 inlines IDs as constants</td><td>“Unused string” lists are wrong; can't answer “which method shows this text”</td></tr>
+    <tr><td>Code → resource links missing</td><td>Binary Eye: 0 <code>R$</code> classes, because R8 inlines IDs as constants</td><td>“Unused string” lists are wrong; can't answer “which method shows this text” <span class="tag g">Fixed in step 4</span></td></tr>
     <tr><td>Not every file is indexed</td><td>Binary Eye root files (<code>kotlin/</code>, <code>org/</code>, <code>countrycodes.csv</code>) have no table</td><td>“100% of the APK” can't be checked. <span class="tag g">Fixed in step 1</span></td></tr>
     <tr><td>XML is kept as summaries</td><td><code>layouts</code> stores counts and JSON arrays, not each view and attribute</td><td>Can't ask “every <code>EditText</code> with <code>inputType=textPassword</code>”</td></tr>
     <tr><td>JSON arrays inside columns</td><td><code>intent_filters</code>, <code>items</code>, <code>ids</code> are TEXT JSON</td><td>Joins need <code>json_each</code>, which is slow and hard for agents to write</td></tr>
@@ -522,7 +522,7 @@
         </g>
       </svg>
     </div>
-    <figcaption>Figure 3. The link map. Grey links exist today in <code>resource_refs</code>. The red ones (code to resources, and component to class) are the biggest missing piece.</figcaption>
+    <figcaption>Figure 3. The link map. Grey links were in <code>resource_refs</code> from the start. The red ones were missing: code → resources is captured since step 4; component → class is still to come.</figcaption>
   </figure>
 
   <h3>Closing the code → resource gap</h3>
@@ -532,7 +532,7 @@
     <li><b>R fields:</b> map <code>R$string.app_name</code> reads to the same resource, using the field's constant value.</li>
     <li><b>Call context:</b> keep the callee that receives it (<code>setContentView</code>, <code>getString</code>, <code>inflate</code>), so a link is labelled <code>inflates</code> or <code>shows_text</code>, not just “uses”.</li>
   </ul>
-  <div class="callout r"><div class="i">!</div><div><p>Without this, “1,511 strings in Nextcloud aren't referenced anywhere” is the honest output of today's index, and it can't be trusted, because strings used only from code are counted as unused.</p></div></div>
+  <div class="callout g"><div class="i">✓</div><div><p><b>Step 4 result:</b> strings that looked unused dropped from 1,409 to 159 in Nextcloud (of 1,945) and from 313 to 58 in Binary Eye (of 497), once code counts as a referrer. Nextcloud has 6,943 code → resource links, Binary Eye 1,032.</p></div></div>
 
   <h3>The questions this answers</h3>
   <p>Your example, “which <code>strings.xml</code> key is used in which layout”, becomes one join. Joins can also chain across kinds:</p>
@@ -668,8 +668,8 @@
     <tr><td class="num">1</td><td><code>files</code> table (every zip entry: type, size, CRC, SHA-256, content, resource name, decoder) with <code>sextant files</code> and <code>sextant coverage</code></td><td>A checkable “100%”, and shrunk file names mapped back to resources</td><td><span class="tag g">Done</span></td></tr>
     <tr><td class="num">2</td><td>APK cache keyed by SHA-256; APK commands use the cached index</td><td>Instant repeat answers</td><td><span class="tag g">Done</span></td></tr>
     <tr><td class="num">3</td><td>SQLite is the only output: <code>extract</code> writes one <code>.sqlite</code> file and every command reads an APK or that file</td><td>APK in, SQLite out; one source of truth</td><td><span class="tag g">Done</span></td></tr>
-    <tr><td class="num">4</td><td>Resource ID constants and <code>R</code> fields in code → resource links</td><td>Correct unused lists, “which method shows this text”</td><td><span class="tag">Next</span></td></tr>
-    <tr><td class="num">5</td><td><code>xml_nodes</code> / <code>xml_attrs</code> for every binary XML file; <code>res_values</code> per config</td><td>Queries over any view or attribute</td><td><span class="tag">Planned</span></td></tr>
+    <tr><td class="num">4</td><td>Resource ID constants and <code>R</code> fields in code → resource links</td><td>Correct unused lists, “which method shows this text”</td><td><span class="tag g">Done</span></td></tr>
+    <tr><td class="num">5</td><td><code>xml_nodes</code> / <code>xml_attrs</code> for every binary XML file; <code>res_values</code> per config</td><td>Queries over any view or attribute</td><td><span class="tag">Next</span></td></tr>
     <tr><td class="num">6</td><td><code>entities</code> + <code>links</code>, and a generic <code>links</code> command</td><td>Cross-kind queries</td><td><span class="tag">Planned</span></td></tr>
     <tr><td class="num">7</td><td>Split the derive stage; <code>schema_docs</code> table; saved queries</td><td>Fast upgrades, self-describing database</td><td><span class="tag">Planned</span></td></tr>
   </table></div>
@@ -767,11 +767,11 @@
     ['Manifest', 100, 'var(--green)'],
     ['Signing', 70, 'var(--accent)'],
     ['Resource table', 60, 'var(--accent)'],
-    ['Code (dex)', 50, 'var(--accent)'],
+    ['Code (dex)', 55, 'var(--accent)'],
     ['Resource XML files', 45, 'var(--amber)'],
     ['Native libraries', 40, 'var(--amber)'],
     ['Assets', 30, 'var(--amber)'],
-    ['Cross-links', 30, 'var(--amber)'],
+    ['Cross-links', 50, 'var(--accent)'],
     ['Other files', 20, 'var(--red)']
   ], 100, function (v) { return v + '%'; });
 </script>

@@ -206,10 +206,10 @@ data class XmlConfigRecord(
 data class ResourceRef(
     /** `@string/app_name` */
     val ref: String,
-    /** layout | menu | navigation | xml | style | manifest */
+    /** layout | menu | navigation | xml | style | manifest | code */
     val fromKind: String,
-    /** The file or element that holds it, e.g. `layout/activity_main` or `activity com.app.Main`. */
+    /** The file or element that holds it, e.g. `layout/activity_main`, `activity com.app.Main`, or a method for code. */
     val from: String,
-    /** The attribute that holds it, e.g. `android:text`. */
+    /** The attribute that holds it, e.g. `android:text`; for code, the method the id is passed to (empty if none). */
     val attribute: String,
 )

@@ -18,6 +18,7 @@ import io.github.rajumark.sextant.core.model.NavAction
 import io.github.rajumark.sextant.core.model.PathPermission
 import io.github.rajumark.sextant.core.model.ResValue
 import io.github.rajumark.sextant.core.model.ResourceHarvest
+import io.github.rajumark.sextant.core.model.ResourceUseRecord
 import io.github.rajumark.sextant.core.model.StringRecord
 import io.github.rajumark.sextant.core.model.TypeRefRecord
 import io.github.rajumark.sextant.core.output.InfoReports
@@ -724,4 +725,6 @@ class TeeSink(
     override fun fieldRef(record: FieldRefRecord) = sinks.forEach { it.fieldRef(record) }
 
     override fun typeRef(record: TypeRefRecord) = sinks.forEach { it.typeRef(record) }
+
+    override fun resourceUse(record: ResourceUseRecord) = sinks.forEach { it.resourceUse(record) }
 }

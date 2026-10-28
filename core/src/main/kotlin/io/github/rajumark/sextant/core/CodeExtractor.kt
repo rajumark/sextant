@@ -7,6 +7,7 @@ import com.android.tools.smali.dexlib2.dexbacked.DexBackedClassDef
 import com.android.tools.smali.dexlib2.dexbacked.DexBackedDexFile
 import com.android.tools.smali.dexlib2.formatter.DexFormatter
 import com.android.tools.smali.dexlib2.iface.Method
+import com.android.tools.smali.dexlib2.iface.instruction.NarrowLiteralInstruction
 import com.android.tools.smali.dexlib2.iface.instruction.ReferenceInstruction
 import com.android.tools.smali.dexlib2.iface.reference.FieldReference
 import com.android.tools.smali.dexlib2.iface.reference.MethodReference
@@ -31,6 +32,7 @@ import io.github.rajumark.sextant.core.model.MAX_OFFSETS
 import io.github.rajumark.sextant.core.model.MethodRecord
 import io.github.rajumark.sextant.core.model.Obfuscation
 import io.github.rajumark.sextant.core.model.PackageCount
+import io.github.rajumark.sextant.core.model.ResourceUseRecord
 import io.github.rajumark.sextant.core.model.StringRecord
 import io.github.rajumark.sextant.core.model.TypeRefRecord
 import java.nio.file.Path
@@ -51,6 +53,8 @@ interface CodeSink {
     fun fieldRef(record: FieldRefRecord) {}
 
     fun typeRef(record: TypeRefRecord) {}
+
+    fun resourceUse(record: ResourceUseRecord) {}
 }
 
 /**
@@ -58,6 +62,17 @@ interface CodeSink {
  * constants to a [CodeSink]. Nothing is decompiled, so this works even where Java decompilation fails.
  */
 object CodeExtractor {
+    /** Resource ids of the app's own package are 0x7fTTEEEE. */
+    private const val APP_PACKAGE_ID = 0x7f
+
+    /** A resource id counts as passed to the first call within this many instructions after it is loaded. */
+    private const val MAX_RESOURCE_GAP = 8
+
+    private val CONST_OPCODES = setOf("const", "const/high16", "const/16", "const/4")
+
+    /** An int field of an R class (`Lcom/app/R$string;->title:I`), as in builds that keep the R classes. */
+    internal val R_FIELD = Regex("""L(?:[^;]*/)?R\$([a-z]+);->([^:]+):I""")
+
     private const val MAX_DEX_BYTES = 256L * 1024 * 1024
     private val DEX_ENTRY = Regex("""classes(\d*)\.dex""")
 
@@ -207,6 +222,14 @@ object CodeExtractor {
         val strings = LinkedHashMap<String, MutableList<Int>>()
         val fieldRefs = LinkedHashMap<Pair<String, String>, MutableList<Int>>()
         val typeRefs = LinkedHashMap<Pair<String, String>, MutableList<Int>>()
+        // Resource ids the code loads, waiting for the call that receives them: (key, offset, instruction index).
+        val resourceUses = LinkedHashMap<Pair<String, String?>, MutableList<Int>>()
+        val pending = ArrayList<Triple<String, Int, Int>>()
+
+        fun settle(via: String?) {
+            pending.forEach { (key, at, _) -> resourceUses.getOrPut(key to via) { mutableListOf() } += at }
+            pending.clear()
+        }
         val impl = method.implementation
         var instructions = 0
         if (impl != null) {
@@ -214,12 +237,19 @@ object CodeExtractor {
                 var offset = 0
                 for (insn in impl.instructions) {
                     instructions++
+                    if (pending.isNotEmpty() && instructions - pending.first().third > MAX_RESOURCE_GAP) settle(null)
+                    if (insn is NarrowLiteralInstruction && insn.opcode.name in CONST_OPCODES) {
+                        val value = insn.narrowLiteral
+                        if (value ushr 24 == APP_PACKAGE_ID) pending += Triple("0x%08x".format(value), offset, instructions)
+                    }
                     if (insn is ReferenceInstruction) {
                         when (insn.referenceType) {
                             ReferenceType.METHOD -> {
                                 val ref = insn.reference as MethodReference
                                 val kind = invokeKind(insn.opcode.name)
-                                calls.getOrPut(DexFormatter.INSTANCE.getMethodDescriptor(ref) to kind) { mutableListOf() } += offset
+                                val callee = DexFormatter.INSTANCE.getMethodDescriptor(ref)
+                                calls.getOrPut(callee to kind) { mutableListOf() } += offset
+                                if (pending.isNotEmpty()) settle(callee)
                             }
                             ReferenceType.STRING ->
                                 strings.getOrPut((insn.reference as StringReference).string) { mutableListOf() } +=
@@ -227,7 +257,10 @@ object CodeExtractor {
                             ReferenceType.FIELD -> {
                                 val ref = insn.reference as FieldReference
                                 val kind = if (insn.opcode.name.let { it.startsWith("iput") || it.startsWith("sput") }) "write" else "read"
-                                fieldRefs.getOrPut(DexFormatter.INSTANCE.getFieldDescriptor(ref) to kind) { mutableListOf() } += offset
+                                val descriptor = DexFormatter.INSTANCE.getFieldDescriptor(ref)
+                                fieldRefs.getOrPut(descriptor to kind) { mutableListOf() } += offset
+                                val resourceField = insn.opcode.name == "sget" && R_FIELD.matches(descriptor)
+                                if (resourceField) pending += Triple(descriptor, offset, instructions)
                             }
                             ReferenceType.TYPE -> {
                                 typeKind(insn.opcode.name)?.let { kind ->
@@ -239,6 +272,7 @@ object CodeExtractor {
                     }
                     offset += insn.codeUnits
                 }
+                settle(null)
             } catch (e: Exception) {
                 counter.unreadable++
             }
@@ -278,6 +312,9 @@ object CodeExtractor {
         for ((key, offsets) in typeRefs.entries.sortedWith(compareBy({ it.key.first }, { it.key.second }))) {
             sink.typeRef(TypeRefRecord(id, key.first, key.second, offsets.size, offsets.take(MAX_OFFSETS)))
             counter.typeRefs++
+        }
+        for ((key, offsets) in resourceUses.entries.sortedWith(compareBy({ it.key.first }, { it.key.second.orEmpty() }))) {
+            sink.resourceUse(ResourceUseRecord(id, key.first, key.second, offsets.size, offsets.take(MAX_OFFSETS)))
         }
     }
 

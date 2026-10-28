@@ -88,6 +88,19 @@ data class TypeRefRecord(
     val offsets: List<Int>,
 )
 
+/**
+ * A resource the code uses: [key] is the resource id loaded as a constant (`0x7f0e001c`) or the `R` field read
+ * (`Lcom/app/R$string;->title:I`); [via] is the first call within 8 instructions after it, usually the one it is passed to.
+ */
+@Serializable
+data class ResourceUseRecord(
+    val method: String,
+    val key: String,
+    val via: String?,
+    val count: Int,
+    val offsets: List<Int>,
+)
+
 @Serializable
 data class CodeStats(
     val dexFiles: List<String>,

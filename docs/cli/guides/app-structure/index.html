@@ -1559,7 +1559,7 @@
 <a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>sextant<span class="w"> </span>res<span class="w"> </span>app.sqlite<span class="w"> </span>refs<span class="w">                       </span><span class="c1"># who references which resource</span>
 <a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>sextant<span class="w"> </span>res<span class="w"> </span>app.sqlite<span class="w"> </span>layouts<span class="w"> </span>activity_main<span class="w">      </span><span class="c1"># one entry in full, and what uses it</span>
 </code></pre></div>
-<p><code>KIND</code> is one of <code>strings</code>, <code>string-keys</code>, <code>ids</code>, <code>styles</code>, <code>drawables</code>, <code>layouts</code>, <code>menus</code>, <code>navigation</code>, <code>assets</code>, <code>xml</code> or <code>refs</code>. References keep the <code>@type/name</code> they were written with plus the resolved value.</p>
+<p><code>KIND</code> is one of <code>strings</code>, <code>string-keys</code>, <code>ids</code>, <code>styles</code>, <code>drawables</code>, <code>layouts</code>, <code>menus</code>, <code>navigation</code>, <code>assets</code>, <code>xml</code> or <code>refs</code>. References keep the <code>@type/name</code> they were written with plus the resolved value. <code>refs</code> includes code: every method that loads a resource id (as a <code>const 0x7f…</code> in R8 builds or an <code>R$type.name</code> field otherwise), with the first call after it, usually the one it is passed to (<code>setContentView</code>, <code>getString</code>, <code>inflate</code>).</p>
 <table>
 <thead>
 <tr>

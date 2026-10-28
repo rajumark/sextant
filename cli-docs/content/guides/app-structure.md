@@ -133,7 +133,7 @@ sextant res app.sqlite refs                       # who references which resourc
 sextant res app.sqlite layouts activity_main      # one entry in full, and what uses it
 ```
 
-`KIND` is one of `strings`, `string-keys`, `ids`, `styles`, `drawables`, `layouts`, `menus`, `navigation`, `assets`, `xml` or `refs`. References keep the `@type/name` they were written with plus the resolved value.
+`KIND` is one of `strings`, `string-keys`, `ids`, `styles`, `drawables`, `layouts`, `menus`, `navigation`, `assets`, `xml` or `refs`. References keep the `@type/name` they were written with plus the resolved value. `refs` includes code: every method that loads a resource id (as a `const 0x7f…` in R8 builds or an `R$type.name` field otherwise), with the first call after it, usually the one it is passed to (`setContentView`, `getString`, `inflate`).
 
 | `string-keys --flag` | Keys that are |
 |---|---|
