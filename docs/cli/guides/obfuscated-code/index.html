@@ -1364,7 +1364,7 @@
 </ul>
 <p>The first search decompiles every class, in parallel, and keeps the code in a local cache keyed by the APK's hash. Later searches only read text: on Signal (41,000 classes) the first search took about 4 minutes, and the next ones about 11 seconds. <code>--no-cache</code> skips the cache. The cache lives in the system temp folder, or wherever <code>-Dsextant.cache=…</code> points; nothing leaves the machine.</p>
 <h2 id="obfuscated-apps">Obfuscated apps<a class="headerlink" href="#obfuscated-apps" title="Permanent link">&para;</a></h2>
-<p><code>info</code> and <code>summary.md</code> show how much of the code was renamed:</p>
+<p><code>info</code> shows how much of the code was renamed:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Obfuscation  heavy · 89% short class names · 2,606 in the default package · source files stripped (100%)
 </code></pre></div>
 <p><code>heavy</code> means more than 30% of classes have R8/ProGuard-style names (<code>a</code>, <code>yi0</code>); <code>light</code> means 5–30%. Signal keeps its names but strips source file names, which shows as <code>none · … · source files stripped</code>. The counts are in <code>meta.json</code> under <code>code.obfuscation</code>.</p>

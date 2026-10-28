@@ -14,8 +14,6 @@ import io.github.rajumark.sextant.core.index.IndexCache
 import io.github.rajumark.sextant.core.insights.AppIcons
 import io.github.rajumark.sextant.core.insights.IconFile
 import io.github.rajumark.sextant.core.insights.IconRef
-import io.github.rajumark.sextant.core.model.AppMeta
-import io.github.rajumark.sextant.core.output.OutputFiles
 import io.github.rajumark.sextant.core.output.SextantJson
 import java.nio.file.Files
 import java.nio.file.Path
@@ -24,7 +22,7 @@ import java.util.zip.ZipFile
 /** `sextant icon <apk|dir>`: the app's launcher icon files, the best one, and optionally save it. */
 class IconCommand : CoreCliktCommand(name = "icon") {
     private val target by argument(
-        help = "An APK (from the index cache when present, else manifest + resources only) or an extracted folder",
+        help = "An APK (from the index cache when present, else manifest + resources only) or a .sqlite file",
     ).path()
     private val round by option("--round", help = "Use android:roundIcon instead of android:icon").flag()
     private val layer by option(
@@ -40,17 +38,14 @@ class IconCommand : CoreCliktCommand(name = "icon") {
 
     override fun run() =
         guarded {
-            val isApk = Files.isRegularFile(target)
             val icons =
-                if (isApk) {
+                if (isApk()) {
                     // A cached index answers at once; otherwise read only the manifest and resources (no full extract).
-                    IndexCache.cached(target)?.let { cached -> openIndex(cached).use { it.manifestExtraction().meta.icons } }
+                    IndexCache.cached(target)?.let { cached -> openIndex(cached).use { it.extraction().meta.icons } }
                         ?: Extractor.icons(target)
                 } else {
-                    val metaFile = target.resolve(OutputFiles.META)
-                    if (!Files.isRegularFile(metaFile)) throw SextantException.input("$target is not an APK or an extraction folder")
-                    SextantJson.reader.decodeFromString(AppMeta.serializer(), Files.readString(metaFile)).icons
-                        ?: throw SextantException.input("no icon data in $target", "re-extract with sextant 0.9.0 or newer")
+                    loadExtraction(target).meta.icons
+                        ?: throw SextantException.input("no icon data in $target", "re-extract with this version of sextant")
                 }
             if (json) {
                 println(SextantJson.compact.encodeToString(AppIcons.serializer(), icons))
@@ -78,6 +73,8 @@ class IconCommand : CoreCliktCommand(name = "icon") {
             if (dest != null) save(best, files, dest)
         }
 
+    private fun isApk() = Files.isRegularFile(target) && !target.toString().endsWith(".sqlite")
+
     /** The icon itself, or one adaptive layer when --layer is given. */
     private fun chosen(ref: IconRef): Triple<String, List<IconFile>, String?> {
         val l = layer ?: return Triple("${if (round) "round icon" else "icon"}  ${ref.resource}", ref.files, ref.best)
@@ -99,12 +96,7 @@ class IconCommand : CoreCliktCommand(name = "icon") {
         files: List<IconFile>,
         dest: Path,
     ) {
-        if (!Files.isRegularFile(
-                target,
-            )
-        ) {
-            throw SextantException.input("-o needs the APK, not an extraction folder", "run `sextant icon app.apk -o icon.png`")
-        }
+        if (!isApk()) throw SextantException.input("-o needs the APK, not a .sqlite file", "run `sextant icon app.apk -o icon.png`")
         val path = best ?: throw SextantException.input("no icon file to save")
         if (files.firstOrNull { it.path == path }?.format == "xml") {
             throw SextantException.input(

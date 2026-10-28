@@ -24,14 +24,14 @@ Sextant is designed so an AI agent can understand an APK without reading thousan
 
 Options:
 
-- `--dir <folder>` starts with an existing extraction as the current app.
+- `--dir <app.sqlite>` starts with an existing extraction (or an APK) as the current app.
 - `--apk <app.apk>` sets the APK used by `source`, `smali` and `icon`.
 
 ### Tools
 
 | Tool | What it does |
 |---|---|
-| `extract` | Analyze an APK and make it the session's current app; returns `summary.md` |
+| `extract` | Analyze an APK into one SQLite file and make it the session's current app; returns the app summary |
 | `summary` | The app overview |
 | `find` | Substring search over names, strings, URLs, resources, SDKs, native symbols, findings |
 | `class` | One class as JSON: hierarchy, fields, methods, callers, strings |
@@ -55,15 +55,15 @@ Example prompts that work well:
 
 ## Without MCP
 
-The output folder itself is agent-friendly:
+The SQLite file itself is agent-friendly:
 
-1. **Read `summary.md` first.** It's under ~80 lines: identity, counts, exported components, insights, findings, and which file holds what.
-2. **`grep` the JSONL files.** Every line is a complete record with full names, so a single hit is understandable on its own:
+1. **Start with `sextant info app.apk --json`.** The APK is indexed once into a cache, so every later command is instant.
+2. **Ask the file.** `sextant find app.apk <text> --json` searches everything; `sextant sql app.apk --schema` lists every table, and any SQL tool works on the `.sqlite` file too:
 
     ```bash
-    grep '"exported":true' app/components.jsonl
-    grep 'api.example.com' app/code/strings.jsonl
-    grep '"caller":"Lcom/example/Login;->auth' app/code/calls.jsonl
+    sextant sql app.apk "SELECT type, name FROM components WHERE exported = 1" --json
+    sextant find app.apk api.example.com --json
+    sextant callers app.apk "Lcom/example/Login;->auth" --json
     ```
 
 3. **Use `--json`** on `info`, `find`, `class`, `sql`, `callers`, `callees`, `reach`, `xref`, `insights`, `endpoints`, `findings`, `diff` and `icon` for machine-readable output on stdout. Progress and errors always go to stderr, so piping is safe.

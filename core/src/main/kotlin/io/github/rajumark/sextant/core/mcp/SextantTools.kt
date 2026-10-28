@@ -9,25 +9,24 @@ import io.github.rajumark.sextant.core.SourceDecompiler
 import io.github.rajumark.sextant.core.index.CallTreeText
 import io.github.rajumark.sextant.core.index.ClassReport
 import io.github.rajumark.sextant.core.index.Direction
+import io.github.rajumark.sextant.core.index.IndexBuilder
 import io.github.rajumark.sextant.core.index.IndexReader
 import io.github.rajumark.sextant.core.index.IndexSchema
 import io.github.rajumark.sextant.core.index.SearchHit
 import io.github.rajumark.sextant.core.insights.AppIcons
 import io.github.rajumark.sextant.core.insights.Urls
 import io.github.rajumark.sextant.core.mcp.McpTool.Param
-import io.github.rajumark.sextant.core.output.OutputFiles
-import io.github.rajumark.sextant.core.output.OutputWriter
 import io.github.rajumark.sextant.core.output.SextantJson
+import io.github.rajumark.sextant.core.output.SummaryWriter
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
-import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
 /**
- * The Sextant tools exposed over MCP. A session remembers the current extraction folder and APK, so after
- * `extract` the other tools need no paths; every tool also accepts an explicit `dir`.
+ * The Sextant tools exposed over MCP. A session remembers the current index (.sqlite) and APK, so after `extract`
+ * the other tools need no paths; every tool also accepts an explicit `dir` (a .sqlite file or an APK).
  */
 class SextantTools(
     private var dir: Path?,
@@ -35,7 +34,7 @@ class SextantTools(
 ) {
     val instructions =
         """
-        Sextant analyzes Android APKs. Start with `extract` (APK path) unless the server was started with a folder.
+        Sextant analyzes Android APKs. Start with `extract` (APK path) unless the server was started with an index.
         Then read `summary` first. Use `find` for any text (names, strings, URLs, resources, SDKs, native symbols),
         `class` for one class, `callers`/`callees` to follow the call graph, `reach` for paths from an entry point to a target, `xref` for class/field uses, `insights` for frameworks/SDKs/libraries,
         `endpoints` for URLs with their sources, `findings` for review points, `source` for decompiled Java, `smali` for bytecode, and `sql` for anything else
@@ -44,7 +43,7 @@ class SextantTools(
 
     private fun folder(args: JsonObject): Path {
         val d = args.string("dir")?.let { Paths.get(it) } ?: dir
-        return d ?: throw SextantException.input("no extraction folder yet", "call `extract` with an APK path first, or pass `dir`")
+        return d ?: throw SextantException.input("no index yet", "call `extract` with an APK path first, or pass `dir`")
     }
 
     private fun <T> index(
@@ -52,33 +51,33 @@ class SextantTools(
         block: (IndexReader) -> T,
     ): T = IndexReader.open(folder(args)).use(block)
 
-    private val dirParam = Param("dir", "string", "Extraction folder (defaults to the current session folder)")
+    private val dirParam = Param("dir", "string", "Index file (.sqlite) or APK (defaults to the session's current app)")
 
     val tools: List<McpTool> =
         listOf(
             McpTool(
                 "extract",
-                "Analyze an APK: writes structured files plus index.sqlite and makes it the session's current app. Returns summary.md.",
+                "Analyze an APK into one SQLite index and make it the session's current app. Returns the app summary.",
                 listOf(
                     Param("apk", "string", "Path to the .apk file", required = true),
-                    Param("out", "string", "Output folder (default: <apk-name>.sextant next to the APK)"),
+                    Param("out", "string", "Output file (default: <apk-name>.sqlite next to the APK)"),
                 ),
             ) { args ->
                 val apkPath = Paths.get(args.string("apk")!!)
                 val out =
                     args.string("out")?.let { Paths.get(it) }
-                        ?: apkPath.resolveSibling(apkPath.fileName.toString().substringBeforeLast('.') + ".sextant")
-                OutputWriter.extractTo(apkPath, out, force = true)
+                        ?: apkPath.resolveSibling(apkPath.fileName.toString().substringBeforeLast('.') + ".sqlite")
+                val extraction = IndexBuilder.build(apkPath, out)
                 dir = out
                 apk = apkPath
-                "Extracted to $out\n\n" + Files.readString(out.resolve(OutputFiles.SUMMARY))
+                "Extracted to $out\n\n" + SummaryWriter.render(extraction, hasIndex = true, sqlite = true)
             },
             McpTool(
                 "summary",
-                "The app overview (summary.md): identity, counts, exported components, insights, files.",
+                "The app overview: identity, counts, exported components, insights.",
                 listOf(dirParam),
             ) { args ->
-                Files.readString(folder(args).resolve(OutputFiles.SUMMARY))
+                index(args) { SummaryWriter.render(it.extraction(), hasIndex = true, sqlite = true) }
             },
             McpTool(
                 "find",

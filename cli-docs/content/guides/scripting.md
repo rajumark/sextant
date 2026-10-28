@@ -1,31 +1,13 @@
-# Scripting with JSON and SQL
+# Scripting with SQL and JSON
 
-Everything Sextant knows is available in three forms: **files** (JSON/JSONL), **SQL** (`index.sqlite`) and **`--json` output** from commands.
-
-## jq over JSONL
-
-Each JSONL line is one self-contained record.
-
-```bash
-# Exported components that need no permission
-jq -c 'select(.exported and .enabled and .permission == null) | {type, name}' app/components.jsonl
-
-# Dangerous permissions
-jq -r 'select(.dangerous) | .name' app/permissions.jsonl
-
-# Optional hardware features
-jq -r 'select(.kind == "feature" and .required == false) | .name' app/features.jsonl
-
-# Every library with its version
-jq -r '"\(.group):\(.artifact):\(.version)"' app/insights/libraries.jsonl
-```
+Everything Sextant knows is in one SQLite file, available two ways: **SQL** over that file (with `sextant sql` or any SQLite tool) and **`--json` output** from commands.
 
 ## SQL
 
-`sextant sql` runs read-only SQL over `index.sqlite`. Output is a table by default, `--json` (one object per line) or `--csv`; it stops at 1000 rows unless you pass `--limit` (0 = no limit). `sextant sql app/ --schema` prints every table and view, and the full schema is also in [SQLite index schema](../reference/index-schema.md).
+`sextant sql` runs read-only SQL over the app's SQLite file. Output is a table by default, `--json` (one object per line) or `--csv`; it stops at 1000 rows unless you pass `--limit` (0 = no limit). `sextant sql app.sqlite --schema` prints every table and view, and the full schema is also in [SQLite index schema](../reference/index-schema.md).
 
 ```bash
-sextant sql app/ "SELECT type, count(*) AS n, sum(exported) AS exported FROM components GROUP BY type ORDER BY n DESC"
+sextant sql app.sqlite "SELECT type, count(*) AS n, sum(exported) AS exported FROM components GROUP BY type ORDER BY n DESC"
 ```
 
 ```text
@@ -64,19 +46,21 @@ WHERE r.field = 'Lcom/example/Session;->token:Ljava/lang/String;' AND r.kind = '
 SELECT i.kind, i.ref, i.text FROM search JOIN search_items i ON i.search_rowid = search.rowid WHERE search MATCH 'Cipher';
 ```
 
-You can also open `index.sqlite` with any SQLite tool (`sqlite3`, DB Browser for SQLite, Python's `sqlite3` module…).
+You can also open the `.sqlite` file with any SQLite tool (`sqlite3`, DB Browser for SQLite, Python's `sqlite3` module…).
 
 ## Many APKs
 
-Extraction output is deterministic, so it diffs and versions well:
+Extraction output is deterministic, so whole folders of APKs are easy to sweep:
 
 ```bash
 for apk in apks/*.apk; do
-  sextant extract --quiet --force "$apk" -o "out/$(basename "$apk" .apk)"
+  sextant extract --quiet --force "$apk" -o "out/$(basename "$apk" .apk).sqlite"
 done
 
 # Every app that uses a given SDK
-grep -l '"name":"Firebase Crashlytics"' out/*/insights/sdks.jsonl
+for db in out/*.sqlite; do
+  sqlite3 "$db" "SELECT '$db' FROM sdks WHERE name = 'Firebase Crashlytics'"
+done
 ```
 
 For fast manifest-only sweeps, add `--no-code` (well under a second per APK).

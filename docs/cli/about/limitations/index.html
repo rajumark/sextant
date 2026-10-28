@@ -1389,7 +1389,7 @@
 <h2 id="findings">Findings<a class="headerlink" href="#findings" title="Permanent link">&para;</a></h2>
 <p><a href="../../reference/findings/">Review findings</a> are hints for a human or an agent to check. They aren't proven vulnerabilities and they don't replace a dynamic test. Expect false positives (e.g. a weak hash used for a cache key) and false negatives (anything reached via reflection).</p>
 <h2 id="size">Size<a class="headerlink" href="#size" title="Permanent link">&para;</a></h2>
-<p>Code JSONL files repeat full descriptors so every line stands on its own. For very large apps they can be hundreds of MB; <code>index.sqlite</code> is the compact form. Use <code>--no-code</code> for manifest-only work.</p>
+<p>The SQLite file of a very large app can be several hundred MB, mostly code tables and the full-text index. Use <code>--no-code</code> for manifest-only work.</p>
 
 
 

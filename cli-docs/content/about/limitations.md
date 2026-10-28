@@ -24,4 +24,4 @@ Sextant is a **static** analyzer. It reads what is in the APK; it never runs it.
 
 ## Size
 
-Code JSONL files repeat full descriptors so every line stands on its own. For very large apps they can be hundreds of MB; `index.sqlite` is the compact form. Use `--no-code` for manifest-only work.
+The SQLite file of a very large app can be several hundred MB, mostly code tables and the full-text index. Use `--no-code` for manifest-only work.

@@ -9,7 +9,7 @@ import io.github.rajumark.sextant.core.mcp.SextantTools
 
 /** `sextant mcp`: a Model Context Protocol server on stdin/stdout for AI agents. */
 class McpCommand : CoreCliktCommand(name = "mcp") {
-    private val dir by option("--dir", help = "Start with this extraction folder as the current app").path()
+    private val dir by option("--dir", help = "Start with this index (.sqlite) or APK as the current app").path()
     private val apk by option("--apk", help = "The APK for `source` (and the default for `extract`)").path()
 
     override fun help(context: Context) =

@@ -69,8 +69,8 @@ Usage: sextant [<options>] <command> [<args>]...
   Turn an Android APK into structured data for people and AI agents.
 
 Commands:
-  extract    Extract structured data from an APK into a folder.
-  info       Show a short summary of an APK or an extracted folder.
+  extract    Extract everything Sextant reads from an APK into one SQLite file.
+  info       Show a short summary of an app (an APK or its .sqlite file).
   ...
 ```
 

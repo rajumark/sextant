@@ -1414,7 +1414,7 @@
 
 <h1 id="insights-and-app-icons">Insights and app icons<a class="headerlink" href="#insights-and-app-icons" title="Permanent link">&para;</a></h1>
 <p>Besides the raw facts, Sextant derives <strong>insights</strong>: what the app is built with and what it talks to. Each insight carries the evidence it is based on.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sextant<span class="w"> </span>insights<span class="w"> </span>app/
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sextant<span class="w"> </span>insights<span class="w"> </span>app.sqlite
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>## Frameworks (0)
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>none
@@ -1444,10 +1444,10 @@
 <p>AndroidX and many other libraries ship <code>META-INF/&lt;group&gt;_&lt;artifact&gt;.version</code> files. Sextant reads them for exact Maven coordinates (Signal: 141 libraries), plus the Android Gradle Plugin version from <code>app-metadata.properties</code>.</p>
 <h2 id="endpoints">Endpoints<a class="headerlink" href="#endpoints" title="Permanent link">&para;</a></h2>
 <p>Every URL from code strings (with the method that uses it), string resources, deep links, manifest meta-data, text assets (React Native/Hermes bundles, configs) and native libraries. See <a href="../../reference/commands/#endpoints"><code>endpoints</code></a>.</p>
-<p>Host counts (<code>Top hosts</code>, <code>meta.json → insights.hosts</code>, the hosts section of <code>diff</code>) include only network URLs (<code>http</code>, <code>https</code>, <code>ws</code>, <code>wss</code>, <code>ftp</code>, <code>ftps</code>). A custom-scheme deep link such as <code>myapp://scan</code> names a screen in the app, not a server; it is still listed by <code>endpoints</code> and in <code>insights/endpoints.jsonl</code>.</p>
+<p>Host counts (<code>Top hosts</code>, <code>meta_json → insights.hosts</code>, the hosts section of <code>diff</code>) include only network URLs (<code>http</code>, <code>https</code>, <code>ws</code>, <code>wss</code>, <code>ftp</code>, <code>ftps</code>). A custom-scheme deep link such as <code>myapp://scan</code> names a screen in the app, not a server; it is still listed by <code>endpoints</code> and in <code>insights/endpoints.jsonl</code>.</p>
 <h2 id="native-code">Native code<a class="headerlink" href="#native-code" title="Permanent link">&para;</a></h2>
 <p>ELF <code>.dynsym</code> tables are parsed for exported functions. JNI functions (<code>Java_…</code>) are decoded back to the Java class and method they implement, including <code>_1</code>, <code>_0xxxx</code> escapes and overload suffixes:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sextant<span class="w"> </span>sql<span class="w"> </span>app/<span class="w"> </span><span class="s2">"SELECT jni_class, jni_method, library FROM native_symbols WHERE jni_class IS NOT NULL LIMIT 5"</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sextant<span class="w"> </span>sql<span class="w"> </span>app.sqlite<span class="w"> </span><span class="s2">"SELECT jni_class, jni_method, library FROM native_symbols WHERE jni_class IS NOT NULL LIMIT 5"</span>
 </code></pre></div>
 <h2 id="app-icons">App icons<a class="headerlink" href="#app-icons" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sextant<span class="w"> </span>icon<span class="w"> </span>app.apk<span class="w">                 </span><span class="c1"># every file behind android:icon, best one marked</span>
@@ -1471,7 +1471,7 @@
 <li>Icons are resolved from the manifest through <code>resources.arsc</code>, so they are found even when R8 resource shrinking renames files (<code>res/o-.png</code> above).</li>
 <li>The best file is the largest bitmap by pixel area (PNG and WebP sizes are read from the file headers). When the icon is only a vector, the vector is reported and <code>-o</code> suggests <code>--layer foreground</code> instead, because vector drawables are compiled binary XML, not images.</li>
 <li>Adaptive icons are split into background, foreground and monochrome layers, following <code>&lt;inset&gt;</code>/<code>&lt;bitmap&gt;</code> wrappers; solid-color layers report their color.</li>
-<li><code>icon</code> on an APK is fast (manifest and resources only). It also works on an extraction folder, reading <code>meta.json</code>; saving with <code>-o</code> needs the APK.</li>
+<li><code>icon</code> on an APK is fast (from the cache when the APK is indexed, else manifest and resources only). It also works on a <code>.sqlite</code> file; saving with <code>-o</code> needs the APK.</li>
 </ul>
 
 

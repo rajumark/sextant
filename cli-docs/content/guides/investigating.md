@@ -1,6 +1,6 @@
 # Investigating an app
 
-Once an APK is extracted, every investigation follows the same loop: **find** something, **look** at it, **follow** the code from there. All commands below take the extraction folder and use `index.sqlite`.
+Once an APK is extracted, every investigation follows the same loop: **find** something, **look** at it, **follow** the code from there. All commands below take the `.sqlite` file from `extract`, or the APK itself.
 
 ## Names and IDs
 
@@ -26,10 +26,10 @@ You rarely have to type full descriptors. Commands accept shorter forms:
 `find` is a substring search over everything with a name: classes, methods, fields, string constants, components, permissions, deep links, resource values, endpoints, SDKs, libraries, native symbols and findings.
 
 ```bash
-sextant find app/ "api.example.com"
-sextant find app/ "token" --kind field
-sextant find app/ "Login" --kind class --limit 20
-sextant find app/ "Java_com_" --kind native_symbol
+sextant find app.sqlite "api.example.com"
+sextant find app.sqlite "token" --kind field
+sextant find app.sqlite "Login" --kind class --limit 20
+sextant find app.sqlite "Java_com_" --kind native_symbol
 ```
 
 Three or more characters use the full-text (trigram) index; shorter text falls back to a slower scan. For string hits, `find` shows the methods that load the string.
@@ -37,7 +37,7 @@ Three or more characters use the full-text (trigram) index; shorter text falls b
 ## Look at a class
 
 ```bash
-sextant class app/ CameraActivity
+sextant class app.sqlite CameraActivity
 ```
 
 You get access flags, superclass, interfaces, subclasses, fields (with constant initial values), every method with its instruction count, calls out and call sites into it, callers from outside the class, and the strings it uses. `--json` gives the same as one object.
@@ -45,7 +45,7 @@ You get access flags, superclass, interfaces, subclasses, fields (with constant 
 ## Follow calls
 
 ```bash
-sextant callers app/ "Landroid/app/Activity;->getIntent" --depth 1 --fan-out 3
+sextant callers app.sqlite "Landroid/app/Activity;->getIntent" --depth 1 --fan-out 3
 ```
 
 ```text
@@ -70,7 +70,7 @@ Landroid/app/Activity;->getIntent()Landroid/content/Intent;  (external)
 `reach` answers "can this entry point get to that code?": a breadth-first search from every method of a component (or from one method) to targets.
 
 ```bash
-sextant reach app/ de.markusfisch.android.binaryeye.activity.CameraActivity 'SharedPreferences$Editor.putBoolean'
+sextant reach app.sqlite de.markusfisch.android.binaryeye.activity.CameraActivity 'SharedPreferences$Editor.putBoolean'
 ```
 
 ```text
@@ -85,7 +85,7 @@ Targets can be a descriptor prefix (`Ljavax/crypto/Cipher;->getInstance`), `Clas
 ## Who uses a class or field
 
 ```bash
-sextant xref app/ 'Lde/markusfisch/android/binaryeye/activity/CameraActivity;->c1'
+sextant xref app.sqlite 'Lde/markusfisch/android/binaryeye/activity/CameraActivity;->c1'
 ```
 
 ```text
@@ -104,12 +104,12 @@ sextant source app.apk com.example.Login.auth     # decompiled Java (jadx)
 sextant smali  app.apk 'Lcom/example/Login;->auth' # bytecode assembly (baksmali)
 ```
 
-Both take the **APK**, not the folder. `source` keeps the original (possibly obfuscated) names so they match the index; anonymous and lambda classes that jadx inlines are shown inside their enclosing class. `smali` works even when decompiling fails, and its `#@54` comments are hex code-unit offsets that match the decimal `offsets` in `code/calls.jsonl` (0x54 = 84).
+Both take the **APK**, not the `.sqlite` file. `source` keeps the original (possibly obfuscated) names so they match the index; anonymous and lambda classes that jadx inlines are shown inside their enclosing class. `smali` works even when decompiling fails, and its `#@54` comments are hex code-unit offsets that match the decimal `offsets` in `code/calls.jsonl` (0x54 = 84).
 
 ## URLs
 
 ```bash
-sextant endpoints app/ --host example.com
+sextant endpoints app.sqlite --host example.com
 ```
 
 ```text

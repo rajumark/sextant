@@ -3,9 +3,9 @@
 `sextant findings` lists **review points**: static observations a reviewer should check, each with the evidence that triggered it. They are deliberately not called vulnerabilities, because a check may exist elsewhere and some patterns are fine in context.
 
 ```bash
-sextant findings app/
-sextant findings app/ --severity medium   # medium and high only
-sextant findings app/ --json              # one JSON object per finding, with evidence
+sextant findings app.sqlite
+sextant findings app.sqlite --severity medium   # medium and high only
+sextant findings app.sqlite --json              # one JSON object per finding, with evidence
 ```
 
 ```text
@@ -28,22 +28,22 @@ The full list of rules, with what each one means, is in [Review findings](../ref
 1. **Attack surface.** Exported components without permission, deep links, providers and their read/write permissions:
 
     ```bash
-    sextant sql app/ "SELECT type, name, permission, read_permission, write_permission FROM components WHERE exported = 1 AND enabled = 1"
-    sextant sql app/ "SELECT url, component FROM deep_links"
+    sextant sql app.sqlite "SELECT type, name, permission, read_permission, write_permission FROM components WHERE exported = 1 AND enabled = 1"
+    sextant sql app.sqlite "SELECT url, component FROM deep_links"
     ```
 
 2. **What those entry points can reach.** Use `reach` from an exported component to sensitive APIs:
 
     ```bash
-    sextant reach app/ com.example.DeepLinkActivity 'WebView.loadUrl'
-    sextant reach app/ com.example.ShareReceiver okhttp3/
+    sextant reach app.sqlite com.example.DeepLinkActivity 'WebView.loadUrl'
+    sextant reach app.sqlite com.example.ShareReceiver okhttp3/
     ```
 
 3. **Network.** Cleartext settings, the network security config, every host the app mentions:
 
     ```bash
-    sextant endpoints app/
-    sextant sql app/ "SELECT value FROM meta WHERE key = 'meta_json'" --json   # flags.uses_cleartext_traffic, network_security_config
+    sextant endpoints app.sqlite
+    sextant sql app.sqlite "SELECT value FROM meta WHERE key = 'meta_json'" --json   # flags.uses_cleartext_traffic, network_security_config
     ```
 
 4. **Crypto and TLS.** `weak-cipher`, `weak-hash`, `trust-all-certificates` and `accept-all-hostnames` point at the methods; read them with `source` or `smali`.
@@ -51,14 +51,14 @@ The full list of rules, with what each one means, is in [Review findings](../ref
 5. **Secrets.** Embedded keys and tokens are masked in the output (only the first 6 and last 4 characters are shown). Search for more with `find`:
 
     ```bash
-    sextant find app/ "api_key" --kind resource
-    sextant find app/ "BEGIN"  --kind string
+    sextant find app.sqlite "api_key" --kind resource
+    sextant find app.sqlite "BEGIN"  --kind string
     ```
 
 6. **Native code.** JNI methods map back to the Java side:
 
     ```bash
-    sextant sql app/ "SELECT jni_class, jni_method, library FROM native_symbols WHERE jni_class IS NOT NULL"
+    sextant sql app.sqlite "SELECT jni_class, jni_method, library FROM native_symbols WHERE jni_class IS NOT NULL"
     ```
 
 ## How the code rules work
@@ -75,8 +75,8 @@ The full list of rules, with what each one means, is in [Review findings](../ref
 `--fail-on <severity>` makes `findings` exit with code **5** when any finding is at or above that severity, so a release pipeline can stop on, say, a debuggable build or a trust-all TrustManager. The normal output is still printed.
 
 ```bash
-sextant extract -q app-release.apk -o build/sextant
-sextant findings build/sextant --fail-on high
+sextant extract -q app-release.apk -o build/app.sqlite
+sextant findings build/app.sqlite --fail-on high
 ```
 
 `--sarif` prints the findings as [SARIF 2.1.0](https://docs.oasis-open.org/sarif/sarif/v2.1.0/sarif-v2.1.0.html), the format GitHub code scanning, GitLab and most security dashboards import. Each finding is one result with its severity mapped to a SARIF level (`high` → error, `medium` → warning, `low`/`info` → note) and to GitHub's `security-severity`. An APK has no source files, so each evidence item points at the part of the APK it lives in (`AndroidManifest.xml`, `resources.arsc`, or the class as `smali/com/example/Foo.smali`), with the exact component, method or resource as a logical location.
@@ -99,11 +99,11 @@ jobs:
         run: |
           curl -fsSL -o sextant.zip https://github.com/rajumark/sextant/releases/latest/download/sextant-1.0.0.zip
           unzip -q sextant.zip && echo "$PWD/sextant-1.0.0/bin" >> "$GITHUB_PATH"
-      - run: sextant extract -q app/build/outputs/apk/release/app-release.apk -o build/sextant
-      - run: sextant findings build/sextant --sarif > sextant.sarif
+      - run: sextant extract -q app/build/outputs/apk/release/app-release.apk -o build/app.sqlite
+      - run: sextant findings build/app.sqlite --sarif > sextant.sarif
       - uses: github/codeql-action/upload-sarif@v3
         with: { sarif_file: sextant.sarif, category: sextant }
-      - run: sextant findings build/sextant --fail-on high
+      - run: sextant findings build/app.sqlite --fail-on high
 ```
 
-Combine with `--severity` to keep low-severity notes out of the dashboard: `sextant findings build/sextant --severity medium --sarif`.
+Combine with `--severity` to keep low-severity notes out of the dashboard: `sextant findings build/app.sqlite --severity medium --sarif`.

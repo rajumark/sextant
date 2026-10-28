@@ -1330,7 +1330,7 @@
 <tr>
 <td><code>3</code></td>
 <td>Output error</td>
-<td>Output folder not empty without <code>--force</code>, not writable</td>
+<td>Output file exists without <code>--force</code>, is a folder, or is not writable</td>
 </tr>
 <tr>
 <td><code>4</code></td>
@@ -1349,12 +1349,12 @@
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Error: output directory busy is not empty
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>hint: pass --force to overwrite Sextant's files in it
 </code></pre></div>
-<p><code>--force</code> only replaces Sextant's own files in the folder; nothing else is touched or deleted.</p>
+<p><code>--force</code> only replaces the output file; nothing else is touched or deleted. The file is built under a temporary name and moved into place at the end, so a failed run never leaves a half-written file.</p>
 <p>For an internal error, set <code>SEXTANT_DEBUG=1</code> to print the stack trace:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nv">SEXTANT_DEBUG</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>sextant<span class="w"> </span>extract<span class="w"> </span>app.apk<span class="w"> </span>-o<span class="w"> </span>out/
 </code></pre></div>
 <h2 id="hostile-and-broken-input">Hostile and broken input<a class="headerlink" href="#hostile-and-broken-input" title="Permanent link">&para;</a></h2>
-<p>Sextant never executes anything from an APK and never writes outside the output folder. Inflation is capped (manifest 32 MB, <code>resources.arsc</code> 512 MB, each dex 256 MB, each native library 256 MB) as a zip-bomb guard. Malformed parts become entries in <code>meta.json → warnings</code> instead of crashes: a dex that can't be read, methods with unreadable bytecode, an undecodable resource table, an unsigned or invalid signature.</p>
+<p>Sextant never executes anything from an APK and never writes anything but its output file and its own cache. Inflation is capped (manifest 32 MB, <code>resources.arsc</code> 512 MB, each dex 256 MB, each native library 256 MB) as a zip-bomb guard. Malformed parts become entries in <code>meta.json → warnings</code> instead of crashes: a dex that can't be read, methods with unreadable bytecode, an undecodable resource table, an unsigned or invalid signature.</p>
 
 
 

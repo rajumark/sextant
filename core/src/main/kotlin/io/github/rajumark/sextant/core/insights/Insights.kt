@@ -29,6 +29,7 @@ import java.util.TreeSet
 import java.util.zip.ZipFile
 
 /** Everything Version 5 derives about an APK. Lists are sorted, so output is deterministic. */
+@Serializable
 data class Insights(
     val stats: InsightStats,
     val libraries: List<LibraryRecord>,

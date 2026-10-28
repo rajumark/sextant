@@ -30,7 +30,7 @@ private val FILE_TYPES =
         "other",
     )
 
-/** `sextant files <dir>`: every zip entry of the APK, from index.sqlite. */
+/** `sextant files <app>`: every zip entry of the APK, from its SQLite file. */
 class FilesCommand : CoreCliktCommand(name = "files") {
     private val dir by argument(help = INDEX_INPUT).path()
     private val type by option("--type", help = "Only this file type").choice(*FILE_TYPES.toTypedArray())

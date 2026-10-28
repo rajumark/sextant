@@ -1888,9 +1888,9 @@
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  -h, --help     Show this message and exit
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>Commands:
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>  extract     Extract structured data from an APK into a folder.
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>  info        Show a short summary of an APK or an extracted folder.
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>  sql         Run read-only SQL over index.sqlite. Use --schema to see the tables.
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>  extract     Extract everything Sextant reads from an APK into one SQLite file. Every other command takes that file (or the APK itself).
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>  info        Show a short summary of an app (an APK or its .sqlite file).
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>  sql         Run read-only SQL over the app's SQLite file. Use --schema to see the tables.
 <a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>  find        Find anything containing the text: classes, methods, fields, strings, components, permissions, deep links, resources, endpoints, SDKs, libraries and native symbols.
 <a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>  class       Show a class: hierarchy, fields, methods, who calls it and the strings it uses.
 <a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>  callers     Show who calls a method, as a tree. Calls through an interface or superclass are recorded against that base method.
@@ -1900,7 +1900,7 @@
 <a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>  insights    Show what the app is built with: frameworks, SDKs, libraries, endpoints and native code.
 <a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>  endpoints   List URLs found in code strings, resources, deep links and manifest values, with their sources.
 <a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>  mcp         Run an MCP server on stdin/stdout so AI agents can extract, search and query APKs. Tools: extract, summary, find, class, callers, callees, sql, source, grep, insights, xref, reach, smali, icon, findings, endpoints.
-<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>  diff        Compare two extracted versions: app facts, permissions, components, deep links, SDKs, libraries, hosts, URLs, native code, packages, classes, strings and resources.
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>  diff        Compare two versions of an app: app facts, permissions, components, deep links, SDKs, libraries, hosts, URLs, native code, packages, classes, strings and resources.
 <a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>  findings    Show review findings (debuggable, cleartext, exported components, WebView bridges, weak crypto, trust-all TLS, embedded secrets, …) with evidence. They are static observations to check, not proven vulnerabilities.
 <a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>  xref        Where is a class or field used: instantiations, casts, instanceof, const-class, calls into its methods, field reads and writes.
 <a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>  reach       Find call paths from an entry point (e.g. an exported activity) to target methods, following virtual and interface dispatch into subclasses. Static approximation: reflection, framework callbacks and native code are not followed.
@@ -1908,7 +1908,7 @@
 <a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>  icon        Find the app icon: every file behind android:icon (or --round) per density, adaptive icon layers, pixel sizes, and the best file to use. -o saves it.
 <a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>  components  List activities, aliases, services, receivers and providers with verdicts: launcher, app-link, deep-link, hidden-entry, task-hijack, lock-screen, exported-by-default, guarded, disabled.
 <a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>  component   Explain one component: verdicts with reasons, activity attributes, intent filters in plain words, deep links, aliases and ready-to-run adb commands.
-<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>  app         Show the Application class and the startup order: AppComponentFactory, attachBaseContext, content providers (androidx.startup initializers), onCreate; with an extracted folder, also their calls and the SDKs they start.
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>  app         Show the Application class and the startup order: AppComponentFactory, attachBaseContext, content providers (androidx.startup initializers), onCreate, with the calls of each step and the SDKs they start.
 <a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>  res         List strings (every locale, plurals, arrays), resource ids, styles and themes, drawables, layouts, menus, navigation graphs, assets and XML configs. References are shown as written and resolved; NAME shows one entry and who uses it.
 <a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>  sdks        Show SDKs and libraries by role (analytics, ads, crash reporting, auth, database, UI, …) with versions when an artifact proves them. With several apps, show which SDKs appear where and filter apps by SDK, category or version.
 <a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>  deobf       Look up names in a ProGuard/R8 mapping.txt, both ways: original -&gt; obfuscated for classes, fields and methods. Pass the same file as --mapping to `source` and `grep` to read the code with original names.
@@ -1919,35 +1919,34 @@
 <h2 id="extract">extract<a class="headerlink" href="#extract" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Usage: sextant extract [&lt;options&gt;] &lt;apk&gt;
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  Extract structured data from an APK into a folder.
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  Extract everything Sextant reads from an APK into one SQLite file. Every other command takes that file (or the APK itself).
 <a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>Options:
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>  -o, --out=&lt;path&gt;  Output directory (default: ./&lt;apk-name&gt;.sextant/)
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>  --force           Overwrite Sextant's files in a non-empty output directory
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>  -o, --out=&lt;path&gt;  Output file (default: ./&lt;apk-name&gt;.sqlite)
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>  --force           Overwrite the output file if it exists
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>  -q, --quiet       No progress output
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>  --no-index        Skip index.sqlite (no sql/find/class)
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>  --no-code         Skip code structure (classes, methods, calls); manifest-level files only
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>  -h, --help        Show this message and exit
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>Arguments:
-<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>  &lt;apk&gt;  APK file to analyze
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>  --no-code         Skip code structure (classes, methods, calls) for a fast manifest-level file
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>  -h, --help        Show this message and exit
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>Arguments:
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>  &lt;apk&gt;  APK or split bundle to analyze
 </code></pre></div>
 <h2 id="info">info<a class="headerlink" href="#info" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Usage: sextant info [&lt;options&gt;] &lt;target&gt;
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>  Show a short summary of an APK or an extracted folder.
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>  Show a short summary of an app (an APK or its .sqlite file).
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>Options:
 <a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>  --json      Machine-readable JSON on stdout
 <a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>  -h, --help  Show this message and exit
 <a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
 <a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>Arguments:
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>  &lt;target&gt;  An APK (indexed once, then cached) or an extracted folder
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>  &lt;target&gt;  An APK (indexed once, then cached) or a .sqlite file from sextant extract
 </code></pre></div>
 <h2 id="sql">sql<a class="headerlink" href="#sql" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Usage: sextant sql [&lt;options&gt;] &lt;dir&gt; [&lt;query&gt;]
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>  Run read-only SQL over index.sqlite. Use --schema to see the tables.
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>  Run read-only SQL over the app's SQLite file. Use --schema to see the tables.
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
 <a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>Options:
 <a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>  --json, --csv  Output format
@@ -1956,7 +1955,7 @@
 <a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>  -h, --help     Show this message and exit
 <a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
 <a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>Arguments:
-<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>  &lt;dir&gt;    An APK (indexed once, then cached), an extracted folder or its index.sqlite
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>  &lt;dir&gt;    An APK (indexed once, then cached) or a .sqlite file from sextant extract
 <a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>  &lt;query&gt;  SQL to run (read-only)
 </code></pre></div>
 <h2 id="find">find<a class="headerlink" href="#find" title="Permanent link">&para;</a></h2>
@@ -1971,7 +1970,7 @@
 <a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>  -h, --help                                                                                                                             Show this message and exit
 <a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
 <a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>Arguments:
-<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>  &lt;dir&gt;   An APK (indexed once, then cached), an extracted folder or its index.sqlite
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>  &lt;dir&gt;   An APK (indexed once, then cached) or a .sqlite file from sextant extract
 <a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>  &lt;text&gt;  Text to find (any part of a name or string)
 </code></pre></div>
 <h2 id="class">class<a class="headerlink" href="#class" title="Permanent link">&para;</a></h2>
@@ -1984,7 +1983,7 @@
 <a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>  -h, --help  Show this message and exit
 <a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
 <a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>Arguments:
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>  &lt;dir&gt;   An APK (indexed once, then cached), an extracted folder or its index.sqlite
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>  &lt;dir&gt;   An APK (indexed once, then cached) or a .sqlite file from sextant extract
 <a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>  &lt;name&gt;  Class name: com.app.Login, Lcom/app/Login; or just Login
 </code></pre></div>
 <h2 id="callers">callers<a class="headerlink" href="#callers" title="Permanent link">&para;</a></h2>
@@ -1999,7 +1998,7 @@
 <a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>  -h, --help         Show this message and exit
 <a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>
 <a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>Arguments:
-<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>  &lt;dir&gt;     An APK (indexed once, then cached), an extracted folder or its index.sqlite
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>  &lt;dir&gt;     An APK (indexed once, then cached) or a .sqlite file from sextant extract
 <a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>  &lt;method&gt;  Method: Lcom/a/B;-&gt;m(I)V, Lcom/a/B;-&gt;m, com.a.B.m, B.m or just m
 </code></pre></div>
 <h2 id="callees">callees<a class="headerlink" href="#callees" title="Permanent link">&para;</a></h2>
@@ -2014,7 +2013,7 @@
 <a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>  -h, --help         Show this message and exit
 <a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
 <a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>Arguments:
-<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>  &lt;dir&gt;     An APK (indexed once, then cached), an extracted folder or its index.sqlite
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>  &lt;dir&gt;     An APK (indexed once, then cached) or a .sqlite file from sextant extract
 <a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>  &lt;method&gt;  Method: Lcom/a/B;-&gt;m(I)V, Lcom/a/B;-&gt;m, com.a.B.m, B.m or just m
 </code></pre></div>
 <h2 id="source">source<a class="headerlink" href="#source" title="Permanent link">&para;</a></h2>
@@ -2059,7 +2058,7 @@
 <a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>  -h, --help  Show this message and exit
 <a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
 <a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>Arguments:
-<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>  &lt;dir&gt;  An APK (indexed once, then cached), an extracted folder or its index.sqlite
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>  &lt;dir&gt;  An APK (indexed once, then cached) or a .sqlite file from sextant extract
 </code></pre></div>
 <h2 id="endpoints">endpoints<a class="headerlink" href="#endpoints" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Usage: sextant endpoints [&lt;options&gt;] &lt;dir&gt;
@@ -2073,7 +2072,7 @@
 <a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>  -h, --help     Show this message and exit
 <a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>
 <a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>Arguments:
-<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>  &lt;dir&gt;  An APK (indexed once, then cached), an extracted folder or its index.sqlite
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>  &lt;dir&gt;  An APK (indexed once, then cached) or a .sqlite file from sextant extract
 </code></pre></div>
 <h2 id="mcp">mcp<a class="headerlink" href="#mcp" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Usage: sextant mcp [&lt;options&gt;]
@@ -2081,14 +2080,14 @@
 <a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>  Run an MCP server on stdin/stdout so AI agents can extract, search and query APKs. Tools: extract, summary, find, class, callers, callees, sql, source, grep, insights, xref, reach, smali, icon, findings, endpoints.
 <a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
 <a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>Options:
-<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>  --dir=&lt;path&gt;  Start with this extraction folder as the current app
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>  --dir=&lt;path&gt;  Start with this index (.sqlite) or APK as the current app
 <a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>  --apk=&lt;path&gt;  The APK for `source` (and the default for `extract`)
 <a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>  -h, --help    Show this message and exit
 </code></pre></div>
 <h2 id="diff">diff<a class="headerlink" href="#diff" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Usage: sextant diff [&lt;options&gt;] &lt;old&gt; &lt;new&gt;
 <a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>  Compare two extracted versions: app facts, permissions, components, deep links, SDKs, libraries, hosts, URLs, native code, packages, classes, strings and resources.
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>  Compare two versions of an app: app facts, permissions, components, deep links, SDKs, libraries, hosts, URLs, native code, packages, classes, strings and resources.
 <a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
 <a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>Options:
 <a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>  --show=&lt;int&gt;  Items to list per section (default 15; totals are always exact)
@@ -2096,8 +2095,8 @@
 <a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>  -h, --help    Show this message and exit
 <a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>
 <a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>Arguments:
-<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>  &lt;old&gt;  Extraction folder of the older version
-<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>  &lt;new&gt;  Extraction folder of the newer version
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>  &lt;old&gt;  The older version: an APK or a .sqlite file
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>  &lt;new&gt;  The newer version: an APK or a .sqlite file
 </code></pre></div>
 <h2 id="findings">findings<a class="headerlink" href="#findings" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>Usage: sextant findings [&lt;options&gt;] &lt;dir&gt;
@@ -2112,7 +2111,7 @@
 <a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>  -h, --help                         Show this message and exit
 <a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>
 <a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>Arguments:
-<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>  &lt;dir&gt;  An APK (indexed once, then cached), an extracted folder or its index.sqlite
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>  &lt;dir&gt;  An APK (indexed once, then cached) or a .sqlite file from sextant extract
 </code></pre></div>
 <h2 id="xref">xref<a class="headerlink" href="#xref" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Usage: sextant xref [&lt;options&gt;] &lt;dir&gt; &lt;target&gt;
@@ -2125,7 +2124,7 @@
 <a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>  -h, --help     Show this message and exit
 <a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>
 <a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>Arguments:
-<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>  &lt;dir&gt;     An APK (indexed once, then cached), an extracted folder or its index.sqlite
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>  &lt;dir&gt;     An APK (indexed once, then cached) or a .sqlite file from sextant extract
 <a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>  &lt;target&gt;  Class (com.a.B, Lcom/a/B;, B) or field (Lcom/a/B;-&gt;f:I, Lcom/a/B;-&gt;f, com.a.B.f)
 </code></pre></div>
 <h2 id="reach">reach<a class="headerlink" href="#reach" title="Permanent link">&para;</a></h2>
@@ -2140,7 +2139,7 @@
 <a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>  -h, --help     Show this message and exit
 <a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>
 <a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>Arguments:
-<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>  &lt;dir&gt;   An APK (indexed once, then cached), an extracted folder or its index.sqlite
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>  &lt;dir&gt;   An APK (indexed once, then cached) or a .sqlite file from sextant extract
 <a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>  &lt;from&gt;  Entry point: a component/class (com.a.LoginActivity) or a method
 <a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>  &lt;to&gt;    Target: Ljavax/crypto/Cipher;-&gt;getInstance, Cipher.getInstance, okhttp3/ or a method name
 </code></pre></div>
@@ -2169,7 +2168,7 @@
 <a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>  -h, --help                                  Show this message and exit
 <a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>
 <a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>Arguments:
-<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>  &lt;target&gt;  An APK (from the index cache when present, else manifest + resources only) or an extracted folder
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>  &lt;target&gt;  An APK (from the index cache when present, else manifest + resources only) or a .sqlite file
 </code></pre></div>
 <h2 id="components">components<a class="headerlink" href="#components" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>Usage: sextant components [&lt;options&gt;] &lt;target&gt;
@@ -2185,7 +2184,7 @@
 <a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>  -h, --help                                                                                                                                                                                                        Show this message and exit
 <a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>
 <a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>Arguments:
-<a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a>  &lt;target&gt;  An extracted folder, or an APK (analyzed in memory, nothing written)
+<a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a>  &lt;target&gt;  An APK (indexed once, then cached) or a .sqlite file from sextant extract
 </code></pre></div>
 <h2 id="component">component<a class="headerlink" href="#component" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>Usage: sextant component [&lt;options&gt;] &lt;target&gt; &lt;name&gt;
@@ -2197,20 +2196,20 @@
 <a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>  -h, --help  Show this message and exit
 <a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>
 <a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>Arguments:
-<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>  &lt;target&gt;  An extracted folder, or an APK (analyzed in memory, nothing written)
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>  &lt;target&gt;  An APK (indexed once, then cached) or a .sqlite file from sextant extract
 <a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>  &lt;name&gt;    Class name, or a unique suffix such as .MainActivity
 </code></pre></div>
 <h2 id="app">app<a class="headerlink" href="#app" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>Usage: sextant app [&lt;options&gt;] &lt;target&gt;
 <a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>
-<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>  Show the Application class and the startup order: AppComponentFactory, attachBaseContext, content providers (androidx.startup initializers), onCreate; with an extracted folder, also their calls and the SDKs they start.
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>  Show the Application class and the startup order: AppComponentFactory, attachBaseContext, content providers (androidx.startup initializers), onCreate, with the calls of each step and the SDKs they start.
 <a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>
 <a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>Options:
 <a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>  --json      One JSON object
 <a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>  -h, --help  Show this message and exit
 <a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>
 <a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>Arguments:
-<a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>  &lt;target&gt;  An extracted folder (follows startup calls with its index), or an APK (manifest only)
+<a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>  &lt;target&gt;  An APK (indexed once, then cached) or a .sqlite file from sextant extract
 </code></pre></div>
 <h2 id="res">res<a class="headerlink" href="#res" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>Usage: sextant res [&lt;options&gt;] &lt;target&gt; &lt;kindname&gt; [&lt;name&gt;]
@@ -2226,7 +2225,7 @@
 <a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>  -h, --help                                                                 Show this message and exit
 <a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>
 <a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a>Arguments:
-<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>  &lt;target&gt;    An extracted folder, or an APK (analyzed in memory, nothing written)
+<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>  &lt;target&gt;    An APK (indexed once, then cached) or a .sqlite file from sextant extract
 <a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a>  &lt;kindname&gt;  What to list: strings, string-keys, ids, styles, drawables, layouts, menus, navigation, assets, xml, refs
 <a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a>  &lt;name&gt;      Show one entry in full (all configurations) and what references it
 </code></pre></div>
@@ -2243,7 +2242,7 @@
 <a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>  -h, --help         Show this message and exit
 <a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>
 <a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>Arguments:
-<a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>  &lt;targets&gt;  Extracted folders and/or APKs (APKs are analyzed in memory)
+<a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>  &lt;targets&gt;  APKs (indexed once, then cached) and/or .sqlite files
 </code></pre></div>
 <h2 id="deobf">deobf<a class="headerlink" href="#deobf" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>Usage: sextant deobf [&lt;options&gt;] &lt;mappingfile&gt; &lt;name&gt;
@@ -2273,7 +2272,7 @@
 <a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>  -h, --help                                                                                                                                  Show this message and exit
 <a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a>
 <a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a>Arguments:
-<a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a>  &lt;dir&gt;  An APK (indexed once, then cached), an extracted folder or its index.sqlite
+<a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a>  &lt;dir&gt;  An APK (indexed once, then cached) or a .sqlite file from sextant extract
 </code></pre></div>
 <h2 id="coverage">coverage<a class="headerlink" href="#coverage" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>Usage: sextant coverage [&lt;options&gt;] &lt;dir&gt;
@@ -2285,7 +2284,7 @@
 <a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>  -h, --help  Show this message and exit
 <a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>
 <a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>Arguments:
-<a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a>  &lt;dir&gt;  An APK (indexed once, then cached), an extracted folder or its index.sqlite
+<a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a>  &lt;dir&gt;  An APK (indexed once, then cached) or a .sqlite file from sextant extract
 </code></pre></div>
 <h2 id="cache">cache<a class="headerlink" href="#cache" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>Usage: sextant cache [&lt;options&gt;]

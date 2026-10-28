@@ -5,7 +5,7 @@ This walks through a first analysis in five minutes. The examples use [Binary Ey
 ## 1. Extract
 
 ```bash
-sextant extract binaryeye.apk -o binaryeye/
+sextant extract binaryeye.apk
 ```
 
 ```text
@@ -15,28 +15,29 @@ sextant extract binaryeye.apk -o binaryeye/
 ✓ Components        18 (9 exported)
 ✓ Signing           v1, v2, v3
 ✓ Code              2936 classes · 16824 methods · 55703 call edges
-✓ Wrote binaryeye/     24 files in 1.3s
+✓ Files             930 in the APK, 619 decoded
+✓ Wrote binaryeye.sqlite  31.8 MB in 2.9s
 ```
 
 Progress goes to **stderr**, so it never mixes with data on stdout. Typical apps take 1–5 seconds; the largest (60k+ classes) take 15–25 seconds, mostly to build the search index.
 
 !!! tip "Faster runs"
-    `--no-index` skips `index.sqlite` (no `find`, `sql`, `class`…). `--no-code` skips code entirely and only reads the manifest, resources and signing, which takes well under a second.
+    `--no-code` skips code entirely and only reads the manifest, resources and signing, which takes well under a second.
 
 ## 2. Read the summary
 
-Open `binaryeye/summary.md`, or run:
+Run:
 
 ```bash
-sextant info binaryeye/
+sextant info binaryeye.sqlite
 ```
 
-`info` also works directly on an APK (`sextant info app.apk`); it then analyzes in memory and writes nothing.
+Every command also works directly on an APK (`sextant info app.apk`): it is indexed once into a cache and reused on every later run.
 
 ## 3. Search anything
 
 ```bash
-sextant find binaryeye/ "markusfisch.de/BinaryEye" --limit 4
+sextant find binaryeye.sqlite "markusfisch.de/BinaryEye" --limit 4
 ```
 
 ```text
@@ -54,7 +55,7 @@ The string hit tells you **which method loads it**; the deep-link hit tells you 
 ## 4. Follow the code
 
 ```bash
-sextant callers binaryeye/ "Landroid/app/Activity;->getIntent" --depth 1 --fan-out 3
+sextant callers binaryeye.sqlite "Landroid/app/Activity;->getIntent" --depth 1 --fan-out 3
 sextant source binaryeye.apk de.markusfisch.android.binaryeye.activity.CameraActivity.onResume
 ```
 
@@ -63,7 +64,7 @@ sextant source binaryeye.apk de.markusfisch.android.binaryeye.activity.CameraAct
 ## 5. Review
 
 ```bash
-sextant findings binaryeye/
+sextant findings binaryeye.sqlite
 ```
 
 ```text

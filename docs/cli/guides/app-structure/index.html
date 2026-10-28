@@ -1369,7 +1369,7 @@
 
 
 <h1 id="components-startup-resources-and-sdks">Components, startup, resources and SDKs<a class="headerlink" href="#components-startup-resources-and-sdks" title="Permanent link">&para;</a></h1>
-<p>Four commands answer "what is this app made of?" without writing SQL. They all take an extracted folder or an APK. Given an APK, they analyze it in memory and write nothing.</p>
+<p>Four commands answer "what is this app made of?" without writing SQL. They all take an APK (indexed once, then cached) or a <code>.sqlite</code> file from <code>extract</code>.</p>
 <table>
 <thead>
 <tr>
@@ -1398,10 +1398,10 @@
 </table>
 <p>The examples below use Bitwarden 2024.10.0 from the <a href="../../about/testing/">test corpus</a>.</p>
 <h2 id="components-and-verdicts">Components and verdicts<a class="headerlink" href="#components-and-verdicts" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sextant<span class="w"> </span>components<span class="w"> </span>app/
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sextant<span class="w"> </span>components<span class="w"> </span>app/<span class="w"> </span>--exported<span class="w"> </span>--type<span class="w"> </span>activity
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>sextant<span class="w"> </span>components<span class="w"> </span>app/<span class="w"> </span>--tag<span class="w"> </span>deep-link<span class="w"> </span>--tag<span class="w"> </span>hidden-entry<span class="w">   </span><span class="c1"># both tags</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>sextant<span class="w"> </span>components<span class="w"> </span>app/<span class="w"> </span>--search<span class="w"> </span>firebase<span class="w"> </span>--json
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sextant<span class="w"> </span>components<span class="w"> </span>app.sqlite
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sextant<span class="w"> </span>components<span class="w"> </span>app.sqlite<span class="w"> </span>--exported<span class="w"> </span>--type<span class="w"> </span>activity
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>sextant<span class="w"> </span>components<span class="w"> </span>app.sqlite<span class="w"> </span>--tag<span class="w"> </span>deep-link<span class="w"> </span>--tag<span class="w"> </span>hidden-entry<span class="w">   </span><span class="c1"># both tags</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>sextant<span class="w"> </span>components<span class="w"> </span>app.sqlite<span class="w"> </span>--search<span class="w"> </span>firebase<span class="w"> </span>--json
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>type      name                                              exported  tags                    entry
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>activity  com.x8bit.bitwarden.MainActivity                  yes       launcher                App launcher icon
@@ -1495,7 +1495,7 @@
 </tbody>
 </table>
 <p><code>sextant component</code> explains one component. The name can be the full class name or a unique suffix such as <code>.MainActivity</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sextant<span class="w"> </span>component<span class="w"> </span>app/<span class="w"> </span>.WebAuthCallbackActivity
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sextant<span class="w"> </span>component<span class="w"> </span>app.sqlite<span class="w"> </span>.WebAuthCallbackActivity
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>crc641b016c64ce400e42.WebAuthCallbackActivity  (activity)
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Exported: yes · enabled: yes
@@ -1526,10 +1526,9 @@
 <a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>      &lt;intent-filter&gt;
 <a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>          ...
 </code></pre></div>
-<p>With <code>--json</code>, both commands print <code>component</code> (as in <code>components.jsonl</code>), <code>review</code> (tags and reasons) and <code>attributes</code>.</p>
+<p>With <code>--json</code>, both commands print <code>component</code> (the full component record), <code>review</code> (tags and reasons) and <code>attributes</code>.</p>
 <h2 id="startup-order">Startup order<a class="headerlink" href="#startup-order" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sextant<span class="w"> </span>app<span class="w"> </span>app/<span class="w">          </span><span class="c1"># with an extracted folder: also the calls of each step</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>sextant<span class="w"> </span>app<span class="w"> </span>app.apk<span class="w">       </span><span class="c1"># manifest only</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sextant<span class="w"> </span>app<span class="w"> </span>app.apk<span class="w">       </span><span class="c1"># the startup order, with the calls of each step and the SDKs they start</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Application class: com.x8bit.bitwarden.MainApplication
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>Extends: crc6488302ad6e9e4df1a.MauiApplication → android.support.multidex.MultiDexApplication → android.app.Application
@@ -1553,12 +1552,12 @@
 </code></pre></div>
 <p>Android creates content providers before <code>Application.onCreate</code>, so SDKs that initialize themselves through a provider (Firebase, androidx.startup) run before any of the app's own code. "SDKs reached at startup" follows the calls from each step through the index. Like <code>reach</code>, it is a static approximation.</p>
 <h2 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sextant<span class="w"> </span>res<span class="w"> </span>app/<span class="w"> </span>strings<span class="w">                    </span><span class="c1"># every string, plural and array, all locales</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>sextant<span class="w"> </span>res<span class="w"> </span>app/<span class="w"> </span>strings<span class="w"> </span>--config<span class="w"> </span>fr<span class="w">        </span><span class="c1"># one configuration</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>sextant<span class="w"> </span>res<span class="w"> </span>app/<span class="w"> </span>string-keys<span class="w"> </span>--flag<span class="w"> </span>unused<span class="w">  </span><span class="c1"># string keys with flags</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>sextant<span class="w"> </span>res<span class="w"> </span>app/<span class="w"> </span>xml<span class="w">                        </span><span class="c1"># res/xml configs with a summary</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>sextant<span class="w"> </span>res<span class="w"> </span>app/<span class="w"> </span>refs<span class="w">                       </span><span class="c1"># who references which resource</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>sextant<span class="w"> </span>res<span class="w"> </span>app/<span class="w"> </span>layouts<span class="w"> </span>activity_main<span class="w">      </span><span class="c1"># one entry in full, and what uses it</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sextant<span class="w"> </span>res<span class="w"> </span>app.sqlite<span class="w"> </span>strings<span class="w">                    </span><span class="c1"># every string, plural and array, all locales</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>sextant<span class="w"> </span>res<span class="w"> </span>app.sqlite<span class="w"> </span>strings<span class="w"> </span>--config<span class="w"> </span>fr<span class="w">        </span><span class="c1"># one configuration</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>sextant<span class="w"> </span>res<span class="w"> </span>app.sqlite<span class="w"> </span>string-keys<span class="w"> </span>--flag<span class="w"> </span>unused<span class="w">  </span><span class="c1"># string keys with flags</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>sextant<span class="w"> </span>res<span class="w"> </span>app.sqlite<span class="w"> </span>xml<span class="w">                        </span><span class="c1"># res/xml configs with a summary</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>sextant<span class="w"> </span>res<span class="w"> </span>app.sqlite<span class="w"> </span>refs<span class="w">                       </span><span class="c1"># who references which resource</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>sextant<span class="w"> </span>res<span class="w"> </span>app.sqlite<span class="w"> </span>layouts<span class="w"> </span>activity_main<span class="w">      </span><span class="c1"># one entry in full, and what uses it</span>
 </code></pre></div>
 <p><code>KIND</code> is one of <code>strings</code>, <code>string-keys</code>, <code>ids</code>, <code>styles</code>, <code>drawables</code>, <code>layouts</code>, <code>menus</code>, <code>navigation</code>, <code>assets</code>, <code>xml</code> or <code>refs</code>. References keep the <code>@type/name</code> they were written with plus the resolved value.</p>
 <table>
@@ -1595,7 +1594,7 @@
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>$ sextant res app/ string-keys --flag url
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>$ sextant res app.sqlite string-keys --flag url
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>name                   kind    locales  used by  flags       value
 <a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>firebase_database_url  string  0        0        unused,url  https://bitwarden-c2b35.firebaseio.com
 </code></pre></div>
@@ -1610,9 +1609,9 @@
 <a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>network_security_config  default  network-security-config  base-cleartext=true user-certs=trusted domain-configs=1 pin-sets=0 …
 </code></pre></div>
 <p><code>res assets</code> flags assets whose bytes are DEX, ELF or zip under another name as <strong>hidden code</strong>.</p>
-<p>The same data is in <code>resources/*.jsonl</code> and in the index (<code>string_resources</code>, <code>resource_ids</code>, <code>styles</code>, <code>drawables</code>, <code>layouts</code>, <code>menus</code>, <code>navigation_destinations</code>, <code>assets</code>, <code>xml_configs</code>, <code>resource_refs</code>); see <a href="../../reference/output/">Output files</a> and the <a href="../../reference/index-schema/">index schema</a>.</p>
+<p>The same data is in the SQLite file (<code>string_resources</code>, <code>resource_ids</code>, <code>styles</code>, <code>drawables</code>, <code>layouts</code>, <code>menus</code>, <code>navigation_destinations</code>, <code>assets</code>, <code>xml_configs</code>, <code>resource_refs</code>); see <a href="../../reference/output/">Output</a> and the <a href="../../reference/index-schema/">index schema</a>.</p>
 <h2 id="sdks-and-versions">SDKs and versions<a class="headerlink" href="#sdks-and-versions" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sextant<span class="w"> </span>sdks<span class="w"> </span>app/
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sextant<span class="w"> </span>sdks<span class="w"> </span>app.sqlite
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>com.x8bit.bitwarden 2024.10.0
 <a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>Roles: analytics, auth, cryptography, image-loading, platform, push, reactive, serialization, ui

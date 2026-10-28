@@ -6,31 +6,22 @@ import com.github.ajalt.clikt.parameters.arguments.argument
 import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.types.path
-import io.github.rajumark.sextant.core.Extractor
-import io.github.rajumark.sextant.core.index.IndexReader
 import io.github.rajumark.sextant.core.insights.AppStartup
 import io.github.rajumark.sextant.core.insights.AppStartups
-import io.github.rajumark.sextant.core.output.OutputFiles
-import io.github.rajumark.sextant.core.output.OutputReader
 import io.github.rajumark.sextant.core.output.SextantJson
-import java.nio.file.Files
 
 /** `sextant app <dir|apk>`: the Application class and everything that runs when the app process starts. */
 class AppCommand : CoreCliktCommand(name = "app") {
-    private val target by argument(help = "An extracted folder (follows startup calls with its index), or an APK (manifest only)").path()
+    private val target by argument(help = INDEX_INPUT).path()
     private val json by option("--json", help = "One JSON object").flag()
 
     override fun help(context: Context) =
         "Show the Application class and the startup order: AppComponentFactory, attachBaseContext, content providers " +
-            "(androidx.startup initializers), onCreate; with an extracted folder, also their calls and the SDKs they start."
+            "(androidx.startup initializers), onCreate, with the calls of each step and the SDKs they start."
 
     override fun run() =
         guarded {
-            val dir = Files.isDirectory(target)
-            val extraction = if (dir) OutputReader.read(target) else Extractor.extract(target, code = null)
-            val hasIndex = dir && Files.exists(target.resolve(OutputFiles.INDEX))
-            val startup =
-                if (hasIndex) IndexReader.open(target).use { AppStartups.build(extraction, it) } else AppStartups.build(extraction, null)
+            val startup = openIndex(target).use { index -> AppStartups.build(index.extraction(), index) }
             if (json) println(SextantJson.compact.encodeToString(AppStartup.serializer(), startup)) else print(human(startup))
         }
 

@@ -1303,12 +1303,12 @@
 
 
 <h1 id="comparing-versions">Comparing versions<a class="headerlink" href="#comparing-versions" title="Permanent link">&para;</a></h1>
-<p><code>sextant diff</code> compares two extraction folders and reports what was added, removed and changed.</p>
+<p><code>sextant diff</code> compares two versions of an app (two APKs or two <code>.sqlite</code> files) and reports what was added, removed and changed.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sextant<span class="w"> </span>extract<span class="w"> </span>app-8.31.2.apk<span class="w"> </span>-o<span class="w"> </span>old/
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sextant<span class="w"> </span>extract<span class="w"> </span>app-8.32.3.apk<span class="w"> </span>-o<span class="w"> </span>new/
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>sextant<span class="w"> </span>diff<span class="w"> </span>old/<span class="w"> </span>new/
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>sextant<span class="w"> </span>diff<span class="w"> </span>old/<span class="w"> </span>new/<span class="w"> </span>--show<span class="w"> </span><span class="m">50</span><span class="w">     </span><span class="c1"># list more items per section</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>sextant<span class="w"> </span>diff<span class="w"> </span>old/<span class="w"> </span>new/<span class="w"> </span>--json<span class="w">        </span><span class="c1"># full report</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>sextant<span class="w"> </span>diff<span class="w"> </span>old.apk<span class="w"> </span>new.apk
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>sextant<span class="w"> </span>diff<span class="w"> </span>old.apk<span class="w"> </span>new.apk<span class="w"> </span>--show<span class="w"> </span><span class="m">50</span><span class="w">     </span><span class="c1"># list more items per section</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>sextant<span class="w"> </span>diff<span class="w"> </span>old.apk<span class="w"> </span>new.apk<span class="w"> </span>--json<span class="w">        </span><span class="c1"># full report</span>
 </code></pre></div>
 <p>Real example, Signal 8.31.2 → 8.32.3 (both official releases):</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a># org.thoughtcrime.securesms 8.31.2 (176601)  →  org.thoughtcrime.securesms 8.32.3 (176902)

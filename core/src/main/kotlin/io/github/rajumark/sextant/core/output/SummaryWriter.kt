@@ -97,9 +97,11 @@ object SummaryWriter {
     private const val MAX_LISTED = 25
     private const val MAX_FINDINGS = 12
 
+    /** [sqlite]: the app lives in one .sqlite file (the CLI), so point at tables and commands instead of files. */
     fun render(
         extraction: Extraction,
         hasIndex: Boolean = false,
+        sqlite: Boolean = false,
     ): String {
         val r = InfoReports.of(extraction)
         val m = r.meta
@@ -149,7 +151,9 @@ object SummaryWriter {
                 appendLine()
                 appendLine("## Insights")
                 appendLine("- Frameworks: ${ins.frameworks.joinToString().ifEmpty { "none detected" }}")
-                val sdkSummary = extraction.insights?.sdks?.joinToString { it.name } ?: "${ins.sdks} (see insights/sdks.jsonl)"
+                val sdkSummary =
+                    extraction.insights?.sdks?.joinToString { it.name }
+                        ?: "${ins.sdks} (see ${if (sqlite) "table sdks" else "insights/sdks.jsonl"})"
                 appendLine("- SDKs (${ins.sdks}): ${sdkSummary.ifEmpty { "none detected" }}")
                 appendLine(
                     "- Libraries with exact versions: ${ins.libraries}${ins.androidGradlePlugin?.let { " · built with AGP $it" } ?: ""}",
@@ -167,7 +171,13 @@ object SummaryWriter {
                     val first = f.evidence.firstOrNull()?.let { " — e.g. ${it.where}" } ?: ""
                     appendLine("- [${f.severity}] ${f.title} (${f.count})$first")
                 }
-                if (findings.size > MAX_FINDINGS) appendLine("- … ${findings.size - MAX_FINDINGS} more in insights/findings.jsonl")
+                if (findings.size >
+                    MAX_FINDINGS
+                ) {
+                    appendLine(
+                        "- … ${findings.size - MAX_FINDINGS} more in ${if (sqlite) "`sextant findings`" else "insights/findings.jsonl"}",
+                    )
+                }
             }
             appendLine()
             appendLine("## Counts")
@@ -199,13 +209,29 @@ object SummaryWriter {
                 val perm = e.permission?.let { " [requires $it]" } ?: ""
                 appendLine("- ${e.type} ${e.name}$perm$links")
             }
-            if (r.exported.size > MAX_LISTED) appendLine("- … ${r.exported.size - MAX_LISTED} more in components.jsonl")
+            if (r.exported.size >
+                MAX_LISTED
+            ) {
+                appendLine("- … ${r.exported.size - MAX_LISTED} more in ${if (sqlite) "`sextant components`" else "components.jsonl"}")
+            }
             if (m.warnings.isNotEmpty()) {
                 appendLine()
                 appendLine("## Warnings")
                 m.warnings.forEach { appendLine("- $it") }
             }
             appendLine()
+            if (sqlite) {
+                appendLine("## Query it")
+                appendLine("Everything is in one SQLite file; every command takes it (or the APK):")
+                appendLine(
+                    "- `sextant find <app> <text>` substring search over names, strings, components, permissions, deep links, resources",
+                )
+                appendLine("- `sextant class <app> <name>` one class: hierarchy, fields, methods, callers, strings")
+                appendLine("- `sextant xref <app> <class|field>` where it is used; `sextant reach <app> <from> <to>` call paths")
+                appendLine("- `sextant res <app> <kind>`, `sextant components <app>`, `sextant files <app>` resources, components, files")
+                appendLine("- `sextant sql <app> \"<query>\"` read-only SQL; `sextant sql <app> --schema` lists tables and views")
+                return@buildString
+            }
             appendLine("## Files")
             appendLine("- meta.json — identity, signing, flags, layout, warnings")
             appendLine("- manifest.json — full decoded manifest tree")

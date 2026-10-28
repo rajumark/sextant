@@ -42,6 +42,7 @@
   <li><span class="s done">Implemented</span><span>Make the Mission SQLite page the default index.html page with 2 tabs: current progress (with related UI) and the current design content in the second tab. Only the CLI goal; skip desktop things for now</span></li>
   <li><span class="s done">Implemented</span><span>Progress tab: minimal stats only. How many percent of all APK data is in SQLite (100% only when all of the APK is in SQLite; a good estimate is enough), and a minimal titles-only list of what the CLI supports</span></li>
   <li><span class="s done">Implemented</span><span>Mission SQLite step 2: instant answers. Any command given an APK builds its SQLite index once (keyed by the APK's SHA-256) and reuses it after, so <code>sextant info app.apk</code> is slow once and instant after</span></li>
+  <li><span class="s done">Implemented</span><span>Mission SQLite step 3: APK in, SQLite out. <code>extract</code> writes one <code>.sqlite</code> file and no JSONL; every command reads an APK or that file</span></li>
 </ul>
 </body>
 </html>

@@ -15,9 +15,9 @@ Options:
   -h, --help     Show this message and exit
 
 Commands:
-  extract     Extract structured data from an APK into a folder.
-  info        Show a short summary of an APK or an extracted folder.
-  sql         Run read-only SQL over index.sqlite. Use --schema to see the tables.
+  extract     Extract everything Sextant reads from an APK into one SQLite file. Every other command takes that file (or the APK itself).
+  info        Show a short summary of an app (an APK or its .sqlite file).
+  sql         Run read-only SQL over the app's SQLite file. Use --schema to see the tables.
   find        Find anything containing the text: classes, methods, fields, strings, components, permissions, deep links, resources, endpoints, SDKs, libraries and native symbols.
   class       Show a class: hierarchy, fields, methods, who calls it and the strings it uses.
   callers     Show who calls a method, as a tree. Calls through an interface or superclass are recorded against that base method.
@@ -27,7 +27,7 @@ Commands:
   insights    Show what the app is built with: frameworks, SDKs, libraries, endpoints and native code.
   endpoints   List URLs found in code strings, resources, deep links and manifest values, with their sources.
   mcp         Run an MCP server on stdin/stdout so AI agents can extract, search and query APKs. Tools: extract, summary, find, class, callers, callees, sql, source, grep, insights, xref, reach, smali, icon, findings, endpoints.
-  diff        Compare two extracted versions: app facts, permissions, components, deep links, SDKs, libraries, hosts, URLs, native code, packages, classes, strings and resources.
+  diff        Compare two versions of an app: app facts, permissions, components, deep links, SDKs, libraries, hosts, URLs, native code, packages, classes, strings and resources.
   findings    Show review findings (debuggable, cleartext, exported components, WebView bridges, weak crypto, trust-all TLS, embedded secrets, …) with evidence. They are static observations to check, not proven vulnerabilities.
   xref        Where is a class or field used: instantiations, casts, instanceof, const-class, calls into its methods, field reads and writes.
   reach       Find call paths from an entry point (e.g. an exported activity) to target methods, following virtual and interface dispatch into subclasses. Static approximation: reflection, framework callbacks and native code are not followed.
@@ -35,7 +35,7 @@ Commands:
   icon        Find the app icon: every file behind android:icon (or --round) per density, adaptive icon layers, pixel sizes, and the best file to use. -o saves it.
   components  List activities, aliases, services, receivers and providers with verdicts: launcher, app-link, deep-link, hidden-entry, task-hijack, lock-screen, exported-by-default, guarded, disabled.
   component   Explain one component: verdicts with reasons, activity attributes, intent filters in plain words, deep links, aliases and ready-to-run adb commands.
-  app         Show the Application class and the startup order: AppComponentFactory, attachBaseContext, content providers (androidx.startup initializers), onCreate; with an extracted folder, also their calls and the SDKs they start.
+  app         Show the Application class and the startup order: AppComponentFactory, attachBaseContext, content providers (androidx.startup initializers), onCreate, with the calls of each step and the SDKs they start.
   res         List strings (every locale, plurals, arrays), resource ids, styles and themes, drawables, layouts, menus, navigation graphs, assets and XML configs. References are shown as written and resolved; NAME shows one entry and who uses it.
   sdks        Show SDKs and libraries by role (analytics, ads, crash reporting, auth, database, UI, …) with versions when an artifact proves them. With several apps, show which SDKs appear where and filter apps by SDK, category or version.
   deobf       Look up names in a ProGuard/R8 mapping.txt, both ways: original -> obfuscated for classes, fields and methods. Pass the same file as --mapping to `source` and `grep` to read the code with original names.
@@ -49,18 +49,17 @@ Commands:
 ```text
 Usage: sextant extract [<options>] <apk>
 
-  Extract structured data from an APK into a folder.
+  Extract everything Sextant reads from an APK into one SQLite file. Every other command takes that file (or the APK itself).
 
 Options:
-  -o, --out=<path>  Output directory (default: ./<apk-name>.sextant/)
-  --force           Overwrite Sextant's files in a non-empty output directory
+  -o, --out=<path>  Output file (default: ./<apk-name>.sqlite)
+  --force           Overwrite the output file if it exists
   -q, --quiet       No progress output
-  --no-index        Skip index.sqlite (no sql/find/class)
-  --no-code         Skip code structure (classes, methods, calls); manifest-level files only
+  --no-code         Skip code structure (classes, methods, calls) for a fast manifest-level file
   -h, --help        Show this message and exit
 
 Arguments:
-  <apk>  APK file to analyze
+  <apk>  APK or split bundle to analyze
 ```
 
 ## info
@@ -68,14 +67,14 @@ Arguments:
 ```text
 Usage: sextant info [<options>] <target>
 
-  Show a short summary of an APK or an extracted folder.
+  Show a short summary of an app (an APK or its .sqlite file).
 
 Options:
   --json      Machine-readable JSON on stdout
   -h, --help  Show this message and exit
 
 Arguments:
-  <target>  An APK (indexed once, then cached) or an extracted folder
+  <target>  An APK (indexed once, then cached) or a .sqlite file from sextant extract
 ```
 
 ## sql
@@ -83,7 +82,7 @@ Arguments:
 ```text
 Usage: sextant sql [<options>] <dir> [<query>]
 
-  Run read-only SQL over index.sqlite. Use --schema to see the tables.
+  Run read-only SQL over the app's SQLite file. Use --schema to see the tables.
 
 Options:
   --json, --csv  Output format
@@ -92,7 +91,7 @@ Options:
   -h, --help     Show this message and exit
 
 Arguments:
-  <dir>    An APK (indexed once, then cached), an extracted folder or its index.sqlite
+  <dir>    An APK (indexed once, then cached) or a .sqlite file from sextant extract
   <query>  SQL to run (read-only)
 ```
 
@@ -110,7 +109,7 @@ Options:
   -h, --help                                                                                                                             Show this message and exit
 
 Arguments:
-  <dir>   An APK (indexed once, then cached), an extracted folder or its index.sqlite
+  <dir>   An APK (indexed once, then cached) or a .sqlite file from sextant extract
   <text>  Text to find (any part of a name or string)
 ```
 
@@ -126,7 +125,7 @@ Options:
   -h, --help  Show this message and exit
 
 Arguments:
-  <dir>   An APK (indexed once, then cached), an extracted folder or its index.sqlite
+  <dir>   An APK (indexed once, then cached) or a .sqlite file from sextant extract
   <name>  Class name: com.app.Login, Lcom/app/Login; or just Login
 ```
 
@@ -144,7 +143,7 @@ Options:
   -h, --help         Show this message and exit
 
 Arguments:
-  <dir>     An APK (indexed once, then cached), an extracted folder or its index.sqlite
+  <dir>     An APK (indexed once, then cached) or a .sqlite file from sextant extract
   <method>  Method: Lcom/a/B;->m(I)V, Lcom/a/B;->m, com.a.B.m, B.m or just m
 ```
 
@@ -162,7 +161,7 @@ Options:
   -h, --help         Show this message and exit
 
 Arguments:
-  <dir>     An APK (indexed once, then cached), an extracted folder or its index.sqlite
+  <dir>     An APK (indexed once, then cached) or a .sqlite file from sextant extract
   <method>  Method: Lcom/a/B;->m(I)V, Lcom/a/B;->m, com.a.B.m, B.m or just m
 ```
 
@@ -216,7 +215,7 @@ Options:
   -h, --help  Show this message and exit
 
 Arguments:
-  <dir>  An APK (indexed once, then cached), an extracted folder or its index.sqlite
+  <dir>  An APK (indexed once, then cached) or a .sqlite file from sextant extract
 ```
 
 ## endpoints
@@ -233,7 +232,7 @@ Options:
   -h, --help     Show this message and exit
 
 Arguments:
-  <dir>  An APK (indexed once, then cached), an extracted folder or its index.sqlite
+  <dir>  An APK (indexed once, then cached) or a .sqlite file from sextant extract
 ```
 
 ## mcp
@@ -244,7 +243,7 @@ Usage: sextant mcp [<options>]
   Run an MCP server on stdin/stdout so AI agents can extract, search and query APKs. Tools: extract, summary, find, class, callers, callees, sql, source, grep, insights, xref, reach, smali, icon, findings, endpoints.
 
 Options:
-  --dir=<path>  Start with this extraction folder as the current app
+  --dir=<path>  Start with this index (.sqlite) or APK as the current app
   --apk=<path>  The APK for `source` (and the default for `extract`)
   -h, --help    Show this message and exit
 ```
@@ -254,7 +253,7 @@ Options:
 ```text
 Usage: sextant diff [<options>] <old> <new>
 
-  Compare two extracted versions: app facts, permissions, components, deep links, SDKs, libraries, hosts, URLs, native code, packages, classes, strings and resources.
+  Compare two versions of an app: app facts, permissions, components, deep links, SDKs, libraries, hosts, URLs, native code, packages, classes, strings and resources.
 
 Options:
   --show=<int>  Items to list per section (default 15; totals are always exact)
@@ -262,8 +261,8 @@ Options:
   -h, --help    Show this message and exit
 
 Arguments:
-  <old>  Extraction folder of the older version
-  <new>  Extraction folder of the newer version
+  <old>  The older version: an APK or a .sqlite file
+  <new>  The newer version: an APK or a .sqlite file
 ```
 
 ## findings
@@ -281,7 +280,7 @@ Options:
   -h, --help                         Show this message and exit
 
 Arguments:
-  <dir>  An APK (indexed once, then cached), an extracted folder or its index.sqlite
+  <dir>  An APK (indexed once, then cached) or a .sqlite file from sextant extract
 ```
 
 ## xref
@@ -297,7 +296,7 @@ Options:
   -h, --help     Show this message and exit
 
 Arguments:
-  <dir>     An APK (indexed once, then cached), an extracted folder or its index.sqlite
+  <dir>     An APK (indexed once, then cached) or a .sqlite file from sextant extract
   <target>  Class (com.a.B, Lcom/a/B;, B) or field (Lcom/a/B;->f:I, Lcom/a/B;->f, com.a.B.f)
 ```
 
@@ -315,7 +314,7 @@ Options:
   -h, --help     Show this message and exit
 
 Arguments:
-  <dir>   An APK (indexed once, then cached), an extracted folder or its index.sqlite
+  <dir>   An APK (indexed once, then cached) or a .sqlite file from sextant extract
   <from>  Entry point: a component/class (com.a.LoginActivity) or a method
   <to>    Target: Ljavax/crypto/Cipher;->getInstance, Cipher.getInstance, okhttp3/ or a method name
 ```
@@ -350,7 +349,7 @@ Options:
   -h, --help                                  Show this message and exit
 
 Arguments:
-  <target>  An APK (from the index cache when present, else manifest + resources only) or an extracted folder
+  <target>  An APK (from the index cache when present, else manifest + resources only) or a .sqlite file
 ```
 
 ## components
@@ -369,7 +368,7 @@ Options:
   -h, --help                                                                                                                                                                                                        Show this message and exit
 
 Arguments:
-  <target>  An extracted folder, or an APK (analyzed in memory, nothing written)
+  <target>  An APK (indexed once, then cached) or a .sqlite file from sextant extract
 ```
 
 ## component
@@ -384,7 +383,7 @@ Options:
   -h, --help  Show this message and exit
 
 Arguments:
-  <target>  An extracted folder, or an APK (analyzed in memory, nothing written)
+  <target>  An APK (indexed once, then cached) or a .sqlite file from sextant extract
   <name>    Class name, or a unique suffix such as .MainActivity
 ```
 
@@ -393,14 +392,14 @@ Arguments:
 ```text
 Usage: sextant app [<options>] <target>
 
-  Show the Application class and the startup order: AppComponentFactory, attachBaseContext, content providers (androidx.startup initializers), onCreate; with an extracted folder, also their calls and the SDKs they start.
+  Show the Application class and the startup order: AppComponentFactory, attachBaseContext, content providers (androidx.startup initializers), onCreate, with the calls of each step and the SDKs they start.
 
 Options:
   --json      One JSON object
   -h, --help  Show this message and exit
 
 Arguments:
-  <target>  An extracted folder (follows startup calls with its index), or an APK (manifest only)
+  <target>  An APK (indexed once, then cached) or a .sqlite file from sextant extract
 ```
 
 ## res
@@ -419,7 +418,7 @@ Options:
   -h, --help                                                                 Show this message and exit
 
 Arguments:
-  <target>    An extracted folder, or an APK (analyzed in memory, nothing written)
+  <target>    An APK (indexed once, then cached) or a .sqlite file from sextant extract
   <kindname>  What to list: strings, string-keys, ids, styles, drawables, layouts, menus, navigation, assets, xml, refs
   <name>      Show one entry in full (all configurations) and what references it
 ```
@@ -439,7 +438,7 @@ Options:
   -h, --help         Show this message and exit
 
 Arguments:
-  <targets>  Extracted folders and/or APKs (APKs are analyzed in memory)
+  <targets>  APKs (indexed once, then cached) and/or .sqlite files
 ```
 
 ## deobf
@@ -475,7 +474,7 @@ Options:
   -h, --help                                                                                                                                  Show this message and exit
 
 Arguments:
-  <dir>  An APK (indexed once, then cached), an extracted folder or its index.sqlite
+  <dir>  An APK (indexed once, then cached) or a .sqlite file from sextant extract
 ```
 
 ## coverage
@@ -490,7 +489,7 @@ Options:
   -h, --help  Show this message and exit
 
 Arguments:
-  <dir>  An APK (indexed once, then cached), an extracted folder or its index.sqlite
+  <dir>  An APK (indexed once, then cached) or a .sqlite file from sextant extract
 ```
 
 ## cache

@@ -7,32 +7,34 @@
 
 <h1 align="center">Sextant</h1>
 
-Sextant is a command-line tool that turns an Android APK into clean, structured data that people, scripts and AI agents can read.
+Sextant is a command-line tool that turns an Android APK into one SQLite file of clean, structured data that people, scripts and AI agents can query. APK in, SQLite out.
 
 **[Documentation](https://rajumark.github.io/sextant/cli/)** · [Install](https://rajumark.github.io/sextant/cli/getting-started/installation/) · [Commands](https://rajumark.github.io/sextant/cli/reference/commands/) · [Releases](https://github.com/rajumark/sextant/releases)
 
 ```bash
-sextant extract app.apk -o app/
-sextant info app/
-sextant find app/ "api.example.com"
-sextant class app/ LoginRepository
-sextant sql app/ "SELECT caller FROM call_edges WHERE callee LIKE 'Ljavax/crypto/Cipher;->getInstance%'"
-sextant callers app/ LoginRepository.login --depth 4
+sextant extract app.apk                 # writes app.sqlite
+sextant info app.sqlite
+sextant find app.sqlite "api.example.com"
+sextant class app.sqlite LoginRepository
+sextant sql app.sqlite "SELECT caller FROM call_edges WHERE callee LIKE 'Ljavax/crypto/Cipher;->getInstance%'"
+sextant callers app.sqlite LoginRepository.login --depth 4
 sextant source app.apk com.example.LoginRepository.login
-sextant insights app/
-sextant endpoints app/ --host example.com
-sextant diff app-4.2/ app-4.3/
-sextant findings app/ --severity medium
-sextant findings app/ --sarif > sextant.sarif   # GitHub code scanning; --fail-on high for CI
-sextant xref app/ com.example.Session.token
-sextant reach app/ com.example.DeepLinkActivity okhttp3/
+sextant insights app.sqlite
+sextant endpoints app.sqlite --host example.com
+sextant diff app-4.2.apk app-4.3.apk
+sextant findings app.sqlite --severity medium
+sextant findings app.sqlite --sarif > sextant.sarif   # GitHub code scanning; --fail-on high for CI
+sextant xref app.sqlite com.example.Session.token
+sextant reach app.sqlite com.example.DeepLinkActivity okhttp3/
 sextant smali app.apk com.example.LoginRepository.login
 sextant icon app.apk -o icon.png
-sextant coverage app/
-sextant files app/ --status listed --by-size
+sextant coverage app.sqlite
+sextant files app.sqlite --status listed --by-size
 ```
 
-It reads the APK's identity, manifest, permissions, components and signing information (since 0.1.0). Since 0.2.0 it also reads the full code structure from DEX bytecode: classes, methods, fields, call edges and string constants. Everything is written as deterministic JSON and JSONL files, and nothing is ever decompiled or run. Since 0.3.0 it also builds `index.sqlite`, so you can search and query all of it. Since 0.5.0 it also reports what the app is built with (frameworks, SDKs, exact library versions), every URL it contains, its resource values and its native code.
+Every command also takes the APK itself: it is indexed once into a cache and reused (`sextant info app.apk`).
+
+It reads the APK's identity, manifest, permissions, components and signing information (since 0.1.0). Since 0.2.0 it also reads the full code structure from DEX bytecode: classes, methods, fields, call edges and string constants. Nothing is ever decompiled or run. Since 0.3.0 everything is searchable and queryable in SQLite, and now one SQLite file is the whole output. Since 0.5.0 it also reports what the app is built with (frameworks, SDKs, exact library versions), every URL it contains, its resource values and its native code.
 
 ## Install
 
@@ -52,36 +54,36 @@ cli/build/install/sextant/bin/sextant --help
 ## Usage
 
 ```text
-sextant extract <app.apk> [-o <dir>] [--force] [--quiet] [--no-code] [--no-index]
-sextant info    <dir | app.apk> [--json]
-sextant find    <app.apk | dir> <text> [--kind class|method|field|string|component|permission|deep_link] [--limit N] [--json]
-sextant class   <app.apk | dir> <name> [--json]
-sextant sql     <app.apk | dir> "<query>" [--json | --csv] [--limit N]
-sextant sql     <app.apk | dir> --schema
-sextant callers <app.apk | dir> <method> [--depth N] [--fan-out N] [--json]
-sextant callees <app.apk | dir> <method> [--depth N] [--fan-out N] [--json]
+sextant extract <app.apk> [-o <app.sqlite>] [--force] [--quiet] [--no-code]
+sextant info    <app.apk | app.sqlite> [--json]
+sextant find    <app.apk | app.sqlite> <text> [--kind class|method|field|string|component|permission|deep_link] [--limit N] [--json]
+sextant class   <app.apk | app.sqlite> <name> [--json]
+sextant sql     <app.apk | app.sqlite> "<query>" [--json | --csv] [--limit N]
+sextant sql     <app.apk | app.sqlite> --schema
+sextant callers <app.apk | app.sqlite> <method> [--depth N] [--fan-out N] [--json]
+sextant callees <app.apk | app.sqlite> <method> [--depth N] [--fan-out N] [--json]
 sextant source  <app.apk> <class | method>
-sextant insights  <app.apk | dir> [--json]
-sextant endpoints <app.apk | dir> [--host TEXT] [--limit N] [--json]
-sextant diff    <old-dir> <new-dir> [--show N] [--json]
-sextant findings <app.apk | dir> [--severity info|low|medium|high] [--json]
-sextant xref    <app.apk | dir> <class | field> [--limit N] [--json]
-sextant reach   <app.apk | dir> <from> <to> [--depth N] [--paths N] [--json]
+sextant insights  <app.apk | app.sqlite> [--json]
+sextant endpoints <app.apk | app.sqlite> [--host TEXT] [--limit N] [--json]
+sextant diff    <old.apk | old.sqlite> <new.apk | new.sqlite> [--show N] [--json]
+sextant findings <app.apk | app.sqlite> [--severity info|low|medium|high] [--json]
+sextant xref    <app.apk | app.sqlite> <class | field> [--limit N] [--json]
+sextant reach   <app.apk | app.sqlite> <from> <to> [--depth N] [--paths N] [--json]
 sextant smali   <app.apk> <class | method>
-sextant icon    <app.apk | dir> [--round] [--layer foreground|background|monochrome] [-o file] [--json]
-sextant files   <app.apk | dir> [--type TYPE] [--status decoded|listed] [--search TEXT] [--by-size] [--limit N] [--json]
-sextant coverage <app.apk | dir> [--json]
+sextant icon    <app.apk | app.sqlite> [--round] [--layer foreground|background|monochrome] [-o file] [--json]
+sextant files   <app.apk | app.sqlite> [--type TYPE] [--status decoded|listed] [--search TEXT] [--by-size] [--limit N] [--json]
+sextant coverage <app.apk | app.sqlite> [--json]
 sextant cache   [--clear] [--json]
-sextant mcp     [--dir <dir>] [--apk <app.apk>]
+sextant mcp     [--dir <app.sqlite | app.apk>] [--apk <app.apk>]
 sextant --version
 ```
 
-Every command that reads the index (`find`, `class`, `sql`, `callers`, `callees`, `insights`, `endpoints`, `findings`, `xref`, `reach`, `files`, `coverage`) and `info` also take an APK directly. The first time, Sextant indexes it once into a cache keyed by the APK's SHA-256 (SQLite only, no folder to manage); every later command on the same APK reads that index at once. `sextant cache` lists the cached indexes and `--clear` deletes them; `SEXTANT_CACHE` moves the folder. A new Sextant version rebuilds an index on next use.
+Every command takes either the `.sqlite` file from `extract` or the APK itself. Given an APK, Sextant indexes it once into a cache keyed by the APK's SHA-256 and every later command on the same APK reads that index at once. `sextant cache` lists the cached indexes and `--clear` deletes them; `SEXTANT_CACHE` moves the folder. A new Sextant version rebuilds an index on next use.
 
 | Command | What it does |
 |---|---|
-| `extract` | Parses the APK and writes the output folder (default `./<apk-name>.sextant/`). Refuses a non-empty folder unless `--force` is given. Even with `--force`, only Sextant's own files are replaced. `--no-code` skips the `code/` files for a fast manifest-only run. |
-| `info` | Prints a short summary of an extracted folder, or of an APK directly (in memory, nothing written). `--json` prints one JSON object to stdout. |
+| `extract` | Parses the APK in one pass and writes one SQLite file (default `./<apk-name>.sqlite`). Refuses to overwrite an existing file unless `--force` is given. `--no-code` skips the code tables for a fast manifest-level file. Split bundles (`.apks`, `.xapk`, `.apkm`) work like a plain APK. |
+| `info` | Prints a short summary of an app (APK or `.sqlite`). `--json` prints one JSON object to stdout. |
 | `find` | Substring search over class, method and field names, string constants, components, permissions and deep links. For strings it shows the methods that load them. |
 | `class` | Shows one class: access, superclass, interfaces, subclasses, fields with constant values, methods with call counts, callers from outside the class, and its strings. It accepts `com.app.Login`, `Lcom/app/Login;` or just `Login`. |
 | `callers` / `callees` | Shows who calls a method, or what it calls, as a tree. The method can be `Lcom/a/B;->m(I)V`, `Lcom/a/B;->m`, `com.a.B.m`, `B.m` or just `m`, and overloads are shown together. External methods (framework, libraries) are marked, and so are cycles. `--depth` (default 3) and `--fan-out` (default 15) keep trees readable. |
@@ -93,7 +95,7 @@ Every command that reads the index (`find`, `class`, `sql`, `callers`, `callees`
 | `xref` | Shows where a class or field is used: instantiations, casts, `instanceof`, `const-class`, calls into its methods, and field reads and writes. |
 | `reach` | Shows call paths from an entry point (component, class or method) to targets (`Cipher.getInstance`, `okhttp3/`, a descriptor prefix). Virtual and interface calls dispatch into subclass overrides (class-hierarchy analysis); signatures with more than 25 implementations, such as `Runnable.run`, are not expanded. You get one shortest path per target method. |
 | `smali` | Prints the bytecode assembly (baksmali) of a class or method. It works where decompiling fails. `#@54` offsets are hex code units, matching the decimal `offsets` in the code files. |
-| `icon` | Finds the app icon. It lists every file behind `android:icon` (or `--round` for `android:roundIcon`) per density, with format, pixel size and byte size, decodes adaptive icons into their foreground, background and monochrome layers, marks the best file, and `-o` saves it. It works on an APK directly (fast: manifest and resources only) or on an extracted folder. |
+| `icon` | Finds the app icon. It lists every file behind `android:icon` (or `--round` for `android:roundIcon`) per density, with format, pixel size and byte size, decodes adaptive icons into their foreground, background and monochrome layers, marks the best file, and `-o` saves it. It works on an APK directly (from the cache when indexed, else manifest and resources only) or on a `.sqlite` file. |
 | `files` | Lists every file inside the APK from the index: type, size, content (dex, elf, png, binary-xml, json, …), the resource it is (shrunk apps rename `res/` files, so `res/BW.xml` shows as `@mipmap/ic_launcher`) and the decoder that read it. `--status listed` shows files no decoder reads yet; `--by-size` puts the largest first. |
 | `coverage` | Shows how much of the APK was decoded into rows: files and bytes per type, and the largest files that are only listed (size and hash). Every zip entry is always listed. |
 | `cache` | Lists the indexes built for APKs given directly to a command (app, version, size, state), or deletes them with `--clear`. |
@@ -108,84 +110,35 @@ Progress and errors go to **stderr**, data goes to **stdout**, so `--json` outpu
 | 0 | Success |
 | 1 | Usage error |
 | 2 | Input error (missing file, not an APK, undecodable manifest) |
-| 3 | Output error (non-empty folder without `--force`, not writable) |
+| 3 | Output error (output file exists without `--force`, is a folder, or is not writable) |
 | 4 | Internal error (a bug, so please report it) |
 | 5 | `findings --fail-on` found a finding at or above the threshold (for CI) |
 
-## Output
+## Output: one SQLite file
 
-```text
-app/
-  summary.md          ← read this first (short, written for agents)
-  meta.json           ← identity, SDK levels, flags, signing, layout, warnings
-  manifest.json       ← the full decoded manifest as a tree
-  permissions.jsonl   ← one permission per line
-  components.jsonl    ← one component per line
-  features.jsonl      ← uses-feature / uses-library / uses-native-library
-  metadata.jsonl      ← meta-data and property (application and components)
-  queries.jsonl       ← <queries>: packages, intents, providers the app can see
-  code/
-    classes.jsonl     ← one class per line
-    methods.jsonl     ← one method per line
-    fields.jsonl      ← one field per line, with constant initial values
-    calls.jsonl       ← caller → callee edges with bytecode offsets
-    strings.jsonl     ← string constants and the methods that load them
-    field_refs.jsonl  ← field reads/writes per method
-    type_refs.jsonl   ← new / const-class / check-cast / instance-of / arrays per method
-  insights/
-    frameworks.jsonl  ← Flutter, React Native/Hermes, Expo, .NET MAUI, Capacitor, Unity, Godot, libGDX, SDL, Compose, …
-    sdks.jsonl        ← known SDKs by category, with class and manifest evidence
-    libraries.jsonl   ← exact Maven coordinates + versions from META-INF/*.version
-    endpoints.jsonl   ← every URL and where it was found
-    findings.jsonl    ← review points with evidence
-  resources/
-    values.jsonl      ← default strings, bools, integers, colors, dimens
-  native/
-    libraries.jsonl   ← .so files per ABI: size, sha256, exported symbols, JNI methods
-    symbols.jsonl     ← exported functions; JNI symbols mapped back to Java class + method
-  index.sqlite        ← all of the above in SQLite, with full-text search
-```
+`sextant extract app.apk` writes `app.sqlite` and nothing else. It holds everything Sextant reads from the APK, in two forms:
+
+- **Tables you query**: one table per kind of fact, normalized, with indexes and a full-text search table. `sextant sql app.sqlite --schema` prints all of them.
+- **Full records**: the `records` table keeps every manifest, resource and insight record exactly as Sextant built it, so every command can rebuild the whole picture from this file alone. A test checks, on real apps, that what is read back equals what was written.
+
+| Tables | Contents |
+|---|---|
+| `meta` | package, versions, SDKs, sha256, label, and the full app metadata (signing, flags, icons, counts) as `meta_json` |
+| `permissions`, `components`, `deep_links`, `features`, `metadata`, `queries` | the manifest; the full decoded tree is in `records` (`kind = 'manifest'`) |
+| `string_resources`, `resource_ids`, `resources`, `styles`, `drawables`, `layouts`, `menus`, `navigation_destinations`, `assets`, `xml_configs`, `resource_refs`, `icons` | resources, every locale, and who refers to what |
+| `classes`, `methods`, `fields`, `calls`, `strings`, `string_refs`, `field_refs`, `type_refs` | code structure from DEX bytecode, edges by integer id |
+| `call_edges`, `string_uses`, `search_items` | the same edges and search hits with readable names (views) |
+| `libraries`, `frameworks`, `sdks`, `endpoints`, `endpoint_sources`, `findings`, `finding_evidence` | insights, each with its evidence |
+| `native_libraries`, `native_symbols` | native code, with JNI symbols mapped to Java |
+| `files` | every file inside the APK: type, size, hashes, content, resource name and the decoder that read it |
+| `records` | full records (manifest tree, permissions, components, resources, insights) |
+| `search` | FTS5 trigram index over names, strings, resources, endpoints, SDKs, libraries and native symbols |
 
 Rules for the output:
 
-- **Deterministic.** The same APK always gives byte-identical files: sorted records, fixed key order, no timestamps, `\n` line endings.
-- **Truthful.** A missing manifest attribute is `null`, never a guess. Derived values say so. For example, `exported_source` is `explicit` or `default`, and implied permissions carry `implied_by`.
-- **Self-contained lines.** Every JSONL line has full names, so a single `grep` hit can be understood without joins.
-
-`components.jsonl`:
-
-```json
-{"type":"activity","name":"org.example.DeepLinkActivity","exported":true,"exported_source":"default","enabled":true,"permission":null,"process":null,"launcher":false,"target_activity":null,"authorities":[],"intent_filters":[{"actions":["android.intent.action.VIEW"],"categories":["android.intent.category.BROWSABLE","android.intent.category.DEFAULT"],"data":[{"scheme":"https","host":"example.org","port":null,"path":null,"path_prefix":"/join","path_pattern":null,"path_suffix":null,"path_advanced_pattern":null,"mime_type":null}],"priority":0,"auto_verify":true}]}
-```
-
-`permissions.jsonl`. The `kind` field is `uses-permission`, `uses-permission-sdk-23`, `implied` (granted by Android without being listed, the same rules as aapt2) or `declared` (defined by the app):
-
-```json
-{"name":"android.permission.CAMERA","kind":"uses-permission","max_sdk":null,"dangerous":true,"protection_level":null,"custom":false,"implied_by":null}
-{"name":"android.permission.READ_EXTERNAL_STORAGE","kind":"implied","max_sdk":28,"dangerous":true,"protection_level":null,"custom":false,"implied_by":"android.permission.WRITE_EXTERNAL_STORAGE"}
-```
-
-### Manifest coverage
-
-Every manifest element is kept in `manifest.json` (the full tree), and the parts people query are also structured:
-
-| Area | Where |
-|---|---|
-| Identity: package, versions, SDKs, `installLocation`, `sharedUserId`, `targetSandboxVersion` | `meta.json` (`flags` holds the identity extras) |
-| `<application>` flags: backup (`allowBackup`, `fullBackupContent`, `dataExtractionRules`, `backupAgent`), `debuggable`, `testOnly`, cleartext and network config, legacy storage, `largeHeap`, `memtagMode`, `localeConfig`, `appCategory`, `profileable`, … | `meta.json → flags` |
-| Permissions (requested, sdk-23, implied, declared) | `permissions.jsonl` |
-| Components, including provider `readPermission`/`writePermission`, `grantUriPermissions`, `path-permission`, plus `launchMode`, `taskAffinity`, `foregroundServiceType`, `directBootAware` and `isolatedProcess` | `components.jsonl` |
-| Intent filters, including `ssp*` patterns, `label` and `order` | inside `components.jsonl` |
-| `uses-feature` (with the OpenGL ES version), `uses-library`, `uses-native-library` | `features.jsonl` |
-| `meta-data` and `property` | `metadata.jsonl` |
-| `<queries>` | `queries.jsonl` |
-| `supports-screens` | `meta.json → flags.supports_screens` |
-
-Each of these also has a table in `index.sqlite`. Optional features and required/optional libraries are cross-checked against aapt2 on every corpus APK.
-
-### Code files
-
-Code is read straight from `classesN.dex` with dexlib2, so it works even where Java decompilation fails (obfuscated or packed apps). IDs are smali descriptors, the format every Android tool understands:
+- **Deterministic.** The same APK always gives the same rows: sorted records, stable ids, no timestamps.
+- **Truthful.** A missing manifest attribute is `NULL`, never a guess. Derived values say so. For example, `exported_source` is `explicit` or `default`, and implied permissions carry `implied_by`.
+- **Readable ids.** Code ids are smali descriptors, the format every Android tool understands:
 
 | Kind | Example ID |
 |---|---|
@@ -193,15 +146,36 @@ Code is read straight from `classesN.dex` with dexlib2, so it works even where J
 | method | `Lcom/app/Login;->auth(Ljava/lang/String;)Z` |
 | field | `Lcom/app/Login;->token:Ljava/lang/String;` |
 
-```json
-{"caller":"Lde/markusfisch/android/binaryeye/activity/CameraActivity;->onResume()V","callee":"Landroid/app/Activity;->getIntent()Landroid/content/Intent;","kind":"virtual","count":1,"offsets":[84]}
-{"value":"https://markusfisch.de/BinaryEye","method":"Lde/markusfisch/android/binaryeye/activity/CameraActivity;->onResume()V","count":1,"offsets":[124]}
+Example queries:
+
+```sql
+-- Who calls Cipher.getInstance?
+SELECT caller, count FROM call_edges WHERE callee LIKE 'Ljavax/crypto/Cipher;->getInstance%';
+
+-- Exported components that need no permission
+SELECT type, name FROM components WHERE exported = 1 AND enabled = 1 AND permission IS NULL;
+
+-- Which layouts use the string app_name?
+SELECT "from" FROM resource_refs WHERE ref = '@string/app_name' AND from_kind = 'layout';
+
+-- Methods that load a URL
+SELECT value, method FROM string_uses WHERE value LIKE 'https://%';
+
+-- Which Java methods are implemented in native code?
+SELECT jni_class, jni_method, library FROM native_symbols WHERE jni_class IS NOT NULL;
+
+-- Which files did no decoder read?
+SELECT type, path, size_bytes FROM files WHERE decoded_by IS NULL ORDER BY size_bytes DESC;
 ```
 
-- `calls.jsonl` has one line per distinct (caller, callee, kind). `kind` is `virtual`, `static`, `direct`, `super`, `interface` or `polymorphic`. `offsets` are in 16-bit code units, as in `dexdump`, and at most 32 are kept (`count` is always exact).
-- When a class is defined in several dex files, the first one wins, as on Android. The count is in `meta.json → code.duplicate_classes`.
-- Unpaired UTF-16 surrogates in DEX strings are written as `\uXXXX` escapes, so the files stay valid UTF-8.
-- The files are large for big apps (Signal: 41k classes, 778k call edges, about 470 MB), because every line is self-contained. Version 3's SQLite index is the compact form.
+Notes on code:
+
+- Code is read straight from `classesN.dex` with dexlib2, so it works even where Java decompilation fails (obfuscated or packed apps).
+- `calls` has one row per distinct (caller, callee, kind). `kind` is `virtual`, `static`, `direct`, `super`, `interface` or `polymorphic`. `offsets` are in 16-bit code units, as in `dexdump`, and at most 32 are kept (`count` is always exact).
+- When a class is defined in several dex files, the first one wins, as on Android.
+- `methods` holds **every** method reference: `defined = 1` for methods in the APK, 0 for external ones (framework, other libraries).
+
+On size and speed: typical apps extract in 1–5 s into 30–200 MB. The largest corpus apps take 15–20 s, mostly spent building the full-text index.
 
 ### Insights
 
@@ -232,7 +206,7 @@ adaptive icon  res/BW.xml
 
 - The best file is the largest bitmap by pixel area. When the icon is only a vector drawable, the vector is reported instead (vectors are compiled binary XML, so `-o` refuses to save them as an image; try `--layer foreground`).
 - Layers wrapped in `<inset>` or `<bitmap>` are followed, and solid-color layers report their color (Bitwarden: `#175ddc`).
-- The data is also in `meta.json → icons`, in an `icons` table in the index, in `summary.md`, in `info`, and in an MCP `icon` tool.
+- The data is also in `meta_json → icons` and the `icons` table, in `info`, and in an MCP `icon` tool.
 - Every per-density icon file aapt2 picks (`application-icon-*`) is checked against these results for every APK in the corpus.
 
 ### Review findings
@@ -247,7 +221,7 @@ On the corpus these point at real patterns. For example, AppManager's wireless-A
 
 ### Version diff
 
-`sextant diff old/ new/` compares two extractions by stable names. Example, Signal 8.31.2 → 8.32.3 (both real releases):
+`sextant diff old.apk new.apk` (or two `.sqlite` files) compares two versions by stable names. Example, Signal 8.31.2 → 8.32.3 (both real releases):
 
 ```text
 ## components  (+3 −3 ~0)
@@ -259,50 +233,6 @@ On the corpus these point at real patterns. For example, AppManager's wireless-A
 ```
 
 R8-obfuscated class names can change between builds, so renamed classes show up as removed plus added. Package counts and resources are the more stable signals.
-
-### index.sqlite
-
-The index is a normalized SQLite database with the same facts, plus full-text search. Run `sextant sql <dir> --schema` for the full schema.
-
-| Table / view | Contents |
-|---|---|
-| `meta` | package, versions, SDKs, sha256, and the whole `meta.json` as `meta_json` |
-| `permissions`, `components`, `deep_links` | manifest-level facts |
-| `classes`, `fields` | definitions from the APK |
-| `methods` | **every** method reference: `defined = 1` for methods in the APK, 0 for external ones (framework, other libraries) |
-| `calls`, `string_refs` | edges by integer id (compact) |
-| `call_edges`, `string_uses` | the same edges with readable descriptors (views) |
-| `libraries`, `frameworks`, `sdks` | what the app is built with |
-| `endpoints`, `endpoint_sources` | URLs and where each was found |
-| `resources` | default resource values |
-| `native_libraries`, `native_symbols` | native code, with JNI symbols mapped to Java |
-| `search` | FTS5 trigram index over names, strings, resources, endpoints, SDKs, libraries and native symbols, where any 3+ character fragment matches |
-
-Example queries:
-
-```sql
--- Who calls Cipher.getInstance?
-SELECT caller, count FROM call_edges WHERE callee LIKE 'Ljavax/crypto/Cipher;->getInstance%';
-
--- Exported components that need no permission
-SELECT type, name FROM components WHERE exported = 1 AND enabled = 1 AND permission IS NULL;
-
--- Methods that load a URL
-SELECT value, method FROM string_uses WHERE value LIKE 'https://%';
-
--- Biggest packages
-SELECT package, count(*) AS n FROM classes GROUP BY package ORDER BY n DESC LIMIT 10;
-
--- Which Java methods are implemented in native code?
-SELECT jni_class, jni_method, library FROM native_symbols WHERE jni_class IS NOT NULL;
-
--- Which hosts does the code (not just resources) refer to?
-SELECT e.host, count(*) FROM endpoints e JOIN endpoint_sources s ON s.endpoint = e.id WHERE s.kind = 'code' GROUP BY e.host;
-```
-
-On size and speed: for Signal (41k classes, 778k call edges) the index is 355 MB, smaller than the 468 MB of JSONL. Typical apps extract in 1–5 s. The largest corpus apps (Element: 66k classes, 856k search rows) take 15–20 s, mostly spent building the full-text index. `--no-index` skips the index entirely.
-
-`meta.json` carries `schema_version`. It changes only when the format of the output files changes, independently of the tool version.
 
 ## For AI agents
 
@@ -322,13 +252,11 @@ claude mcp add sextant -- sextant mcp
 
 The agent can then be asked questions such as "extract ~/Downloads/app.apk and tell me which exported components reach network code".
 
-### Files and commands
+### Commands
 
-1. Read `summary.md` (under 60 lines) for an overview.
-2. `grep` the JSONL files for details: `grep '"exported":true' components.jsonl`.
-3. Follow code: `grep 'api.example.com' code/strings.jsonl` gives the method; `grep '"caller":"<method id>"' code/calls.jsonl` gives what it calls.
-4. Or ask the index: `sextant find <dir> <text> --json`, `sextant class <dir> <name> --json`, `sextant sql <dir> "<query>" --json`.
-5. For an overview without extracting: `sextant info app.apk --json`.
+1. `sextant info app.apk --json` for an overview (the APK is indexed once, then cached).
+2. Ask the index: `sextant find app.apk <text> --json`, `sextant class app.apk <name> --json`, `sextant sql app.apk "<query>" --json`.
+3. `sextant sql app.apk --schema` lists every table and view; one SQLite file holds everything, so any SQL tool works on it too.
 
 ## How it is tested
 

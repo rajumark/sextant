@@ -7,13 +7,13 @@ hide:
 
 **Turn an Android APK into structured data that people, scripts and AI agents can read.**
 
-Sextant reads an APK's manifest, resources, signing information and DEX bytecode, and writes everything as plain JSON and JSONL files plus a SQLite index you can search and query. It never runs the app and needs no device, emulator or Android SDK.
+Sextant reads an APK's manifest, resources, signing information and DEX bytecode, and writes everything into one SQLite file you can search and query. APK in, SQLite out. It never runs the app and needs no device, emulator or Android SDK.
 
 ```bash
-sextant extract app.apk -o app/          # decode everything into app/
-sextant info app/                        # one-screen summary
-sextant find app/ "api.example.com"      # where does this URL come from?
-sextant findings app/ --severity medium  # what should a reviewer look at?
+sextant extract app.apk                       # everything into app.sqlite
+sextant info app.sqlite                        # one-screen summary
+sextant find app.sqlite "api.example.com"      # where does this URL come from?
+sextant findings app.sqlite --severity medium  # what should a reviewer look at?
 ```
 
 <div class="grid cards" markdown>
@@ -22,15 +22,15 @@ sextant findings app/ --severity medium  # what should a reviewer look at?
 
     ---
 
-    Manifest, permissions, components, intent filters, features, queries, metadata, signing, icons, classes, methods, fields, call edges, strings, field and type references, all as deterministic JSON/JSONL.
+    Manifest, permissions, components, intent filters, features, queries, metadata, signing, icons, classes, methods, fields, call edges, strings, field and type references, all as deterministic rows in one SQLite file.
 
-    [:octicons-arrow-right-24: Output files](reference/output.md)
+    [:octicons-arrow-right-24: Output](reference/output.md)
 
 -   :material-database-search: **Query it like a database**
 
     ---
 
-    `index.sqlite` with full-text search over names, strings, URLs, resources, SDKs and native symbols. Use `find`, `class`, `xref`, `callers`, `reach`, or raw read-only SQL.
+    One SQLite file with full-text search over names, strings, URLs, resources, SDKs and native symbols. Use `find`, `class`, `xref`, `callers`, `reach`, or raw read-only SQL.
 
     [:octicons-arrow-right-24: Investigating an app](guides/investigating.md)
 
@@ -54,7 +54,7 @@ sextant findings app/ --severity medium  # what should a reviewer look at?
 
     ---
 
-    `summary.md` for a one-read overview, `--json` on every command, and `sextant mcp`, a Model Context Protocol server with 15 tools.
+    `info` for a one-read overview, `--json` on every command, and `sextant mcp`, a Model Context Protocol server with 15 tools.
 
     [:octicons-arrow-right-24: AI agents and MCP](guides/ai-agents.md)
 
@@ -79,7 +79,7 @@ sextant findings app/ --severity medium  # what should a reviewer look at?
 ## What it looks like
 
 ```text
-$ sextant info binaryeye/
+$ sextant info binaryeye.sqlite
 Package      de.markusfisch.android.binaryeye
 Label        Binary Eye
 Version      1.75.5 (180)

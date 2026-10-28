@@ -3,7 +3,7 @@
 Besides the raw facts, Sextant derives **insights**: what the app is built with and what it talks to. Each insight carries the evidence it is based on.
 
 ```bash
-sextant insights app/
+sextant insights app.sqlite
 ```
 
 ```text
@@ -44,14 +44,14 @@ AndroidX and many other libraries ship `META-INF/<group>_<artifact>.version` fil
 
 Every URL from code strings (with the method that uses it), string resources, deep links, manifest meta-data, text assets (React Native/Hermes bundles, configs) and native libraries. See [`endpoints`](../reference/commands.md#endpoints).
 
-Host counts (`Top hosts`, `meta.json → insights.hosts`, the hosts section of `diff`) include only network URLs (`http`, `https`, `ws`, `wss`, `ftp`, `ftps`). A custom-scheme deep link such as `myapp://scan` names a screen in the app, not a server; it is still listed by `endpoints` and in `insights/endpoints.jsonl`.
+Host counts (`Top hosts`, `meta_json → insights.hosts`, the hosts section of `diff`) include only network URLs (`http`, `https`, `ws`, `wss`, `ftp`, `ftps`). A custom-scheme deep link such as `myapp://scan` names a screen in the app, not a server; it is still listed by `endpoints` and in `insights/endpoints.jsonl`.
 
 ## Native code
 
 ELF `.dynsym` tables are parsed for exported functions. JNI functions (`Java_…`) are decoded back to the Java class and method they implement, including `_1`, `_0xxxx` escapes and overload suffixes:
 
 ```bash
-sextant sql app/ "SELECT jni_class, jni_method, library FROM native_symbols WHERE jni_class IS NOT NULL LIMIT 5"
+sextant sql app.sqlite "SELECT jni_class, jni_method, library FROM native_symbols WHERE jni_class IS NOT NULL LIMIT 5"
 ```
 
 ## App icons
@@ -80,4 +80,4 @@ adaptive icon  res/BW.xml
 - Icons are resolved from the manifest through `resources.arsc`, so they are found even when R8 resource shrinking renames files (`res/o-.png` above).
 - The best file is the largest bitmap by pixel area (PNG and WebP sizes are read from the file headers). When the icon is only a vector, the vector is reported and `-o` suggests `--layer foreground` instead, because vector drawables are compiled binary XML, not images.
 - Adaptive icons are split into background, foreground and monochrome layers, following `<inset>`/`<bitmap>` wrappers; solid-color layers report their color.
-- `icon` on an APK is fast (manifest and resources only). It also works on an extraction folder, reading `meta.json`; saving with `-o` needs the APK.
+- `icon` on an APK is fast (from the cache when the APK is indexed, else manifest and resources only). It also works on a `.sqlite` file; saving with `-o` needs the APK.

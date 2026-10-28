@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#output-files" class="md-skip">
+        <a href="#output-one-sqlite-file" class="md-skip">
           Skip to content
         </a>
       
@@ -984,10 +984,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#conventions" class="md-nav__link">
+  <a href="#what-is-where" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Conventions
+        What is where
       
     </span>
   </a>
@@ -995,10 +995,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#metajson" class="md-nav__link">
+  <a href="#rules" class="md-nav__link">
     <span class="md-ellipsis">
       
-        meta.json
+        Rules
       
     </span>
   </a>
@@ -1006,10 +1006,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#componentsjsonl" class="md-nav__link">
+  <a href="#example-queries" class="md-nav__link">
     <span class="md-ellipsis">
       
-        components.jsonl
+        Example queries
       
     </span>
   </a>
@@ -1017,10 +1017,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#permissionsjsonl" class="md-nav__link">
+  <a href="#size-and-speed" class="md-nav__link">
     <span class="md-ellipsis">
       
-        permissions.jsonl
+        Size and speed
       
     </span>
   </a>
@@ -1028,32 +1028,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#featuresjsonl-metadatajsonl-queriesjsonl" class="md-nav__link">
+  <a href="#the-apk-cache" class="md-nav__link">
     <span class="md-ellipsis">
       
-        features.jsonl, metadata.jsonl, queries.jsonl
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#codejsonl" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        code/*.jsonl
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#insights-resources-and-native" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        insights, resources and native
+        The APK cache
       
     </span>
   </a>
@@ -1338,10 +1316,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#conventions" class="md-nav__link">
+  <a href="#what-is-where" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Conventions
+        What is where
       
     </span>
   </a>
@@ -1349,10 +1327,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#metajson" class="md-nav__link">
+  <a href="#rules" class="md-nav__link">
     <span class="md-ellipsis">
       
-        meta.json
+        Rules
       
     </span>
   </a>
@@ -1360,10 +1338,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#componentsjsonl" class="md-nav__link">
+  <a href="#example-queries" class="md-nav__link">
     <span class="md-ellipsis">
       
-        components.jsonl
+        Example queries
       
     </span>
   </a>
@@ -1371,10 +1349,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#permissionsjsonl" class="md-nav__link">
+  <a href="#size-and-speed" class="md-nav__link">
     <span class="md-ellipsis">
       
-        permissions.jsonl
+        Size and speed
       
     </span>
   </a>
@@ -1382,32 +1360,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#featuresjsonl-metadatajsonl-queriesjsonl" class="md-nav__link">
+  <a href="#the-apk-cache" class="md-nav__link">
     <span class="md-ellipsis">
       
-        features.jsonl, metadata.jsonl, queries.jsonl
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#codejsonl" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        code/*.jsonl
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#insights-resources-and-native" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        insights, resources and native
+        The APK cache
       
     </span>
   </a>
@@ -1434,162 +1390,126 @@
   
 
 
-<h1 id="output-files">Output files<a class="headerlink" href="#output-files" title="Permanent link">&para;</a></h1>
-<p><code>sextant extract app.apk -o app/</code> writes this folder. Every file is UTF-8 with <code>\n</code> line endings. Keys are <code>snake_case</code> in a fixed order, and lists are sorted, so the same APK always gives byte-identical files.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>app/
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  summary.md          ← read this first (short, written for people and agents)
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  meta.json           ← identity, SDKs, application flags, signing, layout, code + insight counts, icons, warnings
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  manifest.json       ← the full decoded AndroidManifest.xml as a tree
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  permissions.jsonl   ← one permission per line
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  components.jsonl    ← one component per line (activities, aliases, services, receivers, providers)
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  features.jsonl      ← uses-feature / uses-library / uses-native-library
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>  metadata.jsonl      ← meta-data and property (application and components)
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>  queries.jsonl       ← &lt;queries&gt;: packages, intents, providers the app can see
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>  code/
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    classes.jsonl     ← one class per line
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    methods.jsonl     ← one method per line
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    fields.jsonl      ← one field per line, with constant initial values
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    calls.jsonl       ← caller → callee edges with bytecode offsets
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    strings.jsonl     ← string constants and the methods that load them
-<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    field_refs.jsonl  ← field reads/writes per method
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    type_refs.jsonl   ← new / const-class / check-cast / instance-of / arrays per method
-<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>  insights/
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    frameworks.jsonl  ← Flutter, React Native, .NET MAUI, Unity, … with evidence
-<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>    sdks.jsonl        ← known SDKs by category, with class and manifest evidence
-<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    libraries.jsonl   ← exact Maven coordinates + versions
-<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    endpoints.jsonl   ← every URL and where it was found
-<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>    findings.jsonl    ← review points with evidence
-<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>  resources/
-<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>    values.jsonl      ← default strings, bools, integers, colors, dimens
-<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    strings.jsonl     ← strings, plurals and arrays in every locale
-<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    ids.jsonl         ← resource ids (R.id)
-<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    styles.jsonl      ← styles and themes with parents and items
-<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>    drawables.jsonl   ← drawables and mipmaps per configuration: path, format, size
-<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>    layouts.jsonl     ← layouts: root, views with attributes, ids, custom views, fragments, includes
-<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>    menus.jsonl       ← menu items
-<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>    navigation.jsonl  ← navigation graph destinations
-<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>    assets.jsonl      ← files under assets/: kind, size, hidden code flagged
-<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>    xml.jsonl         ← res/xml configs with a summary (network security, backup, FileProvider paths, …)
-<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>    refs.jsonl        ← who references which resource (`@type/name`)
-<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>  native/
-<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>    libraries.jsonl   ← .so files per ABI: size, sha256, exported symbols, JNI methods
-<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>    symbols.jsonl     ← exported functions; JNI symbols mapped to Java
-<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>  index.sqlite        ← all of the above, normalized, with full-text search
+<h1 id="output-one-sqlite-file">Output: one SQLite file<a class="headerlink" href="#output-one-sqlite-file" title="Permanent link">&para;</a></h1>
+<p>APK in, SQLite out. <code>sextant extract app.apk</code> writes <code>app.sqlite</code> and nothing else: no folder, no JSON or JSONL files. Every command takes that file, or the APK itself (indexed once into a cache, then reused).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sextant<span class="w"> </span>extract<span class="w"> </span>app.apk<span class="w">                 </span><span class="c1"># writes ./app.sqlite</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sextant<span class="w"> </span>extract<span class="w"> </span>app.apk<span class="w"> </span>-o<span class="w"> </span>out/app.sqlite<span class="w"> </span>--force
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>sextant<span class="w"> </span>info<span class="w"> </span>app.sqlite
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>sextant<span class="w"> </span>sql<span class="w"> </span>app.sqlite<span class="w"> </span>--schema
 </code></pre></div>
-<p><code>--no-code</code> skips <code>code/</code> (and code-based insights); <code>--no-index</code> skips <code>index.sqlite</code>.</p>
-<h2 id="conventions">Conventions<a class="headerlink" href="#conventions" title="Permanent link">&para;</a></h2>
+<p>The file holds everything Sextant reads from the APK, in two forms:</p>
 <ul>
-<li><strong><code>null</code> means absent.</strong> A manifest attribute that isn't set is <code>null</code>, never a guessed default. Values Sextant derives say so (<code>exported_source</code>, <code>implied_by</code>).</li>
-<li><strong>IDs are smali descriptors</strong>: <code>Lcom/a/B;</code> (class), <code>Lcom/a/B;-&gt;m(I)V</code> (method), <code>Lcom/a/B;-&gt;f:I</code> (field).</li>
-<li><strong>Offsets</strong> in <code>code/*.jsonl</code> are 16-bit code units (decimal), the same unit <code>dexdump</code> and <code>smali</code> (<code>#@hex</code>) use. At most 32 are kept per record; <code>count</code> is always exact.</li>
-<li><strong>Strings</strong> with unpaired UTF-16 surrogates (possible in DEX) are written as <code>\uXXXX</code> escapes, so the files stay valid UTF-8.</li>
-<li><strong><code>schema_version</code></strong> in <code>meta.json</code> changes only when the shape of the files changes, independently of the tool version (currently <strong>8</strong>).</li>
+<li><strong>Tables you query.</strong> One table per kind of fact, normalized, with indexes and a full-text search table. The full schema, with a comment on every column, is in <a href="../index-schema/">SQLite schema</a>.</li>
+<li><strong>Full records.</strong> The <code>records</code> table keeps every manifest, resource and insight record exactly as Sextant built it (one JSON row each), so every command can rebuild the whole picture from the file alone. A test checks on real apps that what is read back equals what was written.</li>
 </ul>
-<h2 id="metajson">meta.json<a class="headerlink" href="#metajson" title="Permanent link">&para;</a></h2>
+<h2 id="what-is-where">What is where<a class="headerlink" href="#what-is-where" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>Field</th>
-<th>Meaning</th>
+<th>Tables</th>
+<th>Contents</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>schema_version</code>, <code>tool</code></td>
-<td>Output format version; tool name and version</td>
+<td><code>meta</code></td>
+<td>package, versions, SDKs, sha256, label, and the full app metadata (signing, flags, icons, counts, warnings) as <code>meta_json</code></td>
 </tr>
 <tr>
-<td><code>file</code></td>
-<td>APK file name, size, sha256</td>
+<td><code>permissions</code>, <code>components</code>, <code>deep_links</code>, <code>features</code>, <code>metadata</code>, <code>queries</code></td>
+<td>the manifest; the full decoded tree is in <code>records</code> (<code>kind = 'manifest'</code>)</td>
 </tr>
 <tr>
-<td><code>package</code>, <code>version_name</code>, <code>version_code</code></td>
-<td>Identity</td>
+<td><code>string_resources</code>, <code>resource_ids</code>, <code>resources</code>, <code>styles</code>, <code>drawables</code>, <code>layouts</code>, <code>menus</code>, <code>navigation_destinations</code>, <code>assets</code>, <code>xml_configs</code>, <code>resource_refs</code>, <code>icons</code></td>
+<td>resources in every locale, and who refers to what</td>
 </tr>
 <tr>
-<td><code>min_sdk</code>, <code>target_sdk</code>, <code>compile_sdk</code></td>
-<td>SDK levels (<code>null</code> if absent or a preview codename, with a warning)</td>
+<td><code>classes</code>, <code>methods</code>, <code>fields</code>, <code>calls</code>, <code>strings</code>, <code>string_refs</code>, <code>field_refs</code>, <code>type_refs</code></td>
+<td>code structure from DEX bytecode, edges by integer id</td>
 </tr>
 <tr>
-<td><code>label</code>, <code>application_class</code></td>
-<td>Resolved app name; custom <code>Application</code> class</td>
+<td><code>call_edges</code>, <code>string_uses</code>, <code>search_items</code></td>
+<td>the same edges and search hits with readable names (views)</td>
 </tr>
 <tr>
-<td><code>flags</code></td>
-<td>Every <code>&lt;application&gt;</code> attribute that matters plus identity extras: <code>debuggable</code>, <code>allow_backup</code>, <code>uses_cleartext_traffic</code>, <code>network_security_config</code>, <code>extract_native_libs</code>, <code>test_only</code>, <code>full_backup_content</code>, <code>data_extraction_rules</code>, <code>backup_agent</code>, <code>request_legacy_external_storage</code>, <code>large_heap</code>, <code>memtag_mode</code>, <code>locale_config</code>, <code>app_category</code>, <code>profileable_shell</code>, <code>install_location</code>, <code>shared_user_id</code>, <code>target_sandbox_version</code>, <code>supports_screens</code>, …</td>
+<td><code>libraries</code>, <code>frameworks</code>, <code>sdks</code>, <code>endpoints</code>, <code>endpoint_sources</code>, <code>findings</code>, <code>finding_evidence</code></td>
+<td>insights, each with its evidence</td>
 </tr>
 <tr>
-<td><code>signing</code></td>
-<td><code>verified</code>, <code>schemes</code> (<code>v1</code>, <code>v2</code>, <code>v3</code>, <code>v3.1</code>) and certificates (sha256, sha1, subject, issuer, validity)</td>
+<td><code>native_libraries</code>, <code>native_symbols</code></td>
+<td>native code, with JNI symbols mapped to Java</td>
 </tr>
 <tr>
-<td><code>layout</code></td>
-<td>Number of dex files, native ABIs</td>
+<td><code>files</code></td>
+<td>every file inside the APK: type, size, CRC-32, SHA-256, content, resource name and the decoder that read it</td>
 </tr>
 <tr>
-<td><code>code</code></td>
-<td>Counts (classes, methods, fields, call edges and sites, string refs, field and type refs, Kotlin classes, duplicates, unreadable methods) and the biggest packages; <code>null</code> with <code>--no-code</code></td>
+<td><code>records</code></td>
+<td>full records: manifest tree, permissions, components, features, metadata, queries, resources, insights</td>
 </tr>
 <tr>
-<td><code>insights</code></td>
-<td>Counts and short lists: frameworks, SDK categories, hosts, locales, JNI methods, AGP version, findings per severity</td>
-</tr>
-<tr>
-<td><code>icons</code></td>
-<td><code>icon</code> and <code>round_icon</code>, each with every file per configuration, the best file and adaptive layers</td>
-</tr>
-<tr>
-<td><code>warnings</code></td>
-<td>Anything Sextant couldn't read cleanly (it keeps going and says so here)</td>
+<td><code>search</code></td>
+<td>FTS5 trigram index over names, strings, resources, endpoints, SDKs, libraries and native symbols</td>
 </tr>
 </tbody>
 </table>
-<h2 id="componentsjsonl">components.jsonl<a class="headerlink" href="#componentsjsonl" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"activity"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"org.example.DeepLinkActivity"</span><span class="p">,</span><span class="nt">"exported"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="nt">"exported_source"</span><span class="p">:</span><span class="s2">"default"</span><span class="p">,</span><span class="nt">"enabled"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w"> </span><span class="nt">"permission"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"process"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"launcher"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"target_activity"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"authorities"</span><span class="p">:[],</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w"> </span><span class="nt">"intent_filters"</span><span class="p">:[{</span><span class="nt">"actions"</span><span class="p">:[</span><span class="s2">"android.intent.action.VIEW"</span><span class="p">],</span><span class="nt">"categories"</span><span class="p">:[</span><span class="s2">"android.intent.category.BROWSABLE"</span><span class="p">,</span><span class="s2">"android.intent.category.DEFAULT"</span><span class="p">],</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">   </span><span class="nt">"data"</span><span class="p">:[{</span><span class="nt">"scheme"</span><span class="p">:</span><span class="s2">"https"</span><span class="p">,</span><span class="nt">"host"</span><span class="p">:</span><span class="s2">"example.org"</span><span class="p">,</span><span class="nt">"path_prefix"</span><span class="p">:</span><span class="s2">"/join"</span><span class="p">,</span><span class="w"> </span><span class="nt">"…"</span><span class="p">:</span><span class="w"> </span><span class="s2">"…"</span><span class="p">}],</span><span class="nt">"priority"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"auto_verify"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="nt">"label"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"order"</span><span class="p">:</span><span class="kc">null</span><span class="p">}],</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w"> </span><span class="nt">"read_permission"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"write_permission"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"grant_uri_permissions"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"path_permissions"</span><span class="p">:[],</span><span class="nt">"grant_uri_paths"</span><span class="p">:[],</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w"> </span><span class="nt">"launch_mode"</span><span class="p">:</span><span class="s2">"singleTask"</span><span class="p">,</span><span class="nt">"task_affinity"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"exclude_from_recents"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"allow_task_reparenting"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w"> </span><span class="nt">"screen_orientation"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"foreground_service_type"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"isolated_process"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"direct_boot_aware"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"label"</span><span class="p">:</span><span class="kc">null</span><span class="p">}</span>
-</code></pre></div>
+<h2 id="rules">Rules<a class="headerlink" href="#rules" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>name</code> is always fully qualified (<code>.Main</code> and <code>Main</code> are expanded with the package).</li>
-<li><code>exported</code> is the <strong>effective</strong> value: an explicit <code>android:exported</code> wins; otherwise components with an intent filter are exported, and providers are exported only for apps whose minSdk or targetSdk is 16 or lower. <code>exported_source</code> says which (<code>explicit</code> or <code>default</code>).</li>
-<li><code>launcher</code> is true for activities with <code>MAIN</code> + <code>LAUNCHER</code>.</li>
-<li>Intent filter <code>data</code> also carries <code>ssp</code>, <code>ssp_prefix</code>, <code>ssp_pattern</code>, <code>path_suffix</code>, <code>path_advanced_pattern</code>, <code>port</code> and <code>mime_type</code>.</li>
+<li><strong>Deterministic.</strong> The same APK always gives the same rows: sorted records, stable ids, no timestamps.</li>
+<li><strong>Truthful.</strong> A missing manifest attribute is <code>NULL</code>, never a guess. Derived values say so: <code>exported_source</code> is <code>explicit</code> or <code>default</code>, and implied permissions carry <code>implied_by</code>.</li>
+<li><strong>Readable ids.</strong> Code ids are smali descriptors, the format every Android tool understands:</li>
 </ul>
-<h2 id="permissionsjsonl">permissions.jsonl<a class="headerlink" href="#permissionsjsonl" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"android.permission.CAMERA"</span><span class="p">,</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"uses-permission"</span><span class="p">,</span><span class="nt">"max_sdk"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"dangerous"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="nt">"protection_level"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"custom"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"implied_by"</span><span class="p">:</span><span class="kc">null</span><span class="p">}</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="p">{</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"android.permission.READ_EXTERNAL_STORAGE"</span><span class="p">,</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"implied"</span><span class="p">,</span><span class="nt">"max_sdk"</span><span class="p">:</span><span class="mi">28</span><span class="p">,</span><span class="nt">"dangerous"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="nt">"protection_level"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"custom"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"implied_by"</span><span class="p">:</span><span class="s2">"android.permission.WRITE_EXTERNAL_STORAGE"</span><span class="p">}</span>
-</code></pre></div>
-<p><code>kind</code> is <code>uses-permission</code>, <code>uses-permission-sdk-23</code>, <code>implied</code> (granted by Android without being listed, same rules as <code>aapt2</code>) or <code>declared</code> (defined by this app, with <code>protection_level</code>).</p>
-<h2 id="featuresjsonl-metadatajsonl-queriesjsonl">features.jsonl, metadata.jsonl, queries.jsonl<a class="headerlink" href="#featuresjsonl-metadatajsonl-queriesjsonl" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"feature"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"android.hardware.camera"</span><span class="p">,</span><span class="nt">"required"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"version"</span><span class="p">:</span><span class="kc">null</span><span class="p">}</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="p">{</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"feature"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"glEsVersion"</span><span class="p">,</span><span class="nt">"required"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="nt">"version"</span><span class="p">:</span><span class="s2">"3.1"</span><span class="p">}</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="p">{</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"library"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"org.apache.http.legacy"</span><span class="p">,</span><span class="nt">"required"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"version"</span><span class="p">:</span><span class="kc">null</span><span class="p">}</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span><span class="nt">"scope"</span><span class="p">:</span><span class="s2">"application"</span><span class="p">,</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"meta-data"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"com.google.android.geo.API_KEY"</span><span class="p">,</span><span class="nt">"value"</span><span class="p">:</span><span class="s2">"…"</span><span class="p">,</span><span class="nt">"resource"</span><span class="p">:</span><span class="kc">null</span><span class="p">}</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="p">{</span><span class="nt">"scope"</span><span class="p">:</span><span class="s2">"com.example.UploadService"</span><span class="p">,</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"meta-data"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"android.app.shortcuts"</span><span class="p">,</span><span class="nt">"value"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"resource"</span><span class="p">:</span><span class="s2">"@xml/shortcuts"</span><span class="p">}</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"package"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"com.google.android.apps.maps"</span><span class="p">,</span><span class="nt">"actions"</span><span class="p">:[],</span><span class="nt">"categories"</span><span class="p">:[],</span><span class="nt">"data"</span><span class="p">:[]}</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="p">{</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"intent"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"VIEW https:"</span><span class="p">,</span><span class="nt">"actions"</span><span class="p">:[</span><span class="s2">"android.intent.action.VIEW"</span><span class="p">],</span><span class="nt">"categories"</span><span class="p">:[],</span><span class="nt">"data"</span><span class="p">:[{</span><span class="nt">"scheme"</span><span class="p">:</span><span class="s2">"https"</span><span class="p">,</span><span class="w"> </span><span class="nt">"…"</span><span class="p">:</span><span class="w"> </span><span class="s2">"…"</span><span class="p">}]}</span>
-</code></pre></div>
-<p><code>required: null</code> means the manifest doesn't say (Android treats features and libraries as required by default).</p>
-<h2 id="codejsonl">code/*.jsonl<a class="headerlink" href="#codejsonl" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"Lde/markusfisch/android/binaryeye/activity/CameraActivity;"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"de.markusfisch.android.binaryeye.activity.CameraActivity"</span><span class="p">,</span><span class="nt">"package"</span><span class="p">:</span><span class="s2">"de.markusfisch.android.binaryeye.activity"</span><span class="p">,</span><span class="nt">"superclass"</span><span class="p">:</span><span class="s2">"Lb6;"</span><span class="p">,</span><span class="nt">"interfaces"</span><span class="p">:[],</span><span class="nt">"access"</span><span class="p">:[</span><span class="s2">"public"</span><span class="p">,</span><span class="s2">"final"</span><span class="p">],</span><span class="nt">"source_file"</span><span class="p">:</span><span class="s2">"…"</span><span class="p">,</span><span class="nt">"dex"</span><span class="p">:</span><span class="s2">"classes.dex"</span><span class="p">,</span><span class="nt">"kotlin"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"annotations"</span><span class="p">:[],</span><span class="nt">"methods"</span><span class="p">:</span><span class="mi">23</span><span class="p">,</span><span class="nt">"fields"</span><span class="p">:</span><span class="mi">26</span><span class="p">}</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="p">{</span><span class="nt">"caller"</span><span class="p">:</span><span class="s2">"Lde/…/CameraActivity;-&gt;onResume()V"</span><span class="p">,</span><span class="nt">"callee"</span><span class="p">:</span><span class="s2">"Landroid/app/Activity;-&gt;getIntent()Landroid/content/Intent;"</span><span class="p">,</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"virtual"</span><span class="p">,</span><span class="nt">"count"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">"offsets"</span><span class="p">:[</span><span class="mi">84</span><span class="p">]}</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="p">{</span><span class="nt">"value"</span><span class="p">:</span><span class="s2">"https://markusfisch.de/BinaryEye"</span><span class="p">,</span><span class="nt">"method"</span><span class="p">:</span><span class="s2">"Lde/…/CameraActivity;-&gt;onResume()V"</span><span class="p">,</span><span class="nt">"count"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">"offsets"</span><span class="p">:[</span><span class="mi">124</span><span class="p">]}</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="p">{</span><span class="nt">"method"</span><span class="p">:</span><span class="s2">"Lde/…/CameraActivity;-&gt;onResume()V"</span><span class="p">,</span><span class="nt">"field"</span><span class="p">:</span><span class="s2">"Lde/…/CameraActivity;-&gt;c1:Z"</span><span class="p">,</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"write"</span><span class="p">,</span><span class="nt">"count"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="nt">"offsets"</span><span class="p">:[</span><span class="err">…</span><span class="p">]}</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="p">{</span><span class="nt">"method"</span><span class="p">:</span><span class="s2">"Lde/…/CameraActivity;-&gt;onResume()V"</span><span class="p">,</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"Lde/…/WelcomeActivity;"</span><span class="p">,</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"class"</span><span class="p">,</span><span class="nt">"count"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">"offsets"</span><span class="p">:[</span><span class="err">…</span><span class="p">]}</span>
-</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>Example ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>class</td>
+<td><code>Lcom/app/Login;</code></td>
+</tr>
+<tr>
+<td>method</td>
+<td><code>Lcom/app/Login;-&gt;auth(Ljava/lang/String;)Z</code></td>
+</tr>
+<tr>
+<td>field</td>
+<td><code>Lcom/app/Login;-&gt;token:Ljava/lang/String;</code></td>
+</tr>
+</tbody>
+</table>
 <ul>
-<li><code>calls.jsonl</code> has one line per distinct (caller, callee, kind); <code>kind</code> is <code>virtual</code>, <code>static</code>, <code>direct</code>, <code>super</code>, <code>interface</code> or <code>polymorphic</code>.</li>
-<li>When a class is defined in several dex files, the first definition wins, as on Android (<code>meta.code.duplicate_classes</code>).</li>
-<li>Code files are large for big apps because every line is self-contained (Signal: ~470 MB). <code>index.sqlite</code> is the compact, normalized form.</li>
+<li><strong>Permissions.</strong> <code>kind</code> is <code>uses-permission</code>, <code>uses-permission-sdk-23</code>, <code>implied</code> (granted by Android without being listed, the same rules as aapt2) or <code>declared</code> (defined by the app).</li>
+<li><strong>Calls.</strong> One row per distinct (caller, callee, kind). <code>kind</code> is <code>virtual</code>, <code>static</code>, <code>direct</code>, <code>super</code>, <code>interface</code> or <code>polymorphic</code>. <code>offsets</code> are in 16-bit code units, as in <code>dexdump</code>, and at most 32 are kept (<code>count</code> is always exact).</li>
+<li><strong>Methods.</strong> <code>methods</code> holds every method reference: <code>defined = 1</code> for methods in the APK, 0 for external ones (framework, other libraries).</li>
+<li><strong>Duplicates.</strong> When a class is defined in several dex files, the first one wins, as on Android.</li>
 </ul>
-<h2 id="insights-resources-and-native">insights, resources and native<a class="headerlink" href="#insights-resources-and-native" title="Permanent link">&para;</a></h2>
-<p>See <a href="../../guides/insights/">Insights and app icons</a>, <a href="../../guides/app-structure/">Components, startup, resources and SDKs</a> and <a href="../findings/">Review findings</a> for what these contain; each line carries the evidence it is based on.</p>
+<h2 id="example-queries">Example queries<a class="headerlink" href="#example-queries" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">-- Who calls Cipher.getInstance?</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">caller</span><span class="p">,</span><span class="w"> </span><span class="k">count</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">call_edges</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">callee</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">'Ljavax/crypto/Cipher;-&gt;getInstance%'</span><span class="p">;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">-- Exported components that need no permission</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">type</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">components</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">exported</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">permission</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span><span class="p">;</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1">-- Which layouts use the string app_name?</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">SELECT</span><span class="w"> </span><span class="ss">"from"</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">resource_refs</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">ref</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'@string/app_name'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">from_kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'layout'</span><span class="p">;</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1">-- Which Java methods are implemented in native code?</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">jni_class</span><span class="p">,</span><span class="w"> </span><span class="n">jni_method</span><span class="p">,</span><span class="w"> </span><span class="n">library</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">native_symbols</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">jni_class</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">;</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1">-- Which files did no decoder read?</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">type</span><span class="p">,</span><span class="w"> </span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="n">size_bytes</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">files</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">decoded_by</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">size_bytes</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="c1">-- A full component record, exactly as built</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">json</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">records</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'component'</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</code></pre></div>
+<h2 id="size-and-speed">Size and speed<a class="headerlink" href="#size-and-speed" title="Permanent link">&para;</a></h2>
+<p>Typical apps extract in 1–5 seconds into 30–200 MB. The largest corpus apps (60k+ classes) take 15–25 seconds, mostly to build the full-text index. <code>--no-code</code> skips the code tables and takes well under a second.</p>
+<h2 id="the-apk-cache">The APK cache<a class="headerlink" href="#the-apk-cache" title="Permanent link">&para;</a></h2>
+<p>Given an APK instead of a <code>.sqlite</code> file, a command indexes it once into a cache keyed by the APK's SHA-256 (the platform's user cache folder, or <code>SEXTANT_CACHE</code>) and reads it from there on every later run. <code>sextant cache</code> lists the cached apps; <code>sextant cache --clear</code> deletes them. A new Sextant version rebuilds an index on next use.</p>
 
 
 

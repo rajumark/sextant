@@ -1348,9 +1348,9 @@
 
 <h1 id="security-review">Security review<a class="headerlink" href="#security-review" title="Permanent link">&para;</a></h1>
 <p><code>sextant findings</code> lists <strong>review points</strong>: static observations a reviewer should check, each with the evidence that triggered it. They are deliberately not called vulnerabilities, because a check may exist elsewhere and some patterns are fine in context.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sextant<span class="w"> </span>findings<span class="w"> </span>app/
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sextant<span class="w"> </span>findings<span class="w"> </span>app/<span class="w"> </span>--severity<span class="w"> </span>medium<span class="w">   </span><span class="c1"># medium and high only</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>sextant<span class="w"> </span>findings<span class="w"> </span>app/<span class="w"> </span>--json<span class="w">              </span><span class="c1"># one JSON object per finding, with evidence</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sextant<span class="w"> </span>findings<span class="w"> </span>app.sqlite
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sextant<span class="w"> </span>findings<span class="w"> </span>app.sqlite<span class="w"> </span>--severity<span class="w"> </span>medium<span class="w">   </span><span class="c1"># medium and high only</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>sextant<span class="w"> </span>findings<span class="w"> </span>app.sqlite<span class="w"> </span>--json<span class="w">              </span><span class="c1"># one JSON object per finding, with evidence</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>[medium] Cleartext HTTP allowed  (1)  · cleartext
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    android:usesCleartextTraffic=true allows unencrypted HTTP.
@@ -1368,20 +1368,20 @@
 <ol>
 <li>
 <p><strong>Attack surface.</strong> Exported components without permission, deep links, providers and their read/write permissions:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sextant<span class="w"> </span>sql<span class="w"> </span>app/<span class="w"> </span><span class="s2">"SELECT type, name, permission, read_permission, write_permission FROM components WHERE exported = 1 AND enabled = 1"</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sextant<span class="w"> </span>sql<span class="w"> </span>app/<span class="w"> </span><span class="s2">"SELECT url, component FROM deep_links"</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sextant<span class="w"> </span>sql<span class="w"> </span>app.sqlite<span class="w"> </span><span class="s2">"SELECT type, name, permission, read_permission, write_permission FROM components WHERE exported = 1 AND enabled = 1"</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sextant<span class="w"> </span>sql<span class="w"> </span>app.sqlite<span class="w"> </span><span class="s2">"SELECT url, component FROM deep_links"</span>
 </code></pre></div>
 </li>
 <li>
 <p><strong>What those entry points can reach.</strong> Use <code>reach</code> from an exported component to sensitive APIs:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sextant<span class="w"> </span>reach<span class="w"> </span>app/<span class="w"> </span>com.example.DeepLinkActivity<span class="w"> </span><span class="s1">'WebView.loadUrl'</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sextant<span class="w"> </span>reach<span class="w"> </span>app/<span class="w"> </span>com.example.ShareReceiver<span class="w"> </span>okhttp3/
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sextant<span class="w"> </span>reach<span class="w"> </span>app.sqlite<span class="w"> </span>com.example.DeepLinkActivity<span class="w"> </span><span class="s1">'WebView.loadUrl'</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sextant<span class="w"> </span>reach<span class="w"> </span>app.sqlite<span class="w"> </span>com.example.ShareReceiver<span class="w"> </span>okhttp3/
 </code></pre></div>
 </li>
 <li>
 <p><strong>Network.</strong> Cleartext settings, the network security config, every host the app mentions:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sextant<span class="w"> </span>endpoints<span class="w"> </span>app/
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>sextant<span class="w"> </span>sql<span class="w"> </span>app/<span class="w"> </span><span class="s2">"SELECT value FROM meta WHERE key = 'meta_json'"</span><span class="w"> </span>--json<span class="w">   </span><span class="c1"># flags.uses_cleartext_traffic, network_security_config</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sextant<span class="w"> </span>endpoints<span class="w"> </span>app.sqlite
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>sextant<span class="w"> </span>sql<span class="w"> </span>app.sqlite<span class="w"> </span><span class="s2">"SELECT value FROM meta WHERE key = 'meta_json'"</span><span class="w"> </span>--json<span class="w">   </span><span class="c1"># flags.uses_cleartext_traffic, network_security_config</span>
 </code></pre></div>
 </li>
 <li>
@@ -1389,13 +1389,13 @@
 </li>
 <li>
 <p><strong>Secrets.</strong> Embedded keys and tokens are masked in the output (only the first 6 and last 4 characters are shown). Search for more with <code>find</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sextant<span class="w"> </span>find<span class="w"> </span>app/<span class="w"> </span><span class="s2">"api_key"</span><span class="w"> </span>--kind<span class="w"> </span>resource
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>sextant<span class="w"> </span>find<span class="w"> </span>app/<span class="w"> </span><span class="s2">"BEGIN"</span><span class="w">  </span>--kind<span class="w"> </span>string
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sextant<span class="w"> </span>find<span class="w"> </span>app.sqlite<span class="w"> </span><span class="s2">"api_key"</span><span class="w"> </span>--kind<span class="w"> </span>resource
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>sextant<span class="w"> </span>find<span class="w"> </span>app.sqlite<span class="w"> </span><span class="s2">"BEGIN"</span><span class="w">  </span>--kind<span class="w"> </span>string
 </code></pre></div>
 </li>
 <li>
 <p><strong>Native code.</strong> JNI methods map back to the Java side:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sextant<span class="w"> </span>sql<span class="w"> </span>app/<span class="w"> </span><span class="s2">"SELECT jni_class, jni_method, library FROM native_symbols WHERE jni_class IS NOT NULL"</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sextant<span class="w"> </span>sql<span class="w"> </span>app.sqlite<span class="w"> </span><span class="s2">"SELECT jni_class, jni_method, library FROM native_symbols WHERE jni_class IS NOT NULL"</span>
 </code></pre></div>
 </li>
 </ol>
@@ -1411,8 +1411,8 @@
 </div>
 <h2 id="in-ci-fail-the-build-and-upload-to-code-scanning">In CI: fail the build and upload to code scanning<a class="headerlink" href="#in-ci-fail-the-build-and-upload-to-code-scanning" title="Permanent link">&para;</a></h2>
 <p><code>--fail-on &lt;severity&gt;</code> makes <code>findings</code> exit with code <strong>5</strong> when any finding is at or above that severity, so a release pipeline can stop on, say, a debuggable build or a trust-all TrustManager. The normal output is still printed.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sextant<span class="w"> </span>extract<span class="w"> </span>-q<span class="w"> </span>app-release.apk<span class="w"> </span>-o<span class="w"> </span>build/sextant
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>sextant<span class="w"> </span>findings<span class="w"> </span>build/sextant<span class="w"> </span>--fail-on<span class="w"> </span>high
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sextant<span class="w"> </span>extract<span class="w"> </span>-q<span class="w"> </span>app-release.apk<span class="w"> </span>-o<span class="w"> </span>build/app.sqlite
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>sextant<span class="w"> </span>findings<span class="w"> </span>build/app.sqlite<span class="w"> </span>--fail-on<span class="w"> </span>high
 </code></pre></div>
 <p><code>--sarif</code> prints the findings as <a href="https://docs.oasis-open.org/sarif/sarif/v2.1.0/sarif-v2.1.0.html">SARIF 2.1.0</a>, the format GitHub code scanning, GitLab and most security dashboards import. Each finding is one result with its severity mapped to a SARIF level (<code>high</code> → error, <code>medium</code> → warning, <code>low</code>/<code>info</code> → note) and to GitHub's <code>security-severity</code>. An APK has no source files, so each evidence item points at the part of the APK it lives in (<code>AndroidManifest.xml</code>, <code>resources.arsc</code>, or the class as <code>smali/com/example/Foo.smali</code>), with the exact component, method or resource as a logical location.</p>
 <div class="highlight"><span class="filename">.github/workflows/apk-review.yml</span><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">APK review</span>
@@ -1432,13 +1432,13 @@
 <a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">          </span><span class="no">curl -fsSL -o sextant.zip https://github.com/rajumark/sextant/releases/latest/download/sextant-1.0.0.zip</span>
 <a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">          </span><span class="no">unzip -q sextant.zip &amp;&amp; echo "$PWD/sextant-1.0.0/bin" &gt;&gt; "$GITHUB_PATH"</span>
-<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sextant extract -q app/build/outputs/apk/release/app-release.apk -o build/sextant</span>
-<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sextant findings build/sextant --sarif &gt; sextant.sarif</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sextant extract -q app/build/outputs/apk/release/app-release.apk -o build/app.sqlite</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sextant findings build/app.sqlite --sarif &gt; sextant.sarif</span>
 <a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">github/codeql-action/upload-sarif@v3</span>
 <a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> sarif_file</span><span class="p">:</span><span class="w"> </span><span class="nv">sextant.sarif</span><span class="p p-Indicator">,</span><span class="nt"> category</span><span class="p">:</span><span class="w"> </span><span class="nv">sextant</span><span class="w"> </span><span class="p p-Indicator">}</span>
-<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sextant findings build/sextant --fail-on high</span>
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sextant findings build/app.sqlite --fail-on high</span>
 </code></pre></div>
-<p>Combine with <code>--severity</code> to keep low-severity notes out of the dashboard: <code>sextant findings build/sextant --severity medium --sarif</code>.</p>
+<p>Combine with <code>--severity</code> to keep low-severity notes out of the dashboard: <code>sextant findings build/app.sqlite --severity medium --sarif</code>.</p>
 
 
 

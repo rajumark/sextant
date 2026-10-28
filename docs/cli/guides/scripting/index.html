@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#scripting-with-json-and-sql" class="md-skip">
+        <a href="#scripting-with-sql-and-json" class="md-skip">
           Skip to content
         </a>
       
@@ -829,17 +829,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#jq-over-jsonl" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        jq over JSONL
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#sql" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1294,17 +1283,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#jq-over-jsonl" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        jq over JSONL
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#sql" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1346,66 +1324,54 @@
   
 
 
-<h1 id="scripting-with-json-and-sql">Scripting with JSON and SQL<a class="headerlink" href="#scripting-with-json-and-sql" title="Permanent link">&para;</a></h1>
-<p>Everything Sextant knows is available in three forms: <strong>files</strong> (JSON/JSONL), <strong>SQL</strong> (<code>index.sqlite</code>) and <strong><code>--json</code> output</strong> from commands.</p>
-<h2 id="jq-over-jsonl">jq over JSONL<a class="headerlink" href="#jq-over-jsonl" title="Permanent link">&para;</a></h2>
-<p>Each JSONL line is one self-contained record.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Exported components that need no permission</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>jq<span class="w"> </span>-c<span class="w"> </span><span class="s1">'select(.exported and .enabled and .permission == null) | {type, name}'</span><span class="w"> </span>app/components.jsonl
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Dangerous permissions</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">'select(.dangerous) | .name'</span><span class="w"> </span>app/permissions.jsonl
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># Optional hardware features</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">'select(.kind == "feature" and .required == false) | .name'</span><span class="w"> </span>app/features.jsonl
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1"># Every library with its version</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">'"\(.group):\(.artifact):\(.version)"'</span><span class="w"> </span>app/insights/libraries.jsonl
-</code></pre></div>
+<h1 id="scripting-with-sql-and-json">Scripting with SQL and JSON<a class="headerlink" href="#scripting-with-sql-and-json" title="Permanent link">&para;</a></h1>
+<p>Everything Sextant knows is in one SQLite file, available two ways: <strong>SQL</strong> over that file (with <code>sextant sql</code> or any SQLite tool) and <strong><code>--json</code> output</strong> from commands.</p>
 <h2 id="sql">SQL<a class="headerlink" href="#sql" title="Permanent link">&para;</a></h2>
-<p><code>sextant sql</code> runs read-only SQL over <code>index.sqlite</code>. Output is a table by default, <code>--json</code> (one object per line) or <code>--csv</code>; it stops at 1000 rows unless you pass <code>--limit</code> (0 = no limit). <code>sextant sql app/ --schema</code> prints every table and view, and the full schema is also in <a href="../../reference/index-schema/">SQLite index schema</a>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sextant<span class="w"> </span>sql<span class="w"> </span>app/<span class="w"> </span><span class="s2">"SELECT type, count(*) AS n, sum(exported) AS exported FROM components GROUP BY type ORDER BY n DESC"</span>
+<p><code>sextant sql</code> runs read-only SQL over the app's SQLite file. Output is a table by default, <code>--json</code> (one object per line) or <code>--csv</code>; it stops at 1000 rows unless you pass <code>--limit</code> (0 = no limit). <code>sextant sql app.sqlite --schema</code> prints every table and view, and the full schema is also in <a href="../../reference/index-schema/">SQLite index schema</a>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sextant<span class="w"> </span>sql<span class="w"> </span>app.sqlite<span class="w"> </span><span class="s2">"SELECT type, count(*) AS n, sum(exported) AS exported FROM components GROUP BY type ORDER BY n DESC"</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>type      n   exported
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>--------  --  --------
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>activity  13  7
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>service   2   1
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>provider  2   0
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>receiver  1   1
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>4 rows
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>type      n   exported
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>--------  --  --------
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>activity  13  7
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>service   2   1
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>provider  2   0
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>receiver  1   1
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>4 rows
 </code></pre></div>
 <p>Useful queries:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">-- Who calls Cipher.getInstance?</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">caller</span><span class="p">,</span><span class="w"> </span><span class="k">count</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">call_edges</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">callee</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">'Ljavax/crypto/Cipher;-&gt;getInstance%'</span><span class="p">;</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1">-- Methods that load a URL</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="k">method</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">string_uses</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">'https://%'</span><span class="p">;</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1">-- Biggest packages</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">package</span><span class="p">,</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">classes</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">package</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="k">DESC</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="c1">-- Which Java methods are implemented in native code?</span>
-<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">jni_class</span><span class="p">,</span><span class="w"> </span><span class="n">jni_method</span><span class="p">,</span><span class="w"> </span><span class="n">library</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">native_symbols</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">jni_class</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">;</span>
-<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>
-<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="c1">-- Hosts referenced from code (not just resources)</span>
-<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="k">host</span><span class="p">,</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">endpoints</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">endpoint_sources</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">endpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'code'</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="k">host</span><span class="p">;</span>
-<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>
-<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="c1">-- Who writes a field</span>
-<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">m</span><span class="p">.</span><span class="k">descriptor</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">field_refs</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">methods</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">m</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="k">method</span>
-<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">field</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Lcom/example/Session;-&gt;token:Ljava/lang/String;'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'write'</span><span class="p">;</span>
-<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>
-<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="c1">-- Full-text search from SQL (what `find` uses)</span>
-<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">kind</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="k">ref</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="nb">text</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">search</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">search_items</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">search_rowid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">search</span><span class="p">.</span><span class="n">rowid</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">search</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="s1">'Cipher'</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">-- Who calls Cipher.getInstance?</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">caller</span><span class="p">,</span><span class="w"> </span><span class="k">count</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">call_edges</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">callee</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">'Ljavax/crypto/Cipher;-&gt;getInstance%'</span><span class="p">;</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1">-- Methods that load a URL</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="k">method</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">string_uses</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">'https://%'</span><span class="p">;</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1">-- Biggest packages</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">package</span><span class="p">,</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">classes</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">package</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="k">DESC</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1">-- Which Java methods are implemented in native code?</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">jni_class</span><span class="p">,</span><span class="w"> </span><span class="n">jni_method</span><span class="p">,</span><span class="w"> </span><span class="n">library</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">native_symbols</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">jni_class</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">;</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="c1">-- Hosts referenced from code (not just resources)</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="k">host</span><span class="p">,</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">endpoints</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">endpoint_sources</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">endpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'code'</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="k">host</span><span class="p">;</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="c1">-- Who writes a field</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">m</span><span class="p">.</span><span class="k">descriptor</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">field_refs</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">methods</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">m</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="k">method</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">field</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Lcom/example/Session;-&gt;token:Ljava/lang/String;'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'write'</span><span class="p">;</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="c1">-- Full-text search from SQL (what `find` uses)</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">kind</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="k">ref</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="nb">text</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">search</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">search_items</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">search_rowid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">search</span><span class="p">.</span><span class="n">rowid</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">search</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="s1">'Cipher'</span><span class="p">;</span>
 </code></pre></div>
-<p>You can also open <code>index.sqlite</code> with any SQLite tool (<code>sqlite3</code>, DB Browser for SQLite, Python's <code>sqlite3</code> module…).</p>
+<p>You can also open the <code>.sqlite</code> file with any SQLite tool (<code>sqlite3</code>, DB Browser for SQLite, Python's <code>sqlite3</code> module…).</p>
 <h2 id="many-apks">Many APKs<a class="headerlink" href="#many-apks" title="Permanent link">&para;</a></h2>
-<p>Extraction output is deterministic, so it diffs and versions well:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">for</span><span class="w"> </span>apk<span class="w"> </span><span class="k">in</span><span class="w"> </span>apks/*.apk<span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span>sextant<span class="w"> </span>extract<span class="w"> </span>--quiet<span class="w"> </span>--force<span class="w"> </span><span class="s2">"</span><span class="nv">$apk</span><span class="s2">"</span><span class="w"> </span>-o<span class="w"> </span><span class="s2">"out/</span><span class="k">$(</span>basename<span class="w"> </span><span class="s2">"</span><span class="nv">$apk</span><span class="s2">"</span><span class="w"> </span>.apk<span class="k">)</span><span class="s2">"</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">done</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c1"># Every app that uses a given SDK</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>grep<span class="w"> </span>-l<span class="w"> </span><span class="s1">'"name":"Firebase Crashlytics"'</span><span class="w"> </span>out/*/insights/sdks.jsonl
+<p>Extraction output is deterministic, so whole folders of APKs are easy to sweep:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">for</span><span class="w"> </span>apk<span class="w"> </span><span class="k">in</span><span class="w"> </span>apks/*.apk<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span>sextant<span class="w"> </span>extract<span class="w"> </span>--quiet<span class="w"> </span>--force<span class="w"> </span><span class="s2">"</span><span class="nv">$apk</span><span class="s2">"</span><span class="w"> </span>-o<span class="w"> </span><span class="s2">"out/</span><span class="k">$(</span>basename<span class="w"> </span><span class="s2">"</span><span class="nv">$apk</span><span class="s2">"</span><span class="w"> </span>.apk<span class="k">)</span><span class="s2">.sqlite"</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">done</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># Every app that uses a given SDK</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="k">for</span><span class="w"> </span>db<span class="w"> </span><span class="k">in</span><span class="w"> </span>out/*.sqlite<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span>sqlite3<span class="w"> </span><span class="s2">"</span><span class="nv">$db</span><span class="s2">"</span><span class="w"> </span><span class="s2">"SELECT '</span><span class="nv">$db</span><span class="s2">' FROM sdks WHERE name = 'Firebase Crashlytics'"</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="k">done</span>
 </code></pre></div>
 <p>For fast manifest-only sweeps, add <code>--no-code</code> (well under a second per APK).</p>
 

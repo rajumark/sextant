@@ -25,7 +25,7 @@ import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
-/** `sextant sql <dir> "<query>"`: read-only SQL over index.sqlite. */
+/** `sextant sql <app> "<query>"`: read-only SQL over the app's SQLite file. */
 class SqlCommand : CoreCliktCommand(name = "sql") {
     private val dir by argument(help = INDEX_INPUT).path()
     private val query by argument(help = "SQL to run (read-only)").optional()
@@ -33,7 +33,7 @@ class SqlCommand : CoreCliktCommand(name = "sql") {
     private val schema by option("--schema", help = "Print the tables and views instead of running a query").flag()
     private val limit by option("--limit", help = "Maximum rows to print (default 1000, 0 = no limit)").int().default(1000)
 
-    override fun help(context: Context) = "Run read-only SQL over index.sqlite. Use --schema to see the tables."
+    override fun help(context: Context) = "Run read-only SQL over the app's SQLite file. Use --schema to see the tables."
 
     override fun run() =
         guarded {

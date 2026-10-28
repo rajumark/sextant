@@ -371,6 +371,7 @@ class IndexWriter(
         extraction.insights?.let(::insertInsights)
         insertIcons(m.icons)
         insertFiles(extraction.files)
+        Records.write(conn, extraction)
         conn.prepareStatement("INSERT INTO features VALUES (?,?,?,?)").use { st ->
             for (f in extraction.features) {
                 st.setString(1, f.kind)

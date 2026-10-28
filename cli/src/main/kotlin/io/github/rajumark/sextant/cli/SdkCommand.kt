@@ -9,12 +9,11 @@ import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.multiple
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.types.path
-import io.github.rajumark.sextant.core.Extractor
+import io.github.rajumark.sextant.core.SextantException
 import io.github.rajumark.sextant.core.insights.SdkEntry
 import io.github.rajumark.sextant.core.insights.SdkInventory
 import io.github.rajumark.sextant.core.insights.SdkProfile
 import io.github.rajumark.sextant.core.output.SextantJson
-import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.io.path.name
 
@@ -23,7 +22,7 @@ import kotlin.io.path.name
  * ("which apps ship OkHttp below 4.9?", "which apps have both ads and analytics?").
  */
 class SdkCommand : CoreCliktCommand(name = "sdks") {
-    private val targets by argument(help = "Extracted folders and/or APKs (APKs are analyzed in memory)").path().multiple(required = true)
+    private val targets by argument(help = "APKs (indexed once, then cached) and/or .sqlite files").path().multiple(required = true)
     private val categories by option(
         "--category",
         help = "Only apps that have an SDK in this category; repeat to require several (ads, analytics, …)",
@@ -78,12 +77,9 @@ class SdkCommand : CoreCliktCommand(name = "sdks") {
         }
 
     private fun profile(target: Path): SdkProfile {
-        if (!Files.isDirectory(target)) {
-            val e = Extractor.extract(target)
-            val i = e.insights!!
-            return SdkInventory.of(target.name, e.meta.`package`, e.meta.versionName, i.sdks, i.libraries)
-        }
-        return SdkInventory.fromFolder(target)
+        val e = loadExtraction(target)
+        val i = e.insights ?: throw SextantException.input("$target has no insights", "extract it without --no-code")
+        return SdkInventory.of(target.name, e.meta.`package`, e.meta.versionName, i.sdks, i.libraries)
     }
 
     private fun single(p: SdkProfile) =

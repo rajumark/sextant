@@ -11,7 +11,6 @@ import com.github.ajalt.clikt.parameters.types.choice
 import com.github.ajalt.clikt.parameters.types.int
 import com.github.ajalt.clikt.parameters.types.path
 import io.github.rajumark.sextant.core.ExitCode
-import io.github.rajumark.sextant.core.Extractor
 import io.github.rajumark.sextant.core.SextantException
 import io.github.rajumark.sextant.core.insights.MenuEntry
 import io.github.rajumark.sextant.core.insights.MenuPreviews
@@ -29,13 +28,11 @@ import io.github.rajumark.sextant.core.model.ResourceRef
 import io.github.rajumark.sextant.core.model.StringResource
 import io.github.rajumark.sextant.core.model.StyleRecord
 import io.github.rajumark.sextant.core.model.XmlConfigRecord
-import io.github.rajumark.sextant.core.output.OutputReader
 import io.github.rajumark.sextant.core.output.SextantJson
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.serializer
-import java.nio.file.Files
 
 /** One kind of harvested resource: its records, a name for each, one table row, and the `@type/name` refs it answers to. */
 private class Kind<T>(
@@ -223,7 +220,7 @@ private val KINDS: Map<String, Kind<*>> =
 
 /** `sextant res <apk|dir> <kind> [name]`: harvested resources, searchable, with who references each one. */
 class ResourceCommand : CoreCliktCommand(name = "res") {
-    private val target by argument(help = "An extracted folder, or an APK (analyzed in memory, nothing written)").path()
+    private val target by argument(help = INDEX_INPUT).path()
     private val kindName by argument(help = "What to list: ${KINDS.keys.joinToString()}").choice(*KINDS.keys.toTypedArray())
     private val name by argument(help = "Show one entry in full (all configurations) and what references it").optional()
     private val search by option("--search", help = "Only entries whose name or value contains this text")
@@ -241,7 +238,7 @@ class ResourceCommand : CoreCliktCommand(name = "res") {
 
     override fun run() =
         guarded {
-            val extraction = if (Files.isDirectory(target)) OutputReader.read(target) else Extractor.extract(target, code = null)
+            val extraction = loadExtraction(target)
             @Suppress("UNCHECKED_CAST")
             print(render(KINDS.getValue(kindName) as Kind<Any?>, extraction.resources))
         }

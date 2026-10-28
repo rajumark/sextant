@@ -7,7 +7,7 @@ or external) has one row in `methods`; edges point at integer ids, and the views
 and `search_items` give the readable, descriptor-based form. JSON arrays are stored as TEXT; use SQLite's
 `json_each` to expand them. Query it with `sextant sql <dir> "…"` (read-only) or any SQLite tool.
 
-Schema version: **8**
+Schema version: **9**
 (stored in `meta` as `index_schema_version`).
 
 ```sql
@@ -329,6 +329,15 @@ CREATE TABLE files (
   resource         TEXT,           -- @layout/main: the resource this res/ file is (shrunk apps rename files)
   config           TEXT,           -- that resource's configuration: '' default, xxxhdpi-v4, night, …
   decoded_by       TEXT            -- manifest | resource-table | code | layouts | menus | navigation | xml-configs | drawables | assets | native | libraries | signing
+);
+
+-- Full records (index schema 9): every manifest, resource and insight record exactly as Sextant built it, one JSON
+-- row each, so a command can rebuild the whole extraction from this file alone. The tables above are the
+-- queryable view of the same facts. kind: manifest | permission | component | feature | metadata | query | resources | insights
+CREATE TABLE records (
+  kind TEXT NOT NULL,
+  seq  INTEGER NOT NULL,
+  json TEXT NOT NULL
 );
 
 -- Launcher icon files: role is icon | round_icon, or <role>.background/.foreground/.monochrome for adaptive layers.

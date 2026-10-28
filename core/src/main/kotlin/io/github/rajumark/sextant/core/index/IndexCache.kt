@@ -1,15 +1,12 @@
 package io.github.rajumark.sextant.core.index
 
 import io.github.rajumark.sextant.core.ApkReader
-import io.github.rajumark.sextant.core.AsyncSink
-import io.github.rajumark.sextant.core.Extractor
 import io.github.rajumark.sextant.core.Sextant
 import io.github.rajumark.sextant.core.SextantException
 import kotlinx.serialization.Serializable
 import org.sqlite.SQLiteConfig
 import java.nio.file.Files
 import java.nio.file.Path
-import java.nio.file.StandardCopyOption
 import kotlin.io.path.name
 
 /** One cached index, for `sextant cache`. */
@@ -108,7 +105,7 @@ object IndexCache {
         Files
             .list(dir)
             .use { files ->
-                files.filter { it.name.endsWith(SUFFIX) || it.name.endsWith(".tmp") }.toList()
+                files.filter { it.name.endsWith(SUFFIX) || it.name.endsWith(".tmp") || it.name.endsWith(".building") }.toList()
             }.forEach { f ->
                 freed += runCatching { Files.size(f) }.getOrDefault(0)
                 Files.deleteIfExists(f)
@@ -135,28 +132,10 @@ object IndexCache {
         }
     }
 
-    /** One full extract into SQLite only. Built under a per-process name and moved into place, so parallel runs never clash. */
     private fun build(
         apk: Path,
         file: Path,
     ) {
-        try {
-            Files.createDirectories(file.parent)
-        } catch (e: Exception) {
-            throw SextantException.output("cannot create the index cache ${file.parent}: ${e.message}", cause = e)
-        }
-        val staging = file.resolveSibling("${file.name.removeSuffix(SUFFIX)}.${ProcessHandle.current().pid()}$SUFFIX")
-        try {
-            IndexWriter(staging).use { index ->
-                AsyncSink(index).use { feed ->
-                    val extraction = Extractor.extract(apk, feed, listFiles = true)
-                    feed.await()
-                    index.finish(extraction)
-                }
-            }
-            Files.move(staging, file, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE)
-        } finally {
-            Files.deleteIfExists(staging)
-        }
+        IndexBuilder.build(apk, file)
     }
 }

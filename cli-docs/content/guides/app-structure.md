@@ -1,6 +1,6 @@
 # Components, startup, resources and SDKs
 
-Four commands answer "what is this app made of?" without writing SQL. They all take an extracted folder or an APK. Given an APK, they analyze it in memory and write nothing.
+Four commands answer "what is this app made of?" without writing SQL. They all take an APK (indexed once, then cached) or a `.sqlite` file from `extract`.
 
 | Command | Answers |
 |---|---|
@@ -14,10 +14,10 @@ The examples below use Bitwarden 2024.10.0 from the [test corpus](../about/testi
 ## Components and verdicts
 
 ```bash
-sextant components app/
-sextant components app/ --exported --type activity
-sextant components app/ --tag deep-link --tag hidden-entry   # both tags
-sextant components app/ --search firebase --json
+sextant components app.sqlite
+sextant components app.sqlite --exported --type activity
+sextant components app.sqlite --tag deep-link --tag hidden-entry   # both tags
+sextant components app.sqlite --search firebase --json
 ```
 
 ```text
@@ -56,7 +56,7 @@ Each component gets **verdict tags**, each with a one-line reason. The desktop a
 `sextant component` explains one component. The name can be the full class name or a unique suffix such as `.MainActivity`:
 
 ```bash
-sextant component app/ .WebAuthCallbackActivity
+sextant component app.sqlite .WebAuthCallbackActivity
 ```
 
 ```text
@@ -90,13 +90,12 @@ Exported: yes · enabled: yes
           ...
 ```
 
-With `--json`, both commands print `component` (as in `components.jsonl`), `review` (tags and reasons) and `attributes`.
+With `--json`, both commands print `component` (the full component record), `review` (tags and reasons) and `attributes`.
 
 ## Startup order
 
 ```bash
-sextant app app/          # with an extracted folder: also the calls of each step
-sextant app app.apk       # manifest only
+sextant app app.apk       # the startup order, with the calls of each step and the SDKs they start
 ```
 
 ```text
@@ -126,12 +125,12 @@ Android creates content providers before `Application.onCreate`, so SDKs that in
 ## Resources
 
 ```bash
-sextant res app/ strings                    # every string, plural and array, all locales
-sextant res app/ strings --config fr        # one configuration
-sextant res app/ string-keys --flag unused  # string keys with flags
-sextant res app/ xml                        # res/xml configs with a summary
-sextant res app/ refs                       # who references which resource
-sextant res app/ layouts activity_main      # one entry in full, and what uses it
+sextant res app.sqlite strings                    # every string, plural and array, all locales
+sextant res app.sqlite strings --config fr        # one configuration
+sextant res app.sqlite string-keys --flag unused  # string keys with flags
+sextant res app.sqlite xml                        # res/xml configs with a summary
+sextant res app.sqlite refs                       # who references which resource
+sextant res app.sqlite layouts activity_main      # one entry in full, and what uses it
 ```
 
 `KIND` is one of `strings`, `string-keys`, `ids`, `styles`, `drawables`, `layouts`, `menus`, `navigation`, `assets`, `xml` or `refs`. References keep the `@type/name` they were written with plus the resolved value.
@@ -146,7 +145,7 @@ sextant res app/ layouts activity_main      # one entry in full, and what uses i
 | `empty` | Empty strings |
 
 ```text
-$ sextant res app/ string-keys --flag url
+$ sextant res app.sqlite string-keys --flag url
 name                   kind    locales  used by  flags       value
 firebase_database_url  string  0        0        unused,url  https://bitwarden-c2b35.firebaseio.com
 ```
@@ -165,12 +164,12 @@ network_security_config  default  network-security-config  base-cleartext=true u
 
 `res assets` flags assets whose bytes are DEX, ELF or zip under another name as **hidden code**.
 
-The same data is in `resources/*.jsonl` and in the index (`string_resources`, `resource_ids`, `styles`, `drawables`, `layouts`, `menus`, `navigation_destinations`, `assets`, `xml_configs`, `resource_refs`); see [Output files](../reference/output.md) and the [index schema](../reference/index-schema.md).
+The same data is in the SQLite file (`string_resources`, `resource_ids`, `styles`, `drawables`, `layouts`, `menus`, `navigation_destinations`, `assets`, `xml_configs`, `resource_refs`); see [Output](../reference/output.md) and the [index schema](../reference/index-schema.md).
 
 ## SDKs and versions
 
 ```bash
-sextant sdks app/
+sextant sdks app.sqlite
 ```
 
 ```text

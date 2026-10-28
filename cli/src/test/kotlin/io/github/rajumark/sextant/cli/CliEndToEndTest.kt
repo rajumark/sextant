@@ -75,73 +75,67 @@ class CliEndToEndTest {
     }
 
     @Test
-    fun `extract writes manifest files, code files and the index, progress goes to stderr`() {
-        val out = tmp.resolve("out")
+    fun `extract writes one SQLite file and nothing else, progress goes to stderr`() {
+        val out = tmp.resolve("out.sqlite")
         val result = sextant("extract", apk("binaryeye"), "-o", out.toString())
         result.exitCode shouldBe 0
         result.stdout.shouldBeEmpty()
         result.stderr shouldContain "de.markusfisch.android.binaryeye"
-        Files.list(out).use { files -> files.map { it.fileName.toString() }.toList() } shouldContainExactlyInAnyOrder
-            listOf(
-                "summary.md",
-                "meta.json",
-                "manifest.json",
-                "permissions.jsonl",
-                "components.jsonl",
-                "features.jsonl",
-                "metadata.jsonl",
-                "queries.jsonl",
-                "code",
-                "index.sqlite",
-                "insights",
-                "resources",
-                "native",
-            )
-        Files.list(out.resolve("code")).use { files -> files.map { it.fileName.toString() }.toList() } shouldContainExactlyInAnyOrder
-            listOf("classes.jsonl", "methods.jsonl", "fields.jsonl", "calls.jsonl", "strings.jsonl", "field_refs.jsonl", "type_refs.jsonl")
         result.stderr shouldContain "Code "
+        result.stderr shouldContain "Wrote $out"
+        Files.isRegularFile(out) shouldBe true
+        Files.list(tmp).use { files ->
+            files.map { it.fileName.toString() }.filter { it != "stderr.txt" }.toList()
+        } shouldContainExactlyInAnyOrder
+            listOf("out.sqlite")
+        sextant("sql", out.toString(), "SELECT count(*) AS n FROM records WHERE kind = 'component'").stdout shouldContain "18"
     }
 
     @Test
-    fun `--no-code skips code files and removes stale ones`() {
-        val out = tmp.resolve("nocode")
+    fun `--no-code writes no code tables`() {
+        val out = tmp.resolve("nocode.sqlite")
         sextant("extract", "-q", apk("jitsi"), "-o", out.toString()).exitCode shouldBe 0
-        Files.isRegularFile(out.resolve("code/calls.jsonl")) shouldBe true
+        sextant("sql", out.toString(), "SELECT count(*) > 0 AS has FROM classes").stdout shouldContain "1"
         sextant("extract", "-q", "--force", "--no-code", apk("jitsi"), "-o", out.toString()).exitCode shouldBe 0
-        Files.exists(out.resolve("code/calls.jsonl")) shouldBe false
+        sextant("sql", out.toString(), "SELECT count(*) AS n FROM classes").stdout.lines()[2].trim() shouldBe "0"
         sextant("info", out.toString()).stdout shouldContain "not extracted"
     }
 
     @Test
-    fun `extract defaults to apk-name dot sextant in the current directory`() {
+    fun `extract defaults to apk-name dot sqlite in the current directory`() {
         sextant("extract", "--quiet", apk("jitsi")).exitCode shouldBe 0
-        Files.isRegularFile(tmp.resolve("jitsi.sextant/meta.json")) shouldBe true
+        Files.isRegularFile(tmp.resolve("jitsi.sqlite")) shouldBe true
+        Files.exists(tmp.resolve("jitsi.sextant")) shouldBe false
     }
 
     @Test
     fun `--quiet prints nothing`() {
-        val result = sextant("extract", "-q", apk("jitsi"), "-o", tmp.resolve("q").toString())
+        val result = sextant("extract", "-q", apk("jitsi"), "-o", tmp.resolve("q.sqlite").toString())
         result.exitCode shouldBe 0
         result.stdout.shouldBeEmpty()
         result.stderr.shouldBeEmpty()
     }
 
     @Test
-    fun `non-empty output directory needs --force, and --force keeps foreign files`() {
-        val out = Files.createDirectories(tmp.resolve("busy"))
-        Files.writeString(out.resolve("mine.txt"), "keep me")
+    fun `an existing output file needs --force, and a folder is refused`() {
+        val out = tmp.resolve("busy.sqlite")
+        Files.writeString(out, "old")
         val refused = sextant("extract", apk("jitsi"), "-o", out.toString())
         refused.exitCode shouldBe 3
         refused.stderr shouldContain "--force"
+        Files.readString(out) shouldBe "old"
 
         sextant("extract", "-q", "--force", apk("jitsi"), "-o", out.toString()).exitCode shouldBe 0
-        Files.readString(out.resolve("mine.txt")) shouldBe "keep me"
-        Files.isRegularFile(out.resolve("meta.json")) shouldBe true
+        sextant("info", out.toString()).stdout shouldContain "org.jitsi.meet"
+
+        val folder = sextant("extract", apk("jitsi"), "-o", Files.createDirectories(tmp.resolve("dir")).toString())
+        folder.exitCode shouldBe 3
+        folder.stderr shouldContain "is a folder"
     }
 
     @Test
     fun `files and coverage account for every zip entry`() {
-        val out = tmp.resolve("files")
+        val out = tmp.resolve("files.sqlite")
         sextant("extract", "-q", apk("binaryeye"), "-o", out.toString()).exitCode shouldBe 0
         val entries =
             java.util.zip
@@ -199,7 +193,7 @@ class CliEndToEndTest {
 
     @Test
     fun `info on a folder and on an APK give the same answer`() {
-        val out = tmp.resolve("seal")
+        val out = tmp.resolve("seal.sqlite")
         sextant("extract", "-q", apk("seal"), "-o", out.toString()).exitCode shouldBe 0
         val fromFolder = sextant("info", out.toString())
         val fromApk = sextant("info", apk("seal"))
@@ -255,7 +249,7 @@ class CliEndToEndTest {
     }
 
     private fun extracted(id: String): String {
-        val out = tmp.resolve("$id-x")
+        val out = tmp.resolve("$id.sqlite")
         if (!Files.exists(out)) sextant("extract", "-q", apk(id), "-o", out.toString()).exitCode shouldBe 0
         return out.toString()
     }
@@ -326,9 +320,7 @@ class CliEndToEndTest {
 
     @Test
     fun `query commands explain a missing index`() {
-        val out = tmp.resolve("noindex")
-        sextant("extract", "-q", "--no-index", apk("jitsi"), "-o", out.toString()).exitCode shouldBe 0
-        val result = sextant("find", out.toString(), "jitsi")
+        val result = sextant("find", Files.createDirectories(tmp.resolve("empty")).toString(), "jitsi")
         result.exitCode shouldBe 2
         result.stderr shouldContain "sextant extract"
     }
@@ -378,10 +370,10 @@ class CliEndToEndTest {
     }
 
     @Test
-    fun `extract writes insight files`() {
-        val dir = Paths.get(extracted("binaryeye"))
-        for (f in listOf("insights/libraries.jsonl", "insights/sdks.jsonl", "insights/endpoints.jsonl", "resources/values.jsonl")) {
-            Files.isRegularFile(dir.resolve(f)) shouldBe true
+    fun `extract stores insights and resources in the SQLite file`() {
+        val file = extracted("binaryeye")
+        for (table in listOf("libraries", "sdks", "endpoints", "resources", "string_resources", "layouts")) {
+            sextant("sql", file, "SELECT count(*) > 0 AS has FROM $table").stdout.lines()[2].trim() shouldBe "1"
         }
     }
 
@@ -529,11 +521,11 @@ class CliEndToEndTest {
     }
 
     @Test
-    fun `app shows the startup order and, with an index, the SDKs it starts`() {
+    fun `app shows the startup order and the SDKs it starts, from an APK or its SQLite file`() {
         val fromApk = sextant("app", apk("bitwarden"))
         fromApk.exitCode shouldBe 0
         fromApk.stdout shouldContain "## Startup order"
-        fromApk.stdout shouldContain "No code index"
+        fromApk.stdout shouldContain "## SDKs reached at startup"
         val fromFolder = sextant("app", "--json", extracted("bitwarden"))
         Json
             .parseToJsonElement(fromFolder.stdout)

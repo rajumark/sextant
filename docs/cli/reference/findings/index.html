@@ -1391,7 +1391,7 @@
 
 
 <h1 id="review-findings">Review findings<a class="headerlink" href="#review-findings" title="Permanent link">&para;</a></h1>
-<p><code>sextant findings</code> (and <code>insights/findings.jsonl</code>) report <strong>static observations to review</strong>, not proven vulnerabilities. Each finding lists the evidence: a manifest entry, a method, a string or a resource. At most 25 evidence items are kept per finding; <code>count</code> is exact.</p>
+<p><code>sextant findings</code> (and the <code>findings</code> table) report <strong>static observations to review</strong>, not proven vulnerabilities. Each finding lists the evidence: a manifest entry, a method, a string or a resource. At most 25 evidence items are kept per finding; <code>count</code> is exact.</p>
 <table>
 <thead>
 <tr>
@@ -1612,8 +1612,8 @@
 </code></pre></div>
 <p>In the index: tables <code>findings</code> and <code>finding_evidence</code>, plus the <code>finding</code> search kind.</p>
 <h2 id="sarif-and-ci">SARIF and CI<a class="headerlink" href="#sarif-and-ci" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sextant<span class="w"> </span>findings<span class="w"> </span>app/<span class="w"> </span>--sarif<span class="w"> </span>&gt;<span class="w"> </span>sextant.sarif<span class="w">        </span><span class="c1"># SARIF 2.1.0 for GitHub code scanning, GitLab, dashboards</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sextant<span class="w"> </span>findings<span class="w"> </span>app/<span class="w"> </span>--fail-on<span class="w"> </span>high<span class="w">                 </span><span class="c1"># exit code 5 if there is any high finding</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sextant<span class="w"> </span>findings<span class="w"> </span>app.sqlite<span class="w"> </span>--sarif<span class="w"> </span>&gt;<span class="w"> </span>sextant.sarif<span class="w">        </span><span class="c1"># SARIF 2.1.0 for GitHub code scanning, GitLab, dashboards</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sextant<span class="w"> </span>findings<span class="w"> </span>app.sqlite<span class="w"> </span>--fail-on<span class="w"> </span>high<span class="w">                 </span><span class="c1"># exit code 5 if there is any high finding</span>
 </code></pre></div>
 <table>
 <thead>

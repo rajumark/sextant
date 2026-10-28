@@ -1380,7 +1380,7 @@
 </div>
 <p>Options:</p>
 <ul>
-<li><code>--dir &lt;folder&gt;</code> starts with an existing extraction as the current app.</li>
+<li><code>--dir &lt;app.sqlite&gt;</code> starts with an existing extraction (or an APK) as the current app.</li>
 <li><code>--apk &lt;app.apk&gt;</code> sets the APK used by <code>source</code>, <code>smali</code> and <code>icon</code>.</li>
 </ul>
 <h3 id="tools">Tools<a class="headerlink" href="#tools" title="Permanent link">&para;</a></h3>
@@ -1394,7 +1394,7 @@
 <tbody>
 <tr>
 <td><code>extract</code></td>
-<td>Analyze an APK and make it the session's current app; returns <code>summary.md</code></td>
+<td>Analyze an APK into one SQLite file and make it the session's current app; returns the app summary</td>
 </tr>
 <tr>
 <td><code>summary</code></td>
@@ -1454,14 +1454,14 @@
 <li>"Find where the API base URL is defined and show me the method that builds requests."</li>
 </ul>
 <h2 id="without-mcp">Without MCP<a class="headerlink" href="#without-mcp" title="Permanent link">&para;</a></h2>
-<p>The output folder itself is agent-friendly:</p>
+<p>The SQLite file itself is agent-friendly:</p>
 <ol>
-<li><strong>Read <code>summary.md</code> first.</strong> It's under ~80 lines: identity, counts, exported components, insights, findings, and which file holds what.</li>
+<li><strong>Start with <code>sextant info app.apk --json</code>.</strong> The APK is indexed once into a cache, so every later command is instant.</li>
 <li>
-<p><strong><code>grep</code> the JSONL files.</strong> Every line is a complete record with full names, so a single hit is understandable on its own:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>grep<span class="w"> </span><span class="s1">'"exported":true'</span><span class="w"> </span>app/components.jsonl
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>grep<span class="w"> </span><span class="s1">'api.example.com'</span><span class="w"> </span>app/code/strings.jsonl
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>grep<span class="w"> </span><span class="s1">'"caller":"Lcom/example/Login;-&gt;auth'</span><span class="w"> </span>app/code/calls.jsonl
+<p><strong>Ask the file.</strong> <code>sextant find app.apk &lt;text&gt; --json</code> searches everything; <code>sextant sql app.apk --schema</code> lists every table, and any SQL tool works on the <code>.sqlite</code> file too:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sextant<span class="w"> </span>sql<span class="w"> </span>app.apk<span class="w"> </span><span class="s2">"SELECT type, name FROM components WHERE exported = 1"</span><span class="w"> </span>--json
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sextant<span class="w"> </span>find<span class="w"> </span>app.apk<span class="w"> </span>api.example.com<span class="w"> </span>--json
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>sextant<span class="w"> </span>callers<span class="w"> </span>app.apk<span class="w"> </span><span class="s2">"Lcom/example/Login;-&gt;auth"</span><span class="w"> </span>--json
 </code></pre></div>
 </li>
 <li>

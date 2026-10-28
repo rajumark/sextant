@@ -1,6 +1,6 @@
 # Review findings
 
-`sextant findings` (and `insights/findings.jsonl`) report **static observations to review**, not proven vulnerabilities. Each finding lists the evidence: a manifest entry, a method, a string or a resource. At most 25 evidence items are kept per finding; `count` is exact.
+`sextant findings` (and the `findings` table) report **static observations to review**, not proven vulnerabilities. Each finding lists the evidence: a manifest entry, a method, a string or a resource. At most 25 evidence items are kept per finding; `count` is exact.
 
 | Severity | Meaning |
 |---|---|
@@ -69,8 +69,8 @@ In the index: tables `findings` and `finding_evidence`, plus the `finding` searc
 ## SARIF and CI
 
 ```bash
-sextant findings app/ --sarif > sextant.sarif        # SARIF 2.1.0 for GitHub code scanning, GitLab, dashboards
-sextant findings app/ --fail-on high                 # exit code 5 if there is any high finding
+sextant findings app.sqlite --sarif > sextant.sarif        # SARIF 2.1.0 for GitHub code scanning, GitLab, dashboards
+sextant findings app.sqlite --fail-on high                 # exit code 5 if there is any high finding
 ```
 
 | Sextant severity | SARIF `level` | GitHub `security-severity` |

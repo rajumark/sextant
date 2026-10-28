@@ -24,7 +24,7 @@ The first search decompiles every class, in parallel, and keeps the code in a lo
 
 ## Obfuscated apps
 
-`info` and `summary.md` show how much of the code was renamed:
+`info` shows how much of the code was renamed:
 
 ```text
 Obfuscation  heavy · 89% short class names · 2,606 in the default package · source files stripped (100%)

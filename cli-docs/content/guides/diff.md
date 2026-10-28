@@ -1,13 +1,13 @@
 # Comparing versions
 
-`sextant diff` compares two extraction folders and reports what was added, removed and changed.
+`sextant diff` compares two versions of an app (two APKs or two `.sqlite` files) and reports what was added, removed and changed.
 
 ```bash
 sextant extract app-8.31.2.apk -o old/
 sextant extract app-8.32.3.apk -o new/
-sextant diff old/ new/
-sextant diff old/ new/ --show 50     # list more items per section
-sextant diff old/ new/ --json        # full report
+sextant diff old.apk new.apk
+sextant diff old.apk new.apk --show 50     # list more items per section
+sextant diff old.apk new.apk --json        # full report
 ```
 
 Real example, Signal 8.31.2 → 8.32.3 (both official releases):

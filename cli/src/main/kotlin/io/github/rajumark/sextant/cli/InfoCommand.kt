@@ -12,20 +12,17 @@ import io.github.rajumark.sextant.core.model.obfuscationText
 import io.github.rajumark.sextant.core.output.IconText
 import io.github.rajumark.sextant.core.output.InfoReport
 import io.github.rajumark.sextant.core.output.InfoReports
-import io.github.rajumark.sextant.core.output.OutputReader
 import io.github.rajumark.sextant.core.output.SextantJson
-import java.nio.file.Files
 
 class InfoCommand : CoreCliktCommand(name = "info") {
-    private val target by argument(help = "An APK (indexed once, then cached) or an extracted folder").path()
+    private val target by argument(help = INDEX_INPUT).path()
     private val json by option("--json", help = "Machine-readable JSON on stdout").flag()
 
-    override fun help(context: Context) = "Show a short summary of an APK or an extracted folder."
+    override fun help(context: Context) = "Show a short summary of an app (an APK or its .sqlite file)."
 
     override fun run() =
         guarded {
-            val extraction =
-                if (Files.isDirectory(target)) OutputReader.read(target) else openIndex(target).use { it.manifestExtraction() }
+            val extraction = loadExtraction(target)
             val report = InfoReports.of(extraction)
             if (json) println(SextantJson.compact.encodeToString(InfoReport.serializer(), report)) else print(human(report, extraction))
         }

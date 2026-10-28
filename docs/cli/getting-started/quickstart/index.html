@@ -1415,7 +1415,7 @@
 <h1 id="quickstart">Quickstart<a class="headerlink" href="#quickstart" title="Permanent link">&para;</a></h1>
 <p>This walks through a first analysis in five minutes. The examples use <a href="https://f-droid.org/packages/de.markusfisch.android.binaryeye/">Binary Eye</a>, an open-source barcode scanner from F-Droid. Any APK works.</p>
 <h2 id="1-extract">1. Extract<a class="headerlink" href="#1-extract" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sextant<span class="w"> </span>extract<span class="w"> </span>binaryeye.apk<span class="w"> </span>-o<span class="w"> </span>binaryeye/
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sextant<span class="w"> </span>extract<span class="w"> </span>binaryeye.apk
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>✓ Read APK          8.3 MB · sha256 568cec6598db
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>✓ Decoded manifest  de.markusfisch.android.binaryeye 1.75.5 (180)
@@ -1423,20 +1423,21 @@
 <a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>✓ Components        18 (9 exported)
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>✓ Signing           v1, v2, v3
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>✓ Code              2936 classes · 16824 methods · 55703 call edges
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>✓ Wrote binaryeye/     24 files in 1.3s
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>✓ Files             930 in the APK, 619 decoded
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>✓ Wrote binaryeye.sqlite  31.8 MB in 2.9s
 </code></pre></div>
 <p>Progress goes to <strong>stderr</strong>, so it never mixes with data on stdout. Typical apps take 1–5 seconds; the largest (60k+ classes) take 15–25 seconds, mostly to build the search index.</p>
 <div class="admonition tip">
 <p class="admonition-title">Faster runs</p>
-<p><code>--no-index</code> skips <code>index.sqlite</code> (no <code>find</code>, <code>sql</code>, <code>class</code>…). <code>--no-code</code> skips code entirely and only reads the manifest, resources and signing, which takes well under a second.</p>
+<p><code>--no-code</code> skips code entirely and only reads the manifest, resources and signing, which takes well under a second.</p>
 </div>
 <h2 id="2-read-the-summary">2. Read the summary<a class="headerlink" href="#2-read-the-summary" title="Permanent link">&para;</a></h2>
-<p>Open <code>binaryeye/summary.md</code>, or run:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sextant<span class="w"> </span>info<span class="w"> </span>binaryeye/
+<p>Run:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sextant<span class="w"> </span>info<span class="w"> </span>binaryeye.sqlite
 </code></pre></div>
-<p><code>info</code> also works directly on an APK (<code>sextant info app.apk</code>); it then analyzes in memory and writes nothing.</p>
+<p>Every command also works directly on an APK (<code>sextant info app.apk</code>): it is indexed once into a cache and reused on every later run.</p>
 <h2 id="3-search-anything">3. Search anything<a class="headerlink" href="#3-search-anything" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sextant<span class="w"> </span>find<span class="w"> </span>binaryeye/<span class="w"> </span><span class="s2">"markusfisch.de/BinaryEye"</span><span class="w"> </span>--limit<span class="w"> </span><span class="m">4</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sextant<span class="w"> </span>find<span class="w"> </span>binaryeye.sqlite<span class="w"> </span><span class="s2">"markusfisch.de/BinaryEye"</span><span class="w"> </span>--limit<span class="w"> </span><span class="m">4</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>string     http://markusfisch.de/BinaryEye
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>           ← Lde/markusfisch/android/binaryeye/activity/CameraActivity;-&gt;onResume()V
@@ -1448,12 +1449,12 @@
 </code></pre></div>
 <p>The string hit tells you <strong>which method loads it</strong>; the deep-link hit tells you <strong>which activity opens it</strong>.</p>
 <h2 id="4-follow-the-code">4. Follow the code<a class="headerlink" href="#4-follow-the-code" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sextant<span class="w"> </span>callers<span class="w"> </span>binaryeye/<span class="w"> </span><span class="s2">"Landroid/app/Activity;-&gt;getIntent"</span><span class="w"> </span>--depth<span class="w"> </span><span class="m">1</span><span class="w"> </span>--fan-out<span class="w"> </span><span class="m">3</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sextant<span class="w"> </span>callers<span class="w"> </span>binaryeye.sqlite<span class="w"> </span><span class="s2">"Landroid/app/Activity;-&gt;getIntent"</span><span class="w"> </span>--depth<span class="w"> </span><span class="m">1</span><span class="w"> </span>--fan-out<span class="w"> </span><span class="m">3</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>sextant<span class="w"> </span><span class="nb">source</span><span class="w"> </span>binaryeye.apk<span class="w"> </span>de.markusfisch.android.binaryeye.activity.CameraActivity.onResume
 </code></pre></div>
 <p><code>source</code> prints decompiled Java for one method or class, with the same names as in the index.</p>
 <h2 id="5-review">5. Review<a class="headerlink" href="#5-review" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sextant<span class="w"> </span>findings<span class="w"> </span>binaryeye/
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sextant<span class="w"> </span>findings<span class="w"> </span>binaryeye.sqlite
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>[medium] Cleartext HTTP allowed  (1)  · cleartext
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    android:usesCleartextTraffic=true allows unencrypted HTTP.

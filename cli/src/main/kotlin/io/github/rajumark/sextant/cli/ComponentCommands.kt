@@ -10,24 +10,20 @@ import com.github.ajalt.clikt.parameters.types.choice
 import com.github.ajalt.clikt.parameters.types.path
 import io.github.rajumark.sextant.core.ExitCode
 import io.github.rajumark.sextant.core.Extraction
-import io.github.rajumark.sextant.core.Extractor
 import io.github.rajumark.sextant.core.SextantException
 import io.github.rajumark.sextant.core.insights.ComponentReview
 import io.github.rajumark.sextant.core.insights.ComponentReviews
 import io.github.rajumark.sextant.core.model.Component
 import io.github.rajumark.sextant.core.output.InfoReports
 import io.github.rajumark.sextant.core.output.ManifestXml
-import io.github.rajumark.sextant.core.output.OutputReader
 import io.github.rajumark.sextant.core.output.SextantJson
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.encodeToJsonElement
-import java.nio.file.Files
 import java.nio.file.Path
 
-/** Components need only the manifest: an APK is read without its code, so this is fast even for large apps. */
-private fun load(target: Path): Extraction =
-    if (Files.isDirectory(target)) OutputReader.read(target) else Extractor.extract(target, code = null)
+/** From an APK (through the index cache) or a .sqlite file. */
+private fun load(target: Path): Extraction = loadExtraction(target)
 
 /** The component, its review, and the `<activity>` attributes that are set, as one JSON object. */
 private fun json(
@@ -44,7 +40,7 @@ private fun json(
 
 /** `sextant components <apk|dir>`: every manifest component with its verdict tags, filterable. */
 class ComponentsCommand : CoreCliktCommand(name = "components") {
-    private val target by argument(help = "An extracted folder, or an APK (analyzed in memory, nothing written)").path()
+    private val target by argument(help = INDEX_INPUT).path()
     private val types by option(
         "--type",
         help = "Only this type; repeat for several (activity includes aliases with --type activity-alias)",
@@ -112,7 +108,7 @@ class ComponentsCommand : CoreCliktCommand(name = "components") {
 
 /** `sextant component <apk|dir> <name>`: one component in layers: verdicts and why, attributes, entry points, adb, raw. */
 class ComponentCommand : CoreCliktCommand(name = "component") {
-    private val target by argument(help = "An extracted folder, or an APK (analyzed in memory, nothing written)").path()
+    private val target by argument(help = INDEX_INPUT).path()
     private val name by argument(help = "Class name, or a unique suffix such as .MainActivity")
     private val json by option("--json", help = "One JSON object: component, review, attributes").flag()
 

@@ -1325,24 +1325,24 @@
 
 <h1 id="sextant-cli">Sextant CLI<a class="headerlink" href="#sextant-cli" title="Permanent link">&para;</a></h1>
 <p><strong>Turn an Android APK into structured data that people, scripts and AI agents can read.</strong></p>
-<p>Sextant reads an APK's manifest, resources, signing information and DEX bytecode, and writes everything as plain JSON and JSONL files plus a SQLite index you can search and query. It never runs the app and needs no device, emulator or Android SDK.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sextant<span class="w"> </span>extract<span class="w"> </span>app.apk<span class="w"> </span>-o<span class="w"> </span>app/<span class="w">          </span><span class="c1"># decode everything into app/</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sextant<span class="w"> </span>info<span class="w"> </span>app/<span class="w">                        </span><span class="c1"># one-screen summary</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>sextant<span class="w"> </span>find<span class="w"> </span>app/<span class="w"> </span><span class="s2">"api.example.com"</span><span class="w">      </span><span class="c1"># where does this URL come from?</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>sextant<span class="w"> </span>findings<span class="w"> </span>app/<span class="w"> </span>--severity<span class="w"> </span>medium<span class="w">  </span><span class="c1"># what should a reviewer look at?</span>
+<p>Sextant reads an APK's manifest, resources, signing information and DEX bytecode, and writes everything into one SQLite file you can search and query. APK in, SQLite out. It never runs the app and needs no device, emulator or Android SDK.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sextant<span class="w"> </span>extract<span class="w"> </span>app.apk<span class="w">                       </span><span class="c1"># everything into app.sqlite</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sextant<span class="w"> </span>info<span class="w"> </span>app.sqlite<span class="w">                        </span><span class="c1"># one-screen summary</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>sextant<span class="w"> </span>find<span class="w"> </span>app.sqlite<span class="w"> </span><span class="s2">"api.example.com"</span><span class="w">      </span><span class="c1"># where does this URL come from?</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>sextant<span class="w"> </span>findings<span class="w"> </span>app.sqlite<span class="w"> </span>--severity<span class="w"> </span>medium<span class="w">  </span><span class="c1"># what should a reviewer look at?</span>
 </code></pre></div>
 <div class="grid cards">
 <ul>
 <li>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3zm12 7h6v4h-6zm0 7h6v4h-6zm-2-4H7v5h6v2H5V9h2v2h6z"/></svg></span> <strong>Everything as data</strong></p>
 <hr />
-<p>Manifest, permissions, components, intent filters, features, queries, metadata, signing, icons, classes, methods, fields, call edges, strings, field and type references, all as deterministic JSON/JSONL.</p>
-<p><a href="reference/output/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"/></svg></span> Output files</a></p>
+<p>Manifest, permissions, components, intent filters, features, queries, metadata, signing, icons, classes, methods, fields, call edges, strings, field and type references, all as deterministic rows in one SQLite file.</p>
+<p><a href="reference/output/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"/></svg></span> Output</a></p>
 </li>
 <li>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.68 12.32a4.49 4.49 0 0 0-6.36.01 4.49 4.49 0 0 0 0 6.36 4.51 4.51 0 0 0 5.57.63L21 22.39 22.39 21l-3.09-3.11c1.13-1.77.87-4.09-.62-5.57m-1.41 4.95c-.98.98-2.56.97-3.54 0-.97-.98-.97-2.56.01-3.54.97-.97 2.55-.97 3.53 0 .97.98.97 2.56 0 3.54M10.9 20.1a6.5 6.5 0 0 1-1.48-2.32C6.27 17.25 4 15.76 4 14v3c0 2.21 3.58 4 8 4-.4-.26-.77-.56-1.1-.9M4 9v3c0 1.68 2.07 3.12 5 3.7v-.2c0-.93.2-1.85.58-2.69C6.34 12.3 4 10.79 4 9m8-6C7.58 3 4 4.79 4 7c0 2 3 3.68 6.85 4h.05c1.2-1.26 2.86-2 4.6-2 .91 0 1.81.19 2.64.56A3.22 3.22 0 0 0 20 7c0-2.21-3.58-4-8-4"/></svg></span> <strong>Query it like a database</strong></p>
 <hr />
-<p><code>index.sqlite</code> with full-text search over names, strings, URLs, resources, SDKs and native symbols. Use <code>find</code>, <code>class</code>, <code>xref</code>, <code>callers</code>, <code>reach</code>, or raw read-only SQL.</p>
+<p>One SQLite file with full-text search over names, strings, URLs, resources, SDKs and native symbols. Use <code>find</code>, <code>class</code>, <code>xref</code>, <code>callers</code>, <code>reach</code>, or raw read-only SQL.</p>
 <p><a href="guides/investigating/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"/></svg></span> Investigating an app</a></p>
 </li>
 <li>
@@ -1360,7 +1360,7 @@
 <li>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.5 15.5c0 1.11-.89 2-2 2s-2-.89-2-2 .9-2 2-2 2 .9 2 2m-9-2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.89 2-2-.89-2-2-2M23 15v3c0 .55-.45 1-1 1h-1v1c0 1.11-.89 2-2 2H5a2 2 0 0 1-2-2v-1H2c-.55 0-1-.45-1-1v-3c0-.55.45-1 1-1h1c0-3.87 3.13-7 7-7h1V5.73c-.6-.34-1-.99-1-1.73 0-1.1.9-2 2-2s2 .9 2 2c0 .74-.4 1.39-1 1.73V7h1c3.87 0 7 3.13 7 7h1c.55 0 1 .45 1 1m-2 1h-2v-2c0-2.76-2.24-5-5-5h-4c-2.76 0-5 2.24-5 5v2H3v1h2v3h14v-3h2z"/></svg></span> <strong>Built for AI agents</strong></p>
 <hr />
-<p><code>summary.md</code> for a one-read overview, <code>--json</code> on every command, and <code>sextant mcp</code>, a Model Context Protocol server with 15 tools.</p>
+<p><code>info</code> for a one-read overview, <code>--json</code> on every command, and <code>sextant mcp</code>, a Model Context Protocol server with 15 tools.</p>
 <p><a href="guides/ai-agents/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"/></svg></span> AI agents and MCP</a></p>
 </li>
 <li>
@@ -1378,7 +1378,7 @@
 </ul>
 </div>
 <h2 id="what-it-looks-like">What it looks like<a class="headerlink" href="#what-it-looks-like" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$ sextant info binaryeye/
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$ sextant info binaryeye.sqlite
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Package      de.markusfisch.android.binaryeye
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Label        Binary Eye
 <a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>Version      1.75.5 (180)
