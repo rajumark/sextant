@@ -20,6 +20,7 @@ import androidx.compose.material.icons.outlined.Build
 import androidx.compose.material.icons.outlined.Extension
 import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.material.icons.outlined.RocketLaunch
+import androidx.compose.material.icons.outlined.SearchOff
 import androidx.compose.material.icons.outlined.Storage
 import androidx.compose.material.icons.outlined.TouchApp
 import androidx.compose.material3.MaterialTheme
@@ -27,13 +28,23 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.input.key.type
 import androidx.compose.ui.unit.dp
 import io.github.rajumark.sextant.core.insights.AppStartup
 import io.github.rajumark.sextant.core.insights.StartupStep
 import io.github.rajumark.sextant.desktop.ui.common.CodeBlock
 import io.github.rajumark.sextant.desktop.ui.common.CopyButton
+import io.github.rajumark.sextant.desktop.ui.common.CopyTextButton
 import io.github.rajumark.sextant.desktop.ui.common.EmptyState
 import io.github.rajumark.sextant.desktop.ui.common.IconBadge
 import io.github.rajumark.sextant.desktop.ui.common.KeyValueRow
@@ -77,16 +88,42 @@ fun ApplicationScreen(ws: WorkspaceState) {
         return
     }
     val selected = s.steps.firstOrNull { it.order == ws.selectedStartupStep }
+    var query by remember { mutableStateOf("") }
+    val steps =
+        remember(s, query) {
+            val q = query.trim()
+            if (q.isEmpty()) {
+                s.steps
+            } else {
+                s.steps.filter { it.what.contains(q, ignoreCase = true) || it.target.contains(q, ignoreCase = true) }
+            }
+        }
     ListDetail(
         hasSelection = selected != null,
         onBack = { ws.selectedStartupStep = null },
         initialDetailWidth = 520.dp,
         list = {
-            Column(Modifier.fillMaxSize().padding(start = 24.dp, end = 24.dp, top = 20.dp)) {
+            Column(
+                Modifier.fillMaxSize().padding(start = 24.dp, end = 24.dp, top = 20.dp).onPreviewKeyEvent { e ->
+                    if (e.type != KeyEventType.KeyDown) return@onPreviewKeyEvent false
+                    val i = steps.indexOfFirst { it.order == ws.selectedStartupStep }
+                    when (e.key) {
+                        Key.DirectionDown -> steps.getOrNull(i + 1)?.let { ws.selectedStartupStep = it.order }
+                        Key.DirectionUp -> steps.getOrNull((i - 1).coerceAtLeast(0))?.let { ws.selectedStartupStep = it.order }
+                        Key.Escape -> if (selected != null) ws.selectedStartupStep = null else return@onPreviewKeyEvent false
+                        else -> return@onPreviewKeyEvent false
+                    }
+                    true
+                },
+            ) {
                 ListHeader(
                     "Application",
                     s.applicationClass?.let { "Custom Application class · ${s.steps.size} startup steps" } ?: "No custom Application class",
-                )
+                ) {
+                    CopyTextButton("Copy startup order", "startup order") {
+                        s.steps.joinToString("\n") { "${it.order}. ${it.what.trim()} — ${it.target}" }
+                    }
+                }
                 Spacer(Modifier.height(12.dp))
                 Surface(
                     color = MaterialTheme.colorScheme.surfaceContainerHigh,
@@ -132,8 +169,13 @@ fun ApplicationScreen(ws: WorkspaceState) {
                     }
                 }
                 SubsectionLabel("Startup order")
+                SearchField(query, { query = it }, "Filter steps by step or class", Modifier.fillMaxWidth())
+                Spacer(Modifier.height(4.dp))
+                if (steps.isEmpty()) {
+                    EmptyState(Icons.Outlined.SearchOff, "No step matches", "Try another class or package name.")
+                }
                 LazyColumn(Modifier.fillMaxSize()) {
-                    items(s.steps, key = { it.order }) { step ->
+                    items(steps, key = { it.order }) { step ->
                         val calls = methodsFor(s, step).sumOf { it.calls.size }
                         SelectableRow(
                             selected = step.order == ws.selectedStartupStep,

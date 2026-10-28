@@ -1,5 +1,8 @@
 package io.github.rajumark.sextant.desktop.ui.nav
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.TooltipArea
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,10 +17,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.ExpandLess
 import androidx.compose.material.icons.outlined.ExpandMore
 import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Surface
@@ -25,11 +29,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import io.github.rajumark.sextant.desktop.AppState
 import io.github.rajumark.sextant.desktop.model.Analysis
 import io.github.rajumark.sextant.desktop.ui.common.AppIcon
+import io.github.rajumark.sextant.desktop.ui.workspace.Destination
 
 /**
  * The left sidebar for an open analysis: an app card at the top (icon, name, version) with a dropdown that goes back to
@@ -105,32 +112,24 @@ fun Sidebar(app: AppState) {
         Column(Modifier.fillMaxHeight().padding(horizontal = 12.dp, vertical = 16.dp)) {
             AppCard(analysis, onOpenDropScreen = app::closeWorkspace)
             Spacer(Modifier.height(16.dp))
-            // The menu is a pane: with the Resources group it can be taller than the window, so only it scrolls.
+            // The menu is a pane: compact rows and folded sections make it fit, but on a short window only it scrolls.
             Column(Modifier.weight(1f).verticalScroll(rememberScrollState())) {
-                SidebarMenu.forEachIndexed { index, group ->
-                    if (index > 0) HorizontalDivider(Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
-                    group.forEach { d ->
-                        val c = countFor(d)
-                        val e = exportedFor(d)
-                        NavigationDrawerItem(
-                            label = {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Text(d.label, modifier = Modifier.weight(1f))
-                                    if (c != null && e != null && e > 0) {
-                                        Text("$e/$c", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.error)
-                                    } else if (c != null) {
-                                        Text(
-                                            "$c",
-                                            style = MaterialTheme.typography.labelSmall,
-                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                        )
-                                    }
-                                }
-                            },
-                            selected = ws.destination == d,
-                            onClick = { ws.destination = d },
-                            icon = { Icon(d.icon, null) },
+                SidebarMenu.forEach { section ->
+                    val title = section.title
+                    // The section holding the open page never folds away, or the user would lose their place.
+                    val open = title == null || title !in app.foldedMenuSections || ws.destination in section.items
+                    if (title != null) {
+                        SectionHeader(
+                            title = title,
+                            open = open,
+                            canFold = ws.destination !in section.items,
+                            onToggle = { app.toggleMenuSection(title) },
                         )
+                    }
+                    if (open) {
+                        section.items.forEach { d ->
+                            MenuRow(d, countFor(d), exportedFor(d), selected = ws.destination == d) { ws.destination = d }
+                        }
                     }
                 }
             }
@@ -138,9 +137,101 @@ fun Sidebar(app: AppState) {
                 label = { Text("Settings") },
                 selected = false,
                 onClick = { app.showSettings = true },
-                icon = { Icon(Icons.Outlined.Settings, null) },
+                icon = { Icon(Icons.Outlined.Settings, null, Modifier.size(20.dp)) },
+                modifier = Modifier.height(40.dp),
             )
         }
+    }
+}
+
+/** A section title; clicking it folds or opens the section. A section holding the open page can't fold. */
+@Composable
+private fun SectionHeader(
+    title: String,
+    open: Boolean,
+    canFold: Boolean,
+    onToggle: () -> Unit,
+) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .padding(top = 10.dp)
+            .clip(MaterialTheme.shapes.small)
+            .clickable(enabled = canFold, onClick = onToggle)
+            .padding(start = 16.dp, end = 12.dp, top = 6.dp, bottom = 6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            title.uppercase(),
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.weight(1f),
+        )
+        if (canFold) {
+            Icon(
+                if (open) Icons.Outlined.ExpandLess else Icons.Outlined.ExpandMore,
+                if (open) "Fold $title" else "Open $title",
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.size(18.dp),
+            )
+        }
+    }
+}
+
+/**
+ * One page in the menu, 40dp high so the whole menu fits a normal window. The count is on the right: red
+ * "exported/total" when some components are exported. Pages with nothing in them are dimmed but still open.
+ */
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun MenuRow(
+    d: Destination,
+    count: Int?,
+    exported: Int?,
+    selected: Boolean,
+    onClick: () -> Unit,
+) {
+    val empty = count == 0
+    val dim = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.55f)
+    NavigationDrawerItem(
+        label = {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    d.label,
+                    modifier = Modifier.weight(1f),
+                    color = if (empty && !selected) dim else Color.Unspecified,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+                if (count != null && exported != null && exported > 0) {
+                    TooltipArea(tooltip = { PlainTooltipBox("$exported exported of $count") }) {
+                        Text("$exported/$count", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.error)
+                    }
+                } else if (count != null) {
+                    Text(
+                        "$count",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = if (empty) dim else MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        },
+        selected = selected,
+        onClick = onClick,
+        icon = { Icon(d.icon, null, Modifier.size(20.dp), tint = if (empty && !selected) dim else LocalContentColor.current) },
+        modifier = Modifier.height(40.dp),
+    )
+}
+
+@Composable
+private fun PlainTooltipBox(text: String) {
+    Surface(color = MaterialTheme.colorScheme.inverseSurface, shape = MaterialTheme.shapes.extraSmall) {
+        Text(
+            text,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.inverseOnSurface,
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+        )
     }
 }
 

@@ -3,6 +3,7 @@ package io.github.rajumark.sextant.desktop.ui.home
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
@@ -20,7 +21,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.BrightnessAuto
 import androidx.compose.material.icons.outlined.DarkMode
@@ -29,11 +32,13 @@ import androidx.compose.material.icons.outlined.FolderOpen
 import androidx.compose.material.icons.outlined.History
 import androidx.compose.material.icons.outlined.LightMode
 import androidx.compose.material.icons.outlined.LocalOffer
+import androidx.compose.material.icons.outlined.SearchOff
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.UploadFile
 import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
@@ -46,11 +51,20 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.toShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.input.key.type
 import androidx.compose.ui.unit.dp
 import io.github.rajumark.sextant.desktop.AppState
 import io.github.rajumark.sextant.desktop.ShortcutPrefix
@@ -65,6 +79,7 @@ import io.github.rajumark.sextant.desktop.ui.common.ShapeBadge
 import io.github.rajumark.sextant.desktop.ui.common.Tag
 import io.github.rajumark.sextant.desktop.ui.common.Tone
 import io.github.rajumark.sextant.desktop.ui.common.relativeTime
+import io.github.rajumark.sextant.desktop.ui.screens.SearchField
 
 @Composable
 fun HomeScreen(app: AppState) {
@@ -105,17 +120,79 @@ private fun RecentPane(
     app: AppState,
     modifier: Modifier,
 ) {
+    var query by remember { mutableStateOf("") }
+    var tagFilter by remember { mutableStateOf<String?>(null) }
+    var cursor by remember { mutableIntStateOf(-1) }
+    val allTags =
+        app.recent
+            .flatMap { app.tags[it.outputDir].orEmpty() }
+            .distinct()
+            .sorted()
+    val shown =
+        app.recent.filter { a ->
+            val tags = app.tags[a.outputDir].orEmpty()
+            (tagFilter == null || tagFilter in tags) &&
+                (
+                    query.isBlank() ||
+                        listOfNotNull(a.meta.label, a.meta.packageName, a.meta.versionName, a.meta.file.name)
+                            .plus(tags)
+                            .any { it.contains(query.trim(), ignoreCase = true) }
+                )
+        }
+    val listState = rememberLazyListState()
+    LaunchedEffect(cursor) { if (cursor >= 0) listState.animateScrollToItem(cursor) }
     Surface(
         modifier = modifier,
         color = MaterialTheme.colorScheme.surfaceContainerLow,
         shape = MaterialTheme.shapes.extraLarge,
     ) {
-        Column(Modifier.fillMaxSize().padding(top = 20.dp, bottom = 12.dp)) {
+        // ↑ ↓ move through the list, Enter opens: the whole Home screen works without the mouse.
+        Column(
+            Modifier.fillMaxSize().padding(top = 20.dp, bottom = 12.dp).onPreviewKeyEvent { e ->
+                if (e.type != KeyEventType.KeyDown || shown.isEmpty()) return@onPreviewKeyEvent false
+                when (e.key) {
+                    Key.DirectionDown -> cursor = (cursor + 1).coerceAtMost(shown.lastIndex)
+                    Key.DirectionUp -> cursor = (cursor - 1).coerceAtLeast(0)
+                    Key.Enter, Key.NumPadEnter -> app.open(shown[cursor.coerceIn(0, shown.lastIndex)])
+                    else -> return@onPreviewKeyEvent false
+                }
+                true
+            },
+        ) {
             Row(Modifier.padding(horizontal = 20.dp), verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Outlined.History, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(Modifier.width(10.dp))
                 Text("Recent analyses", style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
                 if (app.recent.isNotEmpty()) TextButton(onClick = app::clearRecent) { Text("Clear") }
+            }
+            if (app.recent.isNotEmpty()) {
+                Spacer(Modifier.height(8.dp))
+                SearchField(
+                    query,
+                    {
+                        query = it
+                        cursor = -1
+                    },
+                    "Search name, package, version or tag · ↑ ↓ Enter",
+                    Modifier.fillMaxWidth().padding(horizontal = 20.dp),
+                )
+                if (allTags.isNotEmpty()) {
+                    Row(
+                        Modifier.padding(start = 20.dp, end = 20.dp, top = 8.dp).horizontalScroll(rememberScrollState()),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        allTags.forEach { t ->
+                            FilterChip(
+                                selected = tagFilter == t,
+                                onClick = {
+                                    tagFilter = if (tagFilter == t) null else t
+                                    cursor = -1
+                                },
+                                label = { Text(t) },
+                            )
+                        }
+                    }
+                }
             }
             Spacer(Modifier.height(8.dp))
             when {
@@ -127,11 +204,19 @@ private fun RecentPane(
                         "APKs you analyze and output folders you open appear here.",
                         Modifier.weight(1f),
                     )
+                shown.isEmpty() ->
+                    EmptyState(
+                        Icons.Outlined.SearchOff,
+                        "No analysis matches",
+                        "Try another name or clear the tag filter.",
+                        Modifier.weight(1f),
+                    )
                 else ->
-                    LazyColumn(Modifier.weight(1f).fillMaxWidth(), contentPadding = PaddingValues(horizontal = 12.dp)) {
-                        items(app.recent, key = { it.outputDir }) { analysis ->
+                    LazyColumn(Modifier.weight(1f).fillMaxWidth(), state = listState, contentPadding = PaddingValues(horizontal = 12.dp)) {
+                        itemsIndexed(shown, key = { _, it -> it.outputDir }) { i, analysis ->
                             RecentRow(
                                 a = analysis,
+                                highlighted = i == cursor,
                                 tags = app.tags[analysis.outputDir].orEmpty(),
                                 onOpen = { app.open(analysis) },
                                 onReveal = { app.revealFolder(analysis.outputDir) },
@@ -215,6 +300,7 @@ private fun DropZone(
 @Composable
 private fun RecentRow(
     a: Analysis,
+    highlighted: Boolean,
     tags: List<String>,
     onOpen: () -> Unit,
     onReveal: () -> Unit,
@@ -233,7 +319,7 @@ private fun RecentRow(
     Surface(
         onClick = onOpen,
         interactionSource = interaction,
-        color = MaterialTheme.colorScheme.surface,
+        color = if (highlighted) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surface,
         shape = MaterialTheme.shapes.large,
         modifier = Modifier.fillMaxWidth().padding(vertical = 3.dp),
     ) {

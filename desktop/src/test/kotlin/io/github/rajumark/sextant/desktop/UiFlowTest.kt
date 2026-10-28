@@ -57,6 +57,9 @@ class UiFlowTest {
         runComposeUiTest {
             val state = testState(northwind)
             setContent { App(state) }
+            // Resources starts folded: open it, then every page is one click away.
+            onNodeWithText("RESOURCES").performClick()
+            waitForIdle()
             Destination.entries.drop(1).forEach { d ->
                 // The menu scrolls when it is taller than the window (resource pages): bring the item into view first.
                 onAllNodesWithText(d.label)[0].performScrollTo().performClick()
@@ -73,12 +76,13 @@ class UiFlowTest {
             setContent { App(state) }
             onNodeWithText("Dangerous", substring = true).performClick()
             waitForIdle()
-            onNodeWithText("android.permission.CAMERA").assertIsDisplayed()
-            assertEquals(0, onAllNodesWithText("android.permission.INTERNET").fetchSemanticsNodes().size)
+            // Rows show the short name and the plain meaning; the full name is in the details.
+            onNodeWithText("CAMERA").assertIsDisplayed()
+            assertEquals(0, onAllNodesWithText("INTERNET").fetchSemanticsNodes().size)
 
-            onNodeWithText("Search permissions").performTextInput("camera")
+            onNodeWithText("Search permissions", substring = true).performTextInput("camera")
             waitForIdle()
-            onNodeWithText("android.permission.CAMERA").performClick()
+            onNodeWithText("CAMERA").performClick()
             waitForIdle()
             assertEquals("uses-permission|android.permission.CAMERA", state.workspace?.selectedPermission)
             onNodeWithText("Use the camera.").assertIsDisplayed()

@@ -8,15 +8,13 @@ import kotlin.test.assertEquals
 class SidebarMenuTest {
     @Test
     fun `every screen appears exactly once in the sidebar`() {
-        assertEquals(Destination.entries.sorted(), SidebarMenu.flatten().sorted())
+        assertEquals(Destination.entries.sorted(), SidebarMenu.flatMap { it.items }.sorted())
     }
 
     @Test
-    fun `app-level pages come first, then components and manifest, then resources`() {
-        assertEquals(
-            listOf(Destination.Overview, Destination.Application, Destination.Sdks, Destination.Permissions, Destination.IconFiles),
-            SidebarMenu[0],
-        )
-        assertEquals(Destination.Strings, SidebarMenu.last().first())
+    fun `overview stands alone, then named sections in review order`() {
+        assertEquals(listOf(Destination.Overview), SidebarMenu.first().items)
+        assertEquals(null, SidebarMenu.first().title)
+        assertEquals(listOf("Review", "Components", "Resources", "Files"), SidebarMenu.drop(1).map { it.title })
     }
 }

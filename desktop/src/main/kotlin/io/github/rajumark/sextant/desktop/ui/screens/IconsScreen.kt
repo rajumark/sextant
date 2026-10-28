@@ -30,6 +30,7 @@ import androidx.compose.material.icons.outlined.Download
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.Layers
 import androidx.compose.material.icons.outlined.TouchApp
+import androidx.compose.material.icons.outlined.WarningAmber
 import androidx.compose.material.icons.outlined.ZoomIn
 import androidx.compose.material.icons.outlined.ZoomOut
 import androidx.compose.material3.CircularProgressIndicator
@@ -74,6 +75,7 @@ import io.github.rajumark.sextant.desktop.model.IconPick
 import io.github.rajumark.sextant.desktop.saveWithDialog
 import io.github.rajumark.sextant.desktop.ui.common.CodeBlock
 import io.github.rajumark.sextant.desktop.ui.common.CopyButton
+import io.github.rajumark.sextant.desktop.ui.common.CopyTextButton
 import io.github.rajumark.sextant.desktop.ui.common.EmptyState
 import io.github.rajumark.sextant.desktop.ui.common.IconBadge
 import io.github.rajumark.sextant.desktop.ui.common.KeyValueRow
@@ -119,11 +121,44 @@ private val LauncherSizes =
 
 private fun IconEntry.sizeWarning(): String? {
     if (role != "Launcher icon" && role != "Round icon") return null
-    val density = LauncherSizes.keys.firstOrNull { file.config.contains(it) } ?: return null
+    // Match whole qualifiers: "xhdpi" contains "hdpi", so a substring test picks the wrong density.
+    val density = LauncherSizes.keys.firstOrNull { it in file.config.split('-') } ?: return null
     val width = file.width ?: return null
     val expected = LauncherSizes.getValue(density)
     return if (width != expected) "Expected $expected px for $density, found $width px" else null
 }
+
+/** The filter value for launcher files with the wrong pixel size. */
+private const val SIZE_PROBLEMS = "Size problems"
+
+/**
+ * Densities with no bitmap launcher icon. Empty when the launcher icon has no bitmaps at all (vector only), since
+ * then no density is missing.
+ */
+private fun missingLauncherDensities(all: List<IconEntry>): List<String> {
+    val bitmaps = all.filter { it.role == "Launcher icon" && it.file.format.lowercase() in setOf("png", "webp", "jpg", "jpeg") }
+    if (bitmaps.isEmpty()) return emptyList()
+    return LauncherSizes.keys.filter { d ->
+        bitmaps.none { b ->
+            b.file.config
+                .split('-')
+                .contains(d)
+        }
+    }
+}
+
+/** One line per shown file, for a release checklist or a bug report. */
+private fun iconReport(entries: List<IconEntry>): String =
+    entries.joinToString("\n") { e ->
+        listOf(
+            e.role,
+            e.file.config.ifEmpty { "default" },
+            e.file.path,
+            e.file.format,
+            if (e.file.width != null) "${e.file.width}×${e.file.height} px" else "vector",
+            formatBytes(e.file.sizeBytes),
+        ).joinToString("\t") + (e.sizeWarning()?.let { "\t$it" } ?: "")
+    }
 
 /**
  * Every icon file the APK ships. The list has search, filter chips and a launcher preview button. Selecting a file
@@ -138,7 +173,7 @@ fun IconsScreen(ws: WorkspaceState) {
     val query = ws.iconQuery.trim()
     val entries =
         all.filter { e ->
-            (ws.iconFilter == "All" || e.kind == ws.iconFilter) &&
+            (ws.iconFilter == "All" || e.kind == ws.iconFilter || (ws.iconFilter == SIZE_PROBLEMS && e.sizeWarning() != null)) &&
                 (
                     query.isEmpty() ||
                         e.file.path.contains(query, true) ||
@@ -221,7 +256,16 @@ private fun IconList(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
+                val missing = remember(all) { missingLauncherDensities(all) }
+                if (missing.isNotEmpty()) {
+                    Text(
+                        "Launcher icon has no ${missing.joinToString()} bitmap; Android scales another density on those screens",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.tertiary,
+                    )
+                }
             }
+            CopyTextButton("Copy list", "${entries.size} icon files") { iconReport(entries) }
             if (canPreview) {
                 IconButton(onClick = onLauncherPreview) { Icon(Icons.Outlined.Layers, "Launcher preview") }
             }
@@ -235,6 +279,15 @@ private fun IconList(
                     selected = ws.iconFilter == kind,
                     onClick = { ws.iconFilter = kind },
                     label = { Text("$kind  ${if (kind == "All") all.size else all.count { it.kind == kind }}") },
+                )
+            }
+            val wrong = all.count { it.sizeWarning() != null }
+            if (wrong > 0) {
+                FilterChip(
+                    selected = ws.iconFilter == SIZE_PROBLEMS,
+                    onClick = { ws.iconFilter = SIZE_PROBLEMS },
+                    label = { Text("$SIZE_PROBLEMS  $wrong") },
+                    leadingIcon = { Icon(Icons.Outlined.WarningAmber, null, Modifier.size(16.dp), tint = MaterialTheme.colorScheme.error) },
                 )
             }
         }

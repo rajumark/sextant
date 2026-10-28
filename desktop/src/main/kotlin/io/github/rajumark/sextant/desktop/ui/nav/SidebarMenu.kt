@@ -2,33 +2,48 @@ package io.github.rajumark.sextant.desktop.ui.nav
 
 import io.github.rajumark.sextant.desktop.ui.workspace.Destination
 
+/** One named, foldable part of the sidebar. A null title is drawn without a header and never folds. */
+class MenuSection(
+    val title: String?,
+    val items: List<Destination>,
+)
+
 /**
- * The order of the sidebar's analysis menu. To reorder or regroup items, edit only this list.
- * Each inner list is one group; a divider is drawn between groups. Every [Destination] should appear exactly once
- * (a test checks this).
+ * The sidebar's analysis menu, in the order a review usually goes: the overview, the app-level review pages, the
+ * components, the resources, then the raw files. To reorder or regroup items, edit only this list. Every
+ * [Destination] should appear exactly once (a test checks this).
  */
-val SidebarMenu: List<List<Destination>> =
+val SidebarMenu: List<MenuSection> =
     listOf(
-        listOf(Destination.Overview, Destination.Application, Destination.Sdks, Destination.Permissions, Destination.IconFiles),
-        listOf(
-            Destination.Activities,
-            Destination.Services,
-            Destination.Receivers,
-            Destination.Providers,
-            Destination.Aliases,
-            Destination.Manifest,
-            Destination.Signing,
-            Destination.Output,
+        MenuSection(null, listOf(Destination.Overview)),
+        MenuSection(
+            "Review",
+            listOf(Destination.Application, Destination.Permissions, Destination.Sdks, Destination.Signing),
         ),
-        listOf(
-            Destination.Strings,
-            Destination.Layouts,
-            Destination.Menus,
-            Destination.Navigation,
-            Destination.Styles,
-            Destination.Drawables,
-            Destination.ResourceIds,
-            Destination.Assets,
-            Destination.XmlConfigs,
+        MenuSection(
+            "Components",
+            listOf(
+                Destination.Activities,
+                Destination.Services,
+                Destination.Receivers,
+                Destination.Providers,
+                Destination.Aliases,
+            ),
         ),
+        MenuSection(
+            "Resources",
+            listOf(
+                Destination.Strings,
+                Destination.Layouts,
+                Destination.Menus,
+                Destination.Navigation,
+                Destination.Styles,
+                Destination.Drawables,
+                Destination.IconFiles,
+                Destination.ResourceIds,
+                Destination.Assets,
+                Destination.XmlConfigs,
+            ),
+        ),
+        MenuSection("Files", listOf(Destination.Manifest, Destination.Output)),
     )

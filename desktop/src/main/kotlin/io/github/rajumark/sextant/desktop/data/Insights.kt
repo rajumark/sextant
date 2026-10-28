@@ -4,10 +4,14 @@ import io.github.rajumark.sextant.desktop.model.Analysis
 
 enum class Severity { Info, Notice, Risk }
 
+/** Where the evidence for an insight lives in the app; the Overview opens it on click. */
+enum class Evidence { OpenComponents, ExportedComponents, ApplicationElement, Signing, AppLinks, DangerousPermissions }
+
 data class Insight(
     val severity: Severity,
     val title: String,
     val detail: String,
+    val evidence: Evidence? = null,
 )
 
 /** Facts worth a second look, derived only from what the analysis contains. */
@@ -16,9 +20,23 @@ object Insights {
         buildList {
             val f = a.meta.flags
             if (f.debuggable == true) {
-                add(Insight(Severity.Risk, "Debuggable build", "android:debuggable is true. Any user can attach a debugger to this app."))
+                add(
+                    Insight(
+                        Severity.Risk,
+                        "Debuggable build",
+                        "android:debuggable is true. Any user can attach a debugger to this app.",
+                        Evidence.ApplicationElement,
+                    ),
+                )
             }
-            val open = a.components.filter { it.exported && it.permission == null && !it.launcher }
+            val open =
+                a.components.filter {
+                    it.exported &&
+                        it.permission == null &&
+                        it.readPermission == null &&
+                        it.writePermission == null &&
+                        !it.launcher
+                }
             if (open.isNotEmpty()) {
                 add(
                     Insight(
@@ -26,6 +44,7 @@ object Insights {
                         "${open.size} exported components without a permission",
                         "Other apps can start these directly: " + open.take(3).joinToString { it.simpleName } +
                             if (open.size > 3) "…" else "",
+                        Evidence.OpenComponents,
                     ),
                 )
             }
@@ -36,11 +55,19 @@ object Insights {
                         Severity.Notice,
                         "$byDefault exported only by Android's default rule",
                         "android:exported is missing; the component is exported because it declares an intent filter.",
+                        Evidence.ExportedComponents,
                     ),
                 )
             }
             if (f.allowBackup == true) {
-                add(Insight(Severity.Notice, "Backups allowed", "android:allowBackup is true, so app data can be copied with adb backup."))
+                add(
+                    Insight(
+                        Severity.Notice,
+                        "Backups allowed",
+                        "android:allowBackup is true, so app data can be copied with adb backup.",
+                        Evidence.ApplicationElement,
+                    ),
+                )
             }
             when (f.usesCleartextTraffic) {
                 true ->
@@ -49,6 +76,7 @@ object Insights {
                             Severity.Risk,
                             "Cleartext traffic allowed",
                             "usesCleartextTraffic is true. Plain HTTP connections are permitted.",
+                            Evidence.ApplicationElement,
                         ),
                     )
                 null ->
@@ -58,6 +86,7 @@ object Insights {
                                 Severity.Info,
                                 "Cleartext blocked by default",
                                 "Not set in the manifest; Android blocks it for targetSdk 28 and higher.",
+                                Evidence.ApplicationElement,
                             ),
                         )
                     }
@@ -75,6 +104,7 @@ object Insights {
                         Severity.Notice,
                         "Signed with the v1 scheme",
                         "JAR signing is kept for old devices. v1 alone is vulnerable to Janus on Android 7.0 and lower.",
+                        Evidence.Signing,
                     ),
                 )
             }
@@ -86,6 +116,7 @@ object Insights {
                         Severity.Risk,
                         "Signed with a debug certificate",
                         "The signer is the default Android debug key, not a release key.",
+                        Evidence.Signing,
                     ),
                 )
             }
@@ -97,10 +128,17 @@ object Insights {
                     .mapNotNull { it.host }
                     .distinct()
             if (verified.isNotEmpty()) {
-                add(Insight(Severity.Info, "Verified App Links", "autoVerify is set for " + verified.joinToString()))
+                add(Insight(Severity.Info, "Verified App Links", "autoVerify is set for " + verified.joinToString(), Evidence.AppLinks))
             }
             if (a.dangerousCount > 0) {
-                add(Insight(Severity.Info, "${a.dangerousCount} dangerous permissions", "These need runtime approval from the user."))
+                add(
+                    Insight(
+                        Severity.Info,
+                        "${a.dangerousCount} dangerous permissions",
+                        "These need runtime approval from the user.",
+                        Evidence.DangerousPermissions,
+                    ),
+                )
             }
         }
 }

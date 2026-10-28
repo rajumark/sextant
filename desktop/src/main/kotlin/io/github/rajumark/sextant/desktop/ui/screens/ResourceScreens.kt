@@ -70,6 +70,7 @@ import io.github.rajumark.sextant.core.model.XmlConfigRecord
 import io.github.rajumark.sextant.desktop.theme.MonoFamily
 import io.github.rajumark.sextant.desktop.ui.common.CodeBlock
 import io.github.rajumark.sextant.desktop.ui.common.CopyButton
+import io.github.rajumark.sextant.desktop.ui.common.CopyTextButton
 import io.github.rajumark.sextant.desktop.ui.common.EmptyState
 import io.github.rajumark.sextant.desktop.ui.common.IconBadge
 import io.github.rajumark.sextant.desktop.ui.common.KeyValueRow
@@ -125,6 +126,8 @@ private class ResSpec<T>(
     /** The entry as written: its own file or its lines in res/values, one block per configuration (prepared by core). */
     val source: (T) -> List<SourceBlock> = { emptyList() },
     val webQuery: (T) -> Pair<String, String>,
+    /** Byte size of an entry, for the "Largest first" sort; null when the page has no sizes. */
+    val size: ((T) -> Long)? = null,
     /** Replaces the default "Manifest entry" block (resources referenced from the manifest). */
     val manifestEntry: (@Composable (T) -> Unit)? = null,
 )
@@ -161,13 +164,35 @@ private fun <T> ResourcePage(
 ) {
     val icon = ws.destination.icon
     val q = page.query.trim()
-    val active = spec.filters.filter { it.first in page.filters }
+    // References from other resources and the manifest. Code is not scanned, so zero never means "unused".
+    val refCounts = remember(ws.analysis) { referenceCounts(ws.analysis.resources.refs) }
+
+    fun refCount(item: T) = spec.refs(item).sumOf { refCounts[it] ?: 0 }
+    val referable = spec.items.any { spec.refs(it).isNotEmpty() }
+    // Strings already carry core's own "Not referenced" flag, so they don't get a second one.
+    val filters =
+        spec.filters +
+            if (referable && spec.title != "Strings") listOf(NOT_REFERENCED to { item: T -> refCount(item) == 0 }) else emptyList()
+    val sorts =
+        listOfNotNull(
+            ResSort.Default,
+            ResSort.Name,
+            ResSort.MostReferenced.takeIf { referable },
+            ResSort.Largest.takeIf { spec.size != null },
+        )
+    val active = filters.filter { it.first in page.filters }
     val shown =
-        remember(spec.items, q, page.filters) {
-            spec.items.filter { item ->
-                (q.isEmpty() || spec.searchText(item).contains(q, ignoreCase = true)) &&
-                    active.all { it.second(item) }
-            }
+        remember(spec.items, q, page.filters, page.sort) {
+            sortResources(
+                spec.items.filter { item ->
+                    (q.isEmpty() || spec.searchText(item).contains(q, ignoreCase = true)) &&
+                        active.all { it.second(item) }
+                },
+                page.sort,
+                spec.key,
+                ::refCount,
+                spec.size,
+            )
         }
     val selected = spec.items.firstOrNull { spec.key(it) == page.selected }
     val searchFocus = remember { FocusRequester() }
@@ -196,11 +221,13 @@ private fun <T> ResourcePage(
                 },
             ) {
                 ListHeader(spec.title, "${spec.items.size} ${spec.noun} · showing ${shown.size}") {
+                    CopyTextButton("Copy list", "${shown.size} ${spec.noun}") { resourceListText(shown, spec.key, spec.supporting) }
+                    ResSortMenu(sorts, page.sort) { page.sort = it }
                     if (spec.title == "Strings") LocaleMenu(ws, page)
                 }
                 Spacer(Modifier.height(12.dp))
                 SearchField(page.query, { page.query = it }, "Search ${spec.noun}", Modifier.fillMaxWidth().focusRequester(searchFocus))
-                val counts = spec.filters.map { (label, p) -> Triple(label, p, spec.items.count(p)) }.filter { it.third > 0 }
+                val counts = filters.map { (label, p) -> Triple(label, p, spec.items.count(p)) }.filter { it.third > 0 }
                 if (counts.isNotEmpty()) {
                     FlowRow(
                         Modifier.fillMaxWidth().padding(top = 8.dp),
@@ -278,6 +305,10 @@ private fun <T> ResourcePage(
                                 trailing = {
                                     Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                                         spec.tags(item).take(3).forEach { (t, tone) -> Tag(t, tone) }
+                                        if (referable) {
+                                            val n = refCount(item)
+                                            Tag(if (n == 1) "1 ref" else "$n refs", if (n == 0) Tone.Neutral else Tone.Secondary)
+                                        }
                                     }
                                 },
                             )
@@ -899,6 +930,7 @@ private fun assetsSpec(assets: List<AssetRecord>) =
         icon = Icons.Outlined.TouchApp,
         items = assets,
         key = { it.path },
+        size = { it.bytes },
         headline = { it.path.removePrefix("assets/") },
         supporting = { "${it.kind} · ${formatBytes(it.bytes)}" + (it.magic?.let { m -> " · content is $m" } ?: "") },
         tags = { a -> listOfNotNull(if (a.hiddenCode) "hidden code" to Tone.Error else null, a.kind to Tone.Neutral) },

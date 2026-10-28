@@ -31,6 +31,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import io.github.rajumark.sextant.desktop.model.Analysis
 import io.github.rajumark.sextant.desktop.model.ComponentType
 import io.github.rajumark.sextant.desktop.model.ManifestNode
+import io.github.rajumark.sextant.desktop.ui.screens.ResSort
 
 enum class Destination(
     val label: String,
@@ -172,6 +173,41 @@ class WorkspaceState(
         destination = Destination.Permissions
     }
 
+    /** Opens the manifest with the `<application>` element selected (flags such as allowBackup live there). */
+    fun showApplicationInManifest() {
+        val app = analysis.manifest.children.indexOfFirst { it.tag == "application" }
+        manifestQuery = ""
+        manifestView = ManifestView.Tree
+        if (app >= 0) selectedNode = "$app"
+        destination = Destination.Manifest
+    }
+
+    /**
+     * Opens the component page with the most components any app can reach (exported, no permission, not the launcher),
+     * filtered to them.
+     */
+    fun showOpenComponents() {
+        val open =
+            analysis.components.filter {
+                it.exported &&
+                    it.permission == null &&
+                    it.readPermission == null &&
+                    it.writePermission == null &&
+                    !it.launcher
+            }
+        val type =
+            open
+                .groupingBy { it.type }
+                .eachCount()
+                .maxByOrNull { it.value }
+                ?.key ?: ComponentType.Activity
+        componentPage(type).apply {
+            clearFilters()
+            openOnly = true
+        }
+        destination = type.destination
+    }
+
     /** Jump to the manifest and select the node declaring the given component name. */
     fun showComponentInManifest(componentName: String) {
         val path = findComponentPath(analysis.manifest, componentName)
@@ -305,6 +341,9 @@ class ComponentPageState {
     var query by mutableStateOf("")
     var exported by mutableStateOf<Boolean?>(null)
     var guardedOnly by mutableStateOf(false)
+
+    /** Exported and not protected by a permission: any app on the device can reach it. */
+    var openOnly by mutableStateOf(false)
     var disabledOnly by mutableStateOf(false)
     var customLaunchModeOnly by mutableStateOf(false)
     var customProcessOnly by mutableStateOf(false)
@@ -324,11 +363,19 @@ class ComponentPageState {
     val listState = LazyListState()
 
     val filtering: Boolean
-        get() = exported != null || guardedOnly || disabledOnly || customLaunchModeOnly || customProcessOnly || tags.isNotEmpty()
+        get() =
+            exported != null ||
+                guardedOnly ||
+                openOnly ||
+                disabledOnly ||
+                customLaunchModeOnly ||
+                customProcessOnly ||
+                tags.isNotEmpty()
 
     fun clearFilters() {
         exported = null
         guardedOnly = false
+        openOnly = false
         disabledOnly = false
         customLaunchModeOnly = false
         customProcessOnly = false
@@ -341,6 +388,8 @@ class ResourcePageState {
     var query by mutableStateOf("")
     var filters by mutableStateOf(emptySet<String>())
     var selected by mutableStateOf<String?>(null)
+
+    var sort by mutableStateOf(ResSort.Default)
 
     /** Strings page: the locale shown in the list (null = default). */
     var locale by mutableStateOf<String?>(null)

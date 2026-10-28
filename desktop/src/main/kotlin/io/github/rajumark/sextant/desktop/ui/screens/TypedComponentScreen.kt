@@ -71,6 +71,7 @@ import androidx.compose.ui.unit.dp
 import io.github.rajumark.sextant.desktop.copyToClipboard
 import io.github.rajumark.sextant.desktop.model.AppComponent
 import io.github.rajumark.sextant.desktop.model.ComponentType
+import io.github.rajumark.sextant.desktop.ui.common.CopyTextButton
 import io.github.rajumark.sextant.desktop.ui.common.EmptyState
 import io.github.rajumark.sextant.desktop.ui.common.IconBadge
 import io.github.rajumark.sextant.desktop.ui.common.ListDetail
@@ -109,9 +110,14 @@ private fun AppComponent.matches(q: String) =
         listOfNotNull(permission, readPermission, writePermission, process, facts.label).any { it.contains(q, ignoreCase = true) } ||
         tags.any { it.equals(q, ignoreCase = true) }
 
+/** Any app on the device can reach it: exported, no permission, and not the launcher (which every app may start). */
+private val AppComponent.isOpen: Boolean
+    get() = exported && permission == null && readPermission == null && writePermission == null && !launcher
+
 private fun ComponentPageState.accepts(c: AppComponent): Boolean =
     (exported == null || c.exported == exported) &&
         (!guardedOnly || c.permission != null || c.readPermission != null || c.writePermission != null) &&
+        (!openOnly || c.isOpen) &&
         (!disabledOnly || !c.enabled) &&
         (!customLaunchModeOnly || c.attribute("launchMode").let { it != null && it != "standard" }) &&
         (!customProcessOnly || c.process != null) &&
@@ -246,6 +252,7 @@ fun TypedComponentScreen(
                 },
             ) {
                 ListHeader(title, "${base.size} declared · ${base.count { it.exported }} exported · showing ${filtered.size}") {
+                    CopyTextButton("Copy list", "${filtered.size} ${title.lowercase()} as a Markdown table") { Export.markdown(filtered) }
                     SortMenu(page)
                     IconToggleButton(checked = page.groupByPackage, onCheckedChange = { page.groupByPackage = it }) {
                         Icon(Icons.Outlined.FolderOpen, if (page.groupByPackage) "Show as flat list" else "Group by package")
@@ -378,6 +385,8 @@ private fun FilterRow(
     FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
         ToggleChip("Exported ${base.count { it.exported }}", page.exported == true) { page.exported = if (it) true else null }
         ToggleChip("Not exported ${base.count { !it.exported }}", page.exported == false) { page.exported = if (it) false else null }
+        val open = base.count { it.isOpen }
+        if (open > 0) ToggleChip("Open to any app $open", page.openOnly) { page.openOnly = it }
         val guarded = base.count { it.permission != null || it.readPermission != null || it.writePermission != null }
         if (guarded > 0) ToggleChip("Guarded $guarded", page.guardedOnly) { page.guardedOnly = it }
         val disabled = base.count { !it.enabled }
@@ -582,7 +591,8 @@ private fun ComponentRow(
                             ?: c.packagePath,
                     )
                 },
-                leading = { IconBadge(c.type.icon(), c.type.tone()) },
+                // Red when any app can reach it, so open entry points stand out while scrolling.
+                leading = { IconBadge(c.type.icon(), if (c.isOpen) Tone.Error else c.type.tone()) },
                 trailing = { RowTags(c) },
             )
         }

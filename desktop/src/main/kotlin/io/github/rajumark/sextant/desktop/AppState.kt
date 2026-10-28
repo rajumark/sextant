@@ -74,6 +74,15 @@ class AppState(
         settings.saveSeedHex(color?.takeIf { it != DefaultSeed }?.toHex())
     }
 
+    /** Sidebar sections the user folded. Resources starts folded: most reviews start elsewhere. Saved between launches. */
+    var foldedMenuSections by mutableStateOf(settings.foldedMenuSections() ?: setOf("Resources"))
+        private set
+
+    fun toggleMenuSection(title: String) {
+        foldedMenuSections = if (title in foldedMenuSections) foldedMenuSections - title else foldedMenuSections + title
+        settings.saveFoldedMenuSections(foldedMenuSections)
+    }
+
     var showSettings by mutableStateOf(false)
     val recent = mutableStateListOf<Analysis>()
     var loadingRecent by mutableStateOf(false)

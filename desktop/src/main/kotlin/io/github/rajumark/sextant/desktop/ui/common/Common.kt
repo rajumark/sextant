@@ -25,6 +25,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Alignment
@@ -231,6 +232,27 @@ fun CopyButton(
         notify("Copied $what")
     }, modifier = Modifier.size(32.dp)) {
         Icon(Icons.Outlined.ContentCopy, "Copy $what", modifier = Modifier.size(16.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
+    }
+}
+
+/**
+ * "Copy" with a label, for copying a whole list or report as text. [text] is built only when clicked, so a long list
+ * costs nothing until then.
+ */
+@Composable
+fun CopyTextButton(
+    label: String,
+    what: String,
+    text: () -> String,
+) {
+    val notify = LocalNotifier.current
+    TextButton(onClick = {
+        copyToClipboard(text())
+        notify("Copied $what")
+    }) {
+        Icon(Icons.Outlined.ContentCopy, null, modifier = Modifier.size(16.dp))
+        Spacer(Modifier.size(6.dp))
+        Text(label)
     }
 }
 

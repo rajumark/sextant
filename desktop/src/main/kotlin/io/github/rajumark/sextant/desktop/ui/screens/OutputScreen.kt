@@ -27,7 +27,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -37,6 +40,7 @@ import io.github.rajumark.sextant.desktop.model.OutputFormat
 import io.github.rajumark.sextant.desktop.ui.common.CodeBlock
 import io.github.rajumark.sextant.desktop.ui.common.CodeView
 import io.github.rajumark.sextant.desktop.ui.common.CopyButton
+import io.github.rajumark.sextant.desktop.ui.common.CopyTextButton
 import io.github.rajumark.sextant.desktop.ui.common.IconBadge
 import io.github.rajumark.sextant.desktop.ui.common.MonoLine
 import io.github.rajumark.sextant.desktop.ui.common.SectionCard
@@ -49,7 +53,9 @@ import io.github.rajumark.sextant.desktop.ui.common.rememberHighlighted
 import io.github.rajumark.sextant.desktop.ui.common.syntax
 import io.github.rajumark.sextant.desktop.ui.workspace.WorkspaceState
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
+import java.io.File
 
 private fun OutputFormat.icon() =
     when (this) {
@@ -67,6 +73,14 @@ fun OutputScreen(
     val a = ws.analysis
     val files = a.outputFiles
     val selected = files.firstOrNull { it.name == ws.selectedFile } ?: files.firstOrNull()
+    var fileQuery by remember { mutableStateOf("") }
+    val shown =
+        remember(files, fileQuery) {
+            files.filter {
+                it.name.contains(fileQuery.trim(), ignoreCase = true) ||
+                    it.description.contains(fileQuery.trim(), ignoreCase = true)
+            }
+        }
     Row(Modifier.fillMaxSize()) {
         Column(
             Modifier
@@ -91,10 +105,20 @@ fun OutputScreen(
                 Spacer(Modifier.width(8.dp))
                 Text(if (isMac) "Reveal in Finder" else "Open folder")
             }
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(12.dp))
+            SearchField(fileQuery, { fileQuery = it }, "Search ${files.size} files", Modifier.fillMaxWidth())
+            Spacer(Modifier.height(8.dp))
             // Only the file list and the terminal card scroll, inside this column.
             Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState())) {
-                files.forEach { f ->
+                if (shown.isEmpty()) {
+                    Text(
+                        "No file matches.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(12.dp),
+                    )
+                }
+                shown.forEach { f ->
                     SelectableRow(
                         selected = f.name == selected?.name,
                         onClick = { ws.selectedFile = f.name },
@@ -112,7 +136,7 @@ fun OutputScreen(
             }
         }
         if (selected != null) {
-            FilePreview(selected, Modifier.weight(1f).fillMaxHeight().padding(top = 24.dp, end = 24.dp, bottom = 24.dp))
+            FilePreview(selected, a.outputDir, Modifier.weight(1f).fillMaxHeight().padding(top = 24.dp, end = 24.dp, bottom = 24.dp))
         }
     }
 }
@@ -120,8 +144,10 @@ fun OutputScreen(
 @Composable
 private fun FilePreview(
     f: OutputFile,
+    dir: String,
     modifier: Modifier,
 ) {
+    var lineQuery by remember(f) { mutableStateOf("") }
     // Files are read off the UI thread; previews are capped (see OutputFolder.PREVIEW_LINES).
     val content by produceState<String?>(null, f) {
         value = withContext(Dispatchers.IO) { runCatching { f.load() }.getOrElse { "Could not read ${f.name}: ${it.message}" } }
@@ -141,17 +167,65 @@ private fun FilePreview(
             )
             Spacer(Modifier.weight(1f))
             Text(formatBytes(f.sizeBytes), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            CopyTextButton("Copy path", "file path") { File(dir, f.name).path }
             content?.let { CopyButton(it, f.name) }
         }
+        SearchField(lineQuery, { lineQuery = it }, "Show only lines containing…", Modifier.fillMaxWidth())
         Spacer(Modifier.height(8.dp))
         val text = content
         if (text == null) {
             Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
         } else {
-            CodeView(rememberHighlighted(text, f.format.syntax()), Modifier.fillMaxSize())
+            val q = lineQuery.trim()
+            // Like grep over the whole file (the preview stops early on big files): matching lines with their numbers.
+            val lines by produceState<List<IndexedValue<String>>?>(null, f, q) {
+                value = null
+                if (q.isEmpty()) return@produceState
+                delay(200)
+                value =
+                    withContext(Dispatchers.IO) {
+                        val file = File(dir, f.name)
+                        if (f.format == OutputFormat.Binary || !file.isFile) {
+                            text
+                                .lineSequence()
+                                .withIndex()
+                                .filter { it.value.contains(q, ignoreCase = true) }
+                                .toList()
+                        } else {
+                            file.bufferedReader().useLines { seq ->
+                                seq
+                                    .withIndex()
+                                    .filter { it.value.contains(q, ignoreCase = true) }
+                                    .take(MAX_MATCHES)
+                                    .toList()
+                            }
+                        }
+                    }
+            }
+            val found = lines
+            if (q.isEmpty()) {
+                CodeView(rememberHighlighted(text, f.format.syntax()), Modifier.fillMaxSize())
+            } else if (found == null) {
+                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
+            } else {
+                Text(
+                    (if (found.size >= MAX_MATCHES) "First $MAX_MATCHES matching lines" else "${found.size} matching lines") +
+                        " in the whole file",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(vertical = 6.dp),
+                )
+                val joined = remember(found) { found.joinToString("\n") { "${it.index + 1}: ${it.value}" } }
+                Box(Modifier.fillMaxSize()) {
+                    CodeView(rememberHighlighted(joined, Syntax.Plain), Modifier.fillMaxSize())
+                    Box(Modifier.align(Alignment.TopEnd).padding(8.dp)) { CopyButton(joined, "matching lines") }
+                }
+            }
         }
     }
 }
+
+private const val MAX_MATCHES = 5_000
 
 @Composable
 private fun TerminalCard(ws: WorkspaceState) {

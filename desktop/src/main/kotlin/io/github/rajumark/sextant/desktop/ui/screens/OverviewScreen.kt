@@ -48,13 +48,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import io.github.rajumark.sextant.desktop.data.Evidence
 import io.github.rajumark.sextant.desktop.data.Insight
 import io.github.rajumark.sextant.desktop.data.Insights
 import io.github.rajumark.sextant.desktop.data.Severity
+import io.github.rajumark.sextant.desktop.model.Analysis
 import io.github.rajumark.sextant.desktop.model.ComponentType
 import io.github.rajumark.sextant.desktop.theme.MonoFamily
 import io.github.rajumark.sextant.desktop.ui.common.AppIcon
 import io.github.rajumark.sextant.desktop.ui.common.CopyButton
+import io.github.rajumark.sextant.desktop.ui.common.CopyTextButton
 import io.github.rajumark.sextant.desktop.ui.common.MonoLine
 import io.github.rajumark.sextant.desktop.ui.common.SectionCard
 import io.github.rajumark.sextant.desktop.ui.common.StatTile
@@ -66,6 +69,7 @@ import io.github.rajumark.sextant.desktop.ui.common.shortHash
 import io.github.rajumark.sextant.desktop.ui.workspace.Destination
 import io.github.rajumark.sextant.desktop.ui.workspace.PermissionFilter
 import io.github.rajumark.sextant.desktop.ui.workspace.WorkspaceState
+import io.github.rajumark.sextant.desktop.ui.workspace.destination
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -82,7 +86,9 @@ fun OverviewScreen(ws: WorkspaceState) {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Column(Modifier.widthIn(max = 1240.dp).fillMaxSize(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                ListHeader("Overview", "What this APK is, what it asks for, and what it exposes")
+                ListHeader("Overview", "What this APK is, what it asks for, and what it exposes") {
+                    CopyTextButton("Copy summary", "summary") { summaryMarkdown(a, insights) }
+                }
                 HeroCard(ws)
 
                 val tiles: List<@Composable (Modifier) -> Unit> =
@@ -153,7 +159,7 @@ fun OverviewScreen(ws: WorkspaceState) {
                 // Each panel scrolls inside its own space; the page does not.
                 val left: @Composable (Modifier) -> Unit = { mod ->
                     Column(mod.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                        InsightsCard(insights)
+                        InsightsCard(insights) { openEvidence(ws, it) }
                         FlagsCard(ws)
                     }
                 }
@@ -243,14 +249,24 @@ private fun HeroChip(text: String) {
 }
 
 @Composable
-private fun InsightsCard(insights: List<Insight>) {
+private fun InsightsCard(
+    insights: List<Insight>,
+    onOpen: (Evidence) -> Unit,
+) {
     SectionCard("Worth a look", icon = Icons.Outlined.Lightbulb) {
         if (insights.isEmpty()) {
             Text("Nothing stands out.", style = MaterialTheme.typography.bodyMedium)
         }
         insights.forEachIndexed { i, ins ->
             if (i > 0) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant, modifier = Modifier.padding(vertical = 10.dp))
-            Row {
+            val evidence = ins.evidence
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .clip(MaterialTheme.shapes.small)
+                    .then(if (evidence != null) Modifier.clickable { onOpen(evidence) } else Modifier)
+                    .padding(4.dp),
+            ) {
                 val (icon, tint) =
                     when (ins.severity) {
                         Severity.Risk -> Icons.Outlined.ErrorOutline to MaterialTheme.colorScheme.error
@@ -259,9 +275,17 @@ private fun InsightsCard(insights: List<Insight>) {
                     }
                 Icon(icon, ins.severity.name, tint = tint, modifier = Modifier.size(20.dp).padding(top = 1.dp))
                 Spacer(Modifier.width(12.dp))
-                Column {
+                Column(Modifier.weight(1f)) {
                     Text(ins.title, style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Medium))
                     Text(ins.detail, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                if (evidence != null) {
+                    Icon(
+                        Icons.AutoMirrored.Outlined.OpenInNew,
+                        "Open evidence",
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.size(18.dp),
+                    )
                 }
             }
         }
@@ -271,12 +295,22 @@ private fun InsightsCard(insights: List<Insight>) {
 @Composable
 private fun FlagsCard(ws: WorkspaceState) {
     val f = ws.analysis.meta.flags
-    SectionCard("Application flags", icon = Icons.Outlined.Flag) {
-        FlagRow("debuggable", f.debuggable, riskyWhen = true)
-        FlagRow("allowBackup", f.allowBackup, riskyWhen = true)
-        FlagRow("usesCleartextTraffic", f.usesCleartextTraffic, riskyWhen = true)
-        FlagRow("extractNativeLibs", f.extractNativeLibs, riskyWhen = null)
-        Row(Modifier.fillMaxWidth().padding(vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
+    val open = ws::showApplicationInManifest
+    SectionCard("Application flags", icon = Icons.Outlined.Flag, action = {
+        TextButton(onClick = open) { Text("View in Manifest") }
+    }) {
+        FlagRow("debuggable", f.debuggable, riskyWhen = true, onClick = open)
+        FlagRow("allowBackup", f.allowBackup, riskyWhen = true, onClick = open)
+        FlagRow("usesCleartextTraffic", f.usesCleartextTraffic, riskyWhen = true, onClick = open)
+        FlagRow("extractNativeLibs", f.extractNativeLibs, riskyWhen = null, onClick = open)
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .clip(MaterialTheme.shapes.small)
+                .clickable(onClick = open)
+                .padding(vertical = 6.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
             Text(
                 "networkSecurityConfig",
                 style = MaterialTheme.typography.bodyMedium.copy(fontFamily = MonoFamily),
@@ -298,8 +332,16 @@ private fun FlagRow(
     name: String,
     value: Boolean?,
     riskyWhen: Boolean?,
+    onClick: () -> Unit,
 ) {
-    Row(Modifier.fillMaxWidth().padding(vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .clip(MaterialTheme.shapes.small)
+            .clickable(onClick = onClick)
+            .padding(vertical = 6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
         Text(name, style = MaterialTheme.typography.bodyMedium.copy(fontFamily = MonoFamily), modifier = Modifier.weight(1f))
         when (value) {
             null -> Tag("not set")
@@ -437,3 +479,78 @@ private fun WarningsCard(warnings: List<String>) {
         }
     }
 }
+
+/** Opens the page that holds the evidence for one "Worth a look" finding. */
+private fun openEvidence(
+    ws: WorkspaceState,
+    e: Evidence,
+) {
+    when (e) {
+        Evidence.OpenComponents -> ws.showOpenComponents()
+        Evidence.ExportedComponents -> {
+            val type =
+                ws.analysis.components
+                    .filter { it.exported && it.exportedSource.name == "Default" }
+                    .groupingBy { it.type }
+                    .eachCount()
+                    .maxByOrNull { it.value }
+                    ?.key ?: ComponentType.Activity
+            ws.componentPage(type).apply {
+                clearFilters()
+                exported = true
+            }
+            ws.destination = type.destination
+        }
+        Evidence.ApplicationElement -> ws.showApplicationInManifest()
+        Evidence.Signing -> ws.destination = Destination.Signing
+        Evidence.AppLinks -> ws.showComponentsWithTag(ComponentType.Activity, "app-link")
+        Evidence.DangerousPermissions -> {
+            ws.permissionFilter = PermissionFilter.Dangerous
+            ws.permissionQuery = ""
+            ws.destination = Destination.Permissions
+        }
+    }
+}
+
+/** A short Markdown report of the analysis, for a ticket or review notes. Same facts the Overview shows. */
+internal fun summaryMarkdown(
+    a: Analysis,
+    insights: List<Insight>,
+): String =
+    buildString {
+        val m = a.meta
+        appendLine("# ${m.label} ${m.versionText}")
+        appendLine()
+        appendLine("- Package: `${m.packageName}`")
+        appendLine("- SDK: min ${m.minSdk ?: "?"} · target ${m.targetSdk ?: "?"} · compile ${m.compileSdk ?: "?"}")
+        appendLine("- APK: ${m.file.name} · ${formatBytes(m.file.sizeBytes)} · SHA-256 `${m.file.sha256}`")
+        val sig = if (m.signing.schemes.isEmpty()) "unsigned" else m.signing.schemes.joinToString(" · ")
+        appendLine("- Signing: $sig${if (m.signing.verified) " (verified)" else ""}")
+        m.signing.certificates.forEach { appendLine("  - Certificate SHA-256 `${it.sha256}`") }
+        val f = m.flags
+
+        fun flag(v: Boolean?) = v?.toString() ?: "not set"
+        appendLine(
+            "- Flags: debuggable ${flag(f.debuggable)} · allowBackup ${flag(f.allowBackup)} · " +
+                "usesCleartextTraffic ${flag(f.usesCleartextTraffic)} · networkSecurityConfig ${f.networkSecurityConfig ?: "not set"}",
+        )
+        appendLine("- Permissions: ${a.requestedCount} requested · ${a.dangerousCount} dangerous · ${a.declaredCount} declared")
+        appendLine("- Components: ${a.components.size} · ${a.exportedCount} exported")
+        a.launcher?.let { appendLine("- Launcher: `${it.name}`") }
+        appendLine()
+        appendLine("## Worth a look")
+        if (insights.isEmpty()) appendLine("- Nothing stands out.")
+        insights.forEach { appendLine("- [${it.severity.name.lowercase()}] **${it.title}**: ${it.detail}") }
+        val dangerous = a.permissions.filter { it.dangerous }
+        if (dangerous.isNotEmpty()) {
+            appendLine()
+            appendLine("## Dangerous permissions")
+            dangerous.forEach { appendLine("- `${it.name}`") }
+        }
+        val links = a.deepLinkComponents.flatMap { c -> c.deepLinks.map { it to c.simpleName } }
+        if (links.isNotEmpty()) {
+            appendLine()
+            appendLine("## Deep links")
+            links.forEach { (uri, c) -> appendLine("- `$uri` → $c") }
+        }
+    }.trimEnd() + "\n"

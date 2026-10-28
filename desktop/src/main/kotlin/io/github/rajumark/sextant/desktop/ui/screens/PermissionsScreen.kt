@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -24,10 +25,21 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.isCtrlPressed
+import androidx.compose.ui.input.key.isMetaPressed
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.input.key.type
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import io.github.rajumark.sextant.desktop.data.ManifestFormat
 import io.github.rajumark.sextant.desktop.data.PermissionBank
@@ -35,6 +47,7 @@ import io.github.rajumark.sextant.desktop.model.Permission
 import io.github.rajumark.sextant.desktop.model.PermissionKind
 import io.github.rajumark.sextant.desktop.ui.common.CodeBlock
 import io.github.rajumark.sextant.desktop.ui.common.CopyButton
+import io.github.rajumark.sextant.desktop.ui.common.CopyTextButton
 import io.github.rajumark.sextant.desktop.ui.common.EmptyState
 import io.github.rajumark.sextant.desktop.ui.common.IconBadge
 import io.github.rajumark.sextant.desktop.ui.common.KeyValueRow
@@ -60,6 +73,21 @@ private fun Permission.matches(f: PermissionFilter): Boolean =
         PermissionFilter.Custom -> custom
     }
 
+private fun Permission.matchesQuery(q: String): Boolean =
+    name.contains(q, ignoreCase = true) ||
+        PermissionBank.summary(name)?.let { it.meaning.contains(q, ignoreCase = true) || it.group.contains(q, ignoreCase = true) } == true
+
+/** A Markdown table of permissions in plain language, for a privacy or audit report. */
+internal fun permissionReport(list: List<Permission>): String =
+    buildString {
+        appendLine("| Permission | Dangerous | What it allows |")
+        appendLine("| --- | --- | --- |")
+        list.forEach { p ->
+            val meaning = PermissionBank.summary(p.name)?.meaning ?: if (p.custom) "Custom permission (${p.kind.wire})" else ""
+            appendLine("| `${p.name}` | ${if (p.dangerous) "yes" else "no"} | ${meaning.replace("|", "\\|")} |")
+        }
+    }
+
 private fun Permission.tone(): Tone =
     when {
         dangerous -> Tone.Error
@@ -79,24 +107,54 @@ fun PermissionsScreen(ws: WorkspaceState) {
     val all = ws.analysis.permissions
     val filtered =
         remember(all, ws.permissionQuery, ws.permissionFilter) {
-            all.filter { it.matches(ws.permissionFilter) && it.name.contains(ws.permissionQuery.trim(), ignoreCase = true) }
+            all.filter { it.matches(ws.permissionFilter) && it.matchesQuery(ws.permissionQuery.trim()) }
         }
     // Selection holds "kind|name" (a name can appear as both declared and requested); a bare name also works.
     val selected = all.firstOrNull { it.selectionKey == ws.selectedPermission } ?: all.firstOrNull { it.name == ws.selectedPermission }
     val rows = remember(filtered) { withUniqueKeys(filtered) { it.selectionKey } }
+    val searchFocus = remember { FocusRequester() }
+    val listState = rememberLazyListState()
+    LaunchedEffect(selected, filtered) {
+        val i = filtered.indexOf(selected)
+        if (i >= 0 && listState.layoutInfo.visibleItemsInfo.none { it.index == i }) listState.animateScrollToItem(i)
+    }
 
     ListDetail(
         hasSelection = selected != null,
         onBack = { ws.selectedPermission = null },
         list = {
-            Column(Modifier.fillMaxSize()) {
+            Column(
+                Modifier.fillMaxSize().onPreviewKeyEvent { e ->
+                    if (e.type != KeyEventType.KeyDown) return@onPreviewKeyEvent false
+                    val i = filtered.indexOf(selected)
+                    when {
+                        e.key == Key.F && (e.isMetaPressed || e.isCtrlPressed) -> searchFocus.requestFocus()
+                        e.key == Key.DirectionDown -> filtered.getOrNull(i + 1)?.let { ws.selectedPermission = it.selectionKey }
+                        e.key == Key.DirectionUp ->
+                            filtered.getOrNull((i - 1).coerceAtLeast(0))?.let {
+                                ws.selectedPermission =
+                                    it.selectionKey
+                            }
+                        e.key == Key.Escape && selected != null -> ws.selectedPermission = null
+                        else -> return@onPreviewKeyEvent false
+                    }
+                    true
+                },
+            ) {
                 Column(Modifier.padding(start = 24.dp, end = 24.dp, top = 20.dp, bottom = 8.dp)) {
                     ListHeader(
                         "Permissions",
                         "${ws.analysis.requestedCount} requested · ${ws.analysis.dangerousCount} dangerous · ${ws.analysis.declaredCount} declared",
-                    )
+                    ) {
+                        CopyTextButton("Copy list", "${filtered.size} permissions") { permissionReport(filtered) }
+                    }
                     Spacer(Modifier.height(16.dp))
-                    SearchField(ws.permissionQuery, { ws.permissionQuery = it }, "Search permissions", Modifier.fillMaxWidth())
+                    SearchField(
+                        ws.permissionQuery,
+                        { ws.permissionQuery = it },
+                        "Search permissions or what they allow",
+                        Modifier.fillMaxWidth().focusRequester(searchFocus),
+                    )
                     Spacer(Modifier.height(12.dp))
                     Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         PermissionFilter.entries.forEach { f ->
@@ -114,6 +172,7 @@ fun PermissionsScreen(ws: WorkspaceState) {
                 } else {
                     LazyColumn(
                         Modifier.fillMaxSize(),
+                        state = listState,
                         contentPadding =
                             androidx.compose.foundation.layout
                                 .PaddingValues(bottom = 16.dp),
@@ -123,7 +182,21 @@ fun PermissionsScreen(ws: WorkspaceState) {
                                 selected = p == selected,
                                 onClick = { ws.selectedPermission = p.selectionKey },
                                 headline = { Text(p.shortName, style = MaterialTheme.typography.bodyLarge) },
-                                supporting = { MonoLine(p.name) },
+                                // The plain meaning says more than the full name, which the headline already shows.
+                                supporting = {
+                                    val meaning = PermissionBank.summary(p.name)?.meaning
+                                    if (meaning != null) {
+                                        Text(
+                                            meaning,
+                                            style = MaterialTheme.typography.bodySmall,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis,
+                                        )
+                                    } else {
+                                        MonoLine(p.name)
+                                    }
+                                },
                                 leading = { IconBadge(p.icon(), p.tone()) },
                                 trailing = {
                                     Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {

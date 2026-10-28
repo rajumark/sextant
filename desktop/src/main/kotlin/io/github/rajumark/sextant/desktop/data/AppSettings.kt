@@ -23,6 +23,11 @@ interface AppSettings {
         dir: String,
         tags: List<String>,
     )
+
+    /** Titles of the sidebar sections the user folded; null when never changed. */
+    fun foldedMenuSections(): Set<String>? = null
+
+    fun saveFoldedMenuSections(titles: Set<String>) {}
 }
 
 class PreferencesSettings(
@@ -56,6 +61,18 @@ class PreferencesSettings(
         runCatching { prefs.flush() }
     }
 
+    override fun foldedMenuSections(): Set<String>? =
+        prefs
+            .get(FOLDED, null)
+            ?.split(TAG_SEPARATOR)
+            ?.filter { it.isNotEmpty() }
+            ?.toSet()
+
+    override fun saveFoldedMenuSections(titles: Set<String>) {
+        prefs.put(FOLDED, titles.joinToString(TAG_SEPARATOR))
+        runCatching { prefs.flush() }
+    }
+
     // Preference keys are short and must not contain '/', so the folder path is hashed.
     private fun tagKey(dir: String): String =
         "tags." +
@@ -68,6 +85,7 @@ class PreferencesSettings(
     private companion object {
         const val SEED = "seed"
         const val THEME = "theme"
+        const val FOLDED = "menu.folded"
         const val TAG_SEPARATOR = "\u001F"
     }
 }
@@ -84,6 +102,13 @@ class MemorySettings : AppSettings {
     }
 
     private val tags = mutableMapOf<String, List<String>>()
+    private var folded: Set<String>? = null
+
+    override fun foldedMenuSections() = folded
+
+    override fun saveFoldedMenuSections(titles: Set<String>) {
+        folded = titles
+    }
 
     override fun seedHex(): String? = seed
 
