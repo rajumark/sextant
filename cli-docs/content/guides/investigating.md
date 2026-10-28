@@ -2,6 +2,19 @@
 
 Once an APK is extracted, every investigation follows the same loop: **find** something, **look** at it, **follow** the code from there. All commands below take the `.sqlite` file from `extract`, or the APK itself.
 
+## Follow links across kinds
+
+`links` connects things of different kinds, so one command answers "what does this touch?":
+
+```bash
+sextant links app.sqlite .MainActivity --depth 2   # component → class → superclass and methods; permissions, deep links, resources
+sextant links app.sqlite @string/app_name          # the layouts, menus and methods that use it
+sextant links app.sqlite @menu/main                # its items' strings and icons, and the method that inflates it
+sextant links app.sqlite permission:android.permission.CAMERA
+```
+
+`→` lines are outgoing links, `←` lines incoming ones, and the text in brackets is the evidence: the attribute that holds a reference, or the call a resource id is passed to. Keys are readable (`component:…`, `class:L…;`, `method:…`, `@type/name`, `url:…`), and the same edges are in the `links` table for SQL.
+
 ## Names and IDs
 
 Sextant identifies code with **smali descriptors**, the format `dexdump`, `baksmali` and most Android tools use:

@@ -97,6 +97,7 @@ fun main(args: Array<String>) {
             CoverageCommand(),
             CacheCommand(),
             XmlCommand(),
+            LinksCommand(),
         )
     try {
         command.parse(args)

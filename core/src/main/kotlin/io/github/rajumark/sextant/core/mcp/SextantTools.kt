@@ -37,7 +37,7 @@ class SextantTools(
         Sextant analyzes Android APKs. Start with `extract` (APK path) unless the server was started with an index.
         Then read `summary` first. Use `find` for any text (names, strings, URLs, resources, SDKs, native symbols),
         `class` for one class, `callers`/`callees` to follow the call graph, `reach` for paths from an entry point to a target, `xref` for class/field uses, `insights` for frameworks/SDKs/libraries,
-        `endpoints` for URLs with their sources, `findings` for review points, `source` for decompiled Java, `smali` for bytecode, and `sql` for anything else
+        `endpoints` for URLs with their sources, `findings` for review points, `links` for what anything connects to (component → class → resources, string → the methods that show it), `source` for decompiled Java, `smali` for bytecode, and `sql` for anything else
         (call `sql` with query "schema" to see all tables). IDs are smali descriptors like Lcom/a/B;->m(I)V.
         """.trimIndent()
 
@@ -213,6 +213,39 @@ class SextantTools(
                     ).joinToString("\n\n") { (title, sql) ->
                         val r = idx.query(sql)
                         "## $title\n" + r.rows.joinToString("\n") { row -> r.columns.zip(row).joinToString(", ") { (c, v) -> "$c=$v" } }
+                    }
+                }
+            },
+            McpTool(
+                "links",
+                "What anything links to and what links to it, across kinds: app, components, classes, methods, permissions, " +
+                    "resources, URLs, native libraries. Lines are `→ rel key (via)` (outgoing) or `← rel key (via)` (incoming).",
+                listOf(
+                    Param(
+                        "thing",
+                        "string",
+                        "A key (component:…, class:L…;, method:…, @string/x, permission:…, url:…) or a component, class or permission name",
+                        required = true,
+                    ),
+                    Param("limit", "integer", "Rows per relation (default 25)"),
+                    dirParam,
+                ),
+            ) { args ->
+                index(args) { idx ->
+                    val limit = args.int("limit", 25)
+                    val keys = idx.linkKeys(args.string("thing")!!)
+                    if (keys.isEmpty()) throw SextantException.input("nothing named '${args.string("thing")}'", "use `find` first")
+                    keys.joinToString("\n\n") { key ->
+                        key + "\n" +
+                            idx
+                                .links(key)
+                                .groupBy { it.direction to it.rel }
+                                .entries
+                                .joinToString("\n") { (group, rows) ->
+                                    val arrow = if (group.first == "out") "→" else "←"
+                                    rows.take(limit).joinToString("\n") { r -> "  $arrow ${r.rel} ${r.other}" + (r.via?.let { " ($it)" } ?: "") } +
+                                        if (rows.size > limit) "\n  … ${rows.size - limit} more ${group.second}" else ""
+                                }.ifEmpty { "  (no links)" }
                     }
                 }
             },

@@ -399,6 +399,30 @@ class CliEndToEndTest {
     }
 
     @Test
+    fun `links walks across kinds, from a component to its class and from a menu to the code that inflates it`() {
+        val file = extracted("binaryeye")
+        val component = sextant("links", file, ".PickActivity", "--depth", "2")
+        component.exitCode shouldBe 0
+        component.stdout shouldContain "component:de.markusfisch.android.binaryeye.activity.PickActivity"
+        component.stdout shouldContain "→ implemented_by class:Lde/markusfisch/android/binaryeye/activity/PickActivity;"
+        component.stdout shouldContain "→ defines        method:Lde/markusfisch/android/binaryeye/activity/PickActivity;->onCreate"
+        val menu = sextant("links", file, "@menu/fragment_encode")
+        menu.stdout shouldContain "→ uses           @drawable/ic_action_pick_file  (android:icon)"
+        menu.stdout shouldContain "← uses           method:Lde/markusfisch/android/binaryeye/activity/EncodeActivity;"
+        val json = sextant("links", file, "@menu/fragment_encode", "--json")
+        json.stdout
+            .lines()
+            .filter { it.isNotBlank() }
+            .forEach {
+                Json
+                    .parseToJsonElement(it)
+                    .jsonObject["rel"]!!
+                    .jsonPrimitive.content
+            }
+        sextant("links", file, "no.such.Thing").exitCode shouldBe 2
+    }
+
+    @Test
     fun `extract stores insights and resources in the SQLite file`() {
         val file = extracted("binaryeye")
         for (table in listOf("libraries", "sdks", "endpoints", "resources", "string_resources", "layouts")) {

@@ -1421,12 +1421,20 @@
 <td>Where a class or field is used</td>
 </tr>
 <tr>
+<td><code>links</code></td>
+<td>What anything connects to across kinds: component → class, resource → the files and methods that use it, …</td>
+</tr>
+<tr>
 <td><code>sql</code></td>
 <td>Read-only SQL; pass <code>"schema"</code> for all tables</td>
 </tr>
 <tr>
 <td><code>source</code> / <code>smali</code></td>
 <td>Decompiled Java / bytecode for a class or method</td>
+</tr>
+<tr>
+<td><code>grep</code></td>
+<td>Text or regex search in decompiled Java</td>
 </tr>
 <tr>
 <td><code>insights</code></td>
@@ -1462,6 +1470,7 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sextant<span class="w"> </span>sql<span class="w"> </span>app.apk<span class="w"> </span><span class="s2">"SELECT type, name FROM components WHERE exported = 1"</span><span class="w"> </span>--json
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sextant<span class="w"> </span>find<span class="w"> </span>app.apk<span class="w"> </span>api.example.com<span class="w"> </span>--json
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>sextant<span class="w"> </span>callers<span class="w"> </span>app.apk<span class="w"> </span><span class="s2">"Lcom/example/Login;-&gt;auth"</span><span class="w"> </span>--json
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>sextant<span class="w"> </span>links<span class="w"> </span>app.apk<span class="w"> </span>.LoginActivity<span class="w"> </span>--json<span class="w">   </span><span class="c1"># class, permissions, resources, deep links of a screen</span>
 </code></pre></div>
 </li>
 <li>

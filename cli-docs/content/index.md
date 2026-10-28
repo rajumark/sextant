@@ -54,7 +54,7 @@ sextant findings app.sqlite --severity medium  # what should a reviewer look at?
 
     ---
 
-    `info` for a one-read overview, `--json` on every command, and `sextant mcp`, a Model Context Protocol server with 15 tools.
+    `info` for a one-read overview, `--json` on every command, and `sextant mcp`, a Model Context Protocol server with 17 tools.
 
     [:octicons-arrow-right-24: AI agents and MCP](guides/ai-agents.md)
 

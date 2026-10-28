@@ -255,11 +255,11 @@
   </nav>
 <section id="tab-progress" class="tab" data-tab="progress">
   <div class="hero">
-    <div class="big">≈ 72%</div>
+    <div class="big">≈ 75%</div>
     <div class="hl">of an APK's data is in SQLite today<span>Estimate. 100% means everything inside the APK is stored as rows and linked.</span></div>
   </div>
-  <div class="mbar"><div class="mfill" style="width:72%"></div></div>
-  <div class="mmeta"><b>Step 5 of 7 done</b><span>Index schema 10</span><span>CLI only</span></div>
+  <div class="mbar"><div class="mfill" style="width:75%"></div></div>
+  <div class="mmeta"><b>Step 6 of 7 done</b><span>Index schema 11</span><span>CLI only</span></div>
 
   <h2 class="ph">By area</h2>
   <div class="hbar small" id="areas"></div>
@@ -271,7 +271,7 @@
     <li class="db">App identity &amp; versions</li><li class="db">Signing</li><li class="db">Permissions</li><li class="db">Components &amp; verdicts</li><li class="db">Deep links</li><li class="db">Features, metadata, queries</li><li class="db">App icon</li>
     <li class="db">Strings (all locales)</li><li class="db">Resource IDs</li><li class="db">Styles &amp; themes</li><li class="db">Drawables</li><li class="db">Layouts</li><li class="db">Menus</li><li class="db">Navigation graphs</li><li class="db">XML configs</li><li class="db">Assets</li><li class="db">Resource references</li>
     <li class="db">Classes, methods, fields</li><li class="db">Call graph</li><li class="db">Field &amp; type references</li><li class="db">String constants</li><li class="db">Full-text search</li><li class="db">SQL queries</li>
-    <li class="db">SDKs &amp; libraries</li><li class="db">Frameworks</li><li class="db">Endpoints / URLs</li><li class="db">Native libraries &amp; JNI</li><li class="db">Security findings</li><li class="db">Every file + coverage</li><li class="db">APK index cache</li><li class="db">Code → resource links</li><li class="db">Every XML node &amp; attribute</li><li class="db">Resource values, every config</li>
+    <li class="db">SDKs &amp; libraries</li><li class="db">Frameworks</li><li class="db">Endpoints / URLs</li><li class="db">Native libraries &amp; JNI</li><li class="db">Security findings</li><li class="db">Every file + coverage</li><li class="db">APK index cache</li><li class="db">Code → resource links</li><li class="db">Every XML node &amp; attribute</li><li class="db">Resource values, every config</li><li class="db">Links across kinds</li>
     <li class="db">Startup order</li><li class="db">Call paths (reach)</li><li class="db">Version diff</li><li class="db">Split bundles</li><li class="db">MCP for AI agents</li><li class="db">One-file output</li><li>Decompiled Java</li><li>Code search (grep)</li><li>Smali</li><li>ProGuard mappings</li>
   </ul>
 
@@ -282,8 +282,8 @@
     <li class="done"><span>3</span>SQLite is the only output<em>Done</em></li>
     <li class="done"><span>4</span>Code → resource links<em>Done</em></li>
     <li class="done"><span>5</span>Every XML node and attribute<em>Done</em></li>
-    <li class="next"><span>6</span>Entities and links<em>Next</em></li>
-    <li><span>7</span>Self-describing database</li>
+    <li class="done"><span>6</span>Entities and links<em>Done</em></li>
+    <li class="next"><span>7</span>Self-describing database<em>Next</em></li>
   </ul>
 </section>
 
@@ -522,7 +522,7 @@
         </g>
       </svg>
     </div>
-    <figcaption>Figure 3. The link map. Grey links were in <code>resource_refs</code> from the start. The red ones were missing: code → resources is captured since step 4; component → class is still to come.</figcaption>
+    <figcaption>Figure 3. The link map. Grey links were in <code>resource_refs</code> from the start. The red ones were missing: code → resources is captured since step 4, component → class since step 6 (the <code>links</code> table).</figcaption>
   </figure>
 
   <h3>Closing the code → resource gap</h3>
@@ -670,8 +670,8 @@
     <tr><td class="num">3</td><td>SQLite is the only output: <code>extract</code> writes one <code>.sqlite</code> file and every command reads an APK or that file</td><td>APK in, SQLite out; one source of truth</td><td><span class="tag g">Done</span></td></tr>
     <tr><td class="num">4</td><td>Resource ID constants and <code>R</code> fields in code → resource links</td><td>Correct unused lists, “which method shows this text”</td><td><span class="tag g">Done</span></td></tr>
     <tr><td class="num">5</td><td><code>xml_nodes</code> / <code>xml_attrs</code> for every binary XML file; <code>res_values</code> per config</td><td>Queries over any view or attribute</td><td><span class="tag g">Done</span></td></tr>
-    <tr><td class="num">6</td><td><code>entities</code> + <code>links</code>, and a generic <code>links</code> command</td><td>Cross-kind queries</td><td><span class="tag">Next</span></td></tr>
-    <tr><td class="num">7</td><td>Split the derive stage; <code>schema_docs</code> table; saved queries</td><td>Fast upgrades, self-describing database</td><td><span class="tag">Planned</span></td></tr>
+    <tr><td class="num">6</td><td><code>entities</code> + <code>links</code>, and a generic <code>links</code> command</td><td>Cross-kind queries</td><td><span class="tag g">Done</span></td></tr>
+    <tr><td class="num">7</td><td>Split the derive stage; <code>schema_docs</code> table; saved queries</td><td>Fast upgrades, self-describing database</td><td><span class="tag">Next</span></td></tr>
   </table></div>
   <h3>Step 1 result</h3>
   <p>Measured with <code>sextant coverage</code> on real apps. Every zip entry is listed; the share below is what a decoder turned into rows.</p>
@@ -771,7 +771,7 @@
     ['Resource XML files', 90, 'var(--green)'],
     ['Native libraries', 40, 'var(--amber)'],
     ['Assets', 30, 'var(--amber)'],
-    ['Cross-links', 50, 'var(--accent)'],
+    ['Cross-links', 85, 'var(--green)'],
     ['Other files', 20, 'var(--red)']
   ], 100, function (v) { return v + '%'; });
 </script>

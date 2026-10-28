@@ -274,6 +274,9 @@ class IndexWriter(
             conn.createStatement().use { st ->
                 IndexSchema.statements(IndexSchema.INDEXES).forEach(st::execute)
                 profile("b-tree indexes")
+                Links.BUILD.forEach(st::execute)
+                Links.INDEXES.forEach(st::execute)
+                profile("links")
                 for ((kind, select) in MANIFEST_SEARCH) {
                     st.execute("INSERT INTO search(rowid, text) SELECT (rowid << 4) + ${IndexSchema.kindCode(kind)}, $select")
                 }

@@ -7,7 +7,7 @@ or external) has one row in `methods`; edges point at integer ids, and the views
 and `search_items` give the readable, descriptor-based form. JSON arrays are stored as TEXT; use SQLite's
 `json_each` to expand them. Query it with `sextant sql <dir> "…"` (read-only) or any SQLite tool.
 
-Schema version: **10**
+Schema version: **11**
 (stored in `meta` as `index_schema_version`).
 
 ```sql
@@ -367,6 +367,23 @@ CREATE TABLE resource_bag_items (
   key    TEXT NOT NULL,           -- style attribute, plural quantity, array index or enum/flag name
   value  TEXT NOT NULL
 );
+
+-- Links (index schema 11): every edge between kinds of things, with readable keys, built from the tables above.
+-- Keys: app, component:<name>, class:<descriptor>, method:<descriptor>, permission:<name>, @type/name,
+-- url:<url>, native:<path>, file:<path>. rel: declares | requests | defines | implemented_by | aliases | requires |
+-- opens | uses | instantiates | contains | implements. `sextant links` walks them, adding calls on the fly.
+CREATE TABLE links (
+  src TEXT NOT NULL,
+  rel TEXT NOT NULL,
+  dst TEXT NOT NULL,
+  via TEXT                        -- evidence: the attribute, the call it is passed to, the component type, …
+);
+
+-- Every key that appears in links, with its kind (the part before ':', or resource for @type/name).
+CREATE VIEW entities AS
+  SELECT key, CASE WHEN key = 'app' THEN 'app' WHEN key LIKE '@%' OR key LIKE '?%' THEN 'resource'
+                   ELSE substr(key, 1, instr(key, ':') - 1) END AS kind
+  FROM (SELECT src AS key FROM links UNION SELECT dst FROM links);
 
 -- Full records (index schema 9): every manifest, resource and insight record exactly as Sextant built it, one JSON
 -- row each, so a command can rebuild the whole extraction from this file alone. The tables above are the

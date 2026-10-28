@@ -38,8 +38,10 @@ Options:
 | `callers` / `callees` | Call trees |
 | `reach` | Call paths from an entry point to targets |
 | `xref` | Where a class or field is used |
+| `links` | What anything connects to across kinds: component → class, resource → the files and methods that use it, … |
 | `sql` | Read-only SQL; pass `"schema"` for all tables |
 | `source` / `smali` | Decompiled Java / bytecode for a class or method |
+| `grep` | Text or regex search in decompiled Java |
 | `insights` | Frameworks, SDKs, libraries, hosts, native code |
 | `endpoints` | URLs with their sources |
 | `findings` | Review points with evidence |
@@ -64,6 +66,7 @@ The SQLite file itself is agent-friendly:
     sextant sql app.apk "SELECT type, name FROM components WHERE exported = 1" --json
     sextant find app.apk api.example.com --json
     sextant callers app.apk "Lcom/example/Login;->auth" --json
+    sextant links app.apk .LoginActivity --json   # class, permissions, resources, deep links of a screen
     ```
 
 3. **Use `--json`** on `info`, `find`, `class`, `sql`, `callers`, `callees`, `reach`, `xref`, `insights`, `endpoints`, `findings`, `diff` and `icon` for machine-readable output on stdout. Progress and errors always go to stderr, so piping is safe.

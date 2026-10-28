@@ -28,6 +28,7 @@ The file holds everything Sextant reads from the APK, in two forms:
 | `xml_nodes`, `xml_attrs` | every binary XML file (manifest, layouts, menus, drawables, colors, animations, …) node by node and attribute by attribute, with `ref` for values that point at a resource; `sextant xml` prints a file rebuilt from them |
 | `resource_values`, `resource_bag_items` | `resources.arsc` in every configuration: values and file paths, and the items of styles, plurals, arrays and attrs |
 | `files` | every file inside the APK: type, size, CRC-32, SHA-256, content, resource name and the decoder that read it |
+| `links`, `entities` | every edge between kinds of things (component → class, layout → resource, method → string, …) with readable keys and evidence; `entities` lists every key with its kind |
 | `records` | full records: manifest tree, permissions, components, features, metadata, queries, resources, insights |
 | `search` | FTS5 trigram index over names, strings, resources, endpoints, SDKs, libraries and native symbols |
 
@@ -69,6 +70,10 @@ SELECT jni_class, jni_method, library FROM native_symbols WHERE jni_class IS NOT
 -- Every password field in every layout
 SELECT n.path, n.tag FROM xml_nodes n JOIN xml_attrs a ON a.node = n.id
 WHERE a.name = 'android:inputType' AND a.value LIKE '%Password%';
+
+-- Everything a screen pulls in, two steps out: its class, and the resources its layouts use
+SELECT l2.dst FROM links l1 JOIN links l2 ON l2.src = l1.dst
+WHERE l1.src = 'component:com.example.MainActivity';
 
 -- Which files did no decoder read?
 SELECT type, path, size_bytes FROM files WHERE decoded_by IS NULL ORDER BY size_bytes DESC;

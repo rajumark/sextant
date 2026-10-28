@@ -26,7 +26,7 @@ Commands:
   grep        Search decompiled Java for text: every matching line with its class, method and line number. Finds what `find` can't (code bodies, field use, API calls). The first search decompiles the app and keeps the code in a local cache, so later searches are quick; --package narrows a first search on big apps.
   insights    Show what the app is built with: frameworks, SDKs, libraries, endpoints and native code.
   endpoints   List URLs found in code strings, resources, deep links and manifest values, with their sources.
-  mcp         Run an MCP server on stdin/stdout so AI agents can extract, search and query APKs. Tools: extract, summary, find, class, callers, callees, sql, source, grep, insights, xref, reach, smali, icon, findings, endpoints.
+  mcp         Run an MCP server on stdin/stdout so AI agents can extract, search and query APKs. Tools: extract, summary, find, class, callers, callees, sql, source, grep, insights, links, xref, reach, smali, icon, findings, endpoints.
   diff        Compare two versions of an app: app facts, permissions, components, deep links, SDKs, libraries, hosts, URLs, native code, packages, classes, strings and resources.
   findings    Show review findings (debuggable, cleartext, exported components, WebView bridges, weak crypto, trust-all TLS, embedded secrets, …) with evidence. They are static observations to check, not proven vulnerabilities.
   xref        Where is a class or field used: instantiations, casts, instanceof, const-class, calls into its methods, field reads and writes.
@@ -43,6 +43,7 @@ Commands:
   coverage    Show how much of the APK was decoded into rows: zip entries and bytes per file type, and examples of files that are only listed. Every file is always listed with its size and hash.
   cache       List the indexes Sextant keeps for APKs given directly to a command (one per APK, keyed by its SHA-256), or delete them with --clear. Set SEXTANT_CACHE to move the folder.
   xml         Print any XML file of the APK (manifest, layouts, menus, drawables, colors, animations, …) as stored in SQLite, or find elements across all of them with --tag, --attr and --value.
+  links       Show what anything links to and what links to it, across kinds: the app, components, classes, methods, permissions, resources, URLs and native libraries. --depth follows the outgoing links further.
 ```
 
 ## extract
@@ -241,7 +242,7 @@ Arguments:
 ```text
 Usage: sextant mcp [<options>]
 
-  Run an MCP server on stdin/stdout so AI agents can extract, search and query APKs. Tools: extract, summary, find, class, callers, callees, sql, source, grep, insights, xref, reach, smali, icon, findings, endpoints.
+  Run an MCP server on stdin/stdout so AI agents can extract, search and query APKs. Tools: extract, summary, find, class, callers, callees, sql, source, grep, insights, links, xref, reach, smali, icon, findings, endpoints.
 
 Options:
   --dir=<path>  Start with this index (.sqlite) or APK as the current app
@@ -524,4 +525,23 @@ Options:
 Arguments:
   <target>  An APK (indexed once, then cached) or a .sqlite file from sextant extract
   <file>    A file inside the APK (res/BW.xml, AndroidManifest.xml) or a resource (@layout/main)
+```
+
+## links
+
+```text
+Usage: sextant links [<options>] <target> <thing>
+
+  Show what anything links to and what links to it, across kinds: the app, components, classes, methods, permissions, resources, URLs and native libraries. --depth follows the outgoing links further.
+
+Options:
+  --depth=<int>  Follow outgoing links this many steps (default 1, max 4)
+  --rel=<text>   Only this relation, e.g. uses, implemented_by, instantiates, calls
+  --limit=<int>  Rows per relation (default 25)
+  --json         One JSON object per link
+  -h, --help     Show this message and exit
+
+Arguments:
+  <target>  An APK (indexed once, then cached) or a .sqlite file from sextant extract
+  <thing>   A key (component:…, class:L…;, method:…, @string/x, permission:…, url:…) or a component, class or permission name
 ```

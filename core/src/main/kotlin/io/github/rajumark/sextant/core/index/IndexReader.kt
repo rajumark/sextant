@@ -104,6 +104,15 @@ data class XmlHit(
     val value: String?,
 )
 
+/** One edge next to a key: `out` = key → [other], `in` = [other] → key. */
+@Serializable
+data class LinkRow(
+    val direction: String,
+    val rel: String,
+    val other: String,
+    val via: String?,
+)
+
 /** Read-only access to index.sqlite. */
 class IndexReader private constructor(
     private val conn: Connection,
@@ -704,6 +713,78 @@ class IndexReader private constructor(
                 "run `sextant extract <app.apk> --force` again with this version, or pass the APK",
             )
         }
+    }
+
+    /**
+     * Keys in `links` that [query] names: a key as written (`component:…`, `@string/x`, `class:L…;`), a class
+     * descriptor, a method descriptor, a URL, or a component, class or permission name (a component suffix like
+     * `.MainActivity` works too).
+     */
+    fun linkKeys(query: String): List<String> {
+        requireTable("links", "links need 11")
+        val q = query.trim()
+        val prefixes = listOf("app", "@", "?", "component:", "class:", "method:", "permission:", "url:", "native:", "file:")
+        if (prefixes.any { q == it || (it != "app" && q.startsWith(it)) }) return listOf(q)
+        if (q.contains("->")) return listOf("method:$q")
+        if (q.startsWith("L") && q.endsWith(";")) return listOf("class:$q")
+        if (q.contains("://")) return listOf("url:$q")
+        val keys = mutableListOf<String>()
+
+        fun add(
+            sql: String,
+            vararg args: String,
+        ) = conn.prepareStatement(sql).use { st ->
+            args.forEachIndexed { i, a -> st.setString(i + 1, a) }
+            st.executeQuery().use { rs -> while (rs.next()) keys += rs.getString(1) }
+        }
+        add(
+            "SELECT 'component:' || name FROM components WHERE name = ? OR name LIKE ? ESCAPE '\\' ORDER BY name LIMIT 20",
+            q,
+            "%" + likeEscape(if (q.startsWith(".")) q else ".$q"),
+        )
+        add("SELECT 'class:' || descriptor FROM classes WHERE name = ?", q)
+        add("SELECT 'permission:' || name FROM permissions WHERE name = ? LIMIT 1", q)
+        return keys.distinct()
+    }
+
+    /** Links next to [key]: the stored ones plus code edges added on the fly (superclass, class members, calls). */
+    fun links(key: String): List<LinkRow> {
+        requireTable("links", "links need 11")
+        val rows = mutableListOf<LinkRow>()
+
+        fun query(
+            sql: String,
+            direction: String,
+            arg: String,
+        ) = conn.prepareStatement(sql).use { st ->
+            st.setString(1, arg)
+            st.executeQuery().use { rs -> while (rs.next()) rows += LinkRow(direction, rs.getString(1), rs.getString(2), rs.getString(3)) }
+        }
+        query("SELECT rel, dst, via FROM links WHERE src = ? ORDER BY rel, dst", "out", key)
+        query("SELECT rel, src, via FROM links WHERE dst = ? ORDER BY rel, src", "in", key)
+        when {
+            key.startsWith("class:") -> {
+                val d = key.removePrefix("class:")
+                query(
+                    "SELECT 'extends', 'class:' || superclass, NULL FROM classes WHERE descriptor = ? AND superclass IS NOT NULL",
+                    "out",
+                    d,
+                )
+                query(
+                    "SELECT 'defines', 'method:' || descriptor, NULL FROM methods WHERE class = ? AND defined = 1 ORDER BY name",
+                    "out",
+                    d,
+                )
+                query("SELECT 'extends', 'class:' || descriptor, NULL FROM classes WHERE superclass = ? ORDER BY descriptor", "in", d)
+            }
+            key.startsWith("method:") -> {
+                val d = key.removePrefix("method:")
+                query("SELECT 'defines', 'class:' || class, NULL FROM methods WHERE descriptor = ?", "in", d)
+                query("SELECT 'calls', 'method:' || callee, kind FROM call_edges WHERE caller = ? ORDER BY callee", "out", d)
+                query("SELECT 'calls', 'method:' || caller, kind FROM call_edges WHERE callee = ? ORDER BY caller", "in", d)
+            }
+        }
+        return rows.distinct()
     }
 
     /** One value from the meta table, or null. */

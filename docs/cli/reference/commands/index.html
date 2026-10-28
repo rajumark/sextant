@@ -1263,6 +1263,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#links" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        links
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1876,6 +1887,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#links" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        links
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1921,7 +1943,7 @@
 <a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>  grep        Search decompiled Java for text: every matching line with its class, method and line number. Finds what `find` can't (code bodies, field use, API calls). The first search decompiles the app and keeps the code in a local cache, so later searches are quick; --package narrows a first search on big apps.
 <a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>  insights    Show what the app is built with: frameworks, SDKs, libraries, endpoints and native code.
 <a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>  endpoints   List URLs found in code strings, resources, deep links and manifest values, with their sources.
-<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>  mcp         Run an MCP server on stdin/stdout so AI agents can extract, search and query APKs. Tools: extract, summary, find, class, callers, callees, sql, source, grep, insights, xref, reach, smali, icon, findings, endpoints.
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>  mcp         Run an MCP server on stdin/stdout so AI agents can extract, search and query APKs. Tools: extract, summary, find, class, callers, callees, sql, source, grep, insights, links, xref, reach, smali, icon, findings, endpoints.
 <a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>  diff        Compare two versions of an app: app facts, permissions, components, deep links, SDKs, libraries, hosts, URLs, native code, packages, classes, strings and resources.
 <a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>  findings    Show review findings (debuggable, cleartext, exported components, WebView bridges, weak crypto, trust-all TLS, embedded secrets, …) with evidence. They are static observations to check, not proven vulnerabilities.
 <a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>  xref        Where is a class or field used: instantiations, casts, instanceof, const-class, calls into its methods, field reads and writes.
@@ -1938,6 +1960,7 @@
 <a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>  coverage    Show how much of the APK was decoded into rows: zip entries and bytes per file type, and examples of files that are only listed. Every file is always listed with its size and hash.
 <a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>  cache       List the indexes Sextant keeps for APKs given directly to a command (one per APK, keyed by its SHA-256), or delete them with --clear. Set SEXTANT_CACHE to move the folder.
 <a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>  xml         Print any XML file of the APK (manifest, layouts, menus, drawables, colors, animations, …) as stored in SQLite, or find elements across all of them with --tag, --attr and --value.
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>  links       Show what anything links to and what links to it, across kinds: the app, components, classes, methods, permissions, resources, URLs and native libraries. --depth follows the outgoing links further.
 </code></pre></div>
 <h2 id="extract">extract<a class="headerlink" href="#extract" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Usage: sextant extract [&lt;options&gt;] &lt;apk&gt;
@@ -2100,7 +2123,7 @@
 <h2 id="mcp">mcp<a class="headerlink" href="#mcp" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Usage: sextant mcp [&lt;options&gt;]
 <a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>  Run an MCP server on stdin/stdout so AI agents can extract, search and query APKs. Tools: extract, summary, find, class, callers, callees, sql, source, grep, insights, xref, reach, smali, icon, findings, endpoints.
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>  Run an MCP server on stdin/stdout so AI agents can extract, search and query APKs. Tools: extract, summary, find, class, callers, callees, sql, source, grep, insights, links, xref, reach, smali, icon, findings, endpoints.
 <a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
 <a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>Options:
 <a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>  --dir=&lt;path&gt;  Start with this index (.sqlite) or APK as the current app
@@ -2335,6 +2358,22 @@
 <a id="__codelineno-28-13" name="__codelineno-28-13" href="#__codelineno-28-13"></a>Arguments:
 <a id="__codelineno-28-14" name="__codelineno-28-14" href="#__codelineno-28-14"></a>  &lt;target&gt;  An APK (indexed once, then cached) or a .sqlite file from sextant extract
 <a id="__codelineno-28-15" name="__codelineno-28-15" href="#__codelineno-28-15"></a>  &lt;file&gt;    A file inside the APK (res/BW.xml, AndroidManifest.xml) or a resource (@layout/main)
+</code></pre></div>
+<h2 id="links">links<a class="headerlink" href="#links" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>Usage: sextant links [&lt;options&gt;] &lt;target&gt; &lt;thing&gt;
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>  Show what anything links to and what links to it, across kinds: the app, components, classes, methods, permissions, resources, URLs and native libraries. --depth follows the outgoing links further.
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>
+<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>Options:
+<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>  --depth=&lt;int&gt;  Follow outgoing links this many steps (default 1, max 4)
+<a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a>  --rel=&lt;text&gt;   Only this relation, e.g. uses, implemented_by, instantiates, calls
+<a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a>  --limit=&lt;int&gt;  Rows per relation (default 25)
+<a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a>  --json         One JSON object per link
+<a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a>  -h, --help     Show this message and exit
+<a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a>
+<a id="__codelineno-29-12" name="__codelineno-29-12" href="#__codelineno-29-12"></a>Arguments:
+<a id="__codelineno-29-13" name="__codelineno-29-13" href="#__codelineno-29-13"></a>  &lt;target&gt;  An APK (indexed once, then cached) or a .sqlite file from sextant extract
+<a id="__codelineno-29-14" name="__codelineno-29-14" href="#__codelineno-29-14"></a>  &lt;thing&gt;   A key (component:…, class:L…;, method:…, @string/x, permission:…, url:…) or a component, class or permission name
 </code></pre></div>
 
 

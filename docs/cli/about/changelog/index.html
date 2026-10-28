@@ -1217,10 +1217,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#unreleased-schema-8-index-schema-10" class="md-nav__link">
+  <a href="#unreleased-schema-8-index-schema-11" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Unreleased (schema 8, index schema 10)
+        Unreleased (schema 8, index schema 11)
       
     </span>
   </a>
@@ -1391,10 +1391,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#unreleased-schema-8-index-schema-10" class="md-nav__link">
+  <a href="#unreleased-schema-8-index-schema-11" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Unreleased (schema 8, index schema 10)
+        Unreleased (schema 8, index schema 11)
       
     </span>
   </a>
@@ -1544,8 +1544,9 @@
 
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
 <p>All notable changes to Sextant. Versions follow semver; <code>schema_version</code> in <code>meta.json</code> tracks the output format separately.</p>
-<h2 id="unreleased-schema-8-index-schema-10">Unreleased (schema 8, index schema 10)<a class="headerlink" href="#unreleased-schema-8-index-schema-10" title="Permanent link">&para;</a></h2>
+<h2 id="unreleased-schema-8-index-schema-11">Unreleased (schema 8, index schema 11)<a class="headerlink" href="#unreleased-schema-8-index-schema-11" title="Permanent link">&para;</a></h2>
 <ul>
+<li><strong>Entities and links</strong> (Mission SQLite, step 6): a <code>links</code> table holds every edge between kinds of things, with readable keys (<code>app</code>, <code>component:…</code>, <code>class:L…;</code>, <code>method:…</code>, <code>permission:…</code>, <code>@type/name</code>, <code>url:…</code>, <code>native:…</code>, <code>file:…</code>) and the evidence for each (<code>via</code>): the app declares components and requests permissions; a component is implemented by its class, needs permissions and opens URLs; every resource file uses and declares resources (from every XML attribute); layouts and navigation graphs instantiate classes (custom views, fragments, behaviors); code uses resources; URLs come from methods, resources, assets and native code; native libraries implement Java classes. The <code>entities</code> view lists every key with its kind. <strong><code>sextant links app.apk &lt;thing&gt;</code></strong> walks them in both directions, adding the superclass, members and calls of a class or method on the fly; <code>--depth</code> follows outgoing links further. Also an MCP <code>links</code> tool.</li>
 <li><strong>Every XML node and attribute</strong> (Mission SQLite, step 5): every binary XML file of the APK (manifest, layouts, menus, drawables, color state lists, animations, interpolators, res/xml configs), not only the kinds <code>res</code> summarizes, is stored node by node in <code>xml_nodes</code> and attribute by attribute in <code>xml_attrs</code>, with <code>ref</code> set when a value points at a resource. <code>resources.arsc</code> is stored in every configuration: <code>resource_values</code> (simple values and file paths) and <code>resource_bag_items</code> (style attributes, plural quantities, array items, attr enums and flags). <strong><code>sextant xml</code></strong> prints any XML file rebuilt from those rows (<code>sextant xml app.apk @layout/main</code>) or finds elements across all of them (<code>--tag EditText --attr android:inputType --value Password</code>). Files read this way count as decoded: Binary Eye's file coverage goes from 66.6% to 95.8%. A round-trip test checks every rebuilt file against the decoded original on real apps.</li>
 <li><strong>Code → resource links</strong> (Mission SQLite, step 4): every resource id the code uses is now a resource reference (<code>from_kind = code</code>, <code>from</code> = the method, <code>attribute</code> = the first call after the id is loaded, usually the one it is passed to, such as <code>setContentView</code> or <code>getString</code>). Both build styles are covered: <code>const 0x7f…</code> literals in R8 builds and <code>R$type.name</code> field reads otherwise; ids not in <code>resources.arsc</code> are dropped. <code>res</code> shows code under "Used by", and the <code>used</code>/<code>unused</code> flags of <code>res string-keys</code> now count code: strings that looked unused drop from 313 to 58 (Binary Eye) and from 1,409 to 159 (Nextcloud).</li>
 <li><strong>APK in, SQLite out</strong> (Mission SQLite, step 3): <code>sextant extract app.apk</code> writes one file, <code>app.sqlite</code>, and nothing else: no output folder, no JSON or JSONL files. <code>-o</code> names the file; <code>--force</code> overwrites it; <code>--no-index</code> is gone (the index is the output). Every command takes that file or the APK itself: <code>info</code>, <code>res</code>, <code>components</code>, <code>component</code>, <code>app</code>, <code>icon</code>, <code>sdks</code> and <code>diff</code> now read SQLite too, and <code>diff</code> compares two APKs directly. A new <code>records</code> table keeps every manifest, resource and insight record exactly as built, so the whole extraction is rebuilt from the file alone (checked on real apps by a round-trip test). The MCP <code>extract</code> tool writes a <code>.sqlite</code> file and <code>summary</code> is generated from it.</li>
