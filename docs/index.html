@@ -6,15 +6,20 @@
 <style>
   :root { color-scheme: light dark; }
   body { margin: 0; padding: 24px 16px; font: 15px/1.6 system-ui, sans-serif; }
-  ul { max-width: 720px; margin: 0 auto; padding: 0; list-style: none; }
-  li { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid color-mix(in srgb, currentColor 15%, transparent); }
-  input { margin-top: 5px; }
+  ul { max-width: 760px; margin: 0 auto; padding: 0; list-style: none; }
+  li { display: flex; gap: 12px; align-items: baseline; padding: 8px 0; border-bottom: 1px solid color-mix(in srgb, currentColor 15%, transparent); }
+  .s { flex: none; width: 110px; font-size: 12px; font-weight: 600; text-align: center; padding: 2px 0; border-radius: 4px; }
+  .todo { background: color-mix(in srgb, gray 20%, transparent); }
+  .doing { background: color-mix(in srgb, #e0a100 30%, transparent); }
+  .done { background: color-mix(in srgb, #1a9a4a 30%, transparent); }
 </style>
 </head>
 <body>
 <ul>
-  <li><input type="checkbox" checked disabled><span>CLI add support for parsing strings.xml files</span></li>
-  <li><input type="checkbox" checked disabled><span>CLI add support for parsing menu xml files, resolve <code>@string/…</code> references (e.g. <code>@string/menu_settings</code>) to their values and keep both the reference and the resolved value</span></li>
+  <li><span class="s done">Implemented</span><span>CLI add support for parsing strings.xml files</span></li>
+  <li><span class="s done">Implemented</span><span>CLI add support for parsing menu xml files, resolve <code>@string/…</code> references (e.g. <code>@string/menu_settings</code>) to their values and keep both the reference and the resolved value</span></li>
+  <li><span class="s doing">In Progress</span><span>Menu details screen: add a visual preview of how the menu looks (we have the data); first suggest improvements for the Menus screen and the menu details page</span></li>
+  <li><span class="s done">Implemented</span><span>Desktop: every details pane shows the original source part. Entries not declared in AndroidManifest.xml show their own source file content (e.g. the menu XML) instead of "Not referenced from AndroidManifest.xml"</span></li>
 </ul>
 </body>
 </html>

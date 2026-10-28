@@ -53,7 +53,9 @@ import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import io.github.rajumark.sextant.core.insights.ResourceSource
 import io.github.rajumark.sextant.core.insights.SdkEntry
+import io.github.rajumark.sextant.core.insights.SourceBlock
 import io.github.rajumark.sextant.core.insights.StringKey
 import io.github.rajumark.sextant.core.model.AssetRecord
 import io.github.rajumark.sextant.core.model.DrawableRecord
@@ -120,8 +122,8 @@ private class ResSpec<T>(
     /** The `@type/name` refs that point at an entry, for "Used by". */
     val refs: (T) -> List<String> = { emptyList() },
     val detail: @Composable (T) -> Unit,
-    /** The entry as declared, for the "Manifest entry" / resource entry block. */
-    val entryXml: (T) -> String?,
+    /** The entry as written: its own file or its lines in res/values, one block per configuration (prepared by core). */
+    val source: (T) -> List<SourceBlock> = { emptyList() },
     val webQuery: (T) -> Pair<String, String>,
     /** Replaces the default "Manifest entry" block (resources referenced from the manifest). */
     val manifestEntry: (@Composable (T) -> Unit)? = null,
@@ -301,37 +303,71 @@ private fun <T> ResourcePage(
                     )
                     spec.detail(selected)
                     if (spec.refs(selected).isNotEmpty()) UsedBy(ws, a = ws.analysis.resources.refs, refs = spec.refs(selected))
-                    SubsectionLabel("Manifest entry")
                     val custom = spec.manifestEntry
                     if (custom != null) {
+                        SubsectionLabel("Manifest entry")
                         custom(selected)
                     } else {
                         val manifestUses =
                             ws.analysis.resources.refs
                                 .filter { it.fromKind == "manifest" && it.ref in spec.refs(selected) }
-                        if (manifestUses.isEmpty()) {
-                            Text(
-                                "Not referenced from AndroidManifest.xml.",
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        } else {
+                        if (manifestUses.isNotEmpty()) {
+                            SubsectionLabel("In AndroidManifest.xml · ${manifestUses.size}")
                             manifestUses.forEach { KeyValueRow(it.attribute.substringAfter(':'), it.from, mono = true, keyWidth = 240.dp) }
                         }
                     }
-                    spec.entryXml(selected)?.let { xml ->
-                        SubsectionLabel("Declaration")
-                        Row(verticalAlignment = Alignment.Top) {
-                            CodeBlock(highlighted(xml, Syntax.Xml), Modifier.weight(1f))
-                            CopyButton(xml, "declaration")
-                        }
-                    }
+                    val key = spec.key(selected)
+                    SourceSection(remember(spec.items, key) { spec.source(selected) }, key)
                     val (search, question) = spec.webQuery(selected)
                     WebActions(searchQuery = search, question = question)
                 }
             }
         },
     )
+}
+
+/**
+ * The entry as the developer wrote it: its own file (menu, layout, drawable XML) or its lines in res/values
+ * (strings, styles, ids). One chip per configuration when there are several; the path inside the APK is shown
+ * when shrinking renamed the file.
+ */
+@Composable
+private fun SourceSection(
+    blocks: List<SourceBlock>,
+    key: String,
+) {
+    if (blocks.isEmpty()) return
+    var pick by remember(key) { mutableStateOf(0) }
+    val b = blocks[pick.coerceIn(blocks.indices)]
+    SubsectionLabel(if (blocks.size > 1) "Source · ${blocks.size} configurations" else "Source")
+    if (blocks.size > 1) {
+        FlowRow(
+            Modifier.fillMaxWidth().padding(bottom = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            blocks.forEachIndexed { i, x ->
+                FilterChip(selected = i == pick, onClick = { pick = i }, label = { Text(x.config.ifEmpty { "default" }) })
+            }
+        }
+    }
+    MonoLine(b.file + if (b.inApk != b.file) "  ·  in APK: ${b.inApk}" else "")
+    Spacer(Modifier.height(6.dp))
+    val text = b.text
+    if (text == null) {
+        Text(b.note.orEmpty(), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    } else {
+        val syntax =
+            when (b.language) {
+                "xml" -> Syntax.Xml
+                "json" -> Syntax.Json
+                else -> Syntax.Plain
+            }
+        Row(verticalAlignment = Alignment.Top) {
+            CodeBlock(highlighted(text, syntax), Modifier.weight(1f))
+            CopyButton(text, "source")
+        }
+    }
 }
 
 /** Where a resource is referenced; each entry opens that resource's page when it has one. */
@@ -506,12 +542,11 @@ private fun stringsSpec(
                     .forEach { KeyValueRow(it.item.orEmpty(), it.value, keyWidth = 110.dp) }
             }
         },
-        entryXml = { k ->
-            val esc = k.value.replace("&", "&amp;").replace("<", "&lt;")
-            when (k.kind) {
-                "string" -> "<string name=\"${k.name}\">$esc</string>"
-                else -> "<${k.kind} name=\"${k.name}\">\n    …\n</${k.kind}>"
-            }
+        source = { k ->
+            ResourceSource.strings(
+                ws.analysis.resources.strings
+                    .filter { it.name == k.name },
+            )
         },
         webQuery = { k ->
             "\"${k.value.take(80)}\" android" to
@@ -595,7 +630,7 @@ private fun layoutsSpec(groups: List<ResGroup<LayoutRecord>>) =
                 }
             }
         },
-        entryXml = { null },
+        source = { ResourceSource.layouts(it.records) },
         webQuery = { g ->
             "android layout ${g.name}" to
                 "What does an Android layout named ${g.name} with root ${g.main.root} and views ${g.main.views.take(
@@ -649,7 +684,7 @@ private fun menusSpec(groups: List<ResGroup<MenuRecord>>) =
                 }
             }
         },
-        entryXml = { null },
+        source = { ResourceSource.menus(it.records) },
         webQuery = { g ->
             "android menu ${g.name}" to
                 "An Android app menu ${g.name} has items: ${g.main.items.mapNotNull {
@@ -702,7 +737,7 @@ private fun navigationSpec(graphs: List<NavigationRecord>) =
                 }
             }
         },
-        entryXml = { null },
+        source = { ResourceSource.navigation(it) },
         webQuery = { n ->
             "android navigation graph ${n.name}" to
                 "An Android navigation graph ${n.name} has destinations ${n.destinations.mapNotNull { it.className }.take(
@@ -763,11 +798,7 @@ private fun stylesSpec(groups: List<ResGroup<StyleRecord>>) =
                 s.items.forEach { ValueRow(it) }
             }
         },
-        entryXml = { g ->
-            "<style name=\"${g.name}\"" + (g.main.parent?.let { " parent=\"$it\"" } ?: "") + ">\n" +
-                g.main.items.joinToString("") { "    <item name=\"${it.name}\">${it.raw}</item>\n" } +
-                "</style>"
-        },
+        source = { ResourceSource.styles(it.records) },
         webQuery = { g ->
             "android style ${g.name}" to "What does the Android style or theme ${g.name} (parent ${g.main.parent}) control?"
         },
@@ -816,7 +847,7 @@ private fun drawablesSpec(groups: List<ResGroup<DrawableRecord>>) =
                 }
             }
         },
-        entryXml = { null },
+        source = { ResourceSource.drawables(it.records) },
         webQuery = { g -> "android drawable ${g.name}" to "What is an Android ${g.main.format} drawable named ${g.name} likely used for?" },
     )
 
@@ -857,7 +888,7 @@ private fun idsSpec(ids: List<ResourceIdRecord>) =
                 modifier = Modifier.padding(top = 8.dp),
             )
         },
-        entryXml = { null },
+        source = { ResourceSource.id(it) },
         webQuery = { r -> "android resource ${r.type} ${r.name}" to "What is the Android resource @${r.type}/${r.name} usually used for?" },
     )
 
@@ -897,7 +928,7 @@ private fun assetsSpec(assets: List<AssetRecord>) =
                 )
             }
         },
-        entryXml = { null },
+        source = { ResourceSource.asset(it) },
         webQuery = { a ->
             "android asset ${a.path.substringAfterLast('/')}" to
                 "An Android app ships the asset ${a.path} (${a.kind}, ${a.bytes} bytes${a.magic?.let {
@@ -962,7 +993,7 @@ private fun xmlSpec(groups: List<ResGroup<XmlConfigRecord>>) =
                 g.main.summary.forEach { (k, v) -> KeyValueRow(k, v, mono = true) }
             }
         },
-        entryXml = { it.main.xml },
+        source = { ResourceSource.xml(it.records) },
         webQuery = { g ->
             "android ${g.main.kind} xml" to
                 "Review this Android ${g.main.kind} file from res/xml/${g.name}.xml for security or privacy issues:\n${g.main.xml.take(
@@ -1053,7 +1084,6 @@ private fun sdkSpec(ws: WorkspaceState): ResSpec<SdkEntry> {
                 TextButton(onClick = { ws.destination = Destination.Application }) { Text("Open startup order") }
             }
         },
-        entryXml = { null },
         manifestEntry = { e ->
             val declared =
                 ws.analysis.components.filter { c ->

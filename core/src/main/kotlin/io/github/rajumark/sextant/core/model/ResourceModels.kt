@@ -74,6 +74,8 @@ data class DrawableRecord(
     val bytes: Long,
     val width: Int? = null,
     val height: Int? = null,
+    /** Readable XML of the decoded file for XML drawables (vector, shape, selector, …); empty for images. */
+    val xml: String = "",
 )
 
 @Serializable
@@ -101,6 +103,8 @@ data class LayoutRecord(
     /** Layouts included with <include layout="…">. */
     val includes: List<String>,
     val views: List<LayoutView>,
+    /** Readable XML of the decoded file, as the developer wrote it (attribute values as compiled). */
+    val xml: String = "",
 )
 
 @Serializable
@@ -121,6 +125,8 @@ data class MenuRecord(
     val config: String,
     val path: String,
     val items: List<MenuItem>,
+    /** Readable XML of the decoded file, as the developer wrote it (attribute values as compiled). */
+    val xml: String = "",
 )
 
 @Serializable
@@ -149,6 +155,8 @@ data class NavigationRecord(
     val path: String,
     val startDestination: String?,
     val destinations: List<NavDestination>,
+    /** Readable XML of the decoded file, as the developer wrote it (attribute values as compiled). */
+    val xml: String = "",
 )
 
 @Serializable
@@ -161,6 +169,8 @@ data class AssetRecord(
     val magic: String?,
     /** Executable code or an archive whose name hides it (e.g. a .dat that is a DEX): worth a look. */
     val hiddenCode: Boolean,
+    /** The file's text when it is a small UTF-8 text asset (json, xml, html, txt, …), else null. */
+    val text: String? = null,
 )
 
 @Serializable

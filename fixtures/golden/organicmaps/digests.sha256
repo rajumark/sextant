@@ -10,10 +10,10 @@ fb1a0d241f3b4da98611aa20c44f406e7373d638a01e29e737902d98d25f0043       8510  nat
 e27633fbea7f81cad0242bed830c4e27f7dcdd863006307b6cd99c827e446b76     107362  resources/strings.jsonl
 1557b896b9ef820f226966e9fde2cb9bc60e5eea3f30f226cf8028c81c44acef       8133  resources/ids.jsonl
 e82741a0ff8927fd6d8fcef32fbe06e7557c8e3a492d3c281360f875a83f3057       1143  resources/styles.jsonl
-d2449baf732a12d3cfd6dc31f43caa4388decc2a64405f3f8c6b96b2ffca66cc       1204  resources/drawables.jsonl
-74ca4b0760b745042137988f200010c5a0786ced6926e22592407832220d5da2        296  resources/layouts.jsonl
-45e87a0780efcd14d858416b9ab85dd1226b93f6cc62733b0eb23fccec6cfab7          4  resources/menus.jsonl
+41c3eab26c93465b71525ffb7f5641e8312388635ca157ca5ab7bb7a6554e86a       1204  resources/drawables.jsonl
+336b4561c714d185dfbe1002295c518c3c104f2f1293e396afb6ee8fbb4d85d9        296  resources/layouts.jsonl
+dac844202124801af951919d175e2738e6498c9470e991be63b3700c55424430          4  resources/menus.jsonl
 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855          0  resources/navigation.jsonl
-2a14502d7728f589ecb5a810d77ddaad288e243bdd7ace7520bfdb52c20e4230        175  resources/assets.jsonl
+9ee8d406076c61029665b1bd2aa471c05f14bb111e5d7f7f6f98c8b3a4b13899        175  resources/assets.jsonl
 9600d185b204709ef3453aec1e9fc1ca5ebb8c8827b5645c28b6c5db1479da23         10  resources/xml.jsonl
 01fabcc3baef8a0bbe2bd68c3c6cb7ee58d67dc7a0312493be19d029930331fc       3432  resources/refs.jsonl

@@ -58,6 +58,10 @@ object ResourceHarvester {
         )
     private const val MAX_FILE_BYTES = 4L * 1024 * 1024
     private const val MAX_VIEWS = 2000
+
+    /** Text assets up to this size keep their content, so readers can see the file itself. */
+    private const val MAX_ASSET_TEXT = 32L * 1024
+    private val TEXT_ASSETS = setOf("text", "json", "html", "js")
     private val FRAMEWORK_VIEW = Regex("""^(android\.|androidx\.|com\.google\.android\.material\.)|^[A-Z][A-Za-z]*$""")
     private val PLURAL =
         mapOf(
@@ -244,7 +248,7 @@ object ResourceHarvester {
                 else -> "other"
             }
         val (w, h) = bytes?.let { ImageSize.of(it) } ?: (null to null)
-        return DrawableRecord(e.type, e.name, e.config, path, format, size, w, h)
+        return DrawableRecord(e.type, e.name, e.config, path, format, size, w, h, tree?.let(::source).orEmpty())
     }
 
     private fun walk(
@@ -299,6 +303,7 @@ object ResourceHarvester {
             fragments.toList(),
             includes.toList(),
             views,
+            source(root),
         )
     }
 
@@ -323,7 +328,7 @@ object ResourceHarvester {
                     n.a("actionViewClass"),
                 )
         }
-        return MenuRecord(e.name, e.config, path, items)
+        return MenuRecord(e.name, e.config, path, items, source(root))
     }
 
     private fun nav(
@@ -358,7 +363,7 @@ object ResourceHarvester {
                         },
                 )
         }
-        return NavigationRecord(e.name, path, id(root.a("startDestination")), dests)
+        return NavigationRecord(e.name, path, id(root.a("startDestination")), dests, source(root))
     }
 
     private fun xmlConfig(
@@ -389,7 +394,7 @@ object ResourceHarvester {
                 "host-apdu-service", "offhost-apdu-service" -> "nfc-apdu-service"
                 else -> if (root.tag.endsWith("PreferenceScreen")) "preferences" else root.tag
             }
-        return XmlConfigRecord(e.name, e.config, path, root.tag, kind, XmlSummaries.of(kind, root), ManifestXml.render(root).trimEnd())
+        return XmlConfigRecord(e.name, e.config, path, root.tag, kind, XmlSummaries.of(kind, root), source(root))
     }
 
     private fun asset(
@@ -442,8 +447,26 @@ object ResourceHarvester {
         val announced = kind == "dex" || kind == "native" || kind == "archive"
         // Many formats are zip containers (office files, Firefox's omni.ja, Lottie, map tiles): not hidden code.
         val zipFormat = magic == "zip" && ext in ZIP_FORMATS
-        return AssetRecord(a.name, a.size, kind, magic, magic != null && !announced && !zipFormat)
+        val text =
+            if (kind in TEXT_ASSETS && a.size in 0..MAX_ASSET_TEXT) {
+                runCatching { zip.getInputStream(a).use { it.readBytes() } }
+                    .getOrNull()
+                    ?.let { b ->
+                        runCatching {
+                            Charsets.UTF_8
+                                .newDecoder()
+                                .decode(java.nio.ByteBuffer.wrap(b))
+                                .toString()
+                        }.getOrNull()
+                    }
+            } else {
+                null
+            }
+        return AssetRecord(a.name, a.size, kind, magic, magic != null && !announced && !zipFormat, text)
     }
+
+    /** The decoded file as readable XML, for the "Source" block. */
+    private fun source(root: XmlNode) = ManifestXml.render(root).trimEnd()
 }
 
 /** An attribute by local name: `android:x`, `app:x` or a bare `x` (aapt2 resource shrinking can drop namespaces). */

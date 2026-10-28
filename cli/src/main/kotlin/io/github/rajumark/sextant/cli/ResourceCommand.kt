@@ -13,12 +13,25 @@ import com.github.ajalt.clikt.parameters.types.path
 import io.github.rajumark.sextant.core.ExitCode
 import io.github.rajumark.sextant.core.Extractor
 import io.github.rajumark.sextant.core.SextantException
+import io.github.rajumark.sextant.core.insights.ResourceSource
+import io.github.rajumark.sextant.core.insights.SourceBlock
 import io.github.rajumark.sextant.core.insights.StringCatalog
+import io.github.rajumark.sextant.core.model.AssetRecord
+import io.github.rajumark.sextant.core.model.DrawableRecord
+import io.github.rajumark.sextant.core.model.LayoutRecord
+import io.github.rajumark.sextant.core.model.MenuRecord
+import io.github.rajumark.sextant.core.model.NavigationRecord
 import io.github.rajumark.sextant.core.model.ResourceHarvest
+import io.github.rajumark.sextant.core.model.ResourceIdRecord
 import io.github.rajumark.sextant.core.model.ResourceRef
+import io.github.rajumark.sextant.core.model.StringResource
+import io.github.rajumark.sextant.core.model.StyleRecord
+import io.github.rajumark.sextant.core.model.XmlConfigRecord
 import io.github.rajumark.sextant.core.output.OutputReader
 import io.github.rajumark.sextant.core.output.SextantJson
 import kotlinx.serialization.KSerializer
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.serializer
 import java.nio.file.Files
 
@@ -261,6 +274,26 @@ class ResourceCommand : CoreCliktCommand(name = "res") {
         return out
     }
 
+    /** The entry as written: its own file (layouts, menus, …) or its lines in res/values (strings, styles, ids). */
+    @Suppress("UNCHECKED_CAST")
+    private fun sources(
+        h: ResourceHarvest,
+        matches: List<Any?>,
+    ): List<SourceBlock> =
+        when (kindName) {
+            "strings" -> ResourceSource.strings(matches as List<StringResource>)
+            "string-keys" -> ResourceSource.strings(h.strings.filter { it.name == name })
+            "ids" -> (matches as List<ResourceIdRecord>).flatMap(ResourceSource::id)
+            "styles" -> ResourceSource.styles(matches as List<StyleRecord>)
+            "drawables" -> ResourceSource.drawables(matches as List<DrawableRecord>)
+            "layouts" -> ResourceSource.layouts(matches as List<LayoutRecord>)
+            "menus" -> ResourceSource.menus(matches as List<MenuRecord>)
+            "navigation" -> (matches as List<NavigationRecord>).flatMap(ResourceSource::navigation)
+            "assets" -> (matches as List<AssetRecord>).flatMap(ResourceSource::asset)
+            "xml" -> ResourceSource.xml(matches as List<XmlConfigRecord>)
+            else -> emptyList()
+        }
+
     private fun rowOf(
         k: Kind<Any?>,
         r: Any?,
@@ -289,8 +322,20 @@ class ResourceCommand : CoreCliktCommand(name = "res") {
             append(Table.render(k.columns, matches.map { rowOf(k, it) }))
             if (kindName in setOf("styles", "layouts", "menus", "navigation", "xml")) {
                 matches.forEach { m ->
+                    // The parsed fields; the file itself follows under Source.
+                    val fields = SextantJson.pretty.encodeToJsonElement(k.serializer, m).jsonObject
                     appendLine()
-                    appendLine(SextantJson.pretty.encodeToString(k.serializer, m))
+                    appendLine(SextantJson.pretty.encodeToString(JsonObject.serializer(), JsonObject(fields - "xml")))
+                }
+            }
+            val sources = sources(h, matches)
+            if (sources.isNotEmpty()) {
+                appendLine()
+                appendLine("## Source (${sources.size})")
+                sources.forEach { b ->
+                    appendLine()
+                    appendLine("# ${b.file}" + if (b.inApk != b.file) "  (in APK: ${b.inApk})" else "")
+                    appendLine(b.text ?: b.note.orEmpty())
                 }
             }
             appendLine()
