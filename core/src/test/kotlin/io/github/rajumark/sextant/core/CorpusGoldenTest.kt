@@ -1,7 +1,9 @@
 package io.github.rajumark.sextant.core
 
 import io.github.rajumark.sextant.core.index.IndexReader
+import io.github.rajumark.sextant.core.insights.MenuPreviews
 import io.github.rajumark.sextant.core.output.OutputFiles
+import io.github.rajumark.sextant.core.output.OutputReader
 import io.github.rajumark.sextant.core.output.OutputWriter
 import io.kotest.assertions.withClue
 import io.kotest.matchers.shouldBe
@@ -56,6 +58,17 @@ class CorpusGoldenTest {
             (counts + search).joinToString("\n", postfix = "\n")
         }
 
+    /** Every menu laid out as its host shows it: one reviewable line per menu. */
+    private fun menuPreviews(out: Path): String {
+        val r = OutputReader.read(out).resources
+        return r.menus.joinToString("") { m ->
+            val p = MenuPreviews.of(m, r.layouts)
+            val bar = p.toolbar.joinToString(",") { it.id?.substringAfter('/') ?: "?" }
+            "${m.name}${m.config.takeIf { it.isNotEmpty() }?.let { "-$it" } ?: ""}  ${p.host}  bar=[$bar]  " +
+                "overflow=${p.overflow.size}  hidden=${p.hidden.size}  untitled=${p.untitled}\n"
+        }
+    }
+
     @TestFactory
     fun `output matches golden files`(): List<DynamicTest> =
         // Some golden folders are kept out of git (Signal embeds a Google API key verbatim); skip those when absent.
@@ -69,7 +82,8 @@ class CorpusGoldenTest {
                     try {
                         OutputWriter.extractTo(CorpusApks.require(id), out, force = false, writeCodeFiles = false, extraCodeSink = code)
                         compared.associate { it.replace('/', '_') to normalize(out.resolve(it).readText()) } +
-                            ("digests.sha256" to digests(out, code)) + ("index.counts" to indexCounts(out))
+                            ("digests.sha256" to digests(out, code)) + ("index.counts" to indexCounts(out)) +
+                            ("menu_previews.txt" to menuPreviews(out))
                     } finally {
                         out.toFile().deleteRecursively()
                     }

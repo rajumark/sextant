@@ -1,0 +1,2 @@
+options_menu  app-bar  bar=[]  overflow=4  hidden=0  untitled=0
+time_scale_options  app-bar  bar=[]  overflow=13  hidden=0  untitled=0

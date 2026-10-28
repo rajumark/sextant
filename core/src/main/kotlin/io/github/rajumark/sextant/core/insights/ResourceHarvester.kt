@@ -89,6 +89,7 @@ object ResourceHarvester {
             "title",
             "tooltipText",
             "navGraph",
+            "menu",
             "inputType",
             "autofillHints",
             "importantForAutofill",
@@ -316,16 +317,35 @@ object ResourceHarvester {
         val items = mutableListOf<MenuItem>()
         walk(root) { n, d ->
             if (d == 0 && n.tag == "menu") return@walk
-            val title = (n.a("title"))?.let { value("android:title", it) }
+
+            // App attributes carry whatever prefix the namespace got (app:, material:, ankidroid:): match by local name.
+            fun m(name: String) =
+                n.a(name) ?: n.attributes.entries
+                    .firstOrNull { it.key.substringAfter(':') == name }
+                    ?.value
+
+            fun bool(name: String) = m(name)?.let { it == "true" || it == "0xffffffff" }
             items +=
                 MenuItem(
                     d,
                     n.tag,
-                    n.a("id")?.removePrefix("@+")?.removePrefix("@"),
-                    title,
-                    n.a("icon"),
-                    n.a("showAsAction"),
-                    n.a("actionViewClass"),
+                    m("id")?.removePrefix("@+")?.removePrefix("@"),
+                    m("title")?.let { value("android:title", it) },
+                    m("icon"),
+                    m("showAsAction")?.let(::showAsAction),
+                    m("actionViewClass"),
+                    orderInCategory = m("orderInCategory")?.let { it.toIntOrNull() ?: it.removePrefix("0x").toIntOrNull(16) },
+                    visible = bool("visible") ?: m("visibility")?.let { it == "visible" },
+                    enabled = bool("enabled"),
+                    checkable = bool("checkable"),
+                    checked = bool("checked"),
+                    checkableBehavior = m("checkableBehavior")?.let { CHECKABLE[it] ?: it },
+                    menuCategory = m("menuCategory")?.let { CATEGORY[it] ?: it },
+                    contentDescription = m("contentDescription")?.let { value("android:contentDescription", it) },
+                    tooltipText = m("tooltipText")?.let { value("android:tooltipText", it) },
+                    actionLayout = m("actionLayout"),
+                    actionProviderClass = m("actionProviderClass"),
+                    alphabeticShortcut = m("alphabeticShortcut"),
                 )
         }
         return MenuRecord(e.name, e.config, path, items, source(root))
@@ -464,6 +484,23 @@ object ResourceHarvester {
             }
         return AssetRecord(a.name, a.size, kind, magic, magic != null && !announced && !zipFormat, text)
     }
+
+    /** `0x2` → `always`, `0xa` → `always|collapseActionView`; names written as text pass through. */
+    internal fun showAsAction(raw: String): String {
+        val flags = (if (raw.startsWith("0x")) raw.removePrefix("0x").toIntOrNull(16) else raw.toIntOrNull()) ?: return raw
+        val place =
+            when (flags and 3) {
+                1 -> "ifRoom"
+                2 -> "always"
+                else -> "never"
+            }
+        return listOfNotNull(place, "withText".takeIf { flags and 4 != 0 }, "collapseActionView".takeIf { flags and 8 != 0 })
+            .joinToString("|")
+    }
+
+    private val CHECKABLE = mapOf("0x0" to "none", "0x1" to "all", "0x2" to "single", "0" to "none", "1" to "all", "2" to "single")
+    private val CATEGORY =
+        mapOf("0x10000" to "container", "0x20000" to "system", "0x30000" to "secondary", "0x40000" to "alternative")
 
     /** The decoded file as readable XML, for the "Source" block. */
     private fun source(root: XmlNode) = ManifestXml.render(root).trimEnd()

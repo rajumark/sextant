@@ -115,8 +115,23 @@ data class MenuItem(
     val id: String?,
     val title: ResValue?,
     val icon: String?,
+    /** never | ifRoom | always, plus withText / collapseActionView, joined with `|` (decoded from the compiled flags). */
     val showAsAction: String?,
     val actionViewClass: String?,
+    val orderInCategory: Int? = null,
+    val visible: Boolean? = null,
+    val enabled: Boolean? = null,
+    val checkable: Boolean? = null,
+    val checked: Boolean? = null,
+    /** Groups only: none | all (check boxes) | single (radio buttons). */
+    val checkableBehavior: String? = null,
+    /** container | system | secondary | alternative */
+    val menuCategory: String? = null,
+    val contentDescription: ResValue? = null,
+    val tooltipText: ResValue? = null,
+    val actionLayout: String? = null,
+    val actionProviderClass: String? = null,
+    val alphabeticShortcut: String? = null,
 )
 
 @Serializable

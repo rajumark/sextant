@@ -1,0 +1,15 @@
+ble_sensors_menu  toolbar  bar=[action_add]  overflow=0  hidden=0  untitled=0
+copy_paste_menu  app-bar  bar=[]  overflow=2  hidden=0  untitled=0
+help_menu  app-bar  bar=[action_menu]  overflow=0  hidden=0  untitled=0
+key_assignment_overview_menu  app-bar  bar=[action_edit,action_overflow_menu]  overflow=0  hidden=0  untitled=0
+map_markers_bottom_navigation  bottom-nav  bar=[action_active,action_groups,action_history,action_more]  overflow=0  hidden=0  untitled=0
+menu_selection_mode  app-bar  bar=[select_all,more_button]  overflow=0  hidden=0  untitled=0
+menu_star_search_browse  toolbar  bar=[action_search]  overflow=0  hidden=0  untitled=0
+myplaces_selection_menu  app-bar  bar=[action_select,action_overflow_menu]  overflow=0  hidden=0  untitled=0
+myplaces_tracks_folder_menu  app-bar  bar=[action_folder_search,action_folder_menu]  overflow=0  hidden=0  untitled=0
+myplaces_tracks_menu  app-bar  bar=[action_search,action_menu]  overflow=0  hidden=0  untitled=0
+show_filters_menu  app-bar  bar=[action_filters]  overflow=0  hidden=0  untitled=0
+track_menu_bottom_navigation  bottom-nav  bar=[action_overview,action_track,action_points,action_options]  overflow=0  hidden=0  untitled=0
+track_segment_menu  app-bar  bar=[]  overflow=3  hidden=0  untitled=0
+weather_forecast_menu  toolbar  bar=[weather_data_source]  overflow=0  hidden=0  untitled=0
+wikivoyage_bottom_navigation  bottom-nav  bar=[action_explore,action_saved_articles]  overflow=0  hidden=0  untitled=0

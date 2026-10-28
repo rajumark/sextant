@@ -13,6 +13,8 @@ import com.github.ajalt.clikt.parameters.types.path
 import io.github.rajumark.sextant.core.ExitCode
 import io.github.rajumark.sextant.core.Extractor
 import io.github.rajumark.sextant.core.SextantException
+import io.github.rajumark.sextant.core.insights.MenuEntry
+import io.github.rajumark.sextant.core.insights.MenuPreviews
 import io.github.rajumark.sextant.core.insights.ResourceSource
 import io.github.rajumark.sextant.core.insights.SourceBlock
 import io.github.rajumark.sextant.core.insights.StringCatalog
@@ -274,6 +276,81 @@ class ResourceCommand : CoreCliktCommand(name = "res") {
         return out
     }
 
+    /** The menu as the app bar shows it: action buttons, then the ⋮ overflow list with sub-menus, checks and radios. */
+    private fun menuPreview(
+        m: MenuRecord,
+        layouts: List<LayoutRecord>,
+    ): String {
+        val p = MenuPreviews.of(m, layouts)
+        return buildString {
+            appendLine()
+            val host =
+                when (p.host) {
+                    "bottom-nav" -> "bottom navigation"
+                    "drawer" -> "navigation drawer"
+                    "toolbar" -> "toolbar"
+                    else -> "app bar (no layout shows it: inflated from code as an options, popup or context menu)"
+                }
+            appendLine("## Preview (${m.config.ifEmpty { "default" }}) as $host")
+            p.hostViews.forEach { appendLine("  shown by $it") }
+            if (p.host != "drawer") {
+                appendLine(
+                    if (p.host ==
+                        "bottom-nav"
+                    ) {
+                        "Tabs (${p.toolbar.size})"
+                    } else {
+                        "Action buttons (${p.toolbar.size} of ${p.slots} slots)"
+                    },
+                )
+                if (p.toolbar.isEmpty()) appendLine("  none: every item is in the ⋮ menu")
+                p.toolbar.forEach { e ->
+                    val how =
+                        listOfNotNull(
+                            e.placement.takeIf { p.host != "bottom-nav" },
+                            "with text".takeIf { e.withText },
+                            e.icon,
+                            e.actionView?.let { "view $it" },
+                        )
+                    appendLine("  ${label(e)}  (${how.joinToString(", ")})")
+                }
+            }
+            if (p.host != "bottom-nav") {
+                appendLine(if (p.host == "drawer") "Rows (${p.overflow.size})" else "Overflow ⋮ (${p.overflow.size})")
+                entries(p.overflow, 1)
+            }
+            if (p.hidden.isNotEmpty()) {
+                appendLine("Hidden until code shows them (${p.hidden.size})")
+                entries(p.hidden, 1)
+            }
+            if (p.untitled > 0) appendLine("${p.untitled} item(s) have no title in XML: set in code")
+        }
+    }
+
+    private fun StringBuilder.entries(
+        list: List<MenuEntry>,
+        indent: Int,
+    ) {
+        var group: Int? = null
+        list.forEachIndexed { i, e ->
+            if (i > 0 && e.group != group) appendLine("  ".repeat(indent) + "────")
+            group = e.group
+            val mark =
+                when (e.mark) {
+                    "check" -> if (e.checked) "☑ " else "☐ "
+                    "radio" -> if (e.checked) "◉ " else "○ "
+                    else -> ""
+                }
+            appendLine("  ".repeat(indent) + mark + label(e) + if (e.children.isNotEmpty()) "  ▸" else "")
+            entries(e.children, indent + 2)
+        }
+    }
+
+    private fun label(e: MenuEntry) =
+        (e.title ?: "(${e.id ?: "untitled"}: title set in code)") +
+            (e.titleRef?.let { "  [$it]" } ?: "") +
+            (if (!e.enabled) "  (disabled)" else "")
+
     /** The entry as written: its own file (layouts, menus, …) or its lines in res/values (strings, styles, ids). */
     @Suppress("UNCHECKED_CAST")
     private fun sources(
@@ -327,6 +404,10 @@ class ResourceCommand : CoreCliktCommand(name = "res") {
                     appendLine()
                     appendLine(SextantJson.pretty.encodeToString(JsonObject.serializer(), JsonObject(fields - "xml")))
                 }
+            }
+            if (kindName == "menus") {
+                @Suppress("UNCHECKED_CAST")
+                (matches as List<MenuRecord>).forEach { append(menuPreview(it, h.layouts)) }
             }
             val sources = sources(h, matches)
             if (sources.isNotEmpty()) {

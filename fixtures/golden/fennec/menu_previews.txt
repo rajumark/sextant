@@ -1,0 +1,4 @@
+history_menu  app-bar  bar=[history_search,history_delete]  overflow=0  hidden=0  untitled=0
+history_select_multi  app-bar  bar=[share_history_multi_select]  overflow=3  hidden=0  untitled=0
+languages_list  app-bar  bar=[search]  overflow=0  hidden=0  untitled=0
+library_menu  app-bar  bar=[close_history]  overflow=0  hidden=0  untitled=0

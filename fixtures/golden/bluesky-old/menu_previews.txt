@@ -1,0 +1,1 @@
+crop_image_menu  app-bar  bar=[ic_rotate_right_24,ic_flip_24,crop_image_menu_crop]  overflow=0  hidden=1  untitled=0

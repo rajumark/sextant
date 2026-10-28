@@ -1,0 +1,5 @@
+menu_app  drawer  bar=[]  overflow=4  hidden=1  untitled=0
+menu_bottom_nav  bottom-nav  bar=[appsContainerFragment,gamesContainerFragment,updatesFragment]  overflow=0  hidden=0  untitled=0
+menu_import_export  app-bar  bar=[]  overflow=2  hidden=0  untitled=0
+menu_main  toolbar  bar=[menu_download_manager,menu_more]  overflow=0  hidden=0  untitled=0
+menu_splash  toolbar  bar=[]  overflow=4  hidden=0  untitled=0

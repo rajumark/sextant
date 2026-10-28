@@ -1,0 +1,7 @@
+activity_camera  app-bar  bar=[history,create]  overflow=8  hidden=0  untitled=0
+activity_pick  app-bar  bar=[toggle_free,rotate]  overflow=0  hidden=0  untitled=0
+fragment_barcode  app-bar  bar=[add_to_history,copy_to_clipboard]  overflow=3  hidden=0  untitled=0
+fragment_decode  app-bar  bar=[copy_to_clipboard,copy_as_deeplink]  overflow=3  hidden=2  untitled=0
+fragment_encode  app-bar  bar=[pick_file]  overflow=0  hidden=0  untitled=0
+fragment_history  app-bar  bar=[search,export_history]  overflow=2  hidden=0  untitled=0
+fragment_history_edit  app-bar  bar=[copy_scan,edit_label,remove_scan]  overflow=0  hidden=0  untitled=0

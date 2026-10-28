@@ -1,0 +1,7 @@
+menu_fragment_locationtracking  app-bar  bar=[history_filter,get_help]  overflow=0  hidden=0  untitled=0
+menu_fragment_log  app-bar  bar=[share_log,refresh_log]  overflow=0  hidden=0  untitled=0
+menu_fragment_notification  app-bar  bar=[search_notifications,get_help]  overflow=2  hidden=0  untitled=0
+menu_fragment_sensor  app-bar  bar=[action_search,action_filter,get_help]  overflow=0  hidden=0  untitled=0
+menu_fragment_sensordetail  app-bar  bar=[get_help]  overflow=0  hidden=2  untitled=0
+menu_fragment_share  app-bar  bar=[share_server]  overflow=0  hidden=0  untitled=0
+menu_help  app-bar  bar=[get_help]  overflow=0  hidden=0  untitled=0

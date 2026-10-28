@@ -1,0 +1,16 @@
+about  app-bar  bar=[menu_about,menu_contribute]  overflow=0  hidden=0  untitled=0
+autofill  app-bar  bar=[menu_block_autofill]  overflow=0  hidden=0  untitled=0
+database  app-bar  bar=[menu_save_database,menu_merge_database,menu_reload_database]  overflow=0  hidden=0  untitled=0
+database_extra  app-bar  bar=[menu_merge_from,menu_save_copy_to,menu_lock_all]  overflow=0  hidden=0  untitled=0
+device_unlock  app-bar  bar=[menu_keystore_remove_key]  overflow=0  hidden=0  untitled=0
+entry_edit  app-bar  bar=[menu_add_attachment,menu_add_otp,menu_add_field]  overflow=0  hidden=0  untitled=0
+entry_history  app-bar  bar=[menu_restore_entry_history,menu_delete_entry_history]  overflow=0  hidden=0  untitled=0
+icon  app-bar  bar=[menu_edit,menu_delete,menu_external_icon]  overflow=0  hidden=0  untitled=0
+key_generator  app-bar  bar=[menu_generate]  overflow=0  hidden=0  untitled=0
+node_menu  app-bar  bar=[menu_move,menu_copy]  overflow=3  hidden=0  untitled=0
+node_paste_menu  app-bar  bar=[menu_paste]  overflow=0  hidden=0  untitled=0
+open_file  app-bar  bar=[menu_open_file_read_mode_key,menu_open_file_user_verification_mode_key]  overflow=0  hidden=0  untitled=0
+recycle_bin  app-bar  bar=[menu_empty_recycle_bin]  overflow=0  hidden=0  untitled=0
+search  app-bar  bar=[menu_search]  overflow=0  hidden=0  untitled=0
+settings  app-bar  bar=[menu_app_settings]  overflow=0  hidden=0  untitled=0
+tree  app-bar  bar=[menu_sort]  overflow=0  hidden=0  untitled=0

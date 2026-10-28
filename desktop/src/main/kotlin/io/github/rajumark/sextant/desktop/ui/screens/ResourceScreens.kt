@@ -143,7 +143,7 @@ fun ResourceScreen(
     when (dest) {
         Destination.Strings -> ResourcePage(ws, page, stringsSpec(ws, page, a.stringKeys))
         Destination.Layouts -> ResourcePage(ws, page, layoutsSpec(grouped(r.layouts, { it.name }, { it.config })))
-        Destination.Menus -> ResourcePage(ws, page, menusSpec(grouped(r.menus, { it.name }, { it.config })))
+        Destination.Menus -> ResourcePage(ws, page, menusSpec(grouped(r.menus, { it.name }, { it.config }), r.layouts))
         Destination.Navigation -> ResourcePage(ws, page, navigationSpec(r.navigation))
         Destination.Styles -> ResourcePage(ws, page, stylesSpec(grouped(r.styles, { it.name }, { it.config })))
         Destination.Drawables -> ResourcePage(ws, page, drawablesSpec(grouped(r.drawables, { "${it.type}/${it.name}" }, { it.config })))
@@ -670,59 +670,66 @@ private fun layoutsSpec(groups: List<ResGroup<LayoutRecord>>) =
         },
     )
 
-private fun menusSpec(groups: List<ResGroup<MenuRecord>>) =
-    ResSpec(
-        title = "Menus",
-        noun = "menus",
-        icon = Icons.Outlined.TouchApp,
-        items = groups,
-        key = { it.name },
-        headline = { it.name },
-        supporting = { g ->
-            g.main.items
-                .mapNotNull {
-                    it.title?.let { t ->
-                        t.resolved ?: t.raw
-                    }
-                }.joinToString(" · ")
-                .ifEmpty { "${g.main.items.size} items" }
-        },
-        tags = { g -> listOf("${g.main.items.count { it.tag == "item" }} items" to Tone.Neutral) },
-        searchText = { g -> g.name + " " + g.main.items.joinToString(" ") { "${it.id} ${it.title?.raw} ${it.title?.resolved}" } },
-        filters =
-            listOf(
-                "Action views" to { g: ResGroup<MenuRecord> -> g.main.items.any { it.actionViewClass != null } },
-                "Sub-menus" to { g -> g.main.items.any { it.tag == "menu" } },
-            ),
-        refs = { listOf("@menu/${it.name}") },
-        detail = { g ->
-            KeyValueRow("Configurations", g.configs.joinToString())
-            KeyValueRow("File", g.main.path, mono = true)
-            SubsectionLabel("Items")
-            g.main.items.forEach { i ->
-                Column(Modifier.padding(start = ((i.depth - 1).coerceAtLeast(0) * 16).dp, top = 4.dp, bottom = 4.dp)) {
-                    Text(i.title?.let { it.resolved ?: it.raw } ?: "(${i.tag})", style = MaterialTheme.typography.bodyLarge)
-                    MonoLine(
-                        listOfNotNull(
-                            i.id,
-                            i.title?.raw?.takeIf {
-                                i.title?.resolved != null
-                            },
-                            i.showAsAction?.let { "showAsAction=$it" },
-                            i.actionViewClass,
-                        ).joinToString("  ·  "),
-                    )
+private fun menusSpec(
+    groups: List<ResGroup<MenuRecord>>,
+    layouts: List<LayoutRecord>,
+) = ResSpec(
+    title = "Menus",
+    noun = "menus",
+    icon = Icons.Outlined.TouchApp,
+    items = groups,
+    key = { it.name },
+    headline = { it.name },
+    supporting = { g ->
+        g.main.items
+            .mapNotNull {
+                it.title?.let { t ->
+                    t.resolved ?: t.raw
                 }
+            }.joinToString(" · ")
+            .ifEmpty { "${g.main.items.size} items" }
+    },
+    tags = { g -> listOf("${g.main.items.count { it.tag == "item" }} items" to Tone.Neutral) },
+    searchText = { g -> g.name + " " + g.main.items.joinToString(" ") { "${it.id} ${it.title?.raw} ${it.title?.resolved}" } },
+    filters =
+        listOf(
+            "Action views" to { g: ResGroup<MenuRecord> -> g.main.items.any { it.actionViewClass != null } },
+            "Sub-menus" to { g -> g.main.items.any { it.tag == "menu" } },
+        ),
+    refs = { listOf("@menu/${it.name}") },
+    detail = { g ->
+        KeyValueRow("Configurations", g.configs.joinToString())
+        KeyValueRow("File", g.main.path, mono = true)
+        MenuPreviewCard(g.records, layouts)
+        SubsectionLabel("Items")
+        g.main.items.forEach { i ->
+            Column(Modifier.padding(start = ((i.depth - 1).coerceAtLeast(0) * 16).dp, top = 4.dp, bottom = 4.dp)) {
+                Text(
+                    i.title?.let { it.resolved ?: it.raw }?.takeIf { it.isNotEmpty() }
+                        ?: if (i.tag == "item") "${i.id?.substringAfter('/') ?: "item"} · title set in code" else "(${i.tag})",
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+                MonoLine(
+                    listOfNotNull(
+                        i.id,
+                        i.title?.raw?.takeIf {
+                            i.title?.resolved != null
+                        },
+                        i.showAsAction?.let { "showAsAction=$it" },
+                        i.actionViewClass,
+                    ).joinToString("  ·  "),
+                )
             }
-        },
-        source = { ResourceSource.menus(it.records) },
-        webQuery = { g ->
-            "android menu ${g.name}" to
-                "An Android app menu ${g.name} has items: ${g.main.items.mapNotNull {
-                    it.title?.resolved
-                }.joinToString()}. What screen is it likely on?"
-        },
-    )
+        }
+    },
+    source = { ResourceSource.menus(it.records) },
+    webQuery = { g ->
+        "android menu ${g.name}" to
+            "An Android app menu ${g.name} has items: ${g.main.items.mapNotNull {
+                it.title?.resolved
+            }.joinToString()}. What screen is it likely on?"
+    },
+)
 
 private fun navigationSpec(graphs: List<NavigationRecord>) =
     ResSpec(
