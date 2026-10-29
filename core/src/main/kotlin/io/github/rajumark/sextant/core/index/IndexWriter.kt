@@ -4,6 +4,7 @@ import io.github.rajumark.sextant.core.CodeSink
 import io.github.rajumark.sextant.core.Extraction
 import io.github.rajumark.sextant.core.RawXml
 import io.github.rajumark.sextant.core.SextantException
+import io.github.rajumark.sextant.core.SigningDetail
 import io.github.rajumark.sextant.core.insights.AppIcons
 import io.github.rajumark.sextant.core.insights.ComponentReviews
 import io.github.rajumark.sextant.core.insights.IconFile
@@ -481,6 +482,90 @@ class IndexWriter(
         }
     }
 
+    private fun insertSigning(d: SigningDetail) {
+        conn.prepareStatement("INSERT INTO signing_signers VALUES (?,?,?,?,?,?)").use { st ->
+            for (s in d.signers) {
+                st.setString(1, s.scheme)
+                st.setInt(2, s.index)
+                st.setString(3, s.name)
+                s.minSdk?.let { st.setInt(4, it) } ?: st.setNull(4, java.sql.Types.INTEGER)
+                s.maxSdk?.let { st.setInt(5, it) } ?: st.setNull(5, java.sql.Types.INTEGER)
+                st.setString(6, s.certSha256)
+                st.addBatch()
+            }
+            d.sourceStamp?.let {
+                st.setString(1, "source-stamp")
+                st.setInt(2, 0)
+                st.setNull(3, java.sql.Types.VARCHAR)
+                st.setNull(4, java.sql.Types.INTEGER)
+                st.setNull(5, java.sql.Types.INTEGER)
+                st.setString(6, it)
+                st.addBatch()
+            }
+            st.executeBatch()
+        }
+        conn.prepareStatement("INSERT INTO signing_digests VALUES (?,?,?,?)").use { st ->
+            for (s in d.signers) {
+                for ((algorithm, digest) in s.digests) {
+                    st.setString(1, s.scheme)
+                    st.setInt(2, s.index)
+                    st.setString(3, algorithm)
+                    st.setString(4, digest)
+                    st.addBatch()
+                }
+            }
+            st.executeBatch()
+        }
+        conn.prepareStatement("INSERT INTO signing_certificates VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)").use { st ->
+            for (c in d.certificates) {
+                listOf(
+                    c.sha256,
+                    c.sha1,
+                    c.md5,
+                    c.subject,
+                    c.issuer,
+                    c.serial,
+                    c.notBefore,
+                    c.notAfter,
+                    c.signatureAlgorithm,
+                    c.keyAlgorithm,
+                ).forEachIndexed { i, v -> st.setString(i + 1, v) }
+                c.keySize?.let { st.setInt(11, it) } ?: st.setNull(11, java.sql.Types.INTEGER)
+                st.setString(12, c.publicKeySha256)
+                st.setBytes(13, c.der)
+                st.addBatch()
+            }
+            st.executeBatch()
+        }
+        conn.prepareStatement("INSERT INTO signing_lineage VALUES (?,?)").use { st ->
+            d.lineage.forEachIndexed { i, cert ->
+                st.setInt(1, i)
+                st.setString(2, cert)
+                st.addBatch()
+            }
+            st.executeBatch()
+        }
+        conn.prepareStatement("INSERT INTO signing_issues VALUES (?,?,?,?)").use { st ->
+            for (i in d.issues) {
+                st.setString(1, i.level)
+                st.setString(2, i.scope)
+                st.setString(3, i.issue)
+                st.setString(4, i.message)
+                st.addBatch()
+            }
+            st.executeBatch()
+        }
+        conn.prepareStatement("INSERT INTO signing_manifest VALUES (?,?,?)").use { st ->
+            for ((path, algorithm, digest) in d.manifestDigests) {
+                st.setString(1, path)
+                st.setString(2, algorithm)
+                st.setString(3, digest)
+                st.addBatch()
+            }
+            st.executeBatch()
+        }
+    }
+
     private fun insertText(extraction: Extraction) {
         val fileIds = extraction.files.withIndex().associate { (i, f) -> f.path to i + 1L }
         conn.prepareStatement("INSERT INTO file_text VALUES (?,?,?,?)").use { text ->
@@ -623,6 +708,7 @@ class IndexWriter(
         }
         insertElf(extraction)
         insertText(extraction)
+        insertSigning(extraction.raw.signing)
         conn.prepareStatement("INSERT INTO resource_values VALUES (?,?,?,?,?,?)").use { values ->
             conn.prepareStatement("INSERT INTO resource_bag_items VALUES (?,?,?,?,?)").use { items ->
                 for (r in extraction.raw.resourceTable) {

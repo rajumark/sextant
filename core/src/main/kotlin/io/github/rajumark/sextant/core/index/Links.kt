@@ -51,6 +51,9 @@ internal object Links {
                 "WHEN 'asset' THEN 'file:' || s.location ELSE 'app' END, " +
                 "'contains', 'url:' || e.url, s.kind FROM endpoint_sources s JOIN endpoints e ON e.id = s.endpoint " +
                 "WHERE s.kind IN ('code', 'resource', 'native', 'manifest', 'asset')",
+            // The app is signed by the certificates of its signers (and stamped by the source-stamp certificate).
+            "INSERT INTO links SELECT DISTINCT 'app', CASE scheme WHEN 'source-stamp' THEN 'stamped_by' ELSE 'signed_by' END, " +
+                "'certificate:' || certificate, scheme FROM signing_signers WHERE certificate IS NOT NULL",
             // Service-loader registrations: an interface is provided by the classes listed in META-INF/services.
             "INSERT INTO links SELECT DISTINCT 'class:L' || replace(s.interface, '.', '/') || ';', 'provided_by', " +
                 "'class:' || k.descriptor, s.path FROM services s JOIN classes k ON k.name = s.implementation",

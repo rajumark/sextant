@@ -36,6 +36,7 @@ object SavedQueries {
             "activity-layouts",
             "exported-components",
             "dangerous-permissions",
+            "signing",
             "webviews",
             "hosts",
             "jni-methods",

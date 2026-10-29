@@ -74,7 +74,7 @@ object Extractor {
         val facts = mapper.facts()
         val permissions = mapper.permissions()
         val components = mapper.components()
-        val signing = SigningReader.read(opened.signed, warnings)
+        val (signing, signingDetail) = SigningReader.readDetailed(opened.signed, warnings)
         val collector = InsightsCollector()
         val findingsCollector = FindingsCollector()
         val resourceUses = ResourceUseCollector()
@@ -132,6 +132,7 @@ object Extractor {
                                 resourceTable = decoded.table,
                                 elf = RawElf.read(it, listed, warnings),
                                 text = TextFiles.read(it, listed),
+                                signing = signingDetail,
                             )
                         }
                     val decoders = ApkFiles.decoders(codeStats, decoded.table.isNotEmpty(), signing, resources, insights)

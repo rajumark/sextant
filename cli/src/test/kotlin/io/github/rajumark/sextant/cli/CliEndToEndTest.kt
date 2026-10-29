@@ -497,6 +497,18 @@ class CliEndToEndTest {
     }
 
     @Test
+    fun `signing is stored as rows, with signers per scheme, certificates and manifest digests`() {
+        val file = extracted("binaryeye")
+        val signing = sextant("q", "signing", file, "--json")
+        signing.exitCode shouldBe 0
+        signing.stdout shouldContain "\"scheme\":\"v3\",\"min_sdk\":24"
+        signing.stdout shouldContain "CN=FDroid"
+        sextant("sql", file, "SELECT key_size FROM signing_certificates").stdout shouldContain "2048"
+        sextant("sql", file, "SELECT count(*) > 900 AS ok FROM signing_manifest").stdout.lines()[2].trim() shouldBe "1"
+        sextant("links", file, "app", "--rel", "signed_by").stdout shouldContain "certificate:9E:CD:BF:06"
+    }
+
+    @Test
     fun `extract stores insights and resources in the SQLite file`() {
         val file = extracted("binaryeye")
         for (table in listOf("libraries", "sdks", "endpoints", "resources", "string_resources", "layouts")) {

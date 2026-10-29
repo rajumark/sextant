@@ -50,6 +50,7 @@
   <li><span class="s done">Implemented</span><span>Mission SQLite step 8: every byte of the APK in SQLite. The bytes of every file (dex always) stored next to the tables built from them, so no command needs the APK any more: <code>smali</code>, <code>source</code>, <code>grep</code>, <code>icon -o</code> and <code>files --save</code> work from the <code>.sqlite</code> file</span></li>
   <li><span class="s done">Implemented</span><span>Mission SQLite step 9: native libraries in depth. For every ELF file in the APK (also ones hidden in assets): architecture, soname, build id, sections, needed libraries, every imported and exported symbol, and the readable strings, as rows, searchable and linked</span></li>
   <li><span class="s done">Implemented</span><span>Mission SQLite step 10: text file contents as rows. The text of every text, JSON and XML file that is not a resource (assets, library metadata, licenses, configs) stored and searchable, properties files key by key, and service-loader files as interface → implementation links</span></li>
+  <li><span class="s done">Implemented</span><span>Mission SQLite step 11: signing as rows. Every signer of every scheme (v1 to v4, with v3 SDK ranges), every certificate field and its bytes, the key rotation lineage, the source stamp, verifier errors and warnings, and every digest in MANIFEST.MF</span></li>
 </ul>
 </body>
 </html>

@@ -29,7 +29,7 @@ frameworks 0
 icons 5
 layouts 6
 libraries 0
-links 338
+links 341
 menus 3
 meta 10
 metadata 0
@@ -45,9 +45,15 @@ resource_ids 210
 resource_refs 263
 resource_values 1021
 resources 90
-schema_docs 365
+schema_docs 403
 sdks 0
 services 0
+signing_certificates 1
+signing_digests 2
+signing_issues 2
+signing_lineage 0
+signing_manifest 84
+signing_signers 3
 string_refs 135
 string_resources 1354
 strings 76

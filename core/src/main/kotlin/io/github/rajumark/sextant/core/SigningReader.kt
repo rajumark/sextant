@@ -8,6 +8,7 @@ import java.security.MessageDigest
 import java.security.cert.X509Certificate
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import java.util.zip.ZipFile
 
 /** Reads APK signature schemes and signer certificates with Google's apksig. */
 object SigningReader {
@@ -16,13 +17,19 @@ object SigningReader {
     fun read(
         path: Path,
         warnings: MutableList<String>,
-    ): Signing {
+    ): Signing = readDetailed(path, warnings).first
+
+    /** The summary kept in meta, and every detail apksig reports as rows ([SigningDetail]), from one verification. */
+    fun readDetailed(
+        path: Path,
+        warnings: MutableList<String>,
+    ): Pair<Signing, SigningDetail> {
         val result =
             try {
                 ApkVerifier.Builder(path.toFile()).build().verify()
             } catch (e: Exception) {
                 warnings += "signature could not be read (${e.javaClass.simpleName}: ${e.message})"
-                return Signing(verified = false, schemes = emptyList(), certificates = emptyList())
+                return Signing(verified = false, schemes = emptyList(), certificates = emptyList()) to SigningDetail()
             }
         val schemes =
             buildList {
@@ -36,7 +43,14 @@ object SigningReader {
             warnings += if (first == null) "APK is not signed" else "signature did not verify: $first"
         }
         val certificates = result.signerCertificates.map(::certificate).distinctBy { it.sha256 }
-        return Signing(verified = result.isVerified, schemes = schemes, certificates = certificates)
+        val manifest =
+            runCatching {
+                ZipFile(path.toFile()).use { z ->
+                    z.getEntry("META-INF/MANIFEST.MF")?.let { e -> z.getInputStream(e).use { it.readBytes() } }
+                }
+            }.getOrNull()
+        val detail = runCatching { SigningDetails.of(result, manifest) }.getOrElse { SigningDetail() }
+        return Signing(verified = result.isVerified, schemes = schemes, certificates = certificates) to detail
     }
 
     private fun certificate(cert: X509Certificate) =

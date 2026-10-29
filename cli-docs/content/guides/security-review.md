@@ -61,6 +61,18 @@ The full list of rules, with what each one means, is in [Review findings](../ref
     sextant sql app.sqlite "SELECT jni_class, jni_method, library FROM native_symbols WHERE jni_class IS NOT NULL"
     ```
 
+## Signing
+
+Every signer of every scheme, every certificate field and the verifier's own warnings are rows:
+
+```bash
+sextant q signing app.apk                       # scheme, SDK range, subject, key, expiry, fingerprint per signer
+sextant sql app.apk "SELECT level, scope, issue FROM signing_issues"
+sextant sql app.apk "SELECT seq, certificate FROM signing_lineage"   # key rotation, oldest first
+```
+
+A v3 signer with `min_sdk` above the app's own minimum means older devices verify a different (older) key; an empty `signing_lineage` means no key rotation.
+
 ## How the code rules work
 
 - **Correlated, not keyword-only.** `weak-cipher` fires only when a method both loads a cipher string (`"AES/ECB/…"`, `"DES"`, bare `"AES"`, which defaults to ECB) and calls `Cipher.getInstance`. The same applies to `weak-hash` with `MessageDigest.getInstance`.

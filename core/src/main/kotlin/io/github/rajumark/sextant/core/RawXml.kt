@@ -24,6 +24,7 @@ class RawLayer(
     val resourceTable: List<RawResource> = emptyList(),
     val elf: List<ElfFile> = emptyList(),
     val text: List<TextFile> = emptyList(),
+    val signing: SigningDetail = SigningDetail(),
 )
 
 /** Reads every file whose bytes are ELF (lib/ and anything hidden elsewhere) with [ElfDetail]. */

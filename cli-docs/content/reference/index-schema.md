@@ -7,7 +7,7 @@ or external) has one row in `methods`; edges point at integer ids, and the views
 and `search_items` give the readable, descriptor-based form. JSON arrays are stored as TEXT; use SQLite's
 `json_each` to expand them. Query it with `sextant sql <dir> "…"` (read-only) or any SQLite tool.
 
-Schema version: **15**
+Schema version: **16**
 (stored in `meta` as `index_schema_version`).
 
 ```sql
@@ -502,6 +502,57 @@ CREATE TABLE services (
 );
 -- Full-text search over file_text (any 3+ character fragment); `sextant files --grep` uses it.
 CREATE VIRTUAL TABLE file_text_search USING fts5(text, content = 'file_text', tokenize = 'trigram');
+
+-- Signing as rows (index schema 16): every signer of every scheme as apksig reports it.
+CREATE TABLE signing_signers (
+  scheme      TEXT NOT NULL,      -- v1 | v2 | v3 | v3.1 | v4 | source-stamp
+  idx         INTEGER NOT NULL,   -- signer index within the scheme
+  name        TEXT,               -- v1: the signature file, e.g. META-INF/CERT.SF
+  min_sdk     INTEGER,            -- v3 / v3.1: lowest SDK this signer applies to
+  max_sdk     INTEGER,            -- v3 / v3.1: highest SDK this signer applies to
+  certificate TEXT                -- signing_certificates.sha256
+);
+-- Content digests each v2 / v3 signer signed.
+CREATE TABLE signing_digests (
+  scheme    TEXT NOT NULL,
+  idx       INTEGER NOT NULL,
+  algorithm TEXT NOT NULL,        -- RSA_PKCS1_V1_5_WITH_SHA256, ECDSA_WITH_SHA256, …
+  digest    TEXT NOT NULL         -- hex
+);
+-- Every certificate seen (signers, rotation lineage, source stamp), with every field people check and its DER bytes.
+CREATE TABLE signing_certificates (
+  sha256              TEXT PRIMARY KEY,   -- colon-separated hex, as in meta_json
+  sha1                TEXT NOT NULL,
+  md5                 TEXT NOT NULL,
+  subject             TEXT NOT NULL,
+  issuer              TEXT NOT NULL,
+  serial              TEXT NOT NULL,      -- hex
+  not_before          TEXT NOT NULL,
+  not_after           TEXT NOT NULL,
+  signature_algorithm TEXT NOT NULL,      -- SHA256withRSA, …
+  key_algorithm       TEXT NOT NULL,      -- RSA | EC | DSA
+  key_size            INTEGER,            -- bits
+  public_key_sha256   TEXT NOT NULL,
+  der                 BLOB NOT NULL
+);
+-- Key rotation (v3 proof-of-rotation): the signing certificates in order, oldest first.
+CREATE TABLE signing_lineage (
+  seq         INTEGER NOT NULL,
+  certificate TEXT NOT NULL       -- signing_certificates.sha256
+);
+-- What the verifier reported: errors and warnings for the APK, each signer and the source stamp.
+CREATE TABLE signing_issues (
+  level   TEXT NOT NULL,          -- error | warning
+  scope   TEXT NOT NULL,          -- apk | v1:<name> | v2:<index> | v3:<index> | v3.1:<index> | source-stamp
+  issue   TEXT NOT NULL,          -- apksig issue id, e.g. JAR_SIG_NO_SIGNATURES
+  message TEXT NOT NULL
+);
+-- Every digest in META-INF/MANIFEST.MF (v1): one row per entry and algorithm.
+CREATE TABLE signing_manifest (
+  path      TEXT NOT NULL,        -- the entry it covers
+  algorithm TEXT NOT NULL,        -- SHA-256, SHA1, …
+  digest    TEXT NOT NULL         -- base64, as written
+);
 
 -- File contents (index schema 13): the uncompressed bytes of every file in the APK (dex files always; the others
 -- unless extracted with --no-content), so the .sqlite file holds the whole APK and no command needs the APK itself.

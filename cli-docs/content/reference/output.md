@@ -25,6 +25,7 @@ The file holds everything Sextant reads from the APK, in two forms:
 | `call_edges`, `string_uses`, `search_items` | the same edges and search hits with readable names (views) |
 | `libraries`, `frameworks`, `sdks`, `endpoints`, `endpoint_sources`, `findings`, `finding_evidence` | insights, each with its evidence |
 | `native_libraries`, `native_symbols` | native code, with JNI symbols mapped to Java |
+| `signing_signers`, `signing_certificates`, `signing_digests`, `signing_lineage`, `signing_issues`, `signing_manifest` | signing as rows: every signer per scheme (with v3 SDK ranges), every certificate field and its bytes, rotation lineage, verifier issues, MANIFEST.MF digests |
 | `file_text`, `file_properties`, `services` | the text of every text, JSON and textual XML file (assets, configs, licenses, …) with a full-text index; `.properties` files key by key; service-loader registrations |
 | `elf_files`, `elf_sections`, `elf_needed`, `elf_symbols`, `elf_strings` | every ELF file in depth: architecture, soname, build id, sections, the libraries it loads, every imported and exported symbol, and its readable strings |
 | `xml_nodes`, `xml_attrs` | every binary XML file (manifest, layouts, menus, drawables, colors, animations, …) node by node and attribute by attribute, with `ref` for values that point at a resource; `sextant xml` prints a file rebuilt from them |
