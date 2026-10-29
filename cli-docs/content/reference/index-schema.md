@@ -400,8 +400,8 @@ CREATE TABLE resource_bag_items (
 
 -- Links (index schema 11): every edge between kinds of things, with readable keys, built from the tables above.
 -- Keys: app, component:<name>, class:<descriptor>, method:<descriptor>, permission:<name>, @type/name,
--- url:<url>, native:<path>, file:<path>. rel: declares | requests | defines | implemented_by | aliases | requires |
--- opens | uses | instantiates | contains | implements. `sextant links` walks them, adding calls on the fly.
+-- url:<url>, native:<path>, file:<path>, package:<name>, sdk:<name>, host:<name>, certificate:<sha256>, system:<lib>. rel: declares | requests | defines | implemented_by | aliases | requires |
+-- opens | uses | instantiates | contains | implements | needs | provided_by | signed_by | stamped_by | in_package | part_of | shows | on_host. `sextant links` walks them, adding calls on the fly.
 CREATE TABLE links (
   src TEXT NOT NULL,
   rel TEXT NOT NULL,
@@ -697,6 +697,7 @@ CREATE INDEX resource_bag_items_id ON resource_bag_items(id);
 CREATE INDEX files_resource ON files(resource);
 CREATE INDEX string_resources_name ON string_resources(name);
 CREATE INDEX resource_refs_ref ON resource_refs(ref);
+CREATE INDEX resource_refs_from ON resource_refs("from");
 CREATE INDEX permissions_name ON permissions(name);
 CREATE INDEX endpoints_host ON endpoints(host);
 CREATE INDEX field_refs_field ON field_refs(field);

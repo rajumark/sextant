@@ -5,7 +5,8 @@ package io.github.rajumark.sextant.core.index
  * built from the other tables at the end of the index so it can never disagree with them.
  *
  * Keys: `app`, `component:<name>`, `class:<descriptor>`, `method:<descriptor>`, `permission:<name>`,
- * `@type/name` (resources), `url:<url>`, `native:<path>`, `file:<path>` (assets). Edges inside the code (calls, field and type uses, string
+ * `@type/name` (resources), `url:<url>`, `native:<path>`, `file:<path>` (assets), `package:<name>`, `sdk:<name>`,
+ * `host:<name>`, `certificate:<sha256>`, `system:<library>`. Edges inside the code (calls, field and type uses, string
  * loads) stay in their own tables; `sextant links` adds them on the fly when it walks a class or a method.
  */
 internal object Links {
@@ -59,6 +60,23 @@ internal object Links {
                 "'class:' || k.descriptor, s.path FROM services s JOIN classes k ON k.name = s.implementation",
             // Native libraries load other libraries: one in the APK (same folder) or one from the system.
             "INSERT INTO links SELECT DISTINCT 'native:' || path, 'needs', coalesce('native:' || resolved, 'system:' || needed), NULL FROM elf_needed",
+            // Every class defined in the APK is in its package; packages belong to the SDKs whose prefixes cover them.
+            "INSERT INTO links SELECT 'class:' || descriptor, 'in_package', 'package:' || package, NULL FROM classes WHERE package != ''",
+            "INSERT INTO links SELECT DISTINCT 'package:' || k.package, 'part_of', 'sdk:' || s.name, s.category " +
+                "FROM sdks s, json_each(s.packages) p JOIN classes k ON k.package = p.value OR k.package LIKE p.value || '.%'",
+            // A screen shows the layouts its own code sets as content view or inflates.
+            "INSERT INTO links SELECT DISTINCT 'component:' || c.name, 'shows', r.ref, substr(r.attribute, instr(r.attribute, '->') + 2) " +
+                "FROM components c JOIN methods m ON m.class = 'L' || replace(c.name, '.', '/') || ';' " +
+                "JOIN resource_refs r ON r.from_kind = 'code' AND r.\"from\" = m.descriptor AND r.ref LIKE '@layout/%' " +
+                "AND (r.attribute LIKE '%setContentView%' OR r.attribute LIKE '%inflate%')",
+            // View binding and data binding: a screen that calls into a generated *Binding class shows the layout it inflates.
+            "INSERT INTO links SELECT DISTINCT 'component:' || c.name, 'shows', r.ref, 'via ' || t.class " +
+                "FROM components c JOIN methods m ON m.class = 'L' || replace(c.name, '.', '/') || ';' " +
+                "JOIN calls e ON e.caller = m.id JOIN methods t ON t.id = e.callee AND t.class LIKE '%Binding;' " +
+                "JOIN methods bm ON bm.class = t.class " +
+                "JOIN resource_refs r ON r.from_kind = 'code' AND r.\"from\" = bm.descriptor AND r.ref LIKE '@layout/%'",
+            // Every URL is on a host.
+            "INSERT INTO links SELECT 'url:' || url, 'on_host', 'host:' || host, scheme FROM endpoints WHERE host != ''",
             // Native libraries implement the Java classes their JNI symbols name.
             "INSERT INTO links SELECT DISTINCT 'native:' || s.library, 'implements', 'class:' || k.descriptor, s.jni_method " +
                 "FROM native_symbols s JOIN classes k ON k.name = s.jni_class",

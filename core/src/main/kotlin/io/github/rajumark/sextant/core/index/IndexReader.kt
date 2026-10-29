@@ -733,13 +733,30 @@ class IndexReader private constructor(
 
     /**
      * Keys in `links` that [query] names: a key as written (`component:…`, `@string/x`, `class:L…;`), a class
-     * descriptor, a method descriptor, a URL, or a component, class or permission name (a component suffix like
-     * `.MainActivity` works too).
+     * descriptor, a method descriptor, a URL, or a component, class, permission, SDK, host or package name (a
+     * component suffix like `.MainActivity` works too).
      */
     fun linkKeys(query: String): List<String> {
         requireTable("links", "links need 11")
         val q = query.trim()
-        val prefixes = listOf("app", "@", "?", "component:", "class:", "method:", "permission:", "url:", "native:", "file:")
+        val prefixes =
+            listOf(
+                "app",
+                "@",
+                "?",
+                "component:",
+                "class:",
+                "method:",
+                "permission:",
+                "url:",
+                "native:",
+                "file:",
+                "package:",
+                "sdk:",
+                "host:",
+                "certificate:",
+                "system:",
+            )
         if (prefixes.any { q == it || (it != "app" && q.startsWith(it)) }) return listOf(q)
         if (q.contains("->")) return listOf("method:$q")
         if (q.startsWith("L") && q.endsWith(";")) return listOf("class:$q")
@@ -760,6 +777,9 @@ class IndexReader private constructor(
         )
         add("SELECT 'class:' || descriptor FROM classes WHERE name = ?", q)
         add("SELECT 'permission:' || name FROM permissions WHERE name = ? LIMIT 1", q)
+        add("SELECT 'sdk:' || name FROM sdks WHERE name = ? COLLATE NOCASE", q)
+        add("SELECT DISTINCT 'host:' || host FROM endpoints WHERE host = ?", q)
+        add("SELECT DISTINCT 'package:' || package FROM classes WHERE package = ? LIMIT 1", q)
         return keys.distinct()
     }
 

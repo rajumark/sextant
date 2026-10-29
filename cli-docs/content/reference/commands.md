@@ -548,7 +548,7 @@ Options:
 
 Arguments:
   <target>  An APK (indexed once, then cached) or a .sqlite file from sextant extract
-  <thing>   A key (component:…, class:L…;, method:…, @string/x, permission:…, url:…) or a component, class or permission name
+  <thing>   A key (component:…, class:L…;, method:…, @string/x, permission:…, url:…, sdk:…, host:…) or a component, class, permission, SDK, host or package name
 ```
 
 ## q

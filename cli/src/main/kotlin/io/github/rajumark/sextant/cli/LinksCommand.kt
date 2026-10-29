@@ -20,7 +20,7 @@ import kotlinx.serialization.json.JsonPrimitive
 class LinksCommand : CoreCliktCommand(name = "links") {
     private val target by argument(help = INDEX_INPUT).path()
     private val thing by argument(
-        help = "A key (component:…, class:L…;, method:…, @string/x, permission:…, url:…) or a component, class or permission name",
+        help = "A key (component:…, class:L…;, method:…, @string/x, permission:…, url:…, sdk:…, host:…) or a component, class, permission, SDK, host or package name",
     )
     private val depth by option("--depth", help = "Follow outgoing links this many steps (default 1, max 4)")
         .int()

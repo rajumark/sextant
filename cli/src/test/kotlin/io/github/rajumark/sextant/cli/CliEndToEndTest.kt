@@ -538,6 +538,18 @@ class CliEndToEndTest {
     }
 
     @Test
+    fun `links reach a class's SDK, a screen's layouts and a host's URLs`() {
+        val file = extracted("binaryeye")
+        val host = sextant("links", file, "markusfisch.de")
+        host.exitCode shouldBe 0
+        host.stdout shouldContain "← on_host        url:https://markusfisch.de/BinaryEye"
+        val screens = sextant("q", "activity-layouts", file, "--json")
+        screens.stdout shouldContain "\"layout\":\"@layout/"
+        sextant("sql", file, "SELECT count(*) > 0 AS ok FROM links WHERE rel = 'part_of'").stdout.lines()[2].trim() shouldBe "1"
+        sextant("sql", file, "SELECT count(*) > 0 AS ok FROM links WHERE rel = 'in_package'").stdout.lines()[2].trim() shouldBe "1"
+    }
+
+    @Test
     fun `extract stores insights and resources in the SQLite file`() {
         val file = extracted("binaryeye")
         for (table in listOf("libraries", "sdks", "endpoints", "resources", "string_resources", "layouts")) {

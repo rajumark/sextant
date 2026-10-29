@@ -23,6 +23,8 @@ sextant links app.sqlite .MainActivity --depth 2   # component → class → sup
 sextant links app.sqlite @string/app_name          # the layouts, menus and methods that use it
 sextant links app.sqlite @menu/main                # its items' strings and icons, and the method that inflates it
 sextant links app.sqlite permission:android.permission.CAMERA
+sextant links app.sqlite example.com                # every URL on that host, and where each comes from
+sextant links app.sqlite "Firebase Crashlytics"     # the packages that make up an SDK
 ```
 
 `→` lines are outgoing links, `←` lines incoming ones, and the text in brackets is the evidence: the attribute that holds a reference, or the call a resource id is passed to. Keys are readable (`component:…`, `class:L…;`, `method:…`, `@type/name`, `url:…`), and the same edges are in the `links` table for SQL.
