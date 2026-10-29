@@ -9,12 +9,14 @@ import io.github.rajumark.sextant.core.insights.AppIcons
 import io.github.rajumark.sextant.core.insights.ComponentReviews
 import io.github.rajumark.sextant.core.insights.IconFile
 import io.github.rajumark.sextant.core.insights.Insights
+import io.github.rajumark.sextant.core.model.AnnotationRecord
 import io.github.rajumark.sextant.core.model.ApkFile
 import io.github.rajumark.sextant.core.model.CallRecord
 import io.github.rajumark.sextant.core.model.ClassRecord
 import io.github.rajumark.sextant.core.model.FieldRecord
 import io.github.rajumark.sextant.core.model.FieldRefRecord
 import io.github.rajumark.sextant.core.model.IntentFilter
+import io.github.rajumark.sextant.core.model.MethodDetailRecord
 import io.github.rajumark.sextant.core.model.MethodRecord
 import io.github.rajumark.sextant.core.model.NavAction
 import io.github.rajumark.sextant.core.model.PathPermission
@@ -61,6 +63,12 @@ class IndexWriter(
     private val insertSearch: PreparedStatement
     private val insertFieldRef: PreparedStatement
     private val insertTypeRef: PreparedStatement
+    private val insertAnnotation: PreparedStatement
+    private val insertAnnotationValue: PreparedStatement
+    private val insertMethodLines: PreparedStatement
+    private val insertMethodParam: PreparedStatement
+    private val insertHandler: PreparedStatement
+    private var nextAnnotationId = 1L
 
     private val methodIds = HashMap<String, Long>()
     private val stringIds = HashMap<String, Long>()
@@ -103,6 +111,11 @@ class IndexWriter(
         insertSearch = conn.prepareStatement("INSERT INTO search(rowid, text) VALUES (?, ?)")
         insertFieldRef = conn.prepareStatement("INSERT INTO field_refs VALUES (?,?,?,?,?)")
         insertTypeRef = conn.prepareStatement("INSERT INTO type_refs VALUES (?,?,?,?,?)")
+        insertAnnotation = conn.prepareStatement("INSERT INTO annotations VALUES (?,?,?,?,?,?)")
+        insertAnnotationValue = conn.prepareStatement("INSERT INTO annotation_values VALUES (?,?,?)")
+        insertMethodLines = conn.prepareStatement("INSERT INTO method_lines VALUES (?,?,?,?)")
+        insertMethodParam = conn.prepareStatement("INSERT INTO method_params VALUES (?,?,?)")
+        insertHandler = conn.prepareStatement("INSERT INTO exception_handlers VALUES (?,?,?,?,?)")
     }
 
     override fun classRecord(record: ClassRecord) {
@@ -216,6 +229,59 @@ class IndexWriter(
     }
 
     /** Ids are assigned in first-seen order, which is deterministic because records arrive sorted. */
+    override fun annotation(record: AnnotationRecord) {
+        val id = nextAnnotationId++
+        insertAnnotation.apply {
+            setLong(1, id)
+            setString(2, record.targetKind)
+            setString(3, record.target)
+            record.parameter?.let { setInt(4, it) } ?: setNull(4, java.sql.Types.INTEGER)
+            setString(5, record.type)
+            setString(6, record.visibility)
+        }
+        batch(insertAnnotation)
+        for (e in record.elements) {
+            insertAnnotationValue.apply {
+                setLong(1, id)
+                setString(2, e.name)
+                setString(3, e.value)
+            }
+            batch(insertAnnotationValue)
+        }
+    }
+
+    override fun methodDetail(record: MethodDetailRecord) {
+        val method = methodId(record.method)
+        if (record.lines.isNotEmpty()) {
+            insertMethodLines.apply {
+                setLong(1, method)
+                setInt(2, record.lines.minOf { it.second })
+                setInt(3, record.lines.maxOf { it.second })
+                setString(4, record.lines.joinToString(" ") { (offset, line) -> "$offset:$line" })
+            }
+            batch(insertMethodLines)
+        }
+        record.parameterNames.forEachIndexed { i, name ->
+            if (name == null) return@forEachIndexed
+            insertMethodParam.apply {
+                setLong(1, method)
+                setInt(2, i)
+                setString(3, name)
+            }
+            batch(insertMethodParam)
+        }
+        for (h in record.handlers) {
+            insertHandler.apply {
+                setLong(1, method)
+                setInt(2, h.start)
+                setInt(3, h.end)
+                setInt(4, h.handler)
+                setString(5, h.type)
+            }
+            batch(insertHandler)
+        }
+    }
+
     private fun methodId(descriptor: String): Long =
         methodIds.getOrPut(descriptor) {
             val id = methodIds.size + 1L
@@ -262,6 +328,11 @@ class IndexWriter(
             insertSearch,
             insertFieldRef,
             insertTypeRef,
+            insertAnnotation,
+            insertAnnotationValue,
+            insertMethodLines,
+            insertMethodParam,
+            insertHandler,
         )) {
             st.executeBatch()
         }
@@ -1042,4 +1113,8 @@ class TeeSink(
     override fun typeRef(record: TypeRefRecord) = sinks.forEach { it.typeRef(record) }
 
     override fun resourceUse(record: ResourceUseRecord) = sinks.forEach { it.resourceUse(record) }
+
+    override fun annotation(record: AnnotationRecord) = sinks.forEach { it.annotation(record) }
+
+    override fun methodDetail(record: MethodDetailRecord) = sinks.forEach { it.methodDetail(record) }
 }

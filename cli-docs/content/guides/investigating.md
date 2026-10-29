@@ -2,6 +2,18 @@
 
 Once an APK is extracted, every investigation follows the same loop: **find** something, **look** at it, **follow** the code from there. All commands below take the `.sqlite` file from `extract`, or the APK itself.
 
+## Annotations, lines and exception handlers
+
+Beyond structure, the code's own metadata is in SQL:
+
+```bash
+sextant q annotated app.sqlite --arg 'type=Ljavax/inject/Inject;'   # every injection point, with values
+sextant q broad-catches app.sqlite                                  # methods that catch Throwable or Exception
+sextant sql app.sqlite "SELECT first_line, last_line, line_table FROM method_lines l JOIN methods m ON m.id = l.method WHERE m.descriptor LIKE 'Lcom/app/Login;->auth%'"
+```
+
+`line_table` maps code offsets to source lines, so an offset from a stack trace or from `calls.offsets` gives the line it is on.
+
 ## Follow links across kinds
 
 `links` connects things of different kinds, so one command answers "what does this touch?":

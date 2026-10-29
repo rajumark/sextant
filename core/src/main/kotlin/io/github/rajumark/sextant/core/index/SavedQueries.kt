@@ -43,6 +43,9 @@ object SavedQueries {
             "native-libraries",
             "native-sensitive-imports",
             "service-providers",
+            "kotlin-classes",
+            "annotated",
+            "broad-catches",
             "biggest-packages",
             "undecoded-files",
         )

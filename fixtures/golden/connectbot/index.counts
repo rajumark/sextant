@@ -1,3 +1,5 @@
+annotation_values 5691
+annotations 3404
 assets 5
 calls 105815
 classes 6697
@@ -11,6 +13,7 @@ elf_strings 23665
 elf_symbols 19214
 endpoint_sources 42
 endpoints 13
+exception_handlers 4990
 features 3
 field_refs 97924
 fields 23127
@@ -33,6 +36,8 @@ links 2802
 menus 0
 meta 10
 metadata 5
+method_lines 28864
+method_params 0
 methods 35341
 native_libraries 24
 native_symbols 15412
@@ -45,7 +50,7 @@ resource_ids 2499
 resource_refs 1949
 resource_values 43125
 resources 941
-schema_docs 403
+schema_docs 430
 sdks 8
 services 2
 signing_certificates 1

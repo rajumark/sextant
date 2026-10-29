@@ -509,6 +509,35 @@ class CliEndToEndTest {
     }
 
     @Test
+    fun `code details are stored, with annotations, line tables and exception handlers`() {
+        val file = extracted("binaryeye")
+
+        fun count(table: String) =
+            sextant("sql", file, "SELECT count(*) AS n FROM $table")
+                .stdout
+                .lines()[2]
+                .trim()
+                .toInt()
+        count("annotations") shouldBeGreaterThan 100
+        count("method_lines") shouldBeGreaterThan 10_000
+        count("exception_handlers") shouldBeGreaterThan 1_000
+        val deprecated = sextant("q", "annotated", file, "--arg", "type=Ljava/lang/Deprecated;")
+        deprecated.exitCode shouldBe 0
+        deprecated.stderr shouldContain "rows"
+        sextant("q", "broad-catches", file).exitCode shouldBe 0
+        val lines =
+            sextant(
+                "sql",
+                file,
+                "SELECT first_line FROM method_lines l JOIN methods m ON m.id = l.method WHERE m.descriptor LIKE 'Lde/markusfisch/android/binaryeye/activity/CameraActivity;->onResume%'",
+            )
+        lines.stdout
+            .lines()[2]
+            .trim()
+            .toInt() shouldBeGreaterThan 0
+    }
+
+    @Test
     fun `extract stores insights and resources in the SQLite file`() {
         val file = extracted("binaryeye")
         for (table in listOf("libraries", "sdks", "endpoints", "resources", "string_resources", "layouts")) {

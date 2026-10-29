@@ -101,6 +101,49 @@ data class ResourceUseRecord(
     val offsets: List<Int>,
 )
 
+/** One annotation on a class, method, field or method parameter, with its element values. */
+@Serializable
+data class AnnotationRecord(
+    /** The class, method or field descriptor it is on. */
+    val target: String,
+    /** class | method | field | parameter */
+    val targetKind: String,
+    /** For parameter annotations: the parameter index. */
+    val parameter: Int?,
+    /** `Lkotlin/Metadata;` */
+    val type: String,
+    /** build | runtime | system */
+    val visibility: String,
+    val elements: List<AnnotationElement>,
+)
+
+@Serializable
+data class AnnotationElement(
+    val name: String,
+    /** Strings and numbers plain; arrays, types, enums and nested annotations in smali syntax. */
+    val value: String,
+)
+
+/** What a method's code says beyond instructions: parameter names, the source line table, exception handlers. */
+@Serializable
+data class MethodDetailRecord(
+    val method: String,
+    /** From debug info; null where the build stripped it. */
+    val parameterNames: List<String?>,
+    /** (code offset, source line) pairs, in code order. */
+    val lines: List<Pair<Int, Int>>,
+    val handlers: List<HandlerRecord>,
+)
+
+/** A try block's handler: code units [start, end) jump to [handler] for [type] (null = catch-all / finally). */
+@Serializable
+data class HandlerRecord(
+    val start: Int,
+    val end: Int,
+    val handler: Int,
+    val type: String?,
+)
+
 @Serializable
 data class CodeStats(
     val dexFiles: List<String>,

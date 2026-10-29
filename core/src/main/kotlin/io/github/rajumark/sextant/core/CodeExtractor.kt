@@ -6,7 +6,9 @@ import com.android.tools.smali.dexlib2.ReferenceType
 import com.android.tools.smali.dexlib2.dexbacked.DexBackedClassDef
 import com.android.tools.smali.dexlib2.dexbacked.DexBackedDexFile
 import com.android.tools.smali.dexlib2.formatter.DexFormatter
+import com.android.tools.smali.dexlib2.iface.Annotation
 import com.android.tools.smali.dexlib2.iface.Method
+import com.android.tools.smali.dexlib2.iface.debug.LineNumber
 import com.android.tools.smali.dexlib2.iface.instruction.NarrowLiteralInstruction
 import com.android.tools.smali.dexlib2.iface.instruction.ReferenceInstruction
 import com.android.tools.smali.dexlib2.iface.reference.FieldReference
@@ -23,12 +25,16 @@ import com.android.tools.smali.dexlib2.iface.value.IntEncodedValue
 import com.android.tools.smali.dexlib2.iface.value.LongEncodedValue
 import com.android.tools.smali.dexlib2.iface.value.ShortEncodedValue
 import com.android.tools.smali.dexlib2.iface.value.StringEncodedValue
+import io.github.rajumark.sextant.core.model.AnnotationElement
+import io.github.rajumark.sextant.core.model.AnnotationRecord
 import io.github.rajumark.sextant.core.model.CallRecord
 import io.github.rajumark.sextant.core.model.ClassRecord
 import io.github.rajumark.sextant.core.model.CodeStats
 import io.github.rajumark.sextant.core.model.FieldRecord
 import io.github.rajumark.sextant.core.model.FieldRefRecord
+import io.github.rajumark.sextant.core.model.HandlerRecord
 import io.github.rajumark.sextant.core.model.MAX_OFFSETS
+import io.github.rajumark.sextant.core.model.MethodDetailRecord
 import io.github.rajumark.sextant.core.model.MethodRecord
 import io.github.rajumark.sextant.core.model.Obfuscation
 import io.github.rajumark.sextant.core.model.PackageCount
@@ -55,6 +61,10 @@ interface CodeSink {
     fun typeRef(record: TypeRefRecord) {}
 
     fun resourceUse(record: ResourceUseRecord) {}
+
+    fun annotation(record: AnnotationRecord) {}
+
+    fun methodDetail(record: MethodDetailRecord) {}
 }
 
 /**
@@ -106,6 +116,7 @@ object CodeExtractor {
             if (src == null || src == "SourceFile" || src.startsWith("r8-map-id-")) counter.sourceStripped++
             sink.classRecord(record)
             counter.classes++
+            def.annotations.forEach { sink.annotation(annotation(def.type, "class", null, it)) }
 
             for (field in def.fields.map { it to DexFormatter.INSTANCE.getFieldDescriptor(it) }.sortedBy { it.second }) {
                 val (f, id) = field
@@ -119,6 +130,7 @@ object CodeExtractor {
                         initialValue = f.initialValue?.let(::encodedValue),
                     ),
                 )
+                f.annotations.forEach { sink.annotation(annotation(id, "field", null, it)) }
                 counter.fields++
             }
 
@@ -293,6 +305,9 @@ object CodeExtractor {
                 strings = strings.values.sumOf { it.size },
             ),
         )
+        method.annotations.forEach { sink.annotation(annotation(id, "method", null, it)) }
+        method.parameters.forEachIndexed { i, p -> p.annotations.forEach { sink.annotation(annotation(id, "parameter", i, it)) } }
+        detail(method, id)?.let(sink::methodDetail)
         counter.methods++
 
         for ((key, offsets) in calls.entries.sortedWith(compareBy({ it.key.first }, { it.key.second }))) {
@@ -336,6 +351,52 @@ object CodeExtractor {
             .substringBefore('/')
             .removeSuffix("-quick")
 
+    private fun annotation(
+        target: String,
+        kind: String,
+        parameter: Int?,
+        a: Annotation,
+    ) = AnnotationRecord(
+        target = target,
+        targetKind = kind,
+        parameter = parameter,
+        type = a.type,
+        visibility =
+            when (a.visibility) {
+                0 -> "build"
+                1 -> "runtime"
+                else -> "system"
+            },
+        elements =
+            a.elements.sortedBy { it.name }.map { e ->
+                val v = encodedValue(e.value) ?: DexFormatter.INSTANCE.getEncodedValue(e.value)
+                AnnotationElement(e.name, if (v.length > MAX_ANNOTATION_VALUE) v.take(MAX_ANNOTATION_VALUE - 1) + "…" else v)
+            },
+    )
+
+    /** Parameter names, the line table and exception handlers of [method], when it has any of them. */
+    private fun detail(
+        method: Method,
+        id: String,
+    ): MethodDetailRecord? {
+        val impl = method.implementation
+        val names = runCatching { method.parameters.map { it.name } }.getOrDefault(emptyList())
+        val lines =
+            runCatching { impl?.debugItems?.filterIsInstance<LineNumber>()?.map { it.codeAddress to it.lineNumber } }
+                .getOrNull()
+                .orEmpty()
+        val handlers =
+            runCatching {
+                impl?.tryBlocks?.flatMap { t ->
+                    t.exceptionHandlers.map { h ->
+                        HandlerRecord(t.startCodeAddress, t.startCodeAddress + t.codeUnitCount, h.handlerCodeAddress, h.exceptionType)
+                    }
+                }
+            }.getOrNull().orEmpty()
+        if (names.all { it == null } && lines.isEmpty() && handlers.isEmpty()) return null
+        return MethodDetailRecord(id, names, lines, handlers)
+    }
+
     private fun encodedValue(value: EncodedValue): String? =
         when (value) {
             is StringEncodedValue -> value.value
@@ -356,6 +417,9 @@ object CodeExtractor {
     fun className(descriptor: String) = descriptor.removePrefix("L").removeSuffix(";").replace('/', '.')
 
     private const val TOP_PACKAGES = 15
+
+    // Kotlin metadata (d1) and similar values can be long; the index keeps the start.
+    private const val MAX_ANNOTATION_VALUE = 4000
 
     private val RENAMED = Regex("[a-z]{1,3}[0-9]{0,2}")
 

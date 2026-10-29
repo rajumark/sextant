@@ -6,7 +6,7 @@ package io.github.rajumark.sextant.core.index
  * The views give the readable, descriptor-based form.
  */
 object IndexSchema {
-    const val VERSION = 16
+    const val VERSION = 17
 
     val DDL =
         """
@@ -502,6 +502,49 @@ object IndexSchema {
         -- Full-text search over file_text (any 3+ character fragment); `sextant files --grep` uses it.
         CREATE VIRTUAL TABLE file_text_search USING fts5(text, content = 'file_text', tokenize = 'trigram');
 
+        -- Code details (index schema 17): every annotation on a class, method, field or parameter, with its values.
+        CREATE TABLE annotations (
+          id          INTEGER PRIMARY KEY,
+          target_kind TEXT NOT NULL,      -- class | method | field | parameter
+          target      TEXT NOT NULL,      -- the class, method or field descriptor
+          parameter   INTEGER,            -- parameter annotations: the parameter index
+          type        TEXT NOT NULL,      -- Lkotlin/Metadata;, Ljavax/inject/Inject;, …
+          visibility  TEXT NOT NULL       -- build | runtime | system
+        );
+        -- Element values of annotations: strings and numbers plain, arrays and nested values in smali syntax (at most 4,000 characters).
+        CREATE TABLE annotation_values (
+          annotation INTEGER NOT NULL,    -- annotations.id
+          name       TEXT NOT NULL,
+          value      TEXT NOT NULL
+        );
+        -- Source lines of each method from its debug info: the range, and every code offset with its line.
+        CREATE TABLE method_lines (
+          method     INTEGER NOT NULL REFERENCES methods(id),
+          first_line INTEGER NOT NULL,
+          last_line  INTEGER NOT NULL,
+          line_table TEXT NOT NULL        -- "offset:line offset:line …", offsets in 16-bit code units
+        );
+        -- Parameter names from debug info (missing where the build stripped them).
+        CREATE TABLE method_params (
+          method INTEGER NOT NULL REFERENCES methods(id),
+          idx    INTEGER NOT NULL,
+          name   TEXT NOT NULL
+        );
+        -- Exception handlers: code in [start, end) jumps to handler when it throws type (NULL = any, as for finally).
+        CREATE TABLE exception_handlers (
+          method  INTEGER NOT NULL REFERENCES methods(id),
+          start   INTEGER NOT NULL,
+          "end"   INTEGER NOT NULL,
+          handler INTEGER NOT NULL,
+          type    TEXT
+        );
+        -- Kotlin classes from their @kotlin.Metadata: kind k (1 class, 2 file facade, 3 synthetic, 4 multi-file facade, 5 multi-file part) and metadata version.
+        CREATE VIEW kotlin_classes AS
+          SELECT a.target AS class,
+                 (SELECT value FROM annotation_values v WHERE v.annotation = a.id AND v.name = 'k') AS kind,
+                 (SELECT value FROM annotation_values v WHERE v.annotation = a.id AND v.name = 'mv') AS version
+          FROM annotations a WHERE a.type = 'Lkotlin/Metadata' || char(59) AND a.target_kind = 'class';  -- char(59) is ';', which the statement splitter would cut on
+
         -- Signing as rows (index schema 16): every signer of every scheme as apksig reports it.
         CREATE TABLE signing_signers (
           scheme      TEXT NOT NULL,      -- v1 | v2 | v3 | v3.1 | v4 | source-stamp
@@ -631,6 +674,12 @@ object IndexSchema {
         CREATE INDEX string_refs_method ON string_refs(method);
         CREATE INDEX components_name ON components(name);
         CREATE INDEX files_type ON files(type);
+        CREATE INDEX annotations_target ON annotations(target);
+        CREATE INDEX annotations_type ON annotations(type);
+        CREATE INDEX annotation_values_annotation ON annotation_values(annotation);
+        CREATE INDEX method_lines_method ON method_lines(method);
+        CREATE INDEX exception_handlers_method ON exception_handlers(method);
+        CREATE INDEX exception_handlers_type ON exception_handlers(type);
         CREATE INDEX file_properties_key ON file_properties(key);
         CREATE INDEX services_interface ON services(interface);
         CREATE INDEX elf_symbols_name ON elf_symbols(name);
