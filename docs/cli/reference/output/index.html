@@ -1440,6 +1440,10 @@
 <td>native code, with JNI symbols mapped to Java</td>
 </tr>
 <tr>
+<td><code>signing_signers</code>, <code>signing_certificates</code>, <code>signing_digests</code>, <code>signing_lineage</code>, <code>signing_issues</code>, <code>signing_manifest</code></td>
+<td>signing as rows: every signer per scheme (with v3 SDK ranges), every certificate field and its bytes, rotation lineage, verifier issues, MANIFEST.MF digests</td>
+</tr>
+<tr>
 <td><code>file_text</code>, <code>file_properties</code>, <code>services</code></td>
 <td>the text of every text, JSON and textual XML file (assets, configs, licenses, …) with a full-text index; <code>.properties</code> files key by key; service-loader registrations</td>
 </tr>

@@ -700,6 +700,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#signing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Signing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-the-code-rules-work" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1305,6 +1316,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#signing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Signing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-the-code-rules-work" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1399,6 +1421,13 @@
 </code></pre></div>
 </li>
 </ol>
+<h2 id="signing">Signing<a class="headerlink" href="#signing" title="Permanent link">&para;</a></h2>
+<p>Every signer of every scheme, every certificate field and the verifier's own warnings are rows:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sextant<span class="w"> </span>q<span class="w"> </span>signing<span class="w"> </span>app.apk<span class="w">                       </span><span class="c1"># scheme, SDK range, subject, key, expiry, fingerprint per signer</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>sextant<span class="w"> </span>sql<span class="w"> </span>app.apk<span class="w"> </span><span class="s2">"SELECT level, scope, issue FROM signing_issues"</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>sextant<span class="w"> </span>sql<span class="w"> </span>app.apk<span class="w"> </span><span class="s2">"SELECT seq, certificate FROM signing_lineage"</span><span class="w">   </span><span class="c1"># key rotation, oldest first</span>
+</code></pre></div>
+<p>A v3 signer with <code>min_sdk</code> above the app's own minimum means older devices verify a different (older) key; an empty <code>signing_lineage</code> means no key rotation.</p>
 <h2 id="how-the-code-rules-work">How the code rules work<a class="headerlink" href="#how-the-code-rules-work" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Correlated, not keyword-only.</strong> <code>weak-cipher</code> fires only when a method both loads a cipher string (<code>"AES/ECB/…"</code>, <code>"DES"</code>, bare <code>"AES"</code>, which defaults to ECB) and calls <code>Cipher.getInstance</code>. The same applies to <code>weak-hash</code> with <code>MessageDigest.getInstance</code>.</li>
@@ -1411,32 +1440,32 @@
 </div>
 <h2 id="in-ci-fail-the-build-and-upload-to-code-scanning">In CI: fail the build and upload to code scanning<a class="headerlink" href="#in-ci-fail-the-build-and-upload-to-code-scanning" title="Permanent link">&para;</a></h2>
 <p><code>--fail-on &lt;severity&gt;</code> makes <code>findings</code> exit with code <strong>5</strong> when any finding is at or above that severity, so a release pipeline can stop on, say, a debuggable build or a trust-all TrustManager. The normal output is still printed.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sextant<span class="w"> </span>extract<span class="w"> </span>-q<span class="w"> </span>app-release.apk<span class="w"> </span>-o<span class="w"> </span>build/app.sqlite
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>sextant<span class="w"> </span>findings<span class="w"> </span>build/app.sqlite<span class="w"> </span>--fail-on<span class="w"> </span>high
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>sextant<span class="w"> </span>extract<span class="w"> </span>-q<span class="w"> </span>app-release.apk<span class="w"> </span>-o<span class="w"> </span>build/app.sqlite
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>sextant<span class="w"> </span>findings<span class="w"> </span>build/app.sqlite<span class="w"> </span>--fail-on<span class="w"> </span>high
 </code></pre></div>
 <p><code>--sarif</code> prints the findings as <a href="https://docs.oasis-open.org/sarif/sarif/v2.1.0/sarif-v2.1.0.html">SARIF 2.1.0</a>, the format GitHub code scanning, GitLab and most security dashboards import. Each finding is one result with its severity mapped to a SARIF level (<code>high</code> → error, <code>medium</code> → warning, <code>low</code>/<code>info</code> → note) and to GitHub's <code>security-severity</code>. An APK has no source files, so each evidence item points at the part of the APK it lives in (<code>AndroidManifest.xml</code>, <code>resources.arsc</code>, or the class as <code>smali/com/example/Foo.smali</code>), with the exact component, method or resource as a logical location.</p>
-<div class="highlight"><span class="filename">.github/workflows/apk-review.yml</span><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">APK review</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">push</span><span class="p p-Indicator">]</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="nt">permissions</span><span class="p">:</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">  </span><span class="nt">contents</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">read</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span><span class="nt">security-events</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">write</span>
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="nt">jobs</span><span class="p">:</span>
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">  </span><span class="nt">sextant</span><span class="p">:</span>
-<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
-<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
-<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
-<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-java@v4</span>
-<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> distribution</span><span class="p">:</span><span class="w"> </span><span class="nv">temurin</span><span class="p p-Indicator">,</span><span class="nt"> java-version</span><span class="p">:</span><span class="w"> </span><span class="nv">17</span><span class="w"> </span><span class="p p-Indicator">}</span>
-<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./gradlew assembleRelease</span>
-<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install Sextant</span>
-<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">          </span><span class="no">curl -fsSL -o sextant.zip https://github.com/rajumark/sextant/releases/latest/download/sextant-1.0.0.zip</span>
-<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">          </span><span class="no">unzip -q sextant.zip &amp;&amp; echo "$PWD/sextant-1.0.0/bin" &gt;&gt; "$GITHUB_PATH"</span>
-<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sextant extract -q app/build/outputs/apk/release/app-release.apk -o build/app.sqlite</span>
-<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sextant findings build/app.sqlite --sarif &gt; sextant.sarif</span>
-<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">github/codeql-action/upload-sarif@v3</span>
-<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> sarif_file</span><span class="p">:</span><span class="w"> </span><span class="nv">sextant.sarif</span><span class="p p-Indicator">,</span><span class="nt"> category</span><span class="p">:</span><span class="w"> </span><span class="nv">sextant</span><span class="w"> </span><span class="p p-Indicator">}</span>
-<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sextant findings build/app.sqlite --fail-on high</span>
+<div class="highlight"><span class="filename">.github/workflows/apk-review.yml</span><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">APK review</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">push</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="nt">permissions</span><span class="p">:</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="nt">contents</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">read</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span><span class="nt">security-events</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">write</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="nt">jobs</span><span class="p">:</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">  </span><span class="nt">sextant</span><span class="p">:</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-java@v4</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> distribution</span><span class="p">:</span><span class="w"> </span><span class="nv">temurin</span><span class="p p-Indicator">,</span><span class="nt"> java-version</span><span class="p">:</span><span class="w"> </span><span class="nv">17</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./gradlew assembleRelease</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install Sextant</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="w">          </span><span class="no">curl -fsSL -o sextant.zip https://github.com/rajumark/sextant/releases/latest/download/sextant-1.0.0.zip</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="w">          </span><span class="no">unzip -q sextant.zip &amp;&amp; echo "$PWD/sextant-1.0.0/bin" &gt;&gt; "$GITHUB_PATH"</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sextant extract -q app/build/outputs/apk/release/app-release.apk -o build/app.sqlite</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sextant findings build/app.sqlite --sarif &gt; sextant.sarif</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">github/codeql-action/upload-sarif@v3</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> sarif_file</span><span class="p">:</span><span class="w"> </span><span class="nv">sextant.sarif</span><span class="p p-Indicator">,</span><span class="nt"> category</span><span class="p">:</span><span class="w"> </span><span class="nv">sextant</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sextant findings build/app.sqlite --fail-on high</span>
 </code></pre></div>
 <p>Combine with <code>--severity</code> to keep low-severity notes out of the dashboard: <code>sextant findings build/app.sqlite --severity medium --sarif</code>.</p>
 
