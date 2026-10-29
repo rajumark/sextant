@@ -32,6 +32,7 @@ fonts 1
 frameworks 0
 icons 11
 images 266
+instructions 143457
 layouts 66
 libraries 21
 links 3392
@@ -44,6 +45,7 @@ methods 17396
 native_libraries 7
 native_symbols 78545
 navigation_destinations 0
+opcodes 264
 permissions 10
 queries 0
 records 28
@@ -52,7 +54,7 @@ resource_ids 1223
 resource_refs 959
 resource_values 4141
 resources 247
-schema_docs 444
+schema_docs 458
 sdks 0
 services 0
 signing_certificates 1

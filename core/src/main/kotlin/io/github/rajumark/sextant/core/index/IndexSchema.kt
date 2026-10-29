@@ -6,7 +6,7 @@ package io.github.rajumark.sextant.core.index
  * The views give the readable, descriptor-based form.
  */
 object IndexSchema {
-    const val VERSION = 18
+    const val VERSION = 19
 
     val DDL =
         """
@@ -545,6 +545,33 @@ object IndexSchema {
                  (SELECT value FROM annotation_values v WHERE v.annotation = a.id AND v.name = 'mv') AS version
           FROM annotations a WHERE a.type = 'Lkotlin/Metadata' || char(59) AND a.target_kind = 'class';  -- char(59) is ';', which the statement splitter would cut on
 
+        -- Every instruction of every method (index schema 19), in code order. Registers are not stored (`sextant smali` shows them).
+        CREATE TABLE instructions (
+          method     INTEGER NOT NULL REFERENCES methods(id),
+          "offset"   INTEGER NOT NULL,    -- 16-bit code units, as in calls.offsets and dexdump
+          op         INTEGER NOT NULL,    -- opcodes.id
+          literal    INTEGER,             -- const* and other literal instructions
+          target     INTEGER,             -- branches, switches, fill-array-data: the offset they go to
+          ref_method INTEGER REFERENCES methods(id),  -- invoke-*: the method called
+          ref_string INTEGER REFERENCES strings(id),  -- const-string: the string loaded
+          ref_text   TEXT                 -- other references: field or type descriptor
+        );
+        -- Dalvik opcodes by id, as smali spells them.
+        CREATE TABLE opcodes (
+          id     INTEGER PRIMARY KEY,
+          name   TEXT NOT NULL,           -- invoke-virtual, const/4, if-eqz, …
+          format TEXT NOT NULL            -- the instruction format (Format35c, Format21t, …)
+        );
+        -- instructions with readable names: method descriptor, opcode name, and what it references.
+        CREATE VIEW instruction_view AS
+          SELECT m.descriptor AS method, i."offset", o.name AS op, i.literal, i.target,
+                 coalesce(rm.descriptor, s.value, i.ref_text) AS ref
+          FROM instructions i
+          JOIN methods m ON m.id = i.method
+          JOIN opcodes o ON o.id = i.op
+          LEFT JOIN methods rm ON rm.id = i.ref_method
+          LEFT JOIN strings s ON s.id = i.ref_string;
+
         -- Every image file in the APK (index schema 18), anywhere, not only drawables: format and pixel size from its header.
         CREATE TABLE images (
           path   TEXT PRIMARY KEY,
@@ -693,6 +720,8 @@ object IndexSchema {
         CREATE INDEX string_refs_method ON string_refs(method);
         CREATE INDEX components_name ON components(name);
         CREATE INDEX files_type ON files(type);
+        CREATE INDEX instructions_method ON instructions(method);
+        CREATE INDEX instructions_op ON instructions(op);
         CREATE INDEX annotations_target ON annotations(target);
         CREATE INDEX annotations_type ON annotations(type);
         CREATE INDEX annotation_values_annotation ON annotation_values(annotation);

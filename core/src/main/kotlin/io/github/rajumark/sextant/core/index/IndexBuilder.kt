@@ -14,13 +14,15 @@ import kotlin.io.path.name
 object IndexBuilder {
     /**
      * Builds [target] from [apk]. The file is written under a per-process name and moved into place at the end, so a
-     * crash or a parallel run never leaves a half-built file at [target]. [includeCode] = false skips the code tables; [includeContent] = false stores the bytes of the dex files only.
+     * crash or a parallel run never leaves a half-built file at [target]. [includeCode] = false skips the code tables; [includeContent] = false stores the bytes of the dex files only;
+     * [includeInstructions] = false leaves out the instructions table.
      */
     fun build(
         apk: Path,
         target: Path,
         includeCode: Boolean = true,
         includeContent: Boolean = true,
+        includeInstructions: Boolean = true,
     ): Extraction {
         // Contents come from the APK Sextant reads: for a split bundle, the merged one (cached by Bundles).
         val contents = IndexWriter.Contents(Bundles.open(apk).apk, includeContent)
@@ -33,7 +35,7 @@ object IndexBuilder {
         val staging = parent.resolve(".${target.name}.${ProcessHandle.current().pid()}.building")
         try {
             val extraction =
-                IndexWriter(staging).use { index ->
+                IndexWriter(staging, instructions = includeInstructions).use { index ->
                     if (includeCode) {
                         AsyncSink(index).use { feed ->
                             val extraction = Extractor.extract(apk, feed, listFiles = true)

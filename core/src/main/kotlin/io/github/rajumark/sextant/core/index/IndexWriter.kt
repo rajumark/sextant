@@ -16,6 +16,7 @@ import io.github.rajumark.sextant.core.model.ClassRecord
 import io.github.rajumark.sextant.core.model.FieldRecord
 import io.github.rajumark.sextant.core.model.FieldRefRecord
 import io.github.rajumark.sextant.core.model.IntentFilter
+import io.github.rajumark.sextant.core.model.MethodCodeRecord
 import io.github.rajumark.sextant.core.model.MethodDetailRecord
 import io.github.rajumark.sextant.core.model.MethodRecord
 import io.github.rajumark.sextant.core.model.NavAction
@@ -49,8 +50,11 @@ private const val MAX_CONTENT_BYTES = 1L shl 30
  */
 class IndexWriter(
     private val target: Path,
+    /** Store every instruction (`instructions` table); false keeps only calls, strings, field and type uses. */
+    private val instructions: Boolean = true,
 ) : CodeSink,
     AutoCloseable {
+    override val wantsInstructions: Boolean get() = instructions
     private val tmp: Path = target.resolveSibling(".${target.fileName}.tmp")
     private val conn: Connection
     private val insertClass: PreparedStatement
@@ -68,6 +72,7 @@ class IndexWriter(
     private val insertMethodLines: PreparedStatement
     private val insertMethodParam: PreparedStatement
     private val insertHandler: PreparedStatement
+    private val insertInstruction: PreparedStatement
     private var nextAnnotationId = 1L
 
     private val methodIds = HashMap<String, Long>()
@@ -116,6 +121,7 @@ class IndexWriter(
         insertMethodLines = conn.prepareStatement("INSERT INTO method_lines VALUES (?,?,?,?)")
         insertMethodParam = conn.prepareStatement("INSERT INTO method_params VALUES (?,?,?)")
         insertHandler = conn.prepareStatement("INSERT INTO exception_handlers VALUES (?,?,?,?,?)")
+        insertInstruction = conn.prepareStatement("INSERT INTO instructions VALUES (?,?,?,?,?,?,?,?)")
     }
 
     override fun classRecord(record: ClassRecord) {
@@ -282,6 +288,26 @@ class IndexWriter(
         }
     }
 
+    override fun methodCode(record: MethodCodeRecord) {
+        val method = methodId(record.method)
+        for (r in record.instructions) {
+            insertInstruction.apply {
+                setLong(1, method)
+                setInt(2, r.offset)
+                setInt(3, r.op)
+                r.literal?.let { setLong(4, it) } ?: setNull(4, java.sql.Types.INTEGER)
+                r.target?.let { setInt(5, it) } ?: setNull(5, java.sql.Types.INTEGER)
+                // Methods and strings point at their rows by id; fields, types and the rest keep their text.
+                val methodRef = if (r.refKind == "method") r.ref?.let(::methodId) else null
+                val stringRef = if (r.refKind == "string") r.ref?.let { stringIds[it] } else null
+                methodRef?.let { setLong(6, it) } ?: setNull(6, java.sql.Types.INTEGER)
+                stringRef?.let { setLong(7, it) } ?: setNull(7, java.sql.Types.INTEGER)
+                setString(8, if (methodRef != null || stringRef != null) null else r.ref)
+            }
+            batch(insertInstruction)
+        }
+    }
+
     private fun methodId(descriptor: String): Long =
         methodIds.getOrPut(descriptor) {
             val id = methodIds.size + 1L
@@ -333,6 +359,7 @@ class IndexWriter(
             insertMethodLines,
             insertMethodParam,
             insertHandler,
+            insertInstruction,
         )) {
             st.executeBatch()
         }
@@ -814,6 +841,15 @@ class IndexWriter(
         insertText(extraction)
         insertSigning(extraction.raw.signing)
         insertMedia(extraction)
+        conn.prepareStatement("INSERT INTO opcodes VALUES (?,?,?)").use { st ->
+            for (op in com.android.tools.smali.dexlib2.Opcode.entries) {
+                st.setInt(1, op.ordinal)
+                st.setString(2, op.name)
+                st.setString(3, op.format.name)
+                st.addBatch()
+            }
+            st.executeBatch()
+        }
         conn.prepareStatement("INSERT INTO resource_values VALUES (?,?,?,?,?,?)").use { values ->
             conn.prepareStatement("INSERT INTO resource_bag_items VALUES (?,?,?,?,?)").use { items ->
                 for (r in extraction.raw.resourceTable) {
@@ -1151,4 +1187,8 @@ class TeeSink(
     override fun annotation(record: AnnotationRecord) = sinks.forEach { it.annotation(record) }
 
     override fun methodDetail(record: MethodDetailRecord) = sinks.forEach { it.methodDetail(record) }
+
+    override val wantsInstructions: Boolean get() = sinks.any { it.wantsInstructions }
+
+    override fun methodCode(record: MethodCodeRecord) = sinks.forEach { if (it.wantsInstructions) it.methodCode(record) }
 }

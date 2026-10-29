@@ -21,6 +21,10 @@ class ExtractCommand : CoreCliktCommand(name = "extract") {
     private val force by option("--force", help = "Overwrite the output file if it exists").flag()
     private val quiet by option("--quiet", "-q", help = "No progress output").flag()
     private val noContent by option("--no-content", help = "Store the bytes of the dex files only, not of every file (smaller)").flag()
+    private val noInstructions by option(
+        "--no-instructions",
+        help = "Leave out the instructions table (smaller, faster on big apps)",
+    ).flag()
     private val noCode by option("--no-code", help = "Skip code structure (classes, methods, calls) for a fast manifest-level file").flag()
 
     override fun help(context: Context) =
@@ -37,7 +41,14 @@ class ExtractCommand : CoreCliktCommand(name = "extract") {
             val exists = Files.exists(target)
             if (exists && !force) throw SextantException(ExitCode.OUTPUT, "$target already exists", "pass --force to overwrite it")
             if (!Files.isRegularFile(apk)) throw SextantException.input("file not found: $apk")
-            val extraction = IndexBuilder.build(apk, target, includeCode = !noCode, includeContent = !noContent)
+            val extraction =
+                IndexBuilder.build(
+                    apk,
+                    target,
+                    includeCode = !noCode,
+                    includeContent = !noContent,
+                    includeInstructions = !noInstructions,
+                )
             if (!quiet) {
                 val r = InfoReports.of(extraction)
                 val m = r.meta

@@ -14,6 +14,16 @@ sextant sql app.sqlite "SELECT first_line, last_line, line_table FROM method_lin
 
 `line_table` maps code offsets to source lines, so an offset from a stack trace or from `calls.offsets` gives the line it is on.
 
+## Every instruction
+
+`instruction_view` lists every instruction of every method in code order, the same sequence `smali` prints, without registers:
+
+```bash
+sextant sql app.sqlite "SELECT op, ref, literal FROM instruction_view WHERE method LIKE 'Lcom/app/Login;->auth%'"
+sextant q literal-users app.sqlite --arg value=8443      # every method that loads the number 8443
+sextant q opcode-stats app.sqlite                        # how often each opcode is used
+```
+
 ## Follow links across kinds
 
 `links` connects things of different kinds, so one command answers "what does this touch?":

@@ -135,6 +135,30 @@ data class MethodDetailRecord(
     val handlers: List<HandlerRecord>,
 )
 
+/** Every instruction of one method, in code order (only built for sinks that want them, see CodeSink.wantsInstructions). */
+@Serializable
+data class MethodCodeRecord(
+    val method: String,
+    val instructions: List<InstructionRow>,
+)
+
+/** One instruction: its offset, opcode, literal or branch target, and what it references. */
+@Serializable
+data class InstructionRow(
+    /** In 16-bit code units, as in calls.offsets and dexdump. */
+    val offset: Int,
+    /** Index into the opcodes table. */
+    val op: Int,
+    /** const* and other literal instructions. */
+    val literal: Long?,
+    /** Branches, switches and fill-array-data: the absolute offset they go to. */
+    val target: Int?,
+    /** method | field | type | string | call_site | proto | handle */
+    val refKind: String?,
+    /** Descriptor (method, field, type) or the string value. */
+    val ref: String?,
+)
+
 /** A try block's handler: code units [start, end) jump to [handler] for [type] (null = catch-all / finally). */
 @Serializable
 data class HandlerRecord(

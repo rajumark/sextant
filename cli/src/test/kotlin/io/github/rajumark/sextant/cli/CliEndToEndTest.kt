@@ -561,6 +561,30 @@ class CliEndToEndTest {
     }
 
     @Test
+    fun `every instruction is a row, in the same order smali shows`() {
+        val file = extracted("binaryeye")
+        val counts =
+            sextant(
+                "sql",
+                file,
+                "SELECT (SELECT count(*) FROM instructions) = (SELECT sum(instructions) FROM methods WHERE defined = 1) AS same",
+            )
+        counts.stdout.lines()[2].trim() shouldBe "1"
+        val first =
+            sextant(
+                "sql",
+                file,
+                "SELECT op, ref FROM instruction_view WHERE method LIKE 'Lde/markusfisch/android/binaryeye/activity/PickActivity;->onCreate%' LIMIT 1",
+            )
+        first.stdout shouldContain "invoke-super"
+        first.stdout shouldContain "Lb6;->onCreate(Landroid/os/Bundle;)V"
+        sextant("q", "literal-users", file, "--arg", "value=2131492901").stdout shouldContain "PickActivity;->onCreate"
+        val slim = tmp.resolve("noinsn.sqlite")
+        sextant("extract", "-q", "--no-instructions", apk("binaryeye"), "-o", slim.toString()).exitCode shouldBe 0
+        sextant("sql", slim.toString(), "SELECT count(*) AS n FROM instructions").stdout.lines()[2].trim() shouldBe "0"
+    }
+
+    @Test
     fun `extract stores insights and resources in the SQLite file`() {
         val file = extracted("binaryeye")
         for (table in listOf("libraries", "sdks", "endpoints", "resources", "string_resources", "layouts")) {

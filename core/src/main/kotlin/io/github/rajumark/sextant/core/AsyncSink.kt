@@ -5,6 +5,7 @@ import io.github.rajumark.sextant.core.model.CallRecord
 import io.github.rajumark.sextant.core.model.ClassRecord
 import io.github.rajumark.sextant.core.model.FieldRecord
 import io.github.rajumark.sextant.core.model.FieldRefRecord
+import io.github.rajumark.sextant.core.model.MethodCodeRecord
 import io.github.rajumark.sextant.core.model.MethodDetailRecord
 import io.github.rajumark.sextant.core.model.MethodRecord
 import io.github.rajumark.sextant.core.model.ResourceUseRecord
@@ -52,6 +53,10 @@ class AsyncSink(
 
     override fun methodDetail(record: MethodDetailRecord) = put(record)
 
+    override val wantsInstructions: Boolean get() = delegate.wantsInstructions
+
+    override fun methodCode(record: MethodCodeRecord) = put(record)
+
     private fun put(record: Any) {
         // Stop feeding a worker that has already failed; the error surfaces in await().
         while (failure == null) {
@@ -74,6 +79,7 @@ class AsyncSink(
                     is ResourceUseRecord -> delegate.resourceUse(r)
                     is AnnotationRecord -> delegate.annotation(r)
                     is MethodDetailRecord -> delegate.methodDetail(r)
+                    is MethodCodeRecord -> delegate.methodCode(r)
                 }
             }
         } catch (e: Throwable) {

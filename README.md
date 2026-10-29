@@ -54,7 +54,7 @@ cli/build/install/sextant/bin/sextant --help
 ## Usage
 
 ```text
-sextant extract <app.apk> [-o <app.sqlite>] [--force] [--quiet] [--no-code] [--no-content]
+sextant extract <app.apk> [-o <app.sqlite>] [--force] [--quiet] [--no-code] [--no-content] [--no-instructions]
 sextant info    <app.apk | app.sqlite> [--json]
 sextant find    <app.apk | app.sqlite> <text> [--kind class|method|field|string|component|permission|deep_link] [--limit N] [--json]
 sextant class   <app.apk | app.sqlite> <name> [--json]
@@ -85,7 +85,7 @@ Every command takes either the `.sqlite` file from `extract` or the APK itself. 
 
 | Command | What it does |
 |---|---|
-| `extract` | Parses the APK in one pass and writes one SQLite file (default `./<apk-name>.sqlite`). Refuses to overwrite an existing file unless `--force` is given. `--no-code` skips the code tables for a fast manifest-level file; `--no-content` stores the bytes of the dex files only instead of every file. Split bundles (`.apks`, `.xapk`, `.apkm`) work like a plain APK. |
+| `extract` | Parses the APK in one pass and writes one SQLite file (default `./<apk-name>.sqlite`). Refuses to overwrite an existing file unless `--force` is given. `--no-code` skips the code tables for a fast manifest-level file; `--no-content` stores the bytes of the dex files only instead of every file; `--no-instructions` leaves out the per-instruction rows (about a quarter of a large app's file). Split bundles (`.apks`, `.xapk`, `.apkm`) work like a plain APK. |
 | `info` | Prints a short summary of an app (APK or `.sqlite`). `--json` prints one JSON object to stdout. |
 | `find` | Substring search over class, method and field names, string constants, components, permissions and deep links. For strings it shows the methods that load them. |
 | `class` | Shows one class: access, superclass, interfaces, subclasses, fields with constant values, methods with call counts, callers from outside the class, and its strings. It accepts `com.app.Login`, `Lcom/app/Login;` or just `Login`. |
@@ -101,7 +101,7 @@ Every command takes either the `.sqlite` file from `extract` or the APK itself. 
 | `icon` | Finds the app icon. It lists every file behind `android:icon` (or `--round` for `android:roundIcon`) per density, with format, pixel size and byte size, decodes adaptive icons into their foreground, background and monochrome layers, marks the best file, and `-o` saves it. It works on an APK directly (from the cache when indexed, else manifest and resources only) or on a `.sqlite` file. |
 | `xml` | Prints any XML file of the APK (manifest, layouts, menus, drawables, colors, animations, …) rebuilt from the `xml_nodes` and `xml_attrs` tables, by path (`res/BW.xml`) or resource (`@layout/main`, every configuration). With `--tag`, `--attr` and `--value` it finds elements across all files instead: `--tag EditText --attr android:inputType --value Password` lists every password field. `--tag` also matches class names that end in it (`TextInputEditText`). |
 | `links` | Shows what anything links to and what links to it, across kinds: `sextant links app.apk .MainActivity` gives the component's class, permissions, deep links and resources; `--depth 2` continues into the class's superclass and methods. A resource shows the files and methods that use it (`@string/app_name`), a menu shows the code that inflates it. The thing can be a key (`@string/x`, `class:L…;`, `method:…`, `permission:…`, `url:…`) or a component, class or permission name. |
-| `q` | Runs a saved query for a common question: `unused-strings`, `untranslated-strings`, `string-users` (`--arg name=app_name`), `password-fields`, `activity-layouts`, `exported-components`, `dangerous-permissions`, `signing`, `webviews`, `hosts`, `jni-methods`, `native-libraries`, `native-sensitive-imports`, `service-providers`, `kotlin-classes`, `annotated` (`--arg type=…`), `broad-catches`, `fonts`, `largest-images`, `biggest-packages`, `undecoded-files`. `sextant q` lists them with what each answers; `sextant q <query>` prints its SQL to adapt. |
+| `q` | Runs a saved query for a common question: `unused-strings`, `untranslated-strings`, `string-users` (`--arg name=app_name`), `password-fields`, `activity-layouts`, `exported-components`, `dangerous-permissions`, `signing`, `webviews`, `hosts`, `jni-methods`, `native-libraries`, `native-sensitive-imports`, `service-providers`, `kotlin-classes`, `annotated` (`--arg type=…`), `broad-catches`, `fonts`, `largest-images`, `literal-users` (`--arg value=…`), `opcode-stats`, `biggest-packages`, `undecoded-files`. `sextant q` lists them with what each answers; `sextant q <query>` prints its SQL to adapt. |
 | `files` | Lists every file inside the APK from the index: type, size, content (dex, elf, png, binary-xml, json, …), the resource it is (shrunk apps rename `res/` files, so `res/BW.xml` shows as `@mipmap/ic_launcher`) and the decoder that read it. `--status listed` shows files no decoder reads yet; `--by-size` puts the largest first. `--save <path> -o <file>` writes one file out from the bytes stored in the `.sqlite` file. `--grep <text>` prints matching lines from the text files (assets, configs, licenses). |
 | `coverage` | Shows how much of the APK was decoded into rows: files and bytes per type, and the largest files that are only listed (size and hash). Every zip entry is always listed. |
 | `cache` | Lists the indexes built for APKs given directly to a command (app, version, size, state), or deletes them with `--clear`. |
@@ -136,6 +136,7 @@ Progress and errors go to **stderr**, data goes to **stdout**, so `--json` outpu
 | `call_edges`, `string_uses`, `search_items` | the same edges and search hits with readable names (views) |
 | `libraries`, `frameworks`, `sdks`, `endpoints`, `endpoint_sources`, `findings`, `finding_evidence` | insights, each with its evidence |
 | `native_libraries`, `native_symbols` | native code, with JNI symbols mapped to Java |
+| `instructions`, `opcodes`, `instruction_view` | every instruction of every method in code order: opcode, literal, branch target and what it references |
 | `annotations`, `annotation_values`, `method_lines`, `method_params`, `exception_handlers`, `kotlin_classes` | code details: every annotation with its values, each method's source line table, parameter names, exception handlers, and Kotlin metadata |
 | `images`, `fonts` | every image (PNG, WebP, JPEG, GIF, anywhere) with its pixel size, and every font with its family, style and version |
 | `signing_signers`, `signing_certificates`, `signing_digests`, `signing_lineage`, `signing_issues`, `signing_manifest` | signing as rows: every signer per scheme (with v3 SDK ranges), every certificate field and its bytes, rotation lineage, verifier issues, MANIFEST.MF digests |

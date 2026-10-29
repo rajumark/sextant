@@ -10,7 +10,9 @@ import com.android.tools.smali.dexlib2.iface.Annotation
 import com.android.tools.smali.dexlib2.iface.Method
 import com.android.tools.smali.dexlib2.iface.debug.LineNumber
 import com.android.tools.smali.dexlib2.iface.instruction.NarrowLiteralInstruction
+import com.android.tools.smali.dexlib2.iface.instruction.OffsetInstruction
 import com.android.tools.smali.dexlib2.iface.instruction.ReferenceInstruction
+import com.android.tools.smali.dexlib2.iface.instruction.WideLiteralInstruction
 import com.android.tools.smali.dexlib2.iface.reference.FieldReference
 import com.android.tools.smali.dexlib2.iface.reference.MethodReference
 import com.android.tools.smali.dexlib2.iface.reference.StringReference
@@ -33,7 +35,9 @@ import io.github.rajumark.sextant.core.model.CodeStats
 import io.github.rajumark.sextant.core.model.FieldRecord
 import io.github.rajumark.sextant.core.model.FieldRefRecord
 import io.github.rajumark.sextant.core.model.HandlerRecord
+import io.github.rajumark.sextant.core.model.InstructionRow
 import io.github.rajumark.sextant.core.model.MAX_OFFSETS
+import io.github.rajumark.sextant.core.model.MethodCodeRecord
 import io.github.rajumark.sextant.core.model.MethodDetailRecord
 import io.github.rajumark.sextant.core.model.MethodRecord
 import io.github.rajumark.sextant.core.model.Obfuscation
@@ -46,6 +50,11 @@ import java.util.zip.ZipFile
 
 /** Receives code records in a deterministic order: classes sorted by id, members sorted within each class. */
 interface CodeSink {
+    /** True when this sink stores every instruction ([methodCode]); the extractor only builds them then. */
+    val wantsInstructions: Boolean get() = false
+
+    fun methodCode(record: MethodCodeRecord) {}
+
     fun classRecord(record: ClassRecord) {}
 
     fun method(record: MethodRecord) {}
@@ -244,6 +253,7 @@ object CodeExtractor {
         }
         val impl = method.implementation
         var instructions = 0
+        val code = if (impl != null && sink.wantsInstructions) ArrayList<InstructionRow>() else null
         if (impl != null) {
             try {
                 var offset = 0
@@ -254,6 +264,8 @@ object CodeExtractor {
                         val value = insn.narrowLiteral
                         if (value ushr 24 == APP_PACKAGE_ID) pending += Triple("0x%08x".format(value), offset, instructions)
                     }
+                    var refKind: String? = null
+                    var refText: String? = null
                     if (insn is ReferenceInstruction) {
                         when (insn.referenceType) {
                             ReferenceType.METHOD -> {
@@ -262,10 +274,15 @@ object CodeExtractor {
                                 val callee = DexFormatter.INSTANCE.getMethodDescriptor(ref)
                                 calls.getOrPut(callee to kind) { mutableListOf() } += offset
                                 if (pending.isNotEmpty()) settle(callee)
+                                refKind = "method"
+                                refText = callee
                             }
-                            ReferenceType.STRING ->
-                                strings.getOrPut((insn.reference as StringReference).string) { mutableListOf() } +=
-                                    offset
+                            ReferenceType.STRING -> {
+                                val value = (insn.reference as StringReference).string
+                                strings.getOrPut(value) { mutableListOf() } += offset
+                                refKind = "string"
+                                refText = value
+                            }
                             ReferenceType.FIELD -> {
                                 val ref = insn.reference as FieldReference
                                 val kind = if (insn.opcode.name.let { it.startsWith("iput") || it.startsWith("sput") }) "write" else "read"
@@ -273,14 +290,25 @@ object CodeExtractor {
                                 fieldRefs.getOrPut(descriptor to kind) { mutableListOf() } += offset
                                 val resourceField = insn.opcode.name == "sget" && R_FIELD.matches(descriptor)
                                 if (resourceField) pending += Triple(descriptor, offset, instructions)
+                                refKind = "field"
+                                refText = descriptor
                             }
                             ReferenceType.TYPE -> {
-                                typeKind(insn.opcode.name)?.let { kind ->
-                                    typeRefs.getOrPut((insn.reference as TypeReference).type to kind) { mutableListOf() } += offset
-                                }
+                                val type = (insn.reference as TypeReference).type
+                                typeKind(insn.opcode.name)?.let { kind -> typeRefs.getOrPut(type to kind) { mutableListOf() } += offset }
+                                refKind = "type"
+                                refText = type
                             }
+                            ReferenceType.CALL_SITE -> refKind = "call_site"
+                            ReferenceType.METHOD_PROTO -> refKind = "proto"
+                            ReferenceType.METHOD_HANDLE -> refKind = "handle"
                             else -> Unit
                         }
+                    }
+                    if (code != null) {
+                        val literal = (insn as? WideLiteralInstruction)?.wideLiteral
+                        val target = (insn as? OffsetInstruction)?.let { offset + it.codeOffset }
+                        code += InstructionRow(offset, insn.opcode.ordinal, literal, target, refKind, refText)
                     }
                     offset += insn.codeUnits
                 }
@@ -331,6 +359,8 @@ object CodeExtractor {
         for ((key, offsets) in resourceUses.entries.sortedWith(compareBy({ it.key.first }, { it.key.second.orEmpty() }))) {
             sink.resourceUse(ResourceUseRecord(id, key.first, key.second, offsets.size, offsets.take(MAX_OFFSETS)))
         }
+        // Last, so the strings and methods it points at already have their rows.
+        code?.let { sink.methodCode(MethodCodeRecord(id, it)) }
     }
 
     /** `new-instance` → `new`, `const-class` → `class`, `check-cast` → `cast`, `instance-of` → `instanceof`, arrays → `array`. */

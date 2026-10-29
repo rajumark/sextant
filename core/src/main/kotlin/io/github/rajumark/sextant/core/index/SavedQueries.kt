@@ -48,6 +48,8 @@ object SavedQueries {
             "broad-catches",
             "fonts",
             "largest-images",
+            "literal-users",
+            "opcode-stats",
             "biggest-packages",
             "undecoded-files",
         )

@@ -55,12 +55,13 @@ Usage: sextant extract [<options>] <apk>
   Extract everything Sextant reads from an APK into one SQLite file. Every other command takes that file (or the APK itself).
 
 Options:
-  -o, --out=<path>  Output file (default: ./<apk-name>.sqlite)
-  --force           Overwrite the output file if it exists
-  -q, --quiet       No progress output
-  --no-content      Store the bytes of the dex files only, not of every file (smaller)
-  --no-code         Skip code structure (classes, methods, calls) for a fast manifest-level file
-  -h, --help        Show this message and exit
+  -o, --out=<path>   Output file (default: ./<apk-name>.sqlite)
+  --force            Overwrite the output file if it exists
+  -q, --quiet        No progress output
+  --no-content       Store the bytes of the dex files only, not of every file (smaller)
+  --no-instructions  Leave out the instructions table (smaller, faster on big apps)
+  --no-code          Skip code structure (classes, methods, calls) for a fast manifest-level file
+  -h, --help         Show this message and exit
 
 Arguments:
   <apk>  APK or split bundle to analyze

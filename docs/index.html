@@ -255,11 +255,11 @@
   </nav>
 <section id="tab-progress" class="tab" data-tab="progress">
   <div class="hero">
-    <div class="big">≈ 88%</div>
+    <div class="big">≈ 94%</div>
     <div class="hl">of an APK's data is in SQLite as rows and links<span>Estimate. 100% means everything inside the APK is stored as rows and linked. The bytes themselves are all there: <b>100% of every file</b>, checked byte for byte.</span></div>
   </div>
-  <div class="mbar"><div class="mfill" style="width:88%"></div></div>
-  <div class="mmeta"><b>Step 14 of 15 done</b><span>Index schema 18</span><span>CLI only</span></div>
+  <div class="mbar"><div class="mfill" style="width:94%"></div></div>
+  <div class="mmeta"><b>Step 15 of 18 done</b><span>Index schema 19</span><span>CLI only</span></div>
 
   <h2 class="ph">By area</h2>
   <div class="hbar small" id="areas"></div>
@@ -271,7 +271,7 @@
     <li class="db">App identity &amp; versions</li><li class="db">Signing</li><li class="db">Permissions</li><li class="db">Components &amp; verdicts</li><li class="db">Deep links</li><li class="db">Features, metadata, queries</li><li class="db">App icon</li>
     <li class="db">Strings (all locales)</li><li class="db">Resource IDs</li><li class="db">Styles &amp; themes</li><li class="db">Drawables</li><li class="db">Layouts</li><li class="db">Menus</li><li class="db">Navigation graphs</li><li class="db">XML configs</li><li class="db">Assets</li><li class="db">Resource references</li>
     <li class="db">Classes, methods, fields</li><li class="db">Call graph</li><li class="db">Field &amp; type references</li><li class="db">String constants</li><li class="db">Full-text search</li><li class="db">SQL queries</li>
-    <li class="db">SDKs &amp; libraries</li><li class="db">Frameworks</li><li class="db">Endpoints / URLs</li><li class="db">Native libraries &amp; JNI</li><li class="db">ELF sections, imports, strings</li><li class="db">Text files, properties, services</li><li class="db">Signing, every field</li><li class="db">Annotations, line tables, handlers</li><li class="db">Kotlin metadata</li><li class="db">Class → SDK, screen → layout, host → URL</li><li class="db">Images &amp; fonts</li><li class="db">Security findings</li><li class="db">Every file + coverage</li><li class="db">APK index cache</li><li class="db">Code → resource links</li><li class="db">Every XML node &amp; attribute</li><li class="db">Resource values, every config</li><li class="db">Links across kinds</li><li class="db">Self-describing schema</li><li class="db">Saved queries</li>
+    <li class="db">SDKs &amp; libraries</li><li class="db">Frameworks</li><li class="db">Endpoints / URLs</li><li class="db">Native libraries &amp; JNI</li><li class="db">ELF sections, imports, strings</li><li class="db">Text files, properties, services</li><li class="db">Signing, every field</li><li class="db">Annotations, line tables, handlers</li><li class="db">Kotlin metadata</li><li class="db">Class → SDK, screen → layout, host → URL</li><li class="db">Images &amp; fonts</li><li class="db">Every instruction</li><li class="db">Security findings</li><li class="db">Every file + coverage</li><li class="db">APK index cache</li><li class="db">Code → resource links</li><li class="db">Every XML node &amp; attribute</li><li class="db">Resource values, every config</li><li class="db">Links across kinds</li><li class="db">Self-describing schema</li><li class="db">Saved queries</li>
     <li class="db">Startup order</li><li class="db">Call paths (reach)</li><li class="db">Version diff</li><li class="db">Split bundles</li><li class="db">MCP for AI agents</li><li class="db">One-file output</li><li class="db">Decompiled Java</li><li class="db">Code search (grep)</li><li class="db">Smali</li><li class="db">ProGuard mappings</li><li class="db">Every byte of every file</li>
   </ul>
 
@@ -291,7 +291,10 @@
     <li class="done"><span>12</span>Code details: annotations, lines, handlers, Kotlin<em>Done</em></li>
     <li class="done"><span>13</span>More cross-links: SDKs, screens → layouts<em>Done</em></li>
     <li class="done"><span>14</span>Remaining binary formats<em>Done</em></li>
-    <li class="next"><span>15</span>Every instruction as rows<em>Next</em></li>
+    <li class="done"><span>15</span>Every instruction as rows<em>Done</em></li>
+    <li class="next"><span>16</span>Instruction operands (registers)<em>Next</em></li>
+    <li><span>17</span>Archives inside the APK, entry by entry</li>
+    <li><span>18</span>A smaller file</li>
   </ul>
 </section>
 
@@ -687,7 +690,10 @@
     <tr><td class="num">12</td><td>Code details: annotations with their values, source line tables, exception handlers, Kotlin metadata</td><td>Code beyond structure: what a method throws and catches, where it is in the source, what Kotlin says it is</td><td><span class="tag g">Done</span></td></tr>
     <tr><td class="num">13</td><td>More cross-links: class → SDK, activity → the layouts it shows, and the other links SQL already proves</td><td>Cross-links near 100%</td><td><span class="tag g">Done</span></td></tr>
     <tr><td class="num">14</td><td>Remaining binary formats: Kotlin builtins, baseline profiles, fonts, image sizes for every image</td><td>The last “bytes only” files as rows</td><td><span class="tag g">Done</span></td></tr>
-    <tr><td class="num">15</td><td>Every instruction of every method as rows</td><td>Code at 100%</td><td><span class="tag">Next</span></td></tr>
+    <tr><td class="num">15</td><td>Every instruction of every method as rows: opcode, literal, branch target, what it references</td><td>Code at 95%; SQL over method bodies</td><td><span class="tag g">Done</span></td></tr>
+    <tr><td class="num">16</td><td>Instruction operands: the registers of every instruction</td><td>Code at 100%</td><td><span class="tag">Next</span></td></tr>
+    <tr><td class="num">17</td><td>Archives inside the APK (zip, jar, APK, dex in assets), entry by entry</td><td>Packed payloads visible without unpacking</td><td><span class="tag">Planned</span></td></tr>
+    <tr><td class="num">18</td><td>A smaller file: compact encodings for the biggest tables</td><td>The same facts in less disk</td><td><span class="tag">Planned</span></td></tr>
   </table></div>
   <h3>Step 1 result</h3>
   <p>Measured with <code>sextant coverage</code> on real apps. Every zip entry is listed; the share below is what a decoder turned into rows.</p>
@@ -783,7 +789,7 @@
     ['Manifest', 100, 'var(--green)'],
     ['Signing', 100, 'var(--green)'],
     ['Resource table', 95, 'var(--green)'],
-    ['Code (dex)', 70, 'var(--accent)'],
+    ['Code (dex)', 95, 'var(--green)'],
     ['Resource XML files', 90, 'var(--green)'],
     ['Native libraries', 85, 'var(--green)'],
     ['Assets', 85, 'var(--green)'],
