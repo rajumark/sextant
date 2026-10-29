@@ -6,7 +6,7 @@ package io.github.rajumark.sextant.core.index
  * The views give the readable, descriptor-based form.
  */
 object IndexSchema {
-    const val VERSION = 12
+    const val VERSION = 13
 
     val DDL =
         """
@@ -430,6 +430,13 @@ object IndexSchema {
           kind TEXT NOT NULL,
           seq  INTEGER NOT NULL,
           json TEXT NOT NULL
+        );
+
+        -- File contents (index schema 13): the uncompressed bytes of every file in the APK (dex files always; the others
+        -- unless extracted with --no-content), so the .sqlite file holds the whole APK and no command needs the APK itself.
+        CREATE TABLE file_contents (
+          file  INTEGER PRIMARY KEY,      -- files.id
+          bytes BLOB NOT NULL
         );
 
         -- Launcher icon files: role is icon | round_icon, or <role>.background/.foreground/.monochrome for adaptive layers.

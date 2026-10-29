@@ -36,6 +36,9 @@ import java.nio.file.StandardCopyOption
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.PreparedStatement
+import java.util.zip.ZipFile
+
+private const val MAX_CONTENT_BYTES = 1L shl 30
 
 /**
  * Builds index.sqlite while code records stream in (one pass over the APK), then adds manifest-level tables,
@@ -265,11 +268,22 @@ class IndexWriter(
     }
 
     /** Adds the manifest-level tables, builds indexes and the search table, and moves the file into place. */
-    fun finish(extraction: Extraction): Path {
+
+    /** Where file contents come from: the (merged) APK, and whether to store every file or only the dex files. */
+    class Contents(
+        val apk: Path,
+        val all: Boolean,
+    )
+
+    fun finish(
+        extraction: Extraction,
+        contents: Contents? = null,
+    ): Path {
         try {
             profile("stream (code records)")
             flush()
             insertManifest(extraction)
+            contents?.let { insertContents(extraction.files, it) }
             profile("flush + manifest tables")
             conn.createStatement().use { st ->
                 IndexSchema.statements(IndexSchema.INDEXES).forEach(st::execute)
@@ -435,6 +449,33 @@ class IndexWriter(
                 }
             }
             st.executeBatch()
+        }
+    }
+
+    private fun insertContents(
+        files: List<ApkFile>,
+        contents: Contents,
+    ) {
+        ZipFile(contents.apk.toFile()).use { zip ->
+            conn.prepareStatement("INSERT INTO file_contents VALUES (?,?)").use { st ->
+                var pendingBytes = 0L
+                files.forEachIndexed { i, f ->
+                    if (!contents.all && f.type != "dex") return@forEachIndexed
+                    // Same zip-bomb guard as hashing: entries over 1 GB are listed, not stored.
+                    if (f.sha256 == null || f.sizeBytes > MAX_CONTENT_BYTES) return@forEachIndexed
+                    val entry = zip.getEntry(f.path) ?: return@forEachIndexed
+                    val bytes = zip.getInputStream(entry).use { it.readBytes() }
+                    st.setLong(1, i + 1L)
+                    st.setBytes(2, bytes)
+                    st.addBatch()
+                    pendingBytes += bytes.size
+                    if (pendingBytes > 64L * 1024 * 1024) {
+                        st.executeBatch()
+                        pendingBytes = 0
+                    }
+                }
+                st.executeBatch()
+            }
         }
     }
 

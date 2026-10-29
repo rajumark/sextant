@@ -10,6 +10,7 @@ import io.github.rajumark.sextant.core.ExitCode
 import io.github.rajumark.sextant.core.Extraction
 import io.github.rajumark.sextant.core.Sextant
 import io.github.rajumark.sextant.core.SextantException
+import io.github.rajumark.sextant.core.index.ApkRestore
 import io.github.rajumark.sextant.core.index.IndexCache
 import io.github.rajumark.sextant.core.index.IndexReader
 import java.io.BufferedOutputStream
@@ -38,6 +39,14 @@ internal const val INDEX_INPUT = "An APK (indexed once, then cached) or a .sqlit
 
 /** The whole extraction from an APK (through the cache) or a .sqlite file. */
 internal fun loadExtraction(path: Path): Extraction = openIndex(path).use { it.extraction() }
+
+/** The APK behind [path]: the APK itself, or one rebuilt (once, cached) from the bytes stored in a .sqlite file. */
+internal fun apkOf(path: Path): Path =
+    when {
+        Files.isRegularFile(path) && !path.toString().endsWith(".sqlite") -> path
+        Files.isDirectory(path) -> ApkRestore.restore(path.resolve("index.sqlite"))
+        else -> ApkRestore.restore(path)
+    }
 
 /** A .sqlite file for [path]: itself, or the cached index of an APK (built once, announced on stderr). */
 internal fun indexFile(path: Path): Path =

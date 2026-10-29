@@ -16,7 +16,7 @@ import io.github.rajumark.sextant.core.output.SextantJson
 
 /** `sextant grep <app.apk> <text>`: text search inside decompiled Java, like jadx-gui's code search. */
 class GrepCommand : CoreCliktCommand(name = "grep") {
-    private val apk by argument(help = "The APK or split bundle (searching needs the bytecode)").path()
+    private val apk by argument(help = "An APK, split bundle or .sqlite file from extract (its stored dex files are used)").path()
     private val text by argument(help = "Text to find in the code (case-insensitive), or a regular expression with --regex")
     private val regex by option("--regex", help = "Treat TEXT as a regular expression").flag()
     private val caseSensitive by option("--case", help = "Match case").flag()
@@ -43,7 +43,7 @@ class GrepCommand : CoreCliktCommand(name = "grep") {
                 }
             val map = mapping?.let { ProguardMapping.read(it) }
             val started = System.nanoTime()
-            val result = CodeGrep.search(apk, pattern, pkg, limit, map, cache = !noCache)
+            val result = CodeGrep.search(apkOf(apk), pattern, pkg, limit, map, cache = !noCache)
             result.hits.forEach { h ->
                 if (json) println(SextantJson.compact.encodeToString(GrepHit.serializer(), h)) else println(line(h))
             }

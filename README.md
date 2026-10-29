@@ -54,7 +54,7 @@ cli/build/install/sextant/bin/sextant --help
 ## Usage
 
 ```text
-sextant extract <app.apk> [-o <app.sqlite>] [--force] [--quiet] [--no-code]
+sextant extract <app.apk> [-o <app.sqlite>] [--force] [--quiet] [--no-code] [--no-content]
 sextant info    <app.apk | app.sqlite> [--json]
 sextant find    <app.apk | app.sqlite> <text> [--kind class|method|field|string|component|permission|deep_link] [--limit N] [--json]
 sextant class   <app.apk | app.sqlite> <name> [--json]
@@ -62,19 +62,19 @@ sextant sql     <app.apk | app.sqlite> "<query>" [--json | --csv] [--limit N]
 sextant sql     <app.apk | app.sqlite> --schema
 sextant callers <app.apk | app.sqlite> <method> [--depth N] [--fan-out N] [--json]
 sextant callees <app.apk | app.sqlite> <method> [--depth N] [--fan-out N] [--json]
-sextant source  <app.apk> <class | method>
+sextant source  <app.apk | app.sqlite> <class | method>
 sextant insights  <app.apk | app.sqlite> [--json]
 sextant endpoints <app.apk | app.sqlite> [--host TEXT] [--limit N] [--json]
 sextant diff    <old.apk | old.sqlite> <new.apk | new.sqlite> [--show N] [--json]
 sextant findings <app.apk | app.sqlite> [--severity info|low|medium|high] [--json]
 sextant xref    <app.apk | app.sqlite> <class | field> [--limit N] [--json]
 sextant reach   <app.apk | app.sqlite> <from> <to> [--depth N] [--paths N] [--json]
-sextant smali   <app.apk> <class | method>
+sextant smali   <app.apk | app.sqlite> <class | method>
 sextant icon    <app.apk | app.sqlite> [--round] [--layer foreground|background|monochrome] [-o file] [--json]
 sextant xml     <app.apk | app.sqlite> [<file | @resource>] [--tag TAG] [--attr NAME] [--value TEXT] [--limit N] [--json]
 sextant links   <app.apk | app.sqlite> <thing> [--depth N] [--rel REL] [--limit N] [--json]
 sextant q       [<query> [<app.apk | app.sqlite>]] [--arg NAME=VALUE] [--json | --csv] [--limit N]
-sextant files   <app.apk | app.sqlite> [--type TYPE] [--status decoded|listed] [--search TEXT] [--by-size] [--limit N] [--json]
+sextant files   <app.apk | app.sqlite> [--type TYPE] [--status decoded|listed] [--search TEXT] [--by-size] [--limit N] [--json] [--save PATH -o FILE]
 sextant coverage <app.apk | app.sqlite> [--json]
 sextant cache   [--clear] [--json]
 sextant mcp     [--dir <app.sqlite | app.apk>] [--apk <app.apk>]
@@ -85,7 +85,7 @@ Every command takes either the `.sqlite` file from `extract` or the APK itself. 
 
 | Command | What it does |
 |---|---|
-| `extract` | Parses the APK in one pass and writes one SQLite file (default `./<apk-name>.sqlite`). Refuses to overwrite an existing file unless `--force` is given. `--no-code` skips the code tables for a fast manifest-level file. Split bundles (`.apks`, `.xapk`, `.apkm`) work like a plain APK. |
+| `extract` | Parses the APK in one pass and writes one SQLite file (default `./<apk-name>.sqlite`). Refuses to overwrite an existing file unless `--force` is given. `--no-code` skips the code tables for a fast manifest-level file; `--no-content` stores the bytes of the dex files only instead of every file. Split bundles (`.apks`, `.xapk`, `.apkm`) work like a plain APK. |
 | `info` | Prints a short summary of an app (APK or `.sqlite`). `--json` prints one JSON object to stdout. |
 | `find` | Substring search over class, method and field names, string constants, components, permissions and deep links. For strings it shows the methods that load them. |
 | `class` | Shows one class: access, superclass, interfaces, subclasses, fields with constant values, methods with call counts, callers from outside the class, and its strings. It accepts `com.app.Login`, `Lcom/app/Login;` or just `Login`. |
@@ -102,7 +102,7 @@ Every command takes either the `.sqlite` file from `extract` or the APK itself. 
 | `xml` | Prints any XML file of the APK (manifest, layouts, menus, drawables, colors, animations, …) rebuilt from the `xml_nodes` and `xml_attrs` tables, by path (`res/BW.xml`) or resource (`@layout/main`, every configuration). With `--tag`, `--attr` and `--value` it finds elements across all files instead: `--tag EditText --attr android:inputType --value Password` lists every password field. `--tag` also matches class names that end in it (`TextInputEditText`). |
 | `links` | Shows what anything links to and what links to it, across kinds: `sextant links app.apk .MainActivity` gives the component's class, permissions, deep links and resources; `--depth 2` continues into the class's superclass and methods. A resource shows the files and methods that use it (`@string/app_name`), a menu shows the code that inflates it. The thing can be a key (`@string/x`, `class:L…;`, `method:…`, `permission:…`, `url:…`) or a component, class or permission name. |
 | `q` | Runs a saved query for a common question: `unused-strings`, `untranslated-strings`, `string-users` (`--arg name=app_name`), `password-fields`, `activity-layouts`, `exported-components`, `dangerous-permissions`, `webviews`, `hosts`, `jni-methods`, `biggest-packages`, `undecoded-files`. `sextant q` lists them with what each answers; `sextant q <query>` prints its SQL to adapt. |
-| `files` | Lists every file inside the APK from the index: type, size, content (dex, elf, png, binary-xml, json, …), the resource it is (shrunk apps rename `res/` files, so `res/BW.xml` shows as `@mipmap/ic_launcher`) and the decoder that read it. `--status listed` shows files no decoder reads yet; `--by-size` puts the largest first. |
+| `files` | Lists every file inside the APK from the index: type, size, content (dex, elf, png, binary-xml, json, …), the resource it is (shrunk apps rename `res/` files, so `res/BW.xml` shows as `@mipmap/ic_launcher`) and the decoder that read it. `--status listed` shows files no decoder reads yet; `--by-size` puts the largest first. `--save <path> -o <file>` writes one file out from the bytes stored in the `.sqlite` file. |
 | `coverage` | Shows how much of the APK was decoded into rows: files and bytes per type, and the largest files that are only listed (size and hash). Every zip entry is always listed. |
 | `cache` | Lists the indexes built for APKs given directly to a command (app, version, size, state), or deletes them with `--clear`. |
 | `sql` | Runs read-only SQL over `index.sqlite`. It prints a table by default (`--json` gives one object per line, `--csv` gives CSV) and stops at 1,000 rows unless you pass `--limit`. `--schema` prints every table and view. |
@@ -139,6 +139,7 @@ Progress and errors go to **stderr**, data goes to **stdout**, so `--json` outpu
 | `xml_nodes`, `xml_attrs` | every binary XML file (manifest, layouts, menus, drawables, colors, animations, …) node by node and attribute by attribute, with `ref` for values that point at a resource |
 | `resource_values`, `resource_bag_items` | `resources.arsc` in every configuration: values and file paths, and the items of styles, plurals, arrays and attrs |
 | `files` | every file inside the APK: type, size, hashes, content, resource name and the decoder that read it |
+| `file_contents` | the uncompressed bytes of every file (dex files always), so the file holds the whole APK and no command needs it |
 | `links`, `entities` | every edge between kinds of things (component → class, layout → resource, method → string, …) with readable keys and evidence; `entities` lists every key with its kind |
 | `records` | full records (manifest tree, permissions, components, resources, insights) |
 | `schema_docs` | what every table, view and column means; start here: `SELECT * FROM schema_docs WHERE "table" = 'links'` |

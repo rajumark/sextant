@@ -9,6 +9,8 @@ import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.types.choice
 import com.github.ajalt.clikt.parameters.types.int
 import com.github.ajalt.clikt.parameters.types.path
+import io.github.rajumark.sextant.core.ExitCode
+import io.github.rajumark.sextant.core.SextantException
 import io.github.rajumark.sextant.core.index.CoverageRow
 import io.github.rajumark.sextant.core.model.ApkFile
 import io.github.rajumark.sextant.core.output.SextantJson
@@ -39,14 +41,35 @@ class FilesCommand : CoreCliktCommand(name = "files") {
     private val bySize by option("--by-size", help = "Largest files first").flag()
     private val limit by option("--limit", help = "Maximum rows (default 500)").int().default(500)
     private val json by option("--json", help = "One JSON object per file").flag()
+    private val save by option("--save", help = "Write this file of the APK (its path, e.g. res/o-.png) to --out instead of listing")
+    private val out by option("-o", "--out", help = "Where --save writes the file").path()
 
     override fun help(context: Context) =
         "List every file inside the APK: type, size, content, the resource it is (shrunk apps rename res/ files) and " +
-            "which decoder read it."
+            "which decoder read it. --save writes one file out, from the bytes stored in the .sqlite file."
 
     override fun run() =
         guarded {
             openIndex(dir).use { index ->
+                save?.let { path ->
+                    val dest =
+                        out
+                            ?: throw SextantException(
+                                ExitCode.USAGE,
+                                "--save needs --out",
+                                "e.g. --save $path -o ${path.substringAfterLast('/')}",
+                            )
+                    val bytes =
+                        index.fileContent(path)
+                            ?: throw SextantException.input(
+                                "$path is not stored in $dir",
+                                "list the files with: sextant files $dir --search ${path.substringAfterLast('/')}",
+                            )
+                    java.nio.file.Files
+                        .write(dest, bytes)
+                    System.err.println("Saved $path → $dest (${size(bytes.size.toLong())})")
+                    return@use
+                }
                 val (files, total) = index.files(type, status?.let { it == "decoded" }, search, bySize, limit)
                 if (json) {
                     files.forEach { println(SextantJson.compact.encodeToString(ApkFile.serializer(), it)) }

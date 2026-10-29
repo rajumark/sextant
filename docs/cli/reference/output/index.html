@@ -1391,7 +1391,7 @@
 
 
 <h1 id="output-one-sqlite-file">Output: one SQLite file<a class="headerlink" href="#output-one-sqlite-file" title="Permanent link">&para;</a></h1>
-<p>APK in, SQLite out. <code>sextant extract app.apk</code> writes <code>app.sqlite</code> and nothing else: no folder, no JSON or JSONL files. Every command takes that file, or the APK itself (indexed once into a cache, then reused).</p>
+<p>APK in, SQLite out. <code>sextant extract app.apk</code> writes <code>app.sqlite</code> and nothing else: no folder, no JSON or JSONL files. The file holds every byte of the APK too (<code>file_contents</code>), so <code>smali</code>, <code>source</code>, <code>grep</code>, <code>icon -o</code> and <code>files --save</code> work from it without the APK; <code>--no-content</code> keeps only the dex files' bytes. Every command takes that file, or the APK itself (indexed once into a cache, then reused).</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sextant<span class="w"> </span>extract<span class="w"> </span>app.apk<span class="w">                 </span><span class="c1"># writes ./app.sqlite</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sextant<span class="w"> </span>extract<span class="w"> </span>app.apk<span class="w"> </span>-o<span class="w"> </span>out/app.sqlite<span class="w"> </span>--force
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>sextant<span class="w"> </span>info<span class="w"> </span>app.sqlite
@@ -1450,6 +1450,10 @@
 <tr>
 <td><code>files</code></td>
 <td>every file inside the APK: type, size, CRC-32, SHA-256, content, resource name and the decoder that read it</td>
+</tr>
+<tr>
+<td><code>file_contents</code></td>
+<td>the uncompressed bytes of every file (dex files always; the others unless <code>--no-content</code>), so the file holds the whole APK</td>
 </tr>
 <tr>
 <td><code>links</code>, <code>entities</code></td>

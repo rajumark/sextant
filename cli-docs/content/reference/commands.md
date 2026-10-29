@@ -39,7 +39,7 @@ Commands:
   res         List strings (every locale, plurals, arrays), resource ids, styles and themes, drawables, layouts, menus, navigation graphs, assets and XML configs. References are shown as written and resolved; NAME shows one entry and who uses it.
   sdks        Show SDKs and libraries by role (analytics, ads, crash reporting, auth, database, UI, …) with versions when an artifact proves them. With several apps, show which SDKs appear where and filter apps by SDK, category or version.
   deobf       Look up names in a ProGuard/R8 mapping.txt, both ways: original -> obfuscated for classes, fields and methods. Pass the same file as --mapping to `source` and `grep` to read the code with original names.
-  files       List every file inside the APK: type, size, content, the resource it is (shrunk apps rename res/ files) and which decoder read it.
+  files       List every file inside the APK: type, size, content, the resource it is (shrunk apps rename res/ files) and which decoder read it. --save writes one file out, from the bytes stored in the .sqlite file.
   coverage    Show how much of the APK was decoded into rows: zip entries and bytes per file type, and examples of files that are only listed. Every file is always listed with its size and hash.
   cache       List the indexes Sextant keeps for APKs given directly to a command (one per APK, keyed by its SHA-256), or delete them with --clear. Set SEXTANT_CACHE to move the folder.
   xml         Print any XML file of the APK (manifest, layouts, menus, drawables, colors, animations, …) as stored in SQLite, or find elements across all of them with --tag, --attr and --value.
@@ -58,6 +58,7 @@ Options:
   -o, --out=<path>  Output file (default: ./<apk-name>.sqlite)
   --force           Overwrite the output file if it exists
   -q, --quiet       No progress output
+  --no-content      Store the bytes of the dex files only, not of every file (smaller)
   --no-code         Skip code structure (classes, methods, calls) for a fast manifest-level file
   -h, --help        Show this message and exit
 
@@ -180,7 +181,7 @@ Options:
   -h, --help        Show this message and exit
 
 Arguments:
-  <apk>     The APK (decompiling needs the bytecode)
+  <apk>     An APK or a .sqlite file from extract (its stored dex files are used)
   <target>  Class (com.a.B, Lcom/a/B;) or method (Lcom/a/B;->m(I)V, Lcom/a/B;->m, com.a.B.m)
 ```
 
@@ -202,7 +203,7 @@ Options:
   -h, --help        Show this message and exit
 
 Arguments:
-  <apk>   The APK or split bundle (searching needs the bytecode)
+  <apk>   An APK, split bundle or .sqlite file from extract (its stored dex files are used)
   <text>  Text to find in the code (case-insensitive), or a regular expression with --regex
 ```
 
@@ -333,7 +334,7 @@ Options:
   -h, --help  Show this message and exit
 
 Arguments:
-  <apk>     The APK
+  <apk>     An APK or a .sqlite file from extract (its stored dex files are used)
   <target>  Class (com.a.B, Lcom/a/B;) or method (Lcom/a/B;->m(I)V, Lcom/a/B;->m)
 ```
 
@@ -347,7 +348,7 @@ Usage: sextant icon [<options>] <target>
 Options:
   --round                                     Use android:roundIcon instead of android:icon
   --layer=(foreground|background|monochrome)  For adaptive icons: pick a layer instead of the full icon
-  -o, --out=<path>                            Save the chosen file here (needs the APK)
+  -o, --out=<path>                            Save the chosen file here
   --json                                      All icon data as JSON
   -h, --help                                  Show this message and exit
 
@@ -465,7 +466,7 @@ Arguments:
 ```text
 Usage: sextant files [<options>] <dir>
 
-  List every file inside the APK: type, size, content, the resource it is (shrunk apps rename res/ files) and which decoder read it.
+  List every file inside the APK: type, size, content, the resource it is (shrunk apps rename res/ files) and which decoder read it. --save writes one file out, from the bytes stored in the .sqlite file.
 
 Options:
   --type=(manifest|resource-table|dex|resource|native-library|asset|signature|library-version|kotlin-metadata|service-loader|meta-inf|other)  Only this file type
@@ -474,6 +475,8 @@ Options:
   --by-size                                                                                                                                   Largest files first
   --limit=<int>                                                                                                                               Maximum rows (default 500)
   --json                                                                                                                                      One JSON object per file
+  --save=<text>                                                                                                                               Write this file of the APK (its path, e.g. res/o-.png) to --out instead of listing
+  -o, --out=<path>                                                                                                                            Where --save writes the file
   -h, --help                                                                                                                                  Show this message and exit
 
 Arguments:

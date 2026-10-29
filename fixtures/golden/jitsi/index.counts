@@ -9,6 +9,7 @@ endpoints 82
 features 3
 field_refs 98807
 fields 28190
+file_contents 0
 files 1851
 finding_evidence 9
 findings 7
@@ -32,7 +33,7 @@ resource_ids 5745
 resource_refs 3601
 resource_values 23700
 resources 2031
-schema_docs 312
+schema_docs 315
 sdks 9
 string_refs 28537
 string_resources 17974

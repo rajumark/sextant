@@ -791,6 +791,25 @@ class IndexReader private constructor(
         return rows.distinct()
     }
 
+    /** Every stored file, in path order: its path, whether it was stored (not deflated) in the APK, and its bytes. */
+    fun fileContents(each: (path: String, stored: Boolean, bytes: ByteArray) -> Unit) {
+        if (!hasTable("file_contents")) return
+        conn.createStatement().use { st ->
+            st.executeQuery("SELECT f.path, f.method, c.bytes FROM file_contents c JOIN files f ON f.id = c.file ORDER BY f.path").use { rs ->
+                while (rs.next()) each(rs.getString(1), rs.getString(2) == "stored", rs.getBytes(3))
+            }
+        }
+    }
+
+    /** The bytes of the file at [path] inside the APK, or null when it is not stored. */
+    fun fileContent(path: String): ByteArray? {
+        if (!hasTable("file_contents")) return null
+        return conn.prepareStatement("SELECT c.bytes FROM file_contents c JOIN files f ON f.id = c.file WHERE f.path = ?").use { st ->
+            st.setString(1, path)
+            st.executeQuery().use { rs -> if (rs.next()) rs.getBytes(1) else null }
+        }
+    }
+
     /** One value from the meta table, or null. */
     fun meta(key: String): String? =
         conn.prepareStatement("SELECT value FROM meta WHERE key = ?").use { st ->

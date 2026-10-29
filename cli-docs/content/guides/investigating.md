@@ -117,7 +117,7 @@ sextant source app.apk com.example.Login.auth     # decompiled Java (jadx)
 sextant smali  app.apk 'Lcom/example/Login;->auth' # bytecode assembly (baksmali)
 ```
 
-Both take the **APK**, not the `.sqlite` file. `source` keeps the original (possibly obfuscated) names so they match the index; anonymous and lambda classes that jadx inlines are shown inside their enclosing class. `smali` works even when decompiling fails, and its `#@54` comments are hex code-unit offsets that match the decimal `offsets` in `code/calls.jsonl` (0x54 = 84).
+Both take the APK or the `.sqlite` file: the file stores the dex files, so it is rebuilt into a zip once and cached. `source` keeps the original (possibly obfuscated) names so they match the index; anonymous and lambda classes that jadx inlines are shown inside their enclosing class. `smali` works even when decompiling fails, and its `#@54` comments are hex code-unit offsets that match the decimal `offsets` in `code/calls.jsonl` (0x54 = 84).
 
 ## URLs
 

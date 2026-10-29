@@ -1,6 +1,7 @@
 package io.github.rajumark.sextant.core.index
 
 import io.github.rajumark.sextant.core.AsyncSink
+import io.github.rajumark.sextant.core.Bundles
 import io.github.rajumark.sextant.core.Extraction
 import io.github.rajumark.sextant.core.Extractor
 import io.github.rajumark.sextant.core.SextantException
@@ -13,13 +14,16 @@ import kotlin.io.path.name
 object IndexBuilder {
     /**
      * Builds [target] from [apk]. The file is written under a per-process name and moved into place at the end, so a
-     * crash or a parallel run never leaves a half-built file at [target]. [includeCode] = false skips the code tables.
+     * crash or a parallel run never leaves a half-built file at [target]. [includeCode] = false skips the code tables; [includeContent] = false stores the bytes of the dex files only.
      */
     fun build(
         apk: Path,
         target: Path,
         includeCode: Boolean = true,
+        includeContent: Boolean = true,
     ): Extraction {
+        // Contents come from the APK Sextant reads: for a split bundle, the merged one (cached by Bundles).
+        val contents = IndexWriter.Contents(Bundles.open(apk).apk, includeContent)
         val parent = target.toAbsolutePath().parent
         try {
             Files.createDirectories(parent)
@@ -34,11 +38,11 @@ object IndexBuilder {
                         AsyncSink(index).use { feed ->
                             val extraction = Extractor.extract(apk, feed, listFiles = true)
                             feed.await()
-                            index.finish(extraction)
+                            index.finish(extraction, contents)
                             extraction
                         }
                     } else {
-                        Extractor.extract(apk, null, listFiles = true).also { index.finish(it) }
+                        Extractor.extract(apk, null, listFiles = true).also { index.finish(it, contents) }
                     }
                 }
             try {

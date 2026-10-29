@@ -29,7 +29,7 @@ class IconCommand : CoreCliktCommand(name = "icon") {
         "--layer",
         help = "For adaptive icons: pick a layer instead of the full icon",
     ).choice("foreground", "background", "monochrome")
-    private val out by option("-o", "--out", help = "Save the chosen file here (needs the APK)").path()
+    private val out by option("-o", "--out", help = "Save the chosen file here").path()
     private val json by option("--json", help = "All icon data as JSON").flag()
 
     override fun help(context: Context) =
@@ -96,7 +96,6 @@ class IconCommand : CoreCliktCommand(name = "icon") {
         files: List<IconFile>,
         dest: Path,
     ) {
-        if (!isApk()) throw SextantException.input("-o needs the APK, not a .sqlite file", "run `sextant icon app.apk -o icon.png`")
         val path = best ?: throw SextantException.input("no icon file to save")
         if (files.firstOrNull { it.path == path }?.format == "xml") {
             throw SextantException.input(
@@ -104,9 +103,16 @@ class IconCommand : CoreCliktCommand(name = "icon") {
                 "try --layer foreground, or --round; vector drawables are compiled binary XML",
             )
         }
-        ZipFile(Bundles.open(target).apk.toFile()).use { zip ->
-            val entry = zip.getEntry(path) ?: throw SextantException.input("$path is not in the APK")
-            zip.getInputStream(entry).use { input -> Files.newOutputStream(dest).use { input.copyTo(it) } }
+        if (isApk()) {
+            ZipFile(Bundles.open(target).apk.toFile()).use { zip ->
+                val entry = zip.getEntry(path) ?: throw SextantException.input("$path is not in the APK")
+                zip.getInputStream(entry).use { input -> Files.newOutputStream(dest).use { input.copyTo(it) } }
+            }
+        } else {
+            val bytes =
+                openIndex(target).use { it.fileContent(path) }
+                    ?: throw SextantException.input("$path is not stored in $target (extracted with --no-content?)", "pass the APK instead")
+            Files.write(dest, bytes)
         }
         System.err.println("Saved $path → $dest")
     }

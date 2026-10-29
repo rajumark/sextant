@@ -1,6 +1,6 @@
 # Output: one SQLite file
 
-APK in, SQLite out. `sextant extract app.apk` writes `app.sqlite` and nothing else: no folder, no JSON or JSONL files. Every command takes that file, or the APK itself (indexed once into a cache, then reused).
+APK in, SQLite out. `sextant extract app.apk` writes `app.sqlite` and nothing else: no folder, no JSON or JSONL files. The file holds every byte of the APK too (`file_contents`), so `smali`, `source`, `grep`, `icon -o` and `files --save` work from it without the APK; `--no-content` keeps only the dex files' bytes. Every command takes that file, or the APK itself (indexed once into a cache, then reused).
 
 ```bash
 sextant extract app.apk                 # writes ./app.sqlite
@@ -28,6 +28,7 @@ The file holds everything Sextant reads from the APK, in two forms:
 | `xml_nodes`, `xml_attrs` | every binary XML file (manifest, layouts, menus, drawables, colors, animations, …) node by node and attribute by attribute, with `ref` for values that point at a resource; `sextant xml` prints a file rebuilt from them |
 | `resource_values`, `resource_bag_items` | `resources.arsc` in every configuration: values and file paths, and the items of styles, plurals, arrays and attrs |
 | `files` | every file inside the APK: type, size, CRC-32, SHA-256, content, resource name and the decoder that read it |
+| `file_contents` | the uncompressed bytes of every file (dex files always; the others unless `--no-content`), so the file holds the whole APK |
 | `links`, `entities` | every edge between kinds of things (component → class, layout → resource, method → string, …) with readable keys and evidence; `entities` lists every key with its kind |
 | `records` | full records: manifest tree, permissions, components, features, metadata, queries, resources, insights |
 | `schema_docs` | what every table, view and column means; start here: `SELECT * FROM schema_docs WHERE "table" = 'links'` |

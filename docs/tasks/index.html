@@ -47,6 +47,7 @@
   <li><span class="s done">Implemented</span><span>Mission SQLite step 5: every XML node and attribute. Every binary XML file in the APK (manifest, layouts, menus, drawables, colors, animations, …) stored node by node and attribute by attribute, and every resource value in every configuration, so any view or attribute can be queried</span></li>
   <li><span class="s done">Implemented</span><span>Mission SQLite step 6: entities and links. One <code>links</code> table that connects every kind of thing (app, components, classes, methods, permissions, resources, URLs, native libraries) with readable keys, the last missing links (component → its class, layout → the classes it uses), and a <code>sextant links</code> command to walk them</span></li>
   <li><span class="s done">Implemented</span><span>Mission SQLite step 7: self-describing database. A <code>schema_docs</code> table explains every table and column inside the file itself, and <code>sextant q</code> runs saved, named queries (unused strings, password fields, unprotected components, …)</span></li>
+  <li><span class="s done">Implemented</span><span>Mission SQLite step 8: every byte of the APK in SQLite. The bytes of every file (dex always) stored next to the tables built from them, so no command needs the APK any more: <code>smali</code>, <code>source</code>, <code>grep</code>, <code>icon -o</code> and <code>files --save</code> work from the <code>.sqlite</code> file</span></li>
 </ul>
 </body>
 </html>

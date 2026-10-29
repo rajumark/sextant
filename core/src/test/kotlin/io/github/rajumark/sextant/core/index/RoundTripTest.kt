@@ -21,6 +21,7 @@ import kotlinx.serialization.builtins.nullable
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import java.nio.file.Files
+import java.util.zip.ZipFile
 
 /** APK in, SQLite out: everything the extractor built must come back unchanged from the .sqlite file alone. */
 class RoundTripTest {
@@ -30,7 +31,8 @@ class RoundTripTest {
         val dir = Files.createTempDirectory("sextant-roundtrip")
         val file = dir.resolve("$id.sqlite")
         try {
-            val written = IndexBuilder.build(CorpusApks.require(id), file)
+            val apk = CorpusApks.require(id)
+            val written = IndexBuilder.build(apk, file)
             IndexReader.open(file).use { index ->
                 val read = index.extraction()
                 for ((part, json) in PARTS) withClue("$id $part") { json(read) shouldBe json(written) }
@@ -43,6 +45,23 @@ class RoundTripTest {
                     }
                 }
                 index.query("SELECT count(*) FROM resource_values").rows[0][0] shouldBe written.raw.resourceTable.size
+            }
+            // Every byte: the APK rebuilt from file_contents has every entry of the original, with the same bytes.
+            ZipFile(apk.toFile()).use { original ->
+                ZipFile(ApkRestore.restore(file).toFile()).use { restored ->
+                    for (entry in original.entries().asSequence().filterNot { it.isDirectory }) {
+                        withClue("$id ${entry.name}") {
+                            val copy = restored.getEntry(entry.name)
+                            (copy != null) shouldBe true
+                            restored
+                                .getInputStream(
+                                    copy,
+                                ).use { it.readBytes() }
+                                .contentEquals(original.getInputStream(entry).use { it.readBytes() }) shouldBe
+                                true
+                        }
+                    }
+                }
             }
         } finally {
             Files.deleteIfExists(file)

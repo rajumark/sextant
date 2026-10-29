@@ -445,6 +445,27 @@ class CliEndToEndTest {
     }
 
     @Test
+    fun `the SQLite file holds every byte, so code commands, icon -o and files --save need no APK`() {
+        val file = extracted("binaryeye")
+        val smali = sextant("smali", file, "Lde/markusfisch/android/binaryeye/activity/PickActivity;->onCreate")
+        smali.exitCode shouldBe 0
+        smali.stdout shouldContain ".method public final onCreate(Landroid/os/Bundle;)V"
+        sextant("source", file, "de.markusfisch.android.binaryeye.activity.PickActivity").stdout shouldContain "class PickActivity"
+        val png = tmp.resolve("icon.png")
+        sextant("icon", file, "-o", png.toString()).exitCode shouldBe 0
+        Files.readAllBytes(png).take(4) shouldBe listOf(0x89.toByte(), 'P'.code.toByte(), 'N'.code.toByte(), 'G'.code.toByte())
+        val csv = tmp.resolve("cc.csv")
+        sextant("files", file, "--save", "countrycodes.csv", "-o", csv.toString()).exitCode shouldBe 0
+        Files.readString(csv) shouldContain "Afghanistan"
+
+        val slim = tmp.resolve("slim.sqlite")
+        sextant("extract", "-q", "--no-content", apk("binaryeye"), "-o", slim.toString()).exitCode shouldBe 0
+        (Files.size(slim) < Files.size(Paths.get(file))) shouldBe true
+        sextant("smali", slim.toString(), "Lde/markusfisch/android/binaryeye/activity/PickActivity;->onCreate").exitCode shouldBe 0
+        sextant("icon", slim.toString(), "-o", tmp.resolve("no.png").toString()).stderr shouldContain "--no-content"
+    }
+
+    @Test
     fun `extract stores insights and resources in the SQLite file`() {
         val file = extracted("binaryeye")
         for (table in listOf("libraries", "sdks", "endpoints", "resources", "string_resources", "layouts")) {

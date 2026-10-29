@@ -6,6 +6,7 @@ import io.github.rajumark.sextant.core.ProguardMapping
 import io.github.rajumark.sextant.core.SextantException
 import io.github.rajumark.sextant.core.SmaliPrinter
 import io.github.rajumark.sextant.core.SourceDecompiler
+import io.github.rajumark.sextant.core.index.ApkRestore
 import io.github.rajumark.sextant.core.index.CallTreeText
 import io.github.rajumark.sextant.core.index.ClassReport
 import io.github.rajumark.sextant.core.index.Direction
@@ -21,6 +22,7 @@ import io.github.rajumark.sextant.core.output.SummaryWriter
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
+import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -44,6 +46,18 @@ class SextantTools(
     private fun folder(args: JsonObject): Path {
         val d = args.string("dir")?.let { Paths.get(it) } ?: dir
         return d ?: throw SextantException.input("no index yet", "call `extract` with an APK path first, or pass `dir`")
+    }
+
+    /** The APK for code tools: `apk`, the session APK, or one rebuilt from the session's .sqlite file. */
+    private fun apkPath(args: JsonObject): Path {
+        args.string("apk")?.let { return Paths.get(it) }
+        apk?.let { return it }
+        val d = args.string("dir")?.let { Paths.get(it) } ?: dir
+        return when {
+            d == null -> throw SextantException.input("no APK in this session", "pass `apk`, or call `extract` first")
+            Files.isRegularFile(d) && !d.toString().endsWith(".sqlite") -> d
+            else -> ApkRestore.restore(d)
+        }
     }
 
     private fun <T> index(
@@ -155,8 +169,7 @@ class SextantTools(
                 ),
             ) { args ->
                 val apkPath =
-                    args.string("apk")?.let { Paths.get(it) } ?: apk
-                        ?: throw SextantException.input("no APK in this session", "pass `apk`, or call `extract` first")
+                    apkPath(args)
                 SourceDecompiler
                     .decompile(
                         apkPath,
@@ -178,8 +191,7 @@ class SextantTools(
                 ),
             ) { args ->
                 val apkPath =
-                    args.string("apk")?.let { Paths.get(it) } ?: apk
-                        ?: throw SextantException.input("no APK in this session", "pass `apk`, or call `extract` first")
+                    apkPath(args)
                 val text = args.string("text")!!
                 val pattern =
                     if (args.bool("regex")) Regex(text, RegexOption.IGNORE_CASE) else Regex(Regex.escape(text), RegexOption.IGNORE_CASE)
@@ -324,8 +336,7 @@ class SextantTools(
                 ),
             ) { args ->
                 val apkPath =
-                    args.string("apk")?.let { Paths.get(it) } ?: apk
-                        ?: throw SextantException.input("no APK in this session", "pass `apk`, or call `extract` first")
+                    apkPath(args)
                 SmaliPrinter.print(apkPath, args.string("target")!!)
             },
             McpTool(
@@ -335,8 +346,7 @@ class SextantTools(
                 listOf(Param("apk", "string", "APK path (defaults to the session APK)")),
             ) { args ->
                 val apkPath =
-                    args.string("apk")?.let { Paths.get(it) } ?: apk
-                        ?: throw SextantException.input("no APK in this session", "pass `apk`, or call `extract` first")
+                    apkPath(args)
                 SextantJson.compact.encodeToString(AppIcons.serializer(), Extractor.icons(apkPath))
             },
             McpTool(

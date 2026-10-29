@@ -7,7 +7,7 @@ or external) has one row in `methods`; edges point at integer ids, and the views
 and `search_items` give the readable, descriptor-based form. JSON arrays are stored as TEXT; use SQLite's
 `json_each` to expand them. Query it with `sextant sql <dir> "…"` (read-only) or any SQLite tool.
 
-Schema version: **12**
+Schema version: **13**
 (stored in `meta` as `index_schema_version`).
 
 ```sql
@@ -431,6 +431,13 @@ CREATE TABLE records (
   kind TEXT NOT NULL,
   seq  INTEGER NOT NULL,
   json TEXT NOT NULL
+);
+
+-- File contents (index schema 13): the uncompressed bytes of every file in the APK (dex files always; the others
+-- unless extracted with --no-content), so the .sqlite file holds the whole APK and no command needs the APK itself.
+CREATE TABLE file_contents (
+  file  INTEGER PRIMARY KEY,      -- files.id
+  bytes BLOB NOT NULL
 );
 
 -- Launcher icon files: role is icon | round_icon, or <role>.background/.foreground/.monochrome for adaptive layers.
