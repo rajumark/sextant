@@ -1234,6 +1234,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#files-that-are-stored-but-not-parsed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Files that are stored but not parsed
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1348,6 +1359,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#files-that-are-stored-but-not-parsed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Files that are stored but not parsed
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1390,6 +1412,13 @@
 <p><a href="../../reference/findings/">Review findings</a> are hints for a human or an agent to check. They aren't proven vulnerabilities and they don't replace a dynamic test. Expect false positives (e.g. a weak hash used for a cache key) and false negatives (anything reached via reflection).</p>
 <h2 id="size">Size<a class="headerlink" href="#size" title="Permanent link">&para;</a></h2>
 <p>The SQLite file of a very large app can be several hundred MB, mostly code tables and the full-text index. Use <code>--no-code</code> for manifest-only work.</p>
+<h2 id="files-that-are-stored-but-not-parsed">Files that are stored but not parsed<a class="headerlink" href="#files-that-are-stored-but-not-parsed" title="Permanent link">&para;</a></h2>
+<p>Every file's bytes, size and hash are in the <code>.sqlite</code> file, and almost every file is also decoded into rows (<code>sextant coverage</code> shows the share per type). A few kinds are deliberately left as bytes only:</p>
+<ul>
+<li><strong>ART baseline profiles</strong> (<code>assets/dexopt/baseline.prof</code> and <code>.profm</code>): the binary format changes between Android versions, and a wrong parse would be worse than none.</li>
+<li><strong><code>kotlin/*.kotlin_builtins</code></strong>: Kotlin standard-library metadata, identical in every Kotlin app.</li>
+<li><strong>Audio, video and compressed data blobs</strong> (for example <code>.ogg</code> files or BouncyCastle's packed <code>.properties</code>): only listed.</li>
+</ul>
 
 
 

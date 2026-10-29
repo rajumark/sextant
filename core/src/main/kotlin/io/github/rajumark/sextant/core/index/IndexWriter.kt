@@ -553,6 +553,39 @@ class IndexWriter(
         }
     }
 
+    private fun insertMedia(extraction: Extraction) {
+        val fileIds = extraction.files.withIndex().associate { (i, f) -> f.path to i + 1L }
+
+        fun PreparedStatement.file(
+            i: Int,
+            path: String,
+        ) = fileIds[path]?.let { setLong(i, it) } ?: setNull(i, java.sql.Types.INTEGER)
+        conn.prepareStatement("INSERT INTO images VALUES (?,?,?,?,?)").use { st ->
+            for (img in extraction.raw.images) {
+                st.setString(1, img.path)
+                st.file(2, img.path)
+                st.setString(3, img.format)
+                img.width?.let { st.setInt(4, it) } ?: st.setNull(4, java.sql.Types.INTEGER)
+                img.height?.let { st.setInt(5, it) } ?: st.setNull(5, java.sql.Types.INTEGER)
+                st.addBatch()
+            }
+            st.executeBatch()
+        }
+        conn.prepareStatement("INSERT INTO fonts VALUES (?,?,?,?,?,?,?)").use { st ->
+            for (f in extraction.raw.fonts) {
+                st.setString(1, f.path)
+                st.file(2, f.path)
+                st.setString(3, f.family)
+                st.setString(4, f.subfamily)
+                st.setString(5, f.fullName)
+                st.setString(6, f.version)
+                st.setString(7, f.postscriptName)
+                st.addBatch()
+            }
+            st.executeBatch()
+        }
+    }
+
     private fun insertSigning(d: SigningDetail) {
         conn.prepareStatement("INSERT INTO signing_signers VALUES (?,?,?,?,?,?)").use { st ->
             for (s in d.signers) {
@@ -780,6 +813,7 @@ class IndexWriter(
         insertElf(extraction)
         insertText(extraction)
         insertSigning(extraction.raw.signing)
+        insertMedia(extraction)
         conn.prepareStatement("INSERT INTO resource_values VALUES (?,?,?,?,?,?)").use { values ->
             conn.prepareStatement("INSERT INTO resource_bag_items VALUES (?,?,?,?,?)").use { items ->
                 for (r in extraction.raw.resourceTable) {

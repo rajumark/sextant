@@ -6,7 +6,7 @@ package io.github.rajumark.sextant.core.index
  * The views give the readable, descriptor-based form.
  */
 object IndexSchema {
-    const val VERSION = 17
+    const val VERSION = 18
 
     val DDL =
         """
@@ -544,6 +544,25 @@ object IndexSchema {
                  (SELECT value FROM annotation_values v WHERE v.annotation = a.id AND v.name = 'k') AS kind,
                  (SELECT value FROM annotation_values v WHERE v.annotation = a.id AND v.name = 'mv') AS version
           FROM annotations a WHERE a.type = 'Lkotlin/Metadata' || char(59) AND a.target_kind = 'class';  -- char(59) is ';', which the statement splitter would cut on
+
+        -- Every image file in the APK (index schema 18), anywhere, not only drawables: format and pixel size from its header.
+        CREATE TABLE images (
+          path   TEXT PRIMARY KEY,
+          file   INTEGER,                 -- files.id
+          format TEXT NOT NULL,           -- png | webp | jpeg | gif
+          width  INTEGER,                 -- NULL when the header is cut or unusual
+          height INTEGER
+        );
+        -- Every TrueType / OpenType font, with the names from its name table.
+        CREATE TABLE fonts (
+          path            TEXT PRIMARY KEY,
+          file            INTEGER,        -- files.id
+          family          TEXT,
+          subfamily       TEXT,           -- Regular, Bold Italic, …
+          full_name       TEXT,
+          version         TEXT,
+          postscript_name TEXT
+        );
 
         -- Signing as rows (index schema 16): every signer of every scheme as apksig reports it.
         CREATE TABLE signing_signers (

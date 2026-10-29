@@ -28,8 +28,10 @@ file_text_search_idx 39
 files 600
 finding_evidence 6
 findings 6
+fonts 11
 frameworks 1
 icons 16
+images 196
 layouts 65
 libraries 62
 links 5706
@@ -50,7 +52,7 @@ resource_ids 3078
 resource_refs 1642
 resource_values 7214
 resources 572
-schema_docs 430
+schema_docs 444
 sdks 3
 services 2
 signing_certificates 1

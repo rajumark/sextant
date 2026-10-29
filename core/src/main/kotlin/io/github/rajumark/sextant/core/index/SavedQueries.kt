@@ -46,6 +46,8 @@ object SavedQueries {
             "kotlin-classes",
             "annotated",
             "broad-catches",
+            "fonts",
+            "largest-images",
             "biggest-packages",
             "undecoded-files",
         )

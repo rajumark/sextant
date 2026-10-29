@@ -25,3 +25,11 @@ Sextant is a **static** analyzer. It reads what is in the APK; it never runs it.
 ## Size
 
 The SQLite file of a very large app can be several hundred MB, mostly code tables and the full-text index. Use `--no-code` for manifest-only work.
+
+## Files that are stored but not parsed
+
+Every file's bytes, size and hash are in the `.sqlite` file, and almost every file is also decoded into rows (`sextant coverage` shows the share per type). A few kinds are deliberately left as bytes only:
+
+- **ART baseline profiles** (`assets/dexopt/baseline.prof` and `.profm`): the binary format changes between Android versions, and a wrong parse would be worse than none.
+- **`kotlin/*.kotlin_builtins`**: Kotlin standard-library metadata, identical in every Kotlin app.
+- **Audio, video and compressed data blobs** (for example `.ogg` files or BouncyCastle's packed `.properties`): only listed.

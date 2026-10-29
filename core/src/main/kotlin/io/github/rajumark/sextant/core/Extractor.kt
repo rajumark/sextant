@@ -133,12 +133,16 @@ object Extractor {
                                 elf = RawElf.read(it, listed, warnings),
                                 text = TextFiles.read(it, listed),
                                 signing = signingDetail,
+                                images = MediaFiles.images(it, listed),
+                                fonts = MediaFiles.fonts(it, listed),
                             )
                         }
                     val decoders = ApkFiles.decoders(codeStats, decoded.table.isNotEmpty(), signing, resources, insights)
                     raw.xml.forEach { decoders.putIfAbsent(it.path, "xml") }
                     raw.elf.forEach { decoders.putIfAbsent(it.path, "native") }
                     raw.text.forEach { decoders.putIfAbsent(it.path, "text") }
+                    raw.images.forEach { decoders.putIfAbsent(it.path, "images") }
+                    raw.fonts.forEach { decoders.putIfAbsent(it.path, "fonts") }
                     ApkFiles.markDecoded(listed, decoders, signing)
                 } catch (e: Exception) {
                     warnings += "zip entries could not be listed (${e.javaClass.simpleName}: ${e.message})"

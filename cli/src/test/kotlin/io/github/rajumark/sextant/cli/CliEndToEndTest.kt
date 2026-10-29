@@ -550,6 +550,17 @@ class CliEndToEndTest {
     }
 
     @Test
+    fun `every image and font is a row, with sizes that match the drawables`() {
+        val file = extracted("binaryeye")
+        sextant("sql", file, "SELECT count(*) AS n FROM images WHERE width IS NULL").stdout.lines()[2].trim() shouldBe "0"
+        val mismatches =
+            "SELECT count(*) FROM images i JOIN drawables d ON d.path = i.path WHERE d.width IS NOT NULL AND (d.width != i.width OR d.height != i.height)"
+        sextant("sql", file, mismatches).stdout.lines()[2].trim() shouldBe "0"
+        sextant("q", "largest-images", file, "--limit", "1").stdout shouldContain "png"
+        sextant("q", "fonts", file).exitCode shouldBe 0
+    }
+
+    @Test
     fun `extract stores insights and resources in the SQLite file`() {
         val file = extracted("binaryeye")
         for (table in listOf("libraries", "sdks", "endpoints", "resources", "string_resources", "layouts")) {
