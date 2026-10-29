@@ -73,6 +73,7 @@ sextant smali   <app.apk> <class | method>
 sextant icon    <app.apk | app.sqlite> [--round] [--layer foreground|background|monochrome] [-o file] [--json]
 sextant xml     <app.apk | app.sqlite> [<file | @resource>] [--tag TAG] [--attr NAME] [--value TEXT] [--limit N] [--json]
 sextant links   <app.apk | app.sqlite> <thing> [--depth N] [--rel REL] [--limit N] [--json]
+sextant q       [<query> [<app.apk | app.sqlite>]] [--arg NAME=VALUE] [--json | --csv] [--limit N]
 sextant files   <app.apk | app.sqlite> [--type TYPE] [--status decoded|listed] [--search TEXT] [--by-size] [--limit N] [--json]
 sextant coverage <app.apk | app.sqlite> [--json]
 sextant cache   [--clear] [--json]
@@ -100,6 +101,7 @@ Every command takes either the `.sqlite` file from `extract` or the APK itself. 
 | `icon` | Finds the app icon. It lists every file behind `android:icon` (or `--round` for `android:roundIcon`) per density, with format, pixel size and byte size, decodes adaptive icons into their foreground, background and monochrome layers, marks the best file, and `-o` saves it. It works on an APK directly (from the cache when indexed, else manifest and resources only) or on a `.sqlite` file. |
 | `xml` | Prints any XML file of the APK (manifest, layouts, menus, drawables, colors, animations, …) rebuilt from the `xml_nodes` and `xml_attrs` tables, by path (`res/BW.xml`) or resource (`@layout/main`, every configuration). With `--tag`, `--attr` and `--value` it finds elements across all files instead: `--tag EditText --attr android:inputType --value Password` lists every password field. `--tag` also matches class names that end in it (`TextInputEditText`). |
 | `links` | Shows what anything links to and what links to it, across kinds: `sextant links app.apk .MainActivity` gives the component's class, permissions, deep links and resources; `--depth 2` continues into the class's superclass and methods. A resource shows the files and methods that use it (`@string/app_name`), a menu shows the code that inflates it. The thing can be a key (`@string/x`, `class:L…;`, `method:…`, `permission:…`, `url:…`) or a component, class or permission name. |
+| `q` | Runs a saved query for a common question: `unused-strings`, `untranslated-strings`, `string-users` (`--arg name=app_name`), `password-fields`, `activity-layouts`, `exported-components`, `dangerous-permissions`, `webviews`, `hosts`, `jni-methods`, `biggest-packages`, `undecoded-files`. `sextant q` lists them with what each answers; `sextant q <query>` prints its SQL to adapt. |
 | `files` | Lists every file inside the APK from the index: type, size, content (dex, elf, png, binary-xml, json, …), the resource it is (shrunk apps rename `res/` files, so `res/BW.xml` shows as `@mipmap/ic_launcher`) and the decoder that read it. `--status listed` shows files no decoder reads yet; `--by-size` puts the largest first. |
 | `coverage` | Shows how much of the APK was decoded into rows: files and bytes per type, and the largest files that are only listed (size and hash). Every zip entry is always listed. |
 | `cache` | Lists the indexes built for APKs given directly to a command (app, version, size, state), or deletes them with `--clear`. |
@@ -139,6 +141,7 @@ Progress and errors go to **stderr**, data goes to **stdout**, so `--json` outpu
 | `files` | every file inside the APK: type, size, hashes, content, resource name and the decoder that read it |
 | `links`, `entities` | every edge between kinds of things (component → class, layout → resource, method → string, …) with readable keys and evidence; `entities` lists every key with its kind |
 | `records` | full records (manifest tree, permissions, components, resources, insights) |
+| `schema_docs` | what every table, view and column means; start here: `SELECT * FROM schema_docs WHERE "table" = 'links'` |
 | `search` | FTS5 trigram index over names, strings, resources, endpoints, SDKs, libraries and native symbols |
 
 Rules for the output:

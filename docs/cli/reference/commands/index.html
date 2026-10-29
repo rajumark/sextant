@@ -1274,6 +1274,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#q" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        q
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1898,6 +1909,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#q" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        q
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1961,6 +1983,7 @@
 <a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>  cache       List the indexes Sextant keeps for APKs given directly to a command (one per APK, keyed by its SHA-256), or delete them with --clear. Set SEXTANT_CACHE to move the folder.
 <a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>  xml         Print any XML file of the APK (manifest, layouts, menus, drawables, colors, animations, …) as stored in SQLite, or find elements across all of them with --tag, --attr and --value.
 <a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>  links       Show what anything links to and what links to it, across kinds: the app, components, classes, methods, permissions, resources, URLs and native libraries. --depth follows the outgoing links further.
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>  q           Run a saved query for a common question (unused strings, password fields, exported components, …). Without a name, list them; without an app, print the query's SQL.
 </code></pre></div>
 <h2 id="extract">extract<a class="headerlink" href="#extract" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Usage: sextant extract [&lt;options&gt;] &lt;apk&gt;
@@ -2374,6 +2397,21 @@
 <a id="__codelineno-29-12" name="__codelineno-29-12" href="#__codelineno-29-12"></a>Arguments:
 <a id="__codelineno-29-13" name="__codelineno-29-13" href="#__codelineno-29-13"></a>  &lt;target&gt;  An APK (indexed once, then cached) or a .sqlite file from sextant extract
 <a id="__codelineno-29-14" name="__codelineno-29-14" href="#__codelineno-29-14"></a>  &lt;thing&gt;   A key (component:…, class:L…;, method:…, @string/x, permission:…, url:…) or a component, class or permission name
+</code></pre></div>
+<h2 id="q">q<a class="headerlink" href="#q" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>Usage: sextant q [&lt;options&gt;] [&lt;name&gt;] [&lt;target&gt;]
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>  Run a saved query for a common question (unused strings, password fields, exported components, …). Without a name, list them; without an app, print the query's SQL.
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>Options:
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>  --arg=&lt;text&gt;   A parameter, NAME=VALUE (e.g. --arg name=app_name)
+<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>  --json, --csv  Output format
+<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>  --limit=&lt;int&gt;  Maximum rows to print (default 1000, 0 = no limit)
+<a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a>  -h, --help     Show this message and exit
+<a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a>
+<a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a>Arguments:
+<a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a>  &lt;name&gt;    The saved query; leave out to list them
+<a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a>  &lt;target&gt;  An APK (indexed once, then cached) or a .sqlite file from sextant extract
 </code></pre></div>
 
 

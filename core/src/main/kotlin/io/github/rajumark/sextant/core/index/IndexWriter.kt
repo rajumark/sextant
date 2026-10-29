@@ -379,6 +379,16 @@ class IndexWriter(
         insertFiles(extraction.files)
         insertRaw(extraction)
         Records.write(conn, extraction)
+        conn.prepareStatement("INSERT INTO schema_docs VALUES (?,?,?,?)").use { st ->
+            for (d in SchemaDocs.ALL) {
+                st.setString(1, d.table)
+                st.setString(2, d.column)
+                st.setString(3, d.type)
+                st.setString(4, d.description)
+                st.addBatch()
+            }
+            st.executeBatch()
+        }
         conn.prepareStatement("INSERT INTO features VALUES (?,?,?,?)").use { st ->
             for (f in extraction.features) {
                 st.setString(1, f.kind)

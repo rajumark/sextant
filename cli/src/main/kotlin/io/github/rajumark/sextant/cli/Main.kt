@@ -98,6 +98,7 @@ fun main(args: Array<String>) {
             CacheCommand(),
             XmlCommand(),
             LinksCommand(),
+            QCommand(),
         )
     try {
         command.parse(args)

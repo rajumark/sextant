@@ -67,6 +67,8 @@ The SQLite file itself is agent-friendly:
     sextant find app.apk api.example.com --json
     sextant callers app.apk "Lcom/example/Login;->auth" --json
     sextant links app.apk .LoginActivity --json   # class, permissions, resources, deep links of a screen
+    sextant sql app.apk "SELECT * FROM schema_docs" --json   # what every table and column means
+    sextant q unused-strings app.apk --json        # saved queries; `sextant q` lists them
     ```
 
 3. **Use `--json`** on `info`, `find`, `class`, `sql`, `callers`, `callees`, `reach`, `xref`, `insights`, `endpoints`, `findings`, `diff` and `icon` for machine-readable output on stdout. Progress and errors always go to stderr, so piping is safe.

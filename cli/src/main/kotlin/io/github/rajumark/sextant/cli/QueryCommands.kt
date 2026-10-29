@@ -43,27 +43,41 @@ class SqlCommand : CoreCliktCommand(name = "sql") {
                     return@use
                 }
                 val sql = query ?: throw SextantException(ExitCode.USAGE, "missing SQL query", "or pass --schema")
-                val result = index.query(sql, if (limit <= 0) Int.MAX_VALUE else limit)
-                when (format) {
-                    "json" -> result.rows.forEach { println(SqlJson.row(result.columns, it)) }
-                    "csv" -> printCsv(result)
-                    else -> print(Table.render(result.columns, result.rows.map { row -> row.map(::cell) }))
-                }
-                val note = if (result.truncated) " (stopped at --limit $limit)" else ""
-                System.err.println("${result.rows.size} row${if (result.rows.size == 1) "" else "s"}$note")
+                printResult(index.query(sql, if (limit <= 0) Int.MAX_VALUE else limit), format, limit)
             }
         }
+}
 
-    private fun printCsv(result: QueryResult) {
-        fun esc(v: Any?): String {
-            val s = v?.toString() ?: ""
-            return if (s.any { it == ',' || it == '"' || it == '\n' || it == '\r' }) "\"" + s.replace("\"", "\"\"") + "\"" else s
+/** Prints a query result as a table (default), JSON lines or CSV, and the row count on stderr. Shared by `sql` and `q`. */
+internal fun printResult(
+    result: QueryResult,
+    format: String,
+    limit: Int,
+) {
+    when (format) {
+        "json" -> result.rows.forEach { println(SqlJson.row(result.columns, it)) }
+        "csv" -> {
+            fun esc(v: Any?): String {
+                val s = v?.toString() ?: ""
+                return if (s.any { it == ',' || it == '"' || it == '\n' || it == '\r' }) "\"" + s.replace("\"", "\"\"") + "\"" else s
+            }
+            println(result.columns.joinToString(",") { esc(it) })
+            result.rows.forEach { row -> println(row.joinToString(",") { esc(it) }) }
         }
-        println(result.columns.joinToString(",") { esc(it) })
-        result.rows.forEach { row -> println(row.joinToString(",") { esc(it) }) }
+        else ->
+            if (result.rows.isNotEmpty()) {
+                print(
+                    Table.render(
+                        result.columns,
+                        result.rows.map { row ->
+                            row.map { it?.toString() ?: "NULL" }
+                        },
+                    ),
+                )
+            }
     }
-
-    private fun cell(v: Any?) = v?.toString() ?: "NULL"
+    val note = if (result.truncated) " (stopped at --limit $limit)" else ""
+    System.err.println("${result.rows.size} row${if (result.rows.size == 1) "" else "s"}$note")
 }
 
 /** `sextant find <dir> <text>`: substring search over every name and string constant. */

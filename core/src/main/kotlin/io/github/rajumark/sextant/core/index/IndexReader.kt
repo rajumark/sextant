@@ -152,14 +152,18 @@ class IndexReader private constructor(
             Files.newInputStream(file).use { input -> String(input.readNBytes(16), Charsets.ISO_8859_1) == "SQLite format 3\u0000" }
     }
 
-    /** Runs any read-only SQL. At most [limit] rows are returned. */
+    /** Runs any read-only SQL. At most [limit] rows are returned. [params] bind, in order, SQLite's numbered and named parameters. */
     fun query(
         sql: String,
         limit: Int = Int.MAX_VALUE,
+        params: List<String> = emptyList(),
     ): QueryResult =
         try {
-            conn.createStatement().use { st ->
-                st.executeQuery(sql).use { rs ->
+            conn.prepareStatement(sql).use { st ->
+                params.forEachIndexed { i, p -> st.setString(i + 1, p) }
+                // execute(), not executeQuery(): a write then reaches SQLite and fails as "readonly", the real reason.
+                if (!st.execute()) return@use QueryResult(emptyList(), emptyList(), false)
+                st.resultSet.use { rs ->
                     val meta = rs.metaData
                     val columns = (1..meta.columnCount).map { meta.getColumnLabel(it) }
                     val rows = mutableListOf<List<Any?>>()

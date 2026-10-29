@@ -423,6 +423,28 @@ class CliEndToEndTest {
     }
 
     @Test
+    fun `q lists and runs saved queries, and the file documents itself`() {
+        val file = extracted("binaryeye")
+        val list = sextant("q")
+        list.exitCode shouldBe 0
+        list.stdout shouldContain "unused-strings"
+        list.stdout shouldContain "password-fields"
+        sextant("q", "hosts").stdout shouldContain "SELECT"
+        val hosts = sextant("q", "hosts", file, "--json")
+        hosts.exitCode shouldBe 0
+        hosts.stdout shouldContain "markusfisch.de"
+        sextant("q", "string-users", file).exitCode shouldBe 1
+        sextant("q", "string-users", file, "--arg", "name=pick_file").stdout shouldContain "@menu/fragment_encode"
+        sextant("q", "no-such-query").exitCode shouldBe 1
+        sextant(
+            "sql",
+            file,
+            "SELECT description FROM schema_docs WHERE \"table\" = 'files' AND \"column\" = 'decoded_by'",
+        ).stdout shouldContain
+            "manifest"
+    }
+
+    @Test
     fun `extract stores insights and resources in the SQLite file`() {
         val file = extracted("binaryeye")
         for (table in listOf("libraries", "sdks", "endpoints", "resources", "string_resources", "layouts")) {

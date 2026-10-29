@@ -38,7 +38,7 @@ class SextantTools(
         Then read `summary` first. Use `find` for any text (names, strings, URLs, resources, SDKs, native symbols),
         `class` for one class, `callers`/`callees` to follow the call graph, `reach` for paths from an entry point to a target, `xref` for class/field uses, `insights` for frameworks/SDKs/libraries,
         `endpoints` for URLs with their sources, `findings` for review points, `links` for what anything connects to (component → class → resources, string → the methods that show it), `source` for decompiled Java, `smali` for bytecode, and `sql` for anything else
-        (call `sql` with query "schema" to see all tables). IDs are smali descriptors like Lcom/a/B;->m(I)V.
+        (`SELECT * FROM schema_docs` explains every table and column; query "schema" gives the CREATE statements). IDs are smali descriptors like Lcom/a/B;->m(I)V.
         """.trimIndent()
 
     private fun folder(args: JsonObject): Path {
@@ -243,7 +243,10 @@ class SextantTools(
                                 .entries
                                 .joinToString("\n") { (group, rows) ->
                                     val arrow = if (group.first == "out") "→" else "←"
-                                    rows.take(limit).joinToString("\n") { r -> "  $arrow ${r.rel} ${r.other}" + (r.via?.let { " ($it)" } ?: "") } +
+                                    rows.take(limit).joinToString("\n") { r ->
+                                        "  $arrow ${r.rel} ${r.other}" +
+                                            (r.via?.let { " ($it)" } ?: "")
+                                    } +
                                         if (rows.size > limit) "\n  … ${rows.size - limit} more ${group.second}" else ""
                                 }.ifEmpty { "  (no links)" }
                     }

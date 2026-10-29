@@ -2,6 +2,25 @@
 
 Everything Sextant knows is in one SQLite file, available two ways: **SQL** over that file (with `sextant sql` or any SQLite tool) and **`--json` output** from commands.
 
+## Saved queries
+
+`sextant q` answers common questions without writing SQL. `sextant q` lists the queries, `sextant q <query>` prints the SQL so you can adapt it, and `sextant q <query> app.apk` runs it (`--json`, `--csv`, `--limit` as for `sql`):
+
+```bash
+sextant q unused-strings app.apk
+sextant q password-fields app.apk
+sextant q string-users app.apk --arg name=app_name
+sextant q hosts app.apk --csv > hosts.csv
+```
+
+## What the tables mean
+
+Every file explains itself: `schema_docs` has one row per table and view and one per column, with a description.
+
+```bash
+sextant sql app.apk "SELECT \"column\", type, description FROM schema_docs WHERE \"table\" = 'files'"
+```
+
 ## SQL
 
 `sextant sql` runs read-only SQL over the app's SQLite file. Output is a table by default, `--json` (one object per line) or `--csv`; it stops at 1000 rows unless you pass `--limit` (0 = no limit). `sextant sql app.sqlite --schema` prints every table and view, and the full schema is also in [SQLite index schema](../reference/index-schema.md).

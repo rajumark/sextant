@@ -6,15 +6,17 @@ package io.github.rajumark.sextant.core.index
  * The views give the readable, descriptor-based form.
  */
 object IndexSchema {
-    const val VERSION = 11
+    const val VERSION = 12
 
     val DDL =
         """
+        -- Key/value facts about the app and the index: package, version_name, version_code, min_sdk, target_sdk, label, sha256, index_schema_version, and meta_json (the full app metadata: signing, flags, icons, counts, warnings).
         CREATE TABLE meta (
           key   TEXT PRIMARY KEY,
           value TEXT
         );
 
+        -- Permissions the app requests (uses-permission, uses-permission-sdk-23), gets implicitly (implied) or defines (declared).
         CREATE TABLE permissions (
           name             TEXT NOT NULL,
           kind             TEXT NOT NULL,   -- uses-permission | uses-permission-sdk-23 | implied | declared
@@ -25,6 +27,7 @@ object IndexSchema {
           implied_by       TEXT
         );
 
+        -- Activities, activity aliases, services, receivers and providers from the manifest, with exported state, permissions, intent filters and review tags.
         CREATE TABLE components (
           type            TEXT NOT NULL,    -- activity | activity-alias | service | receiver | provider
           name            TEXT NOT NULL,
@@ -60,12 +63,14 @@ object IndexSchema {
           item    TEXT,                     -- plural quantity or array index
           value   TEXT NOT NULL
         );
+        -- Every resource id in resources.arsc with its type, name and the configurations it exists in.
         CREATE TABLE resource_ids (
           id      TEXT NOT NULL,            -- 0x7f0e001c
           type    TEXT NOT NULL,
           name    TEXT NOT NULL,
           configs TEXT NOT NULL             -- JSON array
         );
+        -- Styles and themes with their parent and items (raw and resolved), and which components use them as a theme.
         CREATE TABLE styles (
           name     TEXT NOT NULL,
           config   TEXT NOT NULL,
@@ -73,6 +78,7 @@ object IndexSchema {
           items    TEXT NOT NULL,           -- JSON array of {name, raw, resolved}
           used_by  TEXT NOT NULL            -- JSON array: application / activity names using it as theme
         );
+        -- Drawable and mipmap files: path inside the APK, format, size in bytes and pixel size.
         CREATE TABLE drawables (
           type    TEXT NOT NULL,            -- drawable | mipmap
           name    TEXT NOT NULL,
@@ -83,6 +89,7 @@ object IndexSchema {
           width   INTEGER,
           height  INTEGER
         );
+        -- Layout files: root view, number of views, ids, custom views, fragments and includes.
         CREATE TABLE layouts (
           name         TEXT NOT NULL,
           config       TEXT NOT NULL,
@@ -94,6 +101,7 @@ object IndexSchema {
           fragments    TEXT NOT NULL,       -- JSON array
           includes     TEXT NOT NULL        -- JSON array
         );
+        -- Menu items, one row per item or group, with title (raw and resolved), icon and showAsAction.
         CREATE TABLE menus (
           menu           TEXT NOT NULL,
           config         TEXT NOT NULL,
@@ -105,6 +113,7 @@ object IndexSchema {
           icon           TEXT,
           show_as_action TEXT
         );
+        -- Navigation graph destinations: kind, class, label, deep links and actions.
         CREATE TABLE navigation_destinations (
           graph       TEXT NOT NULL,
           id          TEXT,
@@ -114,6 +123,7 @@ object IndexSchema {
           deep_links  TEXT NOT NULL,        -- JSON array
           actions     TEXT NOT NULL         -- JSON array of {id, destination, pop_up_to}
         );
+        -- Files under assets/: kind, size, and whether the bytes are code (dex, ELF, zip) under another name.
         CREATE TABLE assets (
           path        TEXT NOT NULL,
           kind        TEXT NOT NULL,
@@ -121,6 +131,7 @@ object IndexSchema {
           magic       TEXT,                 -- dex | elf | zip when the content is code or an archive
           hidden_code INTEGER NOT NULL
         );
+        -- res/xml configuration files (network security, backup rules, FileProvider paths, ...) with a summary and the decoded XML.
         CREATE TABLE xml_configs (
           name    TEXT NOT NULL,
           config  TEXT NOT NULL,
@@ -129,6 +140,7 @@ object IndexSchema {
           summary TEXT NOT NULL,            -- JSON object
           xml     TEXT NOT NULL
         );
+        -- Who refers to which resource: layouts, menus, navigation graphs, res/xml, styles, the manifest and code.
         CREATE TABLE resource_refs (
           ref       TEXT NOT NULL,          -- @string/app_name
           from_kind TEXT NOT NULL,          -- layout | menu | navigation | xml | style | manifest | code (from = method, attribute = the first call after the id is loaded, usually the one it is passed to)
@@ -162,11 +174,13 @@ object IndexSchema {
           data       TEXT NOT NULL          -- JSON array
         );
 
+        -- URL patterns each component answers to, from VIEW intent filters.
         CREATE TABLE deep_links (
           component TEXT NOT NULL,
           url       TEXT NOT NULL
         );
 
+        -- Classes defined in the dex files of the APK.
         CREATE TABLE classes (
           id           INTEGER PRIMARY KEY,
           descriptor   TEXT NOT NULL UNIQUE, -- Lcom/app/Foo;
@@ -200,6 +214,7 @@ object IndexSchema {
           string_loads INTEGER
         );
 
+        -- Fields defined in the APK, with constant initial values.
         CREATE TABLE fields (
           id            INTEGER PRIMARY KEY,
           descriptor    TEXT NOT NULL UNIQUE, -- Lcom/app/Foo;->count:I
@@ -210,6 +225,7 @@ object IndexSchema {
           initial_value TEXT
         );
 
+        -- Call edges between methods, by integer id; the call_edges view has readable names.
         CREATE TABLE calls (
           caller  INTEGER NOT NULL REFERENCES methods(id),
           callee  INTEGER NOT NULL REFERENCES methods(id),
@@ -218,11 +234,13 @@ object IndexSchema {
           offsets TEXT NOT NULL              -- JSON array, 16-bit code units, max 32
         );
 
+        -- Distinct string constants loaded by code.
         CREATE TABLE strings (
           id    INTEGER PRIMARY KEY,
           value TEXT NOT NULL UNIQUE
         );
 
+        -- Which method loads which string constant, by integer id; the string_uses view has readable values.
         CREATE TABLE string_refs (
           string  INTEGER NOT NULL REFERENCES strings(id),
           method  INTEGER NOT NULL REFERENCES methods(id),
@@ -239,6 +257,7 @@ object IndexSchema {
           offsets TEXT NOT NULL
         );
 
+        -- Type uses per method: new, const-class, check-cast, instance-of, arrays.
         CREATE TABLE type_refs (
           method  INTEGER NOT NULL REFERENCES methods(id),
           type    TEXT NOT NULL,             -- Lcom/app/Foo;
@@ -247,10 +266,12 @@ object IndexSchema {
           offsets TEXT NOT NULL
         );
 
+        -- The calls table with readable method descriptors.
         CREATE VIEW call_edges AS
           SELECT a.descriptor AS caller, b.descriptor AS callee, c.kind, c.count, c.offsets
           FROM calls c JOIN methods a ON a.id = c.caller JOIN methods b ON b.id = c.callee;
 
+        -- The string_refs table with the string value and the method descriptor.
         CREATE VIEW string_uses AS
           SELECT s.value, m.descriptor AS method, r.count, r.offsets
           FROM string_refs r JOIN strings s ON s.id = r.string JOIN methods m ON m.id = r.method;
@@ -263,11 +284,13 @@ object IndexSchema {
           evidence TEXT NOT NULL
         );
 
+        -- Cross-platform frameworks detected (Flutter, React Native, .NET MAUI, Unity, ...), with evidence.
         CREATE TABLE frameworks (
           name     TEXT NOT NULL,
           evidence TEXT NOT NULL             -- JSON array
         );
 
+        -- Known SDKs by category (analytics, ads, crash reporting, ...), with class counts, packages and manifest evidence.
         CREATE TABLE sdks (
           name     TEXT NOT NULL,
           category TEXT NOT NULL,
@@ -276,6 +299,7 @@ object IndexSchema {
           manifest TEXT NOT NULL             -- JSON array
         );
 
+        -- Every distinct URL found in the APK.
         CREATE TABLE endpoints (
           id     INTEGER PRIMARY KEY,
           url    TEXT NOT NULL UNIQUE,
@@ -283,18 +307,21 @@ object IndexSchema {
           host   TEXT NOT NULL
         );
 
+        -- Where each URL was found: a method, a resource, a deep link, the manifest, an asset or a native library.
         CREATE TABLE endpoint_sources (
           endpoint INTEGER NOT NULL REFERENCES endpoints(id),
           kind     TEXT NOT NULL,            -- code | resource | deep_link | manifest | asset | native
           location TEXT NOT NULL             -- method descriptor, @string/name or component
         );
 
+        -- Default values of simple resources (string, bool, integer, color, dimen); every configuration is in resource_values.
         CREATE TABLE resources (
           type  TEXT NOT NULL,               -- string | bool | integer | color | dimen
           name  TEXT NOT NULL,
           value TEXT NOT NULL
         );
 
+        -- Native .so files per ABI: size, sha256, ELF class, exported symbols and JNI methods.
         CREATE TABLE native_libraries (
           path             TEXT NOT NULL,
           abi              TEXT NOT NULL,
@@ -306,6 +333,7 @@ object IndexSchema {
           jni_methods      INTEGER NOT NULL
         );
 
+        -- Exported symbols of native libraries; JNI symbols are mapped back to the Java class and method they implement.
         CREATE TABLE native_symbols (
           library    TEXT NOT NULL,
           name       TEXT NOT NULL,
@@ -342,6 +370,7 @@ object IndexSchema {
           tag    TEXT NOT NULL,           -- LinearLayout, com.app.ui.Card, item, vector, …
           text   TEXT                     -- element text, when it has no child elements
         );
+        -- Attributes of xml_nodes, as decoded, with ref set when the value points at a resource.
         CREATE TABLE xml_attrs (
           node  INTEGER NOT NULL,         -- xml_nodes.id
           name  TEXT NOT NULL,            -- android:text, app:layout_constraintTop_toTopOf, …
@@ -359,6 +388,7 @@ object IndexSchema {
           value  TEXT,                    -- the value, or the file path for file resources; NULL for bags
           parent TEXT                     -- bags: parent style
         );
+        -- Items of bag resources: style attributes, plural quantities, array items, attr enum and flag values.
         CREATE TABLE resource_bag_items (
           id     TEXT NOT NULL,           -- resource_values.id
           config TEXT NOT NULL,
@@ -383,6 +413,15 @@ object IndexSchema {
           SELECT key, CASE WHEN key = 'app' THEN 'app' WHEN key LIKE '@%' OR key LIKE '?%' THEN 'resource'
                            ELSE substr(key, 1, instr(key, ':') - 1) END AS kind
           FROM (SELECT src AS key FROM links UNION SELECT dst FROM links);
+
+        -- What every table, view and column means (index schema 12), from the comments in this schema. Start here:
+        -- SELECT * FROM schema_docs WHERE "table" = 'links'
+        CREATE TABLE schema_docs (
+          "table"     TEXT NOT NULL,
+          "column"    TEXT,               -- NULL for the row that describes the table or view itself
+          type        TEXT NOT NULL,      -- table | view | virtual table, or the column's SQL type
+          description TEXT
+        );
 
         -- Full records (index schema 9): every manifest, resource and insight record exactly as Sextant built it, one JSON
         -- row each, so a command can rebuild the whole extraction from this file alone. The tables above are the
@@ -416,6 +455,7 @@ object IndexSchema {
           count    INTEGER NOT NULL
         );
 
+        -- The evidence behind each finding: a manifest entry, method, class, string or resource.
         CREATE TABLE finding_evidence (
           finding  TEXT NOT NULL,            -- findings.id
           kind     TEXT NOT NULL,            -- manifest | method | class | string | resource

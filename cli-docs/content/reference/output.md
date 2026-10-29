@@ -30,6 +30,7 @@ The file holds everything Sextant reads from the APK, in two forms:
 | `files` | every file inside the APK: type, size, CRC-32, SHA-256, content, resource name and the decoder that read it |
 | `links`, `entities` | every edge between kinds of things (component → class, layout → resource, method → string, …) with readable keys and evidence; `entities` lists every key with its kind |
 | `records` | full records: manifest tree, permissions, components, features, metadata, queries, resources, insights |
+| `schema_docs` | what every table, view and column means; start here: `SELECT * FROM schema_docs WHERE "table" = 'links'` |
 | `search` | FTS5 trigram index over names, strings, resources, endpoints, SDKs, libraries and native symbols |
 
 ## Rules

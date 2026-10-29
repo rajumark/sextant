@@ -44,6 +44,7 @@ Commands:
   cache       List the indexes Sextant keeps for APKs given directly to a command (one per APK, keyed by its SHA-256), or delete them with --clear. Set SEXTANT_CACHE to move the folder.
   xml         Print any XML file of the APK (manifest, layouts, menus, drawables, colors, animations, …) as stored in SQLite, or find elements across all of them with --tag, --attr and --value.
   links       Show what anything links to and what links to it, across kinds: the app, components, classes, methods, permissions, resources, URLs and native libraries. --depth follows the outgoing links further.
+  q           Run a saved query for a common question (unused strings, password fields, exported components, …). Without a name, list them; without an app, print the query's SQL.
 ```
 
 ## extract
@@ -544,4 +545,22 @@ Options:
 Arguments:
   <target>  An APK (indexed once, then cached) or a .sqlite file from sextant extract
   <thing>   A key (component:…, class:L…;, method:…, @string/x, permission:…, url:…) or a component, class or permission name
+```
+
+## q
+
+```text
+Usage: sextant q [<options>] [<name>] [<target>]
+
+  Run a saved query for a common question (unused strings, password fields, exported components, …). Without a name, list them; without an app, print the query's SQL.
+
+Options:
+  --arg=<text>   A parameter, NAME=VALUE (e.g. --arg name=app_name)
+  --json, --csv  Output format
+  --limit=<int>  Maximum rows to print (default 1000, 0 = no limit)
+  -h, --help     Show this message and exit
+
+Arguments:
+  <name>    The saved query; leave out to list them
+  <target>  An APK (indexed once, then cached) or a .sqlite file from sextant extract
 ```
