@@ -1440,6 +1440,10 @@
 <td>native code, with JNI symbols mapped to Java</td>
 </tr>
 <tr>
+<td><code>elf_files</code>, <code>elf_sections</code>, <code>elf_needed</code>, <code>elf_symbols</code>, <code>elf_strings</code></td>
+<td>every ELF file in depth: architecture, soname, build id, sections, the libraries it loads, every imported and exported symbol, and its readable strings</td>
+</tr>
+<tr>
 <td><code>xml_nodes</code>, <code>xml_attrs</code></td>
 <td>every binary XML file (manifest, layouts, menus, drawables, colors, animations, …) node by node and attribute by attribute, with <code>ref</code> for values that point at a resource; <code>sextant xml</code> prints a file rebuilt from them</td>
 </tr>

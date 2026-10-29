@@ -1449,23 +1449,29 @@
 <p>ELF <code>.dynsym</code> tables are parsed for exported functions. JNI functions (<code>Java_…</code>) are decoded back to the Java class and method they implement, including <code>_1</code>, <code>_0xxxx</code> escapes and overload suffixes:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sextant<span class="w"> </span>sql<span class="w"> </span>app.sqlite<span class="w"> </span><span class="s2">"SELECT jni_class, jni_method, library FROM native_symbols WHERE jni_class IS NOT NULL LIMIT 5"</span>
 </code></pre></div>
-<h2 id="app-icons">App icons<a class="headerlink" href="#app-icons" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sextant<span class="w"> </span>icon<span class="w"> </span>app.apk<span class="w">                 </span><span class="c1"># every file behind android:icon, best one marked</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sextant<span class="w"> </span>icon<span class="w"> </span>app.apk<span class="w"> </span>--round<span class="w">         </span><span class="c1"># android:roundIcon</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>sextant<span class="w"> </span>icon<span class="w"> </span>app.apk<span class="w"> </span>--layer<span class="w"> </span>foreground<span class="w"> </span>-o<span class="w"> </span>fg.png
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>sextant<span class="w"> </span>icon<span class="w"> </span>app.apk<span class="w"> </span>-o<span class="w"> </span>icon.png<span class="w">     </span><span class="c1"># save the best bitmap</span>
+<p>Beyond exported functions, every ELF file (also ones hidden in assets) is read in depth: architecture, soname, build id, sections, the libraries it loads, every imported and exported symbol, and its readable strings.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sextant<span class="w"> </span>q<span class="w"> </span>native-libraries<span class="w"> </span>app.sqlite<span class="w">            </span><span class="c1"># every ELF file: architecture, needs, symbol and string counts</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sextant<span class="w"> </span>q<span class="w"> </span>native-sensitive-imports<span class="w"> </span>app.sqlite<span class="w">    </span><span class="c1"># dlopen, execve, ptrace, mprotect, … and which libraries import them</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>sextant<span class="w"> </span>find<span class="w"> </span>app.sqlite<span class="w"> </span><span class="s2">"BEGIN PRIVATE KEY"</span><span class="w"> </span>--kind<span class="w"> </span>native_string
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>sextant<span class="w"> </span>links<span class="w"> </span>app.sqlite<span class="w"> </span>native:lib/arm64-v8a/libapp.so<span class="w">   </span><span class="c1"># what it needs and which Java classes it implements</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>icon  @mipmap/ic_launcher
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  anydpi-v26     xml   -               548 B  res/BW.xml
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  hdpi           png   72×72          2567 B  res/yn.png
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>  mdpi           png   48×48          1710 B  res/9w.png
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>  xhdpi          png   96×96          3363 B  res/FS.png
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>  xxhdpi         png   144×144        5145 B  res/RJ.png
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>  xxxhdpi        png   192×192        6982 B  res/o-.png  ← best
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>adaptive icon  res/BW.xml
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>  background  @color/accent  #b6d46f
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>  foreground  @drawable/ic_launcher_foreground  res/Qr.xml
-<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>  monochrome  @drawable/ic_launcher_monochrome  res/Vy.xml
+<h2 id="app-icons">App icons<a class="headerlink" href="#app-icons" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sextant<span class="w"> </span>icon<span class="w"> </span>app.apk<span class="w">                 </span><span class="c1"># every file behind android:icon, best one marked</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>sextant<span class="w"> </span>icon<span class="w"> </span>app.apk<span class="w"> </span>--round<span class="w">         </span><span class="c1"># android:roundIcon</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>sextant<span class="w"> </span>icon<span class="w"> </span>app.apk<span class="w"> </span>--layer<span class="w"> </span>foreground<span class="w"> </span>-o<span class="w"> </span>fg.png
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>sextant<span class="w"> </span>icon<span class="w"> </span>app.apk<span class="w"> </span>-o<span class="w"> </span>icon.png<span class="w">     </span><span class="c1"># save the best bitmap</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>icon  @mipmap/ic_launcher
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  anydpi-v26     xml   -               548 B  res/BW.xml
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>  hdpi           png   72×72          2567 B  res/yn.png
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>  mdpi           png   48×48          1710 B  res/9w.png
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>  xhdpi          png   96×96          3363 B  res/FS.png
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>  xxhdpi         png   144×144        5145 B  res/RJ.png
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>  xxxhdpi        png   192×192        6982 B  res/o-.png  ← best
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>adaptive icon  res/BW.xml
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>  background  @color/accent  #b6d46f
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>  foreground  @drawable/ic_launcher_foreground  res/Qr.xml
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>  monochrome  @drawable/ic_launcher_monochrome  res/Vy.xml
 </code></pre></div>
 <ul>
 <li>Icons are resolved from the manifest through <code>resources.arsc</code>, so they are found even when R8 resource shrinking renames files (<code>res/o-.png</code> above).</li>

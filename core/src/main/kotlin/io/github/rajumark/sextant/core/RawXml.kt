@@ -1,5 +1,7 @@
 package io.github.rajumark.sextant.core
 
+import io.github.rajumark.sextant.core.insights.ElfDetail
+import io.github.rajumark.sextant.core.insights.ElfInfo
 import io.github.rajumark.sextant.core.model.ApkFile
 import io.github.rajumark.sextant.core.model.XmlNode
 import java.util.zip.ZipFile
@@ -10,11 +12,41 @@ class XmlDoc(
     val root: XmlNode,
 )
 
-/** The raw layer of an extraction: every binary XML file node by node, and the resource table in every configuration. */
+/** One ELF file of the APK (native library, or ELF bytes anywhere else), read in depth. */
+class ElfFile(
+    val path: String,
+    val info: ElfInfo,
+)
+
+/** The raw layer of an extraction: every binary XML file node by node, the resource table in every configuration, every ELF file. */
 class RawLayer(
     val xml: List<XmlDoc> = emptyList(),
     val resourceTable: List<RawResource> = emptyList(),
+    val elf: List<ElfFile> = emptyList(),
 )
+
+/** Reads every file whose bytes are ELF (lib/ and anything hidden elsewhere) with [ElfDetail]. */
+object RawElf {
+    // ELF files larger than this are listed and hashed, not parsed.
+    private const val MAX_ELF_BYTES = 256L * 1024 * 1024
+
+    fun read(
+        zip: ZipFile,
+        files: List<ApkFile>,
+        warnings: MutableList<String>,
+    ): List<ElfFile> {
+        var failed = 0
+        val out = mutableListOf<ElfFile>()
+        for (f in files) {
+            if (f.magic != "elf" || f.sizeBytes > MAX_ELF_BYTES) continue
+            val entry = zip.getEntry(f.path) ?: continue
+            val info = runCatching { zip.getInputStream(entry).use { ElfDetail.read(it.readBytes()) } }.getOrNull()
+            if (info == null) failed++ else out += ElfFile(f.path, info)
+        }
+        if (failed > 0) warnings += "$failed ELF file${if (failed == 1) "" else "s"} could not be read"
+        return out
+    }
+}
 
 /**
  * Decodes every binary XML file in the APK (manifest, layouts, menus, drawables, color state lists, animations,

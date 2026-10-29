@@ -466,6 +466,21 @@ class CliEndToEndTest {
     }
 
     @Test
+    fun `native libraries are read in depth, searchable and linked`() {
+        val file = extracted("binaryeye")
+        val libs = sextant("q", "native-libraries", file, "--json")
+        libs.exitCode shouldBe 0
+        libs.stdout
+            .lines()
+            .filter { it.isNotBlank() }
+            .size shouldBe 12
+        libs.stdout shouldContain "\"machine\":\"arm64\""
+        sextant("find", file, "ZXing", "--kind", "native_string", "--limit", "1").stdout shouldContain "libzxingcpp_android.so"
+        sextant("links", file, "native:lib/arm64-v8a/libzxingcpp_android.so").stdout shouldContain "→ needs          system:libc.so"
+        sextant("q", "native-sensitive-imports", file).exitCode shouldBe 0
+    }
+
+    @Test
     fun `extract stores insights and resources in the SQLite file`() {
         val file = extracted("binaryeye")
         for (table in listOf("libraries", "sdks", "endpoints", "resources", "string_resources", "layouts")) {

@@ -292,7 +292,9 @@ class IndexWriter(
                 Links.INDEXES.forEach(st::execute)
                 profile("links")
                 for ((kind, select) in MANIFEST_SEARCH) {
-                    st.execute("INSERT INTO search(rowid, text) SELECT (rowid << 4) + ${IndexSchema.kindCode(kind)}, $select")
+                    // Grouped selects (native_string) take each group's first row, as the search_items view does.
+                    val rowid = if ("GROUP BY" in select) "min(rowid)" else "rowid"
+                    st.execute("INSERT INTO search(rowid, text) SELECT ($rowid << 4) + ${IndexSchema.kindCode(kind)}, $select")
                 }
                 st.execute("INSERT INTO search(search) VALUES ('optimize')")
                 profile("search optimize")
@@ -479,6 +481,72 @@ class IndexWriter(
         }
     }
 
+    private fun insertElf(extraction: Extraction) {
+        val fileIds = extraction.files.withIndex().associate { (i, f) -> f.path to i + 1L }
+        val elfPaths =
+            extraction.raw.elf
+                .map { it.path }
+                .toSet()
+        val files = conn.prepareStatement("INSERT INTO elf_files VALUES (?,?,?,?,?,?,?,?,?,?,?)")
+        val sections = conn.prepareStatement("INSERT INTO elf_sections VALUES (?,?,?,?,?,?,?)")
+        val needed = conn.prepareStatement("INSERT INTO elf_needed VALUES (?,?,?,?)")
+        val symbols = conn.prepareStatement("INSERT INTO elf_symbols VALUES (?,?,?,?,?)")
+        val strings = conn.prepareStatement("INSERT INTO elf_strings VALUES (?,?,?)")
+        try {
+            for (e in extraction.raw.elf) {
+                val i = e.info
+                files.setString(1, e.path)
+                fileIds[e.path]?.let { files.setLong(2, it) } ?: files.setNull(2, java.sql.Types.INTEGER)
+                files.setString(3, i.elfClass)
+                files.setString(4, i.machine)
+                files.setString(5, i.soname)
+                files.setString(6, i.buildId)
+                files.setString(7, i.runpath)
+                files.setInt(8, i.symbols.count { it.defined })
+                files.setInt(9, i.symbols.count { !it.defined })
+                files.setInt(10, i.strings.size)
+                files.setInt(11, if (i.stringsCapped) 1 else 0)
+                files.addBatch()
+                i.sections.forEachIndexed { k, s ->
+                    sections.setString(1, e.path)
+                    sections.setInt(2, k)
+                    sections.setString(3, s.name)
+                    sections.setString(4, s.type)
+                    sections.setLong(5, s.offset)
+                    sections.setLong(6, s.size)
+                    sections.setString(7, s.flags)
+                    sections.addBatch()
+                }
+                // A needed library resolves to the one with that name in the same folder (lib/arm64-v8a/), if the APK has it.
+                val dir = e.path.substringBeforeLast('/', "")
+                i.needed.forEachIndexed { k, n ->
+                    needed.setString(1, e.path)
+                    needed.setInt(2, k)
+                    needed.setString(3, n)
+                    needed.setString(4, (if (dir.isEmpty()) n else "$dir/$n").takeIf { it in elfPaths })
+                    needed.addBatch()
+                }
+                for (s in i.symbols) {
+                    symbols.setString(1, e.path)
+                    symbols.setString(2, s.name)
+                    symbols.setString(3, s.type)
+                    symbols.setString(4, s.binding)
+                    symbols.setInt(5, if (s.defined) 1 else 0)
+                    symbols.addBatch()
+                }
+                for (s in i.strings) {
+                    strings.setString(1, e.path)
+                    strings.setLong(2, s.offset)
+                    strings.setString(3, s.value)
+                    strings.addBatch()
+                }
+            }
+            listOf(files, sections, needed, symbols, strings).forEach { it.executeBatch() }
+        } finally {
+            listOf(files, sections, needed, symbols, strings).forEach { it.close() }
+        }
+    }
+
     private fun insertRaw(extraction: Extraction) {
         val fileIds = extraction.files.withIndex().associate { (i, f) -> f.path to i + 1L }
         var nextNode = 1L
@@ -518,6 +586,7 @@ class IndexWriter(
                 attrs.executeBatch()
             }
         }
+        insertElf(extraction)
         conn.prepareStatement("INSERT INTO resource_values VALUES (?,?,?,?,?,?)").use { values ->
             conn.prepareStatement("INSERT INTO resource_bag_items VALUES (?,?,?,?,?)").use { items ->
                 for (r in extraction.raw.resourceTable) {
@@ -826,6 +895,8 @@ class IndexWriter(
                 "native_symbol" to "name FROM native_symbols",
                 "finding" to "severity || ' ' || title || ' ' || id FROM findings",
                 "string_resource" to "substr(name || ' = ' || value, 1, ${IndexSchema.MAX_SEARCH_TEXT}) FROM string_resources",
+                // The same string often sits in every ABI's copy of a library: index each value once.
+                "native_string" to "substr(value, 1, ${IndexSchema.MAX_SEARCH_TEXT}) FROM elf_strings GROUP BY value",
             )
     }
 }

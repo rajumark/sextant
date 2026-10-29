@@ -107,10 +107,10 @@ Usage: sextant find [<options>] <dir> <text>
   Find anything containing the text: classes, methods, fields, strings, components, permissions, deep links, resources, endpoints, SDKs, libraries and native symbols.
 
 Options:
-  --kind=(class|method|field|string|component|permission|deep_link|resource|endpoint|sdk|library|native_symbol|finding|string_resource)  Only this kind
-  --limit=<int>                                                                                                                          Maximum results (default 50)
-  --json                                                                                                                                 One JSON object per line
-  -h, --help                                                                                                                             Show this message and exit
+  --kind=(class|method|field|string|component|permission|deep_link|resource|endpoint|sdk|library|native_symbol|finding|string_resource|native_string)  Only this kind
+  --limit=<int>                                                                                                                                        Maximum results (default 50)
+  --json                                                                                                                                               One JSON object per line
+  -h, --help                                                                                                                                           Show this message and exit
 
 Arguments:
   <dir>   An APK (indexed once, then cached) or a .sqlite file from sextant extract

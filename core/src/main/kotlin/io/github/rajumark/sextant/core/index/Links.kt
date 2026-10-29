@@ -51,6 +51,8 @@ internal object Links {
                 "WHEN 'asset' THEN 'file:' || s.location ELSE 'app' END, " +
                 "'contains', 'url:' || e.url, s.kind FROM endpoint_sources s JOIN endpoints e ON e.id = s.endpoint " +
                 "WHERE s.kind IN ('code', 'resource', 'native', 'manifest', 'asset')",
+            // Native libraries load other libraries: one in the APK (same folder) or one from the system.
+            "INSERT INTO links SELECT DISTINCT 'native:' || path, 'needs', coalesce('native:' || resolved, 'system:' || needed), NULL FROM elf_needed",
             // Native libraries implement the Java classes their JNI symbols name.
             "INSERT INTO links SELECT DISTINCT 'native:' || s.library, 'implements', 'class:' || k.descriptor, s.jni_method " +
                 "FROM native_symbols s JOIN classes k ON k.name = s.jni_class",

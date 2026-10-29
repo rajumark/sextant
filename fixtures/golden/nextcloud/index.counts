@@ -4,6 +4,11 @@ classes 54323
 components 78
 deep_links 11
 drawables 820
+elf_files 12
+elf_needed 52
+elf_sections 307
+elf_strings 35801
+elf_symbols 22674
 endpoint_sources 288
 endpoints 164
 features 9
@@ -17,7 +22,7 @@ frameworks 2
 icons 18
 layouts 368
 libraries 105
-links 20507
+links 20559
 menus 92
 meta 10
 metadata 12
@@ -33,7 +38,7 @@ resource_ids 10894
 resource_refs 13615
 resource_values 103321
 resources 4508
-schema_docs 315
+schema_docs 350
 sdks 18
 string_refs 154281
 string_resources 96659
@@ -43,4 +48,4 @@ type_refs 235999
 xml_attrs 22365
 xml_configs 20
 xml_nodes 6149
-search 808632
+search 825466

@@ -39,6 +39,8 @@ object SavedQueries {
             "webviews",
             "hosts",
             "jni-methods",
+            "native-libraries",
+            "native-sensitive-imports",
             "biggest-packages",
             "undecoded-files",
         )

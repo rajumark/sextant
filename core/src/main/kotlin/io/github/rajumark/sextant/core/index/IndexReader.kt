@@ -244,8 +244,12 @@ class IndexReader private constructor(
                 "library" ->
                     "SELECT \"group\" || ':' || artifact, \"group\" || ':' || artifact || ':' || version FROM libraries WHERE rowid = ?"
                 "finding" -> "SELECT id, severity || ' · ' || title || ' (' || count || ')' FROM findings WHERE rowid = ?"
-                else ->
+                "native_symbol" ->
                     "SELECT library, name || coalesce('  →  ' || jni_class || '.' || jni_method, '') FROM native_symbols WHERE rowid = ?"
+                "string_resource" ->
+                    "SELECT '@' || kind || '/' || name, name || ' = ' || value || coalesce('  (' || nullif(config, '') || ')', '') FROM string_resources WHERE rowid = ?"
+                "native_string" -> "SELECT path, value FROM elf_strings WHERE rowid = ?"
+                else -> return null
             }
         return conn.prepareStatement(sql).use { st ->
             st.setLong(1, id)

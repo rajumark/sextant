@@ -6,7 +6,7 @@ package io.github.rajumark.sextant.core.index
  * The views give the readable, descriptor-based form.
  */
 object IndexSchema {
-    const val VERSION = 13
+    const val VERSION = 14
 
     val DDL =
         """
@@ -432,6 +432,52 @@ object IndexSchema {
           json TEXT NOT NULL
         );
 
+        -- Every ELF file in the APK, read in depth (index schema 14): native libraries under lib/ and ELF bytes anywhere else.
+        CREATE TABLE elf_files (
+          path             TEXT PRIMARY KEY,   -- the file inside the APK
+          file             INTEGER,            -- files.id
+          elf_class        TEXT NOT NULL,      -- ELF32 | ELF64
+          machine          TEXT NOT NULL,      -- arm64 | arm | x86 | x86_64 | riscv64 | …
+          soname           TEXT,               -- DT_SONAME
+          build_id         TEXT,               -- GNU build id, hex
+          runpath          TEXT,               -- DT_RUNPATH or DT_RPATH
+          exported         INTEGER NOT NULL,   -- defined dynamic symbols
+          imported         INTEGER NOT NULL,   -- undefined dynamic symbols (from other libraries)
+          strings          INTEGER NOT NULL,   -- rows in elf_strings
+          strings_capped   INTEGER NOT NULL    -- 1 when elf_strings stopped at 20,000 for this file
+        );
+        -- Section headers of each ELF file.
+        CREATE TABLE elf_sections (
+          path   TEXT NOT NULL,
+          seq    INTEGER NOT NULL,
+          name   TEXT NOT NULL,                -- .text, .rodata, .dynsym, …
+          type   TEXT NOT NULL,                -- progbits | nobits | dynsym | dynamic | note | …
+          offset INTEGER NOT NULL,
+          size   INTEGER NOT NULL,
+          flags  TEXT NOT NULL                 -- w (write), a (alloc), x (exec)
+        );
+        -- The libraries each ELF file loads (DT_NEEDED), in order.
+        CREATE TABLE elf_needed (
+          path     TEXT NOT NULL,
+          seq      INTEGER NOT NULL,
+          needed   TEXT NOT NULL,              -- libc.so, libc++_shared.so, …
+          resolved TEXT                        -- the library in the APK it resolves to (same folder); NULL = from the system
+        );
+        -- Every dynamic symbol: exported (defined = 1) or imported from another library (defined = 0).
+        CREATE TABLE elf_symbols (
+          path    TEXT NOT NULL,
+          name    TEXT NOT NULL,
+          type    TEXT NOT NULL,               -- func | object | other
+          binding TEXT NOT NULL,               -- global | weak | local
+          defined INTEGER NOT NULL
+        );
+        -- Printable strings (6+ characters) in the read-only data of each ELF file, at most 20,000 per file.
+        CREATE TABLE elf_strings (
+          path   TEXT NOT NULL,
+          offset INTEGER NOT NULL,             -- file offset
+          value  TEXT NOT NULL
+        );
+
         -- File contents (index schema 13): the uncompressed bytes of every file in the APK (dex files always; the others
         -- unless extracted with --no-content), so the .sqlite file holds the whole APK and no command needs the APK itself.
         CREATE TABLE file_contents (
@@ -472,7 +518,7 @@ object IndexSchema {
 
         -- Substring search (trigram: any 3+ character fragment matches). Contentless to save space:
         -- rowid = (source id << 4) | kind; kinds: 1 class, 2 method, 3 field, 4 string, 5 component, 6 permission,
-        -- 7 deep_link, 8 resource, 9 endpoint, 10 sdk, 11 library, 12 native_symbol, 13 finding, 14 string_resource.
+        -- 7 deep_link, 8 resource, 9 endpoint, 10 sdk, 11 library, 12 native_symbol, 13 finding, 14 string_resource, 15 native_string.
         -- Indexed text: class full name; method and field "SimpleClass.name" (field + " = value"); first 1000 chars of strings.
         CREATE VIRTUAL TABLE search USING fts5(text, content = '', tokenize = 'trigram');
 
@@ -492,7 +538,8 @@ object IndexSchema {
           UNION ALL SELECT rowid * 16 + 11, 'library', "group" || ':' || artifact, "group" || ':' || artifact || ':' || version FROM libraries
           UNION ALL SELECT rowid * 16 + 12, 'native_symbol', library, name FROM native_symbols
           UNION ALL SELECT rowid * 16 + 13, 'finding', id, severity || ' ' || title FROM findings
-          UNION ALL SELECT rowid * 16 + 14, 'string_resource', '@string/' || name, name || ' = ' || value FROM string_resources;
+          UNION ALL SELECT rowid * 16 + 14, 'string_resource', '@string/' || name, name || ' = ' || value FROM string_resources
+          UNION ALL SELECT min(rowid) * 16 + 15, 'native_string', path, value FROM elf_strings GROUP BY value;
         """.trimIndent()
 
     /** Created after the bulk insert: much faster than maintaining them row by row. */
@@ -509,6 +556,10 @@ object IndexSchema {
         CREATE INDEX string_refs_method ON string_refs(method);
         CREATE INDEX components_name ON components(name);
         CREATE INDEX files_type ON files(type);
+        CREATE INDEX elf_symbols_name ON elf_symbols(name);
+        CREATE INDEX elf_symbols_path ON elf_symbols(path);
+        CREATE INDEX elf_strings_path ON elf_strings(path);
+        CREATE INDEX elf_needed_needed ON elf_needed(needed);
         CREATE INDEX xml_nodes_file ON xml_nodes(path);
         CREATE INDEX xml_nodes_tag ON xml_nodes(tag);
         CREATE INDEX xml_attrs_node ON xml_attrs(node);
@@ -545,6 +596,7 @@ object IndexSchema {
             "native_symbol",
             "finding",
             "string_resource",
+            "native_string",
         )
 
     /** Search rowids keep the kind in the low 4 bits. */

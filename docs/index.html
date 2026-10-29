@@ -255,11 +255,11 @@
   </nav>
 <section id="tab-progress" class="tab" data-tab="progress">
   <div class="hero">
-    <div class="big">≈ 75%</div>
+    <div class="big">≈ 78%</div>
     <div class="hl">of an APK's data is in SQLite as rows and links<span>Estimate. 100% means everything inside the APK is stored as rows and linked. The bytes themselves are all there: <b>100% of every file</b>, checked byte for byte.</span></div>
   </div>
-  <div class="mbar"><div class="mfill" style="width:75%"></div></div>
-  <div class="mmeta"><b>Step 8 of 11 done</b><span>Index schema 13</span><span>CLI only</span></div>
+  <div class="mbar"><div class="mfill" style="width:78%"></div></div>
+  <div class="mmeta"><b>Step 9 of 11 done</b><span>Index schema 14</span><span>CLI only</span></div>
 
   <h2 class="ph">By area</h2>
   <div class="hbar small" id="areas"></div>
@@ -271,7 +271,7 @@
     <li class="db">App identity &amp; versions</li><li class="db">Signing</li><li class="db">Permissions</li><li class="db">Components &amp; verdicts</li><li class="db">Deep links</li><li class="db">Features, metadata, queries</li><li class="db">App icon</li>
     <li class="db">Strings (all locales)</li><li class="db">Resource IDs</li><li class="db">Styles &amp; themes</li><li class="db">Drawables</li><li class="db">Layouts</li><li class="db">Menus</li><li class="db">Navigation graphs</li><li class="db">XML configs</li><li class="db">Assets</li><li class="db">Resource references</li>
     <li class="db">Classes, methods, fields</li><li class="db">Call graph</li><li class="db">Field &amp; type references</li><li class="db">String constants</li><li class="db">Full-text search</li><li class="db">SQL queries</li>
-    <li class="db">SDKs &amp; libraries</li><li class="db">Frameworks</li><li class="db">Endpoints / URLs</li><li class="db">Native libraries &amp; JNI</li><li class="db">Security findings</li><li class="db">Every file + coverage</li><li class="db">APK index cache</li><li class="db">Code → resource links</li><li class="db">Every XML node &amp; attribute</li><li class="db">Resource values, every config</li><li class="db">Links across kinds</li><li class="db">Self-describing schema</li><li class="db">Saved queries</li>
+    <li class="db">SDKs &amp; libraries</li><li class="db">Frameworks</li><li class="db">Endpoints / URLs</li><li class="db">Native libraries &amp; JNI</li><li class="db">ELF sections, imports, strings</li><li class="db">Security findings</li><li class="db">Every file + coverage</li><li class="db">APK index cache</li><li class="db">Code → resource links</li><li class="db">Every XML node &amp; attribute</li><li class="db">Resource values, every config</li><li class="db">Links across kinds</li><li class="db">Self-describing schema</li><li class="db">Saved queries</li>
     <li class="db">Startup order</li><li class="db">Call paths (reach)</li><li class="db">Version diff</li><li class="db">Split bundles</li><li class="db">MCP for AI agents</li><li class="db">One-file output</li><li class="db">Decompiled Java</li><li class="db">Code search (grep)</li><li class="db">Smali</li><li class="db">ProGuard mappings</li><li class="db">Every byte of every file</li>
   </ul>
 
@@ -285,8 +285,8 @@
     <li class="done"><span>6</span>Entities and links<em>Done</em></li>
     <li class="done"><span>7</span>Self-describing database<em>Done</em></li>
     <li class="done"><span>8</span>Every byte of the APK in SQLite<em>Done</em></li>
-    <li class="next"><span>9</span>Native libraries in depth<em>Next</em></li>
-    <li><span>10</span>Text file contents as rows</li>
+    <li class="done"><span>9</span>Native libraries in depth<em>Done</em></li>
+    <li class="next"><span>10</span>Text file contents as rows<em>Next</em></li>
     <li><span>11</span>Signing as rows</li>
   </ul>
 </section>
@@ -677,8 +677,8 @@
     <tr><td class="num">6</td><td><code>entities</code> + <code>links</code>, and a generic <code>links</code> command</td><td>Cross-kind queries</td><td><span class="tag g">Done</span></td></tr>
     <tr><td class="num">7</td><td><code>schema_docs</code> table (every table and column explained inside the file) and saved queries (<code>sextant q</code>). A separate derive stage was dropped: the cache already rebuilds on a new version</td><td>A database that needs no manual</td><td><span class="tag g">Done</span></td></tr>
     <tr><td class="num">8</td><td>Every byte of the APK in SQLite: dex files and file contents next to the tables built from them</td><td>No command needs the APK any more: <code>smali</code>, <code>source</code>, <code>grep</code> and <code>icon -o</code> work from the <code>.sqlite</code> file</td><td><span class="tag g">Done</span></td></tr>
-    <tr><td class="num">9</td><td>Native libraries in depth: sections, imported symbols, needed libraries, strings</td><td>Native code beyond exported symbols</td><td><span class="tag">Next</span></td></tr>
-    <tr><td class="num">10</td><td>Text file contents as rows: assets, properties, service files and other non-resource text</td><td>The last “listed only” files become searchable rows</td><td><span class="tag">Planned</span></td></tr>
+    <tr><td class="num">9</td><td>Native libraries in depth: sections, imported symbols, needed libraries, strings</td><td>Native code beyond exported symbols</td><td><span class="tag g">Done</span></td></tr>
+    <tr><td class="num">10</td><td>Text file contents as rows: assets, properties, service files and other non-resource text</td><td>The last “listed only” files become searchable rows</td><td><span class="tag">Next</span></td></tr>
     <tr><td class="num">11</td><td>Signing as rows: every certificate field and digest per scheme</td><td>Signing at 100%</td><td><span class="tag">Planned</span></td></tr>
   </table></div>
   <h3>Step 1 result</h3>
@@ -777,7 +777,7 @@
     ['Resource table', 95, 'var(--green)'],
     ['Code (dex)', 55, 'var(--accent)'],
     ['Resource XML files', 90, 'var(--green)'],
-    ['Native libraries', 40, 'var(--amber)'],
+    ['Native libraries', 85, 'var(--green)'],
     ['Assets', 30, 'var(--amber)'],
     ['Cross-links', 85, 'var(--green)'],
     ['Other files', 20, 'var(--red)']

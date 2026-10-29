@@ -54,6 +54,15 @@ ELF `.dynsym` tables are parsed for exported functions. JNI functions (`Java_…
 sextant sql app.sqlite "SELECT jni_class, jni_method, library FROM native_symbols WHERE jni_class IS NOT NULL LIMIT 5"
 ```
 
+Beyond exported functions, every ELF file (also ones hidden in assets) is read in depth: architecture, soname, build id, sections, the libraries it loads, every imported and exported symbol, and its readable strings.
+
+```bash
+sextant q native-libraries app.sqlite            # every ELF file: architecture, needs, symbol and string counts
+sextant q native-sensitive-imports app.sqlite    # dlopen, execve, ptrace, mprotect, … and which libraries import them
+sextant find app.sqlite "BEGIN PRIVATE KEY" --kind native_string
+sextant links app.sqlite native:lib/arm64-v8a/libapp.so   # what it needs and which Java classes it implements
+```
+
 ## App icons
 
 ```bash
