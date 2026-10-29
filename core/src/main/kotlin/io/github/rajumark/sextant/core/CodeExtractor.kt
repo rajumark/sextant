@@ -9,9 +9,15 @@ import com.android.tools.smali.dexlib2.formatter.DexFormatter
 import com.android.tools.smali.dexlib2.iface.Annotation
 import com.android.tools.smali.dexlib2.iface.Method
 import com.android.tools.smali.dexlib2.iface.debug.LineNumber
+import com.android.tools.smali.dexlib2.iface.instruction.FiveRegisterInstruction
+import com.android.tools.smali.dexlib2.iface.instruction.Instruction
 import com.android.tools.smali.dexlib2.iface.instruction.NarrowLiteralInstruction
 import com.android.tools.smali.dexlib2.iface.instruction.OffsetInstruction
+import com.android.tools.smali.dexlib2.iface.instruction.OneRegisterInstruction
 import com.android.tools.smali.dexlib2.iface.instruction.ReferenceInstruction
+import com.android.tools.smali.dexlib2.iface.instruction.RegisterRangeInstruction
+import com.android.tools.smali.dexlib2.iface.instruction.ThreeRegisterInstruction
+import com.android.tools.smali.dexlib2.iface.instruction.TwoRegisterInstruction
 import com.android.tools.smali.dexlib2.iface.instruction.WideLiteralInstruction
 import com.android.tools.smali.dexlib2.iface.reference.FieldReference
 import com.android.tools.smali.dexlib2.iface.reference.MethodReference
@@ -308,7 +314,7 @@ object CodeExtractor {
                     if (code != null) {
                         val literal = (insn as? WideLiteralInstruction)?.wideLiteral
                         val target = (insn as? OffsetInstruction)?.let { offset + it.codeOffset }
-                        code += InstructionRow(offset, insn.opcode.ordinal, literal, target, refKind, refText)
+                        code += InstructionRow(offset, insn.opcode.ordinal, literal, target, refKind, refText, registers(insn))
                     }
                     offset += insn.codeUnits
                 }
@@ -403,6 +409,22 @@ object CodeExtractor {
                 AnnotationElement(e.name, if (v.length > MAX_ANNOTATION_VALUE) v.take(MAX_ANNOTATION_VALUE - 1) + "…" else v)
             },
     )
+
+    /** An instruction's registers in smali order: `v0 v3`, `v4..v7` for ranges; null when it has none. */
+    internal fun registers(insn: Instruction): String? =
+        when (insn) {
+            is RegisterRangeInstruction ->
+                if (insn.registerCount == 0) null else "v${insn.startRegister}..v${insn.startRegister + insn.registerCount - 1}"
+            is FiveRegisterInstruction ->
+                listOf(insn.registerC, insn.registerD, insn.registerE, insn.registerF, insn.registerG)
+                    .take(insn.registerCount)
+                    .joinToString(" ") { "v$it" }
+                    .ifEmpty { null }
+            is ThreeRegisterInstruction -> "v${insn.registerA} v${insn.registerB} v${insn.registerC}"
+            is TwoRegisterInstruction -> "v${insn.registerA} v${insn.registerB}"
+            is OneRegisterInstruction -> "v${insn.registerA}"
+            else -> null
+        }
 
     /** Parameter names, the line table and exception handlers of [method], when it has any of them. */
     private fun detail(

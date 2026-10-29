@@ -1532,7 +1532,7 @@
 </code></pre></div>
 <p><code>line_table</code> maps code offsets to source lines, so an offset from a stack trace or from <code>calls.offsets</code> gives the line it is on.</p>
 <h2 id="every-instruction">Every instruction<a class="headerlink" href="#every-instruction" title="Permanent link">&para;</a></h2>
-<p><code>instruction_view</code> lists every instruction of every method in code order, the same sequence <code>smali</code> prints, without registers:</p>
+<p><code>instruction_view</code> lists every instruction of every method in code order, the same sequence <code>smali</code> prints. Registers are raw v numbers: smali's <code>p0</code>, <code>p1</code>, … are the method's last registers.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sextant<span class="w"> </span>sql<span class="w"> </span>app.sqlite<span class="w"> </span><span class="s2">"SELECT op, ref, literal FROM instruction_view WHERE method LIKE 'Lcom/app/Login;-&gt;auth%'"</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sextant<span class="w"> </span>q<span class="w"> </span>literal-users<span class="w"> </span>app.sqlite<span class="w"> </span>--arg<span class="w"> </span><span class="nv">value</span><span class="o">=</span><span class="m">8443</span><span class="w">      </span><span class="c1"># every method that loads the number 8443</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>sextant<span class="w"> </span>q<span class="w"> </span>opcode-stats<span class="w"> </span>app.sqlite<span class="w">                        </span><span class="c1"># how often each opcode is used</span>

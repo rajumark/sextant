@@ -121,7 +121,7 @@ class IndexWriter(
         insertMethodLines = conn.prepareStatement("INSERT INTO method_lines VALUES (?,?,?,?)")
         insertMethodParam = conn.prepareStatement("INSERT INTO method_params VALUES (?,?,?)")
         insertHandler = conn.prepareStatement("INSERT INTO exception_handlers VALUES (?,?,?,?,?)")
-        insertInstruction = conn.prepareStatement("INSERT INTO instructions VALUES (?,?,?,?,?,?,?,?)")
+        insertInstruction = conn.prepareStatement("INSERT INTO instructions VALUES (?,?,?,?,?,?,?,?,?)")
     }
 
     override fun classRecord(record: ClassRecord) {
@@ -303,6 +303,7 @@ class IndexWriter(
                 methodRef?.let { setLong(6, it) } ?: setNull(6, java.sql.Types.INTEGER)
                 stringRef?.let { setLong(7, it) } ?: setNull(7, java.sql.Types.INTEGER)
                 setString(8, if (methodRef != null || stringRef != null) null else r.ref)
+                setString(9, r.registers)
             }
             batch(insertInstruction)
         }

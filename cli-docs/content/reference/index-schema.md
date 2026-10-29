@@ -7,7 +7,7 @@ or external) has one row in `methods`; edges point at integer ids, and the views
 and `search_items` give the readable, descriptor-based form. JSON arrays are stored as TEXT; use SQLite's
 `json_each` to expand them. Query it with `sextant sql <dir> "…"` (read-only) or any SQLite tool.
 
-Schema version: **19**
+Schema version: **20**
 (stored in `meta` as `index_schema_version`).
 
 ```sql
@@ -546,7 +546,7 @@ CREATE VIEW kotlin_classes AS
          (SELECT value FROM annotation_values v WHERE v.annotation = a.id AND v.name = 'mv') AS version
   FROM annotations a WHERE a.type = 'Lkotlin/Metadata' || char(59) AND a.target_kind = 'class';  -- char(59) is ';', which the statement splitter would cut on
 
--- Every instruction of every method (index schema 19), in code order. Registers are not stored (`sextant smali` shows them).
+-- Every instruction of every method (index schema 19; registers since 20), in code order.
 CREATE TABLE instructions (
   method     INTEGER NOT NULL REFERENCES methods(id),
   "offset"   INTEGER NOT NULL,    -- 16-bit code units, as in calls.offsets and dexdump
@@ -555,7 +555,8 @@ CREATE TABLE instructions (
   target     INTEGER,             -- branches, switches, fill-array-data: the offset they go to
   ref_method INTEGER REFERENCES methods(id),  -- invoke-*: the method called
   ref_string INTEGER REFERENCES strings(id),  -- const-string: the string loaded
-  ref_text   TEXT                 -- other references: field or type descriptor
+  ref_text   TEXT,                -- other references: field or type descriptor
+  registers  TEXT                 -- as smali writes them: v0 v3, or v4..v7 for a range (raw v numbers; parameters are the highest ones)
 );
 -- Dalvik opcodes by id, as smali spells them.
 CREATE TABLE opcodes (
@@ -565,7 +566,7 @@ CREATE TABLE opcodes (
 );
 -- instructions with readable names: method descriptor, opcode name, and what it references.
 CREATE VIEW instruction_view AS
-  SELECT m.descriptor AS method, i."offset", o.name AS op, i.literal, i.target,
+  SELECT m.descriptor AS method, i."offset", o.name AS op, i.registers, i.literal, i.target,
          coalesce(rm.descriptor, s.value, i.ref_text) AS ref
   FROM instructions i
   JOIN methods m ON m.id = i.method

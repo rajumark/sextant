@@ -157,6 +157,8 @@ data class InstructionRow(
     val refKind: String?,
     /** Descriptor (method, field, type) or the string value. */
     val ref: String?,
+    /** Registers as smali writes them: `v0 v3`, or `v4..v7` for a range; raw v numbers (parameters are the last ones). */
+    val registers: String? = null,
 )
 
 /** A try block's handler: code units [start, end) jump to [handler] for [type] (null = catch-all / finally). */

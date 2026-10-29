@@ -255,11 +255,11 @@
   </nav>
 <section id="tab-progress" class="tab" data-tab="progress">
   <div class="hero">
-    <div class="big">≈ 94%</div>
+    <div class="big">≈ 95%</div>
     <div class="hl">of an APK's data is in SQLite as rows and links<span>Estimate. 100% means everything inside the APK is stored as rows and linked. The bytes themselves are all there: <b>100% of every file</b>, checked byte for byte.</span></div>
   </div>
-  <div class="mbar"><div class="mfill" style="width:94%"></div></div>
-  <div class="mmeta"><b>Step 15 of 18 done</b><span>Index schema 19</span><span>CLI only</span></div>
+  <div class="mbar"><div class="mfill" style="width:95%"></div></div>
+  <div class="mmeta"><b>Step 16 of 18 done</b><span>Index schema 20</span><span>CLI only</span></div>
 
   <h2 class="ph">By area</h2>
   <div class="hbar small" id="areas"></div>
@@ -292,8 +292,8 @@
     <li class="done"><span>13</span>More cross-links: SDKs, screens → layouts<em>Done</em></li>
     <li class="done"><span>14</span>Remaining binary formats<em>Done</em></li>
     <li class="done"><span>15</span>Every instruction as rows<em>Done</em></li>
-    <li class="next"><span>16</span>Instruction operands (registers)<em>Next</em></li>
-    <li><span>17</span>Archives inside the APK, entry by entry</li>
+    <li class="done"><span>16</span>Instruction operands (registers)<em>Done</em></li>
+    <li class="next"><span>17</span>Archives inside the APK, entry by entry<em>Next</em></li>
     <li><span>18</span>A smaller file</li>
   </ul>
 </section>
@@ -691,8 +691,8 @@
     <tr><td class="num">13</td><td>More cross-links: class → SDK, activity → the layouts it shows, and the other links SQL already proves</td><td>Cross-links near 100%</td><td><span class="tag g">Done</span></td></tr>
     <tr><td class="num">14</td><td>Remaining binary formats: Kotlin builtins, baseline profiles, fonts, image sizes for every image</td><td>The last “bytes only” files as rows</td><td><span class="tag g">Done</span></td></tr>
     <tr><td class="num">15</td><td>Every instruction of every method as rows: opcode, literal, branch target, what it references</td><td>Code at 95%; SQL over method bodies</td><td><span class="tag g">Done</span></td></tr>
-    <tr><td class="num">16</td><td>Instruction operands: the registers of every instruction</td><td>Code at 100%</td><td><span class="tag">Next</span></td></tr>
-    <tr><td class="num">17</td><td>Archives inside the APK (zip, jar, APK, dex in assets), entry by entry</td><td>Packed payloads visible without unpacking</td><td><span class="tag">Planned</span></td></tr>
+    <tr><td class="num">16</td><td>Instruction operands: the registers of every instruction</td><td>Code at 100%</td><td><span class="tag g">Done</span></td></tr>
+    <tr><td class="num">17</td><td>Archives inside the APK (zip, jar, APK, dex in assets), entry by entry</td><td>Packed payloads visible without unpacking</td><td><span class="tag">Next</span></td></tr>
     <tr><td class="num">18</td><td>A smaller file: compact encodings for the biggest tables</td><td>The same facts in less disk</td><td><span class="tag">Planned</span></td></tr>
   </table></div>
   <h3>Step 1 result</h3>
@@ -789,7 +789,7 @@
     ['Manifest', 100, 'var(--green)'],
     ['Signing', 100, 'var(--green)'],
     ['Resource table', 95, 'var(--green)'],
-    ['Code (dex)', 95, 'var(--green)'],
+    ['Code (dex)', 100, 'var(--green)'],
     ['Resource XML files', 90, 'var(--green)'],
     ['Native libraries', 85, 'var(--green)'],
     ['Assets', 85, 'var(--green)'],

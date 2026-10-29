@@ -16,7 +16,7 @@ sextant sql app.sqlite "SELECT first_line, last_line, line_table FROM method_lin
 
 ## Every instruction
 
-`instruction_view` lists every instruction of every method in code order, the same sequence `smali` prints, without registers:
+`instruction_view` lists every instruction of every method in code order, the same sequence `smali` prints. Registers are raw v numbers: smali's `p0`, `p1`, … are the method's last registers.
 
 ```bash
 sextant sql app.sqlite "SELECT op, ref, literal FROM instruction_view WHERE method LIKE 'Lcom/app/Login;->auth%'"

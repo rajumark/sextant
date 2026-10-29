@@ -25,7 +25,7 @@ The file holds everything Sextant reads from the APK, in two forms:
 | `call_edges`, `string_uses`, `search_items` | the same edges and search hits with readable names (views) |
 | `libraries`, `frameworks`, `sdks`, `endpoints`, `endpoint_sources`, `findings`, `finding_evidence` | insights, each with its evidence |
 | `native_libraries`, `native_symbols` | native code, with JNI symbols mapped to Java |
-| `instructions`, `opcodes`, `instruction_view` | every instruction of every method in code order: opcode, literal, branch target and what it references (`--no-instructions` leaves them out) |
+| `instructions`, `opcodes`, `instruction_view` | every instruction of every method in code order: opcode, registers, literal, branch target and what it references (`--no-instructions` leaves them out) |
 | `annotations`, `annotation_values`, `method_lines`, `method_params`, `exception_handlers`, `kotlin_classes` | code details: every annotation with its values, each method's source line table, parameter names, exception handlers, and Kotlin metadata |
 | `images`, `fonts` | every image (PNG, WebP, JPEG, GIF, anywhere) with its pixel size, and every font with its family, style and version |
 | `signing_signers`, `signing_certificates`, `signing_digests`, `signing_lineage`, `signing_issues`, `signing_manifest` | signing as rows: every signer per scheme (with v3 SDK ranges), every certificate field and its bytes, rotation lineage, verifier issues, MANIFEST.MF digests |

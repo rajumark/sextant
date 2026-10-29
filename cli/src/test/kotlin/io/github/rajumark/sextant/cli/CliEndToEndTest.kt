@@ -585,6 +585,20 @@ class CliEndToEndTest {
     }
 
     @Test
+    fun `instruction rows carry their registers, as smali writes them`() {
+        val file = extracted("binaryeye")
+        val rows =
+            sextant(
+                "sql",
+                file,
+                "SELECT op, registers FROM instruction_view WHERE method LIKE 'Lde/markusfisch/android/binaryeye/activity/PickActivity;->onCreate%' LIMIT 2",
+            )
+        rows.stdout shouldContain "invoke-super  v13 v14"
+        rows.stdout shouldContain "const         v14"
+        sextant("sql", file, "SELECT registers FROM instruction_view WHERE op LIKE '%/range' LIMIT 1").stdout shouldContain ".."
+    }
+
+    @Test
     fun `extract stores insights and resources in the SQLite file`() {
         val file = extracted("binaryeye")
         for (table in listOf("libraries", "sdks", "endpoints", "resources", "string_resources", "layouts")) {
