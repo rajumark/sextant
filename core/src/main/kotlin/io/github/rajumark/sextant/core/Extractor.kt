@@ -125,15 +125,19 @@ object Extractor {
             } else {
                 try {
                     val listed = ApkFiles.list(apk, decoded.table, warnings)
-                    val (xml, elf) =
+                    raw =
                         ZipFile(apk.toFile()).use {
-                            RawXml.decode(it, decoded.root, listed, decoded.decodeXml, warnings) to
-                                RawElf.read(it, listed, warnings)
+                            RawLayer(
+                                xml = RawXml.decode(it, decoded.root, listed, decoded.decodeXml, warnings),
+                                resourceTable = decoded.table,
+                                elf = RawElf.read(it, listed, warnings),
+                                text = TextFiles.read(it, listed),
+                            )
                         }
-                    raw = RawLayer(xml, decoded.table, elf)
                     val decoders = ApkFiles.decoders(codeStats, decoded.table.isNotEmpty(), signing, resources, insights)
-                    xml.forEach { decoders.putIfAbsent(it.path, "xml") }
-                    elf.forEach { decoders.putIfAbsent(it.path, "native") }
+                    raw.xml.forEach { decoders.putIfAbsent(it.path, "xml") }
+                    raw.elf.forEach { decoders.putIfAbsent(it.path, "native") }
+                    raw.text.forEach { decoders.putIfAbsent(it.path, "text") }
                     ApkFiles.markDecoded(listed, decoders, signing)
                 } catch (e: Exception) {
                     warnings += "zip entries could not be listed (${e.javaClass.simpleName}: ${e.message})"

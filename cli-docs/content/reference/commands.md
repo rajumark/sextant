@@ -39,7 +39,7 @@ Commands:
   res         List strings (every locale, plurals, arrays), resource ids, styles and themes, drawables, layouts, menus, navigation graphs, assets and XML configs. References are shown as written and resolved; NAME shows one entry and who uses it.
   sdks        Show SDKs and libraries by role (analytics, ads, crash reporting, auth, database, UI, …) with versions when an artifact proves them. With several apps, show which SDKs appear where and filter apps by SDK, category or version.
   deobf       Look up names in a ProGuard/R8 mapping.txt, both ways: original -> obfuscated for classes, fields and methods. Pass the same file as --mapping to `source` and `grep` to read the code with original names.
-  files       List every file inside the APK: type, size, content, the resource it is (shrunk apps rename res/ files) and which decoder read it. --save writes one file out, from the bytes stored in the .sqlite file.
+  files       List every file inside the APK: type, size, content, the resource it is (shrunk apps rename res/ files) and which decoder read it. --grep searches the text files; --save writes one file out from the stored bytes.
   coverage    Show how much of the APK was decoded into rows: zip entries and bytes per file type, and examples of files that are only listed. Every file is always listed with its size and hash.
   cache       List the indexes Sextant keeps for APKs given directly to a command (one per APK, keyed by its SHA-256), or delete them with --clear. Set SEXTANT_CACHE to move the folder.
   xml         Print any XML file of the APK (manifest, layouts, menus, drawables, colors, animations, …) as stored in SQLite, or find elements across all of them with --tag, --attr and --value.
@@ -466,7 +466,7 @@ Arguments:
 ```text
 Usage: sextant files [<options>] <dir>
 
-  List every file inside the APK: type, size, content, the resource it is (shrunk apps rename res/ files) and which decoder read it. --save writes one file out, from the bytes stored in the .sqlite file.
+  List every file inside the APK: type, size, content, the resource it is (shrunk apps rename res/ files) and which decoder read it. --grep searches the text files; --save writes one file out from the stored bytes.
 
 Options:
   --type=(manifest|resource-table|dex|resource|native-library|asset|signature|library-version|kotlin-metadata|service-loader|meta-inf|other)  Only this file type
@@ -475,6 +475,7 @@ Options:
   --by-size                                                                                                                                   Largest files first
   --limit=<int>                                                                                                                               Maximum rows (default 500)
   --json                                                                                                                                      One JSON object per file
+  --grep=<text>                                                                                                                               Lines containing this text in the APK's text files (assets, configs, licenses, …)
   --save=<text>                                                                                                                               Write this file of the APK (its path, e.g. res/o-.png) to --out instead of listing
   -o, --out=<path>                                                                                                                            Where --save writes the file
   -h, --help                                                                                                                                  Show this message and exit

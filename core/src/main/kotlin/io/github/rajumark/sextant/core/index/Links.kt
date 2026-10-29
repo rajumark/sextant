@@ -51,6 +51,9 @@ internal object Links {
                 "WHEN 'asset' THEN 'file:' || s.location ELSE 'app' END, " +
                 "'contains', 'url:' || e.url, s.kind FROM endpoint_sources s JOIN endpoints e ON e.id = s.endpoint " +
                 "WHERE s.kind IN ('code', 'resource', 'native', 'manifest', 'asset')",
+            // Service-loader registrations: an interface is provided by the classes listed in META-INF/services.
+            "INSERT INTO links SELECT DISTINCT 'class:L' || replace(s.interface, '.', '/') || ';', 'provided_by', " +
+                "'class:' || k.descriptor, s.path FROM services s JOIN classes k ON k.name = s.implementation",
             // Native libraries load other libraries: one in the APK (same folder) or one from the system.
             "INSERT INTO links SELECT DISTINCT 'native:' || path, 'needs', coalesce('native:' || resolved, 'system:' || needed), NULL FROM elf_needed",
             // Native libraries implement the Java classes their JNI symbols name.

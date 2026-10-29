@@ -113,6 +113,14 @@ data class LinkRow(
     val via: String?,
 )
 
+/** One matching line of a text file inside the APK. */
+@Serializable
+data class TextLine(
+    val path: String,
+    val line: Int,
+    val text: String,
+)
+
 /** Read-only access to index.sqlite. */
 class IndexReader private constructor(
     private val conn: Connection,
@@ -187,7 +195,7 @@ class IndexReader private constructor(
 
     /** The CREATE statements of every table and view, for `sql --schema`. */
     fun schema(): String =
-        query("SELECT sql FROM sqlite_master WHERE sql IS NOT NULL AND name NOT LIKE 'search_%' ORDER BY rowid")
+        query("SELECT sql FROM sqlite_master WHERE sql IS NOT NULL AND name NOT GLOB '*search_*' ORDER BY rowid")
             .rows
             .joinToString(";\n\n", postfix = ";\n") { it[0].toString() }
 
@@ -812,6 +820,36 @@ class IndexReader private constructor(
             st.setString(1, path)
             st.executeQuery().use { rs -> if (rs.next()) rs.getBytes(1) else null }
         }
+    }
+
+    /**
+     * Lines containing [text] (case-insensitive) in the text files of the APK (`file_text`). The full-text index finds
+     * the files (3+ characters); shorter text scans them. At most [limit] lines.
+     */
+    fun textGrep(
+        text: String,
+        limit: Int,
+    ): List<TextLine> {
+        requireTable("file_text", "text files need 15")
+        val sql =
+            if (text.length >= 3) {
+                "SELECT t.path, t.text FROM file_text_search s JOIN file_text t ON t.rowid = s.rowid WHERE file_text_search MATCH ? ORDER BY t.path"
+            } else {
+                "SELECT path, text FROM file_text WHERE text LIKE ? ESCAPE '\\' ORDER BY path"
+            }
+        val out = mutableListOf<TextLine>()
+        conn.prepareStatement(sql).use { st ->
+            st.setString(1, if (text.length >= 3) "\"" + text.replace("\"", "\"\"") + "\"" else "%" + likeEscape(text) + "%")
+            st.executeQuery().use { rs ->
+                while (rs.next() && out.size < limit) {
+                    val path = rs.getString(1)
+                    rs.getString(2).lineSequence().forEachIndexed { i, line ->
+                        if (out.size < limit && line.contains(text, ignoreCase = true)) out += TextLine(path, i + 1, line.trim())
+                    }
+                }
+            }
+        }
+        return out
     }
 
     /** One value from the meta table, or null. */

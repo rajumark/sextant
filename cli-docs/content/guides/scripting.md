@@ -13,6 +13,16 @@ sextant q string-users app.apk --arg name=app_name
 sextant q hosts app.apk --csv > hosts.csv
 ```
 
+## Text files and JSON assets
+
+Every text, JSON and textual XML file is a row in `file_text`, so assets and configs are searchable and JSON is queryable:
+
+```bash
+sextant files app.apk --grep "api_key"                       # matching lines with file and line number
+sextant sql app.apk "SELECT path, json_extract(text, '$.version') FROM file_text WHERE json_valid(text)"
+sextant sql app.apk "SELECT key, value FROM file_properties WHERE path LIKE '%firebase%'"
+```
+
 ## What the tables mean
 
 Every file explains itself: `schema_docs` has one row per table and view and one per column, with a description.

@@ -481,6 +481,41 @@ class IndexWriter(
         }
     }
 
+    private fun insertText(extraction: Extraction) {
+        val fileIds = extraction.files.withIndex().associate { (i, f) -> f.path to i + 1L }
+        conn.prepareStatement("INSERT INTO file_text VALUES (?,?,?,?)").use { text ->
+            conn.prepareStatement("INSERT INTO file_properties VALUES (?,?,?,?)").use { props ->
+                conn.prepareStatement("INSERT INTO services VALUES (?,?,?)").use { services ->
+                    for (t in extraction.raw.text) {
+                        text.setString(1, t.path)
+                        fileIds[t.path]?.let { text.setLong(2, it) } ?: text.setNull(2, java.sql.Types.INTEGER)
+                        text.setInt(3, t.text.lines().size)
+                        text.setString(4, t.text)
+                        text.addBatch()
+                        t.properties.forEachIndexed { i, (k, v) ->
+                            props.setString(1, t.path)
+                            props.setInt(2, i)
+                            props.setString(3, k)
+                            props.setString(4, v)
+                            props.addBatch()
+                        }
+                        for (impl in t.services) {
+                            services.setString(1, t.path.removePrefix("META-INF/services/"))
+                            services.setString(2, impl)
+                            services.setString(3, t.path)
+                            services.addBatch()
+                        }
+                    }
+                    text.executeBatch()
+                    props.executeBatch()
+                    services.executeBatch()
+                }
+            }
+        }
+        // External-content FTS: built from file_text in one pass.
+        conn.createStatement().use { it.execute("INSERT INTO file_text_search(file_text_search) VALUES ('rebuild')") }
+    }
+
     private fun insertElf(extraction: Extraction) {
         val fileIds = extraction.files.withIndex().associate { (i, f) -> f.path to i + 1L }
         val elfPaths =
@@ -587,6 +622,7 @@ class IndexWriter(
             }
         }
         insertElf(extraction)
+        insertText(extraction)
         conn.prepareStatement("INSERT INTO resource_values VALUES (?,?,?,?,?,?)").use { values ->
             conn.prepareStatement("INSERT INTO resource_bag_items VALUES (?,?,?,?,?)").use { items ->
                 for (r in extraction.raw.resourceTable) {

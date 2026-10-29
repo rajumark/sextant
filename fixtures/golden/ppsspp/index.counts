@@ -15,6 +15,13 @@ features 10
 field_refs 18125
 fields 8211
 file_contents 0
+file_properties 2
+file_text 138
+file_text_search 138
+file_text_search_config 1
+file_text_search_data 5085
+file_text_search_docsize 138
+file_text_search_idx 4526
 files 662
 finding_evidence 4
 findings 4
@@ -38,8 +45,9 @@ resource_ids 1223
 resource_refs 959
 resource_values 4141
 resources 247
-schema_docs 350
+schema_docs 365
 sdks 0
+services 0
 string_refs 3237
 string_resources 2498
 strings 2250

@@ -1217,10 +1217,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#unreleased-schema-8-index-schema-14" class="md-nav__link">
+  <a href="#unreleased-schema-8-index-schema-15" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Unreleased (schema 8, index schema 14)
+        Unreleased (schema 8, index schema 15)
       
     </span>
   </a>
@@ -1391,10 +1391,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#unreleased-schema-8-index-schema-14" class="md-nav__link">
+  <a href="#unreleased-schema-8-index-schema-15" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Unreleased (schema 8, index schema 14)
+        Unreleased (schema 8, index schema 15)
       
     </span>
   </a>
@@ -1544,8 +1544,9 @@
 
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
 <p>All notable changes to Sextant. Versions follow semver; <code>schema_version</code> in <code>meta.json</code> tracks the output format separately.</p>
-<h2 id="unreleased-schema-8-index-schema-14">Unreleased (schema 8, index schema 14)<a class="headerlink" href="#unreleased-schema-8-index-schema-14" title="Permanent link">&para;</a></h2>
+<h2 id="unreleased-schema-8-index-schema-15">Unreleased (schema 8, index schema 15)<a class="headerlink" href="#unreleased-schema-8-index-schema-15" title="Permanent link">&para;</a></h2>
 <ul>
+<li><strong>Text files as rows</strong> (Mission SQLite, step 10): the text of every file whose content is text, JSON or textual XML, up to 4 MB (assets, library metadata, licenses, configs, res/raw), is stored in <code>file_text</code>, with a full-text index; JSON works with <code>json_extract(text, '$.key')</code>. <code>.properties</code> files are split into <code>file_properties</code> and <code>META-INF/services</code> files into <code>services</code>, also as <code>provided_by</code> links from the interface to each implementing class. <strong><code>files --grep &lt;text&gt;</code></strong> prints matching lines with their file and line number. File coverage: Binary Eye 98.7% of files decoded, Nextcloud 99.4%. New saved query <code>service-providers</code>.</li>
 <li><strong>Native libraries in depth</strong> (Mission SQLite, step 9): every ELF file in the APK, under <code>lib/</code> or hidden anywhere else, is read in depth: architecture, soname, GNU build id and runpath (<code>elf_files</code>), section headers (<code>elf_sections</code>), the libraries it loads with where each resolves (<code>elf_needed</code>), every dynamic symbol it exports or imports (<code>elf_symbols</code>) and the printable strings of its read-only data, up to 20,000 per file (<code>elf_strings</code>). <code>needs</code> links connect libraries to each other and to system libraries; <code>find --kind native_string</code> searches the strings (each value once across ABIs). New saved queries <code>native-libraries</code> and <code>native-sensitive-imports</code> (dlopen, execve, ptrace, mprotect, …). <strong>Fixed:</strong> search hits of kind <code>string_resource</code> were looked up in the native symbol table, so they could be dropped or point at the wrong row.</li>
 <li><strong>Every byte of the APK in SQLite</strong> (Mission SQLite, step 8): <code>file_contents</code> stores the uncompressed bytes of every file in the APK next to the tables built from them, so the <code>.sqlite</code> file holds the whole APK. No command needs the APK any more: <code>smali</code>, <code>source</code> and <code>grep</code> take the <code>.sqlite</code> file (its dex files are rebuilt into a zip once and cached), <code>icon -o</code> saves the icon from it, and <strong><code>files --save &lt;path&gt; -o &lt;file&gt;</code></strong> writes any single file out. A round-trip test checks that every entry of four real APKs comes back with identical bytes. <code>extract --no-content</code> stores the dex files only, for a smaller file (Binary Eye: 50.4 MB with every byte, 39.8 MB with <code>--no-content</code>). The MCP code tools fall back to the session's <code>.sqlite</code> file when no APK is given.</li>
 <li><strong>Self-describing database</strong> (Mission SQLite, step 7): every file has a <code>schema_docs</code> table that explains each table, view and column (<code>SELECT * FROM schema_docs WHERE "table" = 'links'</code>), generated from the comments in the schema, so people and agents need no manual. <strong><code>sextant q</code></strong> runs saved queries for common questions: <code>unused-strings</code>, <code>untranslated-strings</code>, <code>string-users</code> (<code>--arg name=…</code>), <code>password-fields</code>, <code>activity-layouts</code>, <code>exported-components</code>, <code>dangerous-permissions</code>, <code>webviews</code>, <code>hosts</code>, <code>jni-methods</code>, <code>biggest-packages</code>, <code>undecoded-files</code>. <code>sextant q</code> lists them; <code>sextant q &lt;query&gt;</code> prints its SQL. <code>sql</code> and <code>q</code> share the table, <code>--json</code> and <code>--csv</code> output.</li>

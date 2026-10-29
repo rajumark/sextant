@@ -6,7 +6,7 @@ package io.github.rajumark.sextant.core.index
  * The views give the readable, descriptor-based form.
  */
 object IndexSchema {
-    const val VERSION = 14
+    const val VERSION = 15
 
     val DDL =
         """
@@ -478,6 +478,30 @@ object IndexSchema {
           value  TEXT NOT NULL
         );
 
+        -- Text files (index schema 15): the text of every file whose content is text, JSON or textual XML, up to 4 MB
+        -- (assets, library metadata, licenses, configs, res/raw). JSON works with json_extract(text, '$.key').
+        CREATE TABLE file_text (
+          path  TEXT PRIMARY KEY,         -- the file inside the APK
+          file  INTEGER,                  -- files.id
+          lines INTEGER NOT NULL,
+          text  TEXT NOT NULL
+        );
+        -- Java .properties files, key by key in file order.
+        CREATE TABLE file_properties (
+          path  TEXT NOT NULL,
+          seq   INTEGER NOT NULL,
+          key   TEXT NOT NULL,
+          value TEXT NOT NULL
+        );
+        -- Service-loader registrations (META-INF/services/<interface>): which class implements which interface.
+        CREATE TABLE services (
+          interface      TEXT NOT NULL,   -- com.example.Plugin
+          implementation TEXT NOT NULL,   -- com.example.impl.PluginImpl
+          path           TEXT NOT NULL    -- the META-INF/services file
+        );
+        -- Full-text search over file_text (any 3+ character fragment); `sextant files --grep` uses it.
+        CREATE VIRTUAL TABLE file_text_search USING fts5(text, content = 'file_text', tokenize = 'trigram');
+
         -- File contents (index schema 13): the uncompressed bytes of every file in the APK (dex files always; the others
         -- unless extracted with --no-content), so the .sqlite file holds the whole APK and no command needs the APK itself.
         CREATE TABLE file_contents (
@@ -556,6 +580,8 @@ object IndexSchema {
         CREATE INDEX string_refs_method ON string_refs(method);
         CREATE INDEX components_name ON components(name);
         CREATE INDEX files_type ON files(type);
+        CREATE INDEX file_properties_key ON file_properties(key);
+        CREATE INDEX services_interface ON services(interface);
         CREATE INDEX elf_symbols_name ON elf_symbols(name);
         CREATE INDEX elf_symbols_path ON elf_symbols(path);
         CREATE INDEX elf_strings_path ON elf_strings(path);

@@ -481,6 +481,22 @@ class CliEndToEndTest {
     }
 
     @Test
+    fun `text files are rows, searchable with files --grep and queryable as JSON`() {
+        val file = extracted("binaryeye")
+        val grep = sextant("files", file, "--grep", "Germany")
+        grep.exitCode shouldBe 0
+        grep.stdout shouldContain "countrycodes.csv:85: Germany,DE,DEU"
+        sextant(
+            "sql",
+            file,
+            "SELECT json_valid(text) AS ok FROM file_text WHERE path = 'IdbMessageTypes.json'",
+        ).stdout.lines()[2].trim() shouldBe
+            "1"
+        sextant("q", "service-providers", file).stdout shouldContain "META-INF/services/"
+        sextant("coverage", file).stdout shouldContain "decoded: 918 of 930 files"
+    }
+
+    @Test
     fun `extract stores insights and resources in the SQLite file`() {
         val file = extracted("binaryeye")
         for (table in listOf("libraries", "sdks", "endpoints", "resources", "string_resources", "layouts")) {

@@ -41,6 +41,7 @@ object SavedQueries {
             "jni-methods",
             "native-libraries",
             "native-sensitive-imports",
+            "service-providers",
             "biggest-packages",
             "undecoded-files",
         )

@@ -15,6 +15,13 @@ features 3
 field_refs 98807
 fields 28190
 file_contents 0
+file_properties 2
+file_text 64
+file_text_search 64
+file_text_search_config 1
+file_text_search_data 290
+file_text_search_docsize 64
+file_text_search_idx 288
 files 1851
 finding_evidence 9
 findings 7
@@ -22,7 +29,7 @@ frameworks 2
 icons 12
 layouts 151
 libraries 45
-links 6556
+links 6559
 menus 0
 meta 10
 metadata 8
@@ -38,8 +45,9 @@ resource_ids 5745
 resource_refs 3601
 resource_values 23700
 resources 2031
-schema_docs 350
+schema_docs 365
 sdks 9
+services 3
 string_refs 28537
 string_resources 17974
 strings 15733

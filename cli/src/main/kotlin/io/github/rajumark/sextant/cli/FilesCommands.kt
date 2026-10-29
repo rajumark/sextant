@@ -12,6 +12,7 @@ import com.github.ajalt.clikt.parameters.types.path
 import io.github.rajumark.sextant.core.ExitCode
 import io.github.rajumark.sextant.core.SextantException
 import io.github.rajumark.sextant.core.index.CoverageRow
+import io.github.rajumark.sextant.core.index.TextLine
 import io.github.rajumark.sextant.core.model.ApkFile
 import io.github.rajumark.sextant.core.output.SextantJson
 import java.util.Locale
@@ -41,16 +42,32 @@ class FilesCommand : CoreCliktCommand(name = "files") {
     private val bySize by option("--by-size", help = "Largest files first").flag()
     private val limit by option("--limit", help = "Maximum rows (default 500)").int().default(500)
     private val json by option("--json", help = "One JSON object per file").flag()
+    private val grep by option("--grep", help = "Lines containing this text in the APK's text files (assets, configs, licenses, …)")
     private val save by option("--save", help = "Write this file of the APK (its path, e.g. res/o-.png) to --out instead of listing")
     private val out by option("-o", "--out", help = "Where --save writes the file").path()
 
     override fun help(context: Context) =
         "List every file inside the APK: type, size, content, the resource it is (shrunk apps rename res/ files) and " +
-            "which decoder read it. --save writes one file out, from the bytes stored in the .sqlite file."
+            "which decoder read it. --grep searches the text files; --save writes one file out from the stored bytes."
 
     override fun run() =
         guarded {
             openIndex(dir).use { index ->
+                grep?.let { text ->
+                    val lines = index.textGrep(text, limit)
+                    for (l in lines) {
+                        if (json) {
+                            println(SextantJson.compact.encodeToString(TextLine.serializer(), l))
+                        } else {
+                            println("${l.path}:${l.line}: ${if (l.text.length > 200) l.text.take(197) + "…" else l.text}")
+                        }
+                    }
+                    System.err.println(
+                        "${lines.size} matching line${if (lines.size == 1) "" else "s"}" +
+                            if (lines.size == limit) " (stopped at --limit $limit)" else "",
+                    )
+                    return@use
+                }
                 save?.let { path ->
                     val dest =
                         out

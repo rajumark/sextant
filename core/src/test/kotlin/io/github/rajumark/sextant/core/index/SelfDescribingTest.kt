@@ -32,7 +32,7 @@ class SelfDescribingTest {
             val tables =
                 index
                     .query(
-                        "SELECT name FROM sqlite_master WHERE type IN ('table', 'view') AND name NOT LIKE 'search_%' AND name NOT LIKE 'sqlite_%'",
+                        "SELECT name FROM sqlite_master WHERE type IN ('table', 'view') AND name NOT GLOB '*search_*' AND name NOT LIKE 'sqlite_%'",
                     ).rows
                     .map { it[0].toString() }
             val documented =

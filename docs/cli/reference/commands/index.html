@@ -1978,7 +1978,7 @@
 <a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>  res         List strings (every locale, plurals, arrays), resource ids, styles and themes, drawables, layouts, menus, navigation graphs, assets and XML configs. References are shown as written and resolved; NAME shows one entry and who uses it.
 <a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>  sdks        Show SDKs and libraries by role (analytics, ads, crash reporting, auth, database, UI, …) with versions when an artifact proves them. With several apps, show which SDKs appear where and filter apps by SDK, category or version.
 <a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>  deobf       Look up names in a ProGuard/R8 mapping.txt, both ways: original -&gt; obfuscated for classes, fields and methods. Pass the same file as --mapping to `source` and `grep` to read the code with original names.
-<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>  files       List every file inside the APK: type, size, content, the resource it is (shrunk apps rename res/ files) and which decoder read it. --save writes one file out, from the bytes stored in the .sqlite file.
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>  files       List every file inside the APK: type, size, content, the resource it is (shrunk apps rename res/ files) and which decoder read it. --grep searches the text files; --save writes one file out from the stored bytes.
 <a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>  coverage    Show how much of the APK was decoded into rows: zip entries and bytes per file type, and examples of files that are only listed. Every file is always listed with its size and hash.
 <a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>  cache       List the indexes Sextant keeps for APKs given directly to a command (one per APK, keyed by its SHA-256), or delete them with --clear. Set SEXTANT_CACHE to move the folder.
 <a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>  xml         Print any XML file of the APK (manifest, layouts, menus, drawables, colors, animations, …) as stored in SQLite, or find elements across all of them with --tag, --attr and --value.
@@ -2330,7 +2330,7 @@
 <h2 id="files">files<a class="headerlink" href="#files" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>Usage: sextant files [&lt;options&gt;] &lt;dir&gt;
 <a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>
-<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>  List every file inside the APK: type, size, content, the resource it is (shrunk apps rename res/ files) and which decoder read it. --save writes one file out, from the bytes stored in the .sqlite file.
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>  List every file inside the APK: type, size, content, the resource it is (shrunk apps rename res/ files) and which decoder read it. --grep searches the text files; --save writes one file out from the stored bytes.
 <a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>
 <a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>Options:
 <a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>  --type=(manifest|resource-table|dex|resource|native-library|asset|signature|library-version|kotlin-metadata|service-loader|meta-inf|other)  Only this file type
@@ -2339,12 +2339,13 @@
 <a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>  --by-size                                                                                                                                   Largest files first
 <a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>  --limit=&lt;int&gt;                                                                                                                               Maximum rows (default 500)
 <a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a>  --json                                                                                                                                      One JSON object per file
-<a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>  --save=&lt;text&gt;                                                                                                                               Write this file of the APK (its path, e.g. res/o-.png) to --out instead of listing
-<a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a>  -o, --out=&lt;path&gt;                                                                                                                            Where --save writes the file
-<a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a>  -h, --help                                                                                                                                  Show this message and exit
-<a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a>
-<a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a>Arguments:
-<a id="__codelineno-25-17" name="__codelineno-25-17" href="#__codelineno-25-17"></a>  &lt;dir&gt;  An APK (indexed once, then cached) or a .sqlite file from sextant extract
+<a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>  --grep=&lt;text&gt;                                                                                                                               Lines containing this text in the APK's text files (assets, configs, licenses, …)
+<a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a>  --save=&lt;text&gt;                                                                                                                               Write this file of the APK (its path, e.g. res/o-.png) to --out instead of listing
+<a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a>  -o, --out=&lt;path&gt;                                                                                                                            Where --save writes the file
+<a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a>  -h, --help                                                                                                                                  Show this message and exit
+<a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a>
+<a id="__codelineno-25-17" name="__codelineno-25-17" href="#__codelineno-25-17"></a>Arguments:
+<a id="__codelineno-25-18" name="__codelineno-25-18" href="#__codelineno-25-18"></a>  &lt;dir&gt;  An APK (indexed once, then cached) or a .sqlite file from sextant extract
 </code></pre></div>
 <h2 id="coverage">coverage<a class="headerlink" href="#coverage" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>Usage: sextant coverage [&lt;options&gt;] &lt;dir&gt;
