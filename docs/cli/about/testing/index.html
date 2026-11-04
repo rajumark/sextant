@@ -926,7 +926,7 @@
   <span class="md-ellipsis">
     
   
-    Output files
+    Output
   
 
     
@@ -1390,13 +1390,13 @@
 </table>
 <h2 id="what-runs">What runs<a class="headerlink" href="#what-runs" title="Permanent link">&para;</a></h2>
 <p><strong>Unit and integration tests</strong> (<code>gradle test</code>) cover the manifest mapper, resource and icon resolution, code extraction, the index, search, call trees, reach, xref, insights, findings, diff, the CLI commands and the MCP server.</p>
-<p><strong>Golden tests</strong> extract every corpus APK and compare <code>meta.json</code>, the manifest files, insights and a digest of every code file with checked-in expectations in <code>fixtures/golden/</code>. Output must be byte-identical between runs.</p>
+<p><strong>Golden tests</strong> extract every corpus APK, render its records (meta, manifest, insights) as JSON, pin code and large tables by digest and every SQLite table by row count, and compare them with checked-in expectations in <code>fixtures/golden/</code>. Output must be byte-identical between runs.</p>
 <p><strong>Cross-checks against Android's own tools:</strong></p>
 <ul>
 <li><code>scripts/compare-aapt2.sh</code> compares package, versions, SDKs, label, permissions (including implied ones), launchable activity, features, libraries and icon files with <code>aapt2 dump badging</code>, on all 46 APKs.</li>
 <li><code>scripts/compare-dexdump.sh</code> compares class, method and field counts and call sites with <code>dexdump</code>, on all 46 APKs.</li>
 </ul>
-<p><strong>Sweep</strong> (<code>scripts/sweep.sh</code>) runs the full CLI over the corpus one APK at a time, records time, result and warnings per APK, and fails if any APK fails. Outputs are trimmed after each APK so a full run fits in a few GB of disk (<code>SEXTANT_MIN_FREE_GB</code> stops it early when space runs low).</p>
+<p><strong>Sweep</strong> (<code>scripts/sweep.sh</code>) runs the full CLI over the corpus one APK at a time, records time, result and warnings per APK, and fails if any APK fails. Each output is cut down to a small SQLite file with the tables the cross-checks read (meta, features, permissions), so a full run fits in a few GB of disk (<code>SEXTANT_MIN_FREE_GB</code> stops it early when space runs low).</p>
 <h2 id="running-it-yourself">Running it yourself<a class="headerlink" href="#running-it-yourself" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>scripts/fetch-apks.sh<span class="w">          </span><span class="c1"># ~3 GB download, verified by sha256</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>gradle<span class="w"> </span><span class="nb">test</span><span class="w">                    </span><span class="c1"># unit + golden tests</span>

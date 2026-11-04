@@ -54,7 +54,7 @@ sextant findings app.sqlite --severity medium  # what should a reviewer look at?
 
     ---
 
-    `info` for a one-read overview, `--json` on every command, and `sextant mcp`, a Model Context Protocol server with 17 tools.
+    `info` for a one-read overview, `--json` on every command that prints data, and `sextant mcp`, a Model Context Protocol server with 17 tools.
 
     [:octicons-arrow-right-24: AI agents and MCP](guides/ai-agents.md)
 
@@ -62,7 +62,7 @@ sextant findings app.sqlite --severity medium  # what should a reviewer look at?
 
     ---
 
-    `sextant diff old/ new/` shows what changed between two versions: permissions, components, SDKs, library versions, hosts, code packages, strings and resources.
+    `sextant diff old.apk new.apk` (or two `.sqlite` files) shows what changed between two versions: permissions, components, SDKs, library versions, hosts, code packages, strings and resources.
 
     [:octicons-arrow-right-24: Comparing versions](guides/diff.md)
 
@@ -90,10 +90,12 @@ Components   13 activity · 0 activity-alias · 2 service · 1 receiver · 2 pro
 Exported     9 components · 2 with deep links
 Launcher     de.markusfisch.android.binaryeye.activity.SplashActivity
 DEX / ABIs   1 dex · arm64-v8a, armeabi-v7a, x86, x86_64
-Icon         res/o-.png (192×192 xxxhdpi) · @mipmap/ic_launcher · adaptive res/BW.xml
+Icon         res/o-.png (192×192 xxxhdpi) · @mipmap/ic_launcher · adaptive res/BW.xml fg res/Qr.xml bg #b6d46f
 Manifest     2 features · 2 libraries · 7 metadata · 2 queries
-Insights     1 SDKs · 46 libraries · 24 URLs on 12 hosts · 12 native libs · 87 locales
+Frameworks   none detected
+Insights     1 SDKs · 46 libraries · 24 URLs on 9 hosts · 12 native libs · 87 locales
 Code         2936 classes · 16824 methods · 55703 call edges · 0 Kotlin classes
+Obfuscation  heavy · 89% short class names · 2,606 in the default package · source files stripped (100%)
 ```
 
 ## Principles

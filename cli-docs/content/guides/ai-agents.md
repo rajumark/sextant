@@ -25,7 +25,7 @@ Sextant is designed so an AI agent can understand an APK without reading thousan
 Options:
 
 - `--dir <app.sqlite>` starts with an existing extraction (or an APK) as the current app.
-- `--apk <app.apk>` sets the APK used by `source`, `smali` and `icon`.
+- `--apk <app.apk>` sets the APK for `extract`, and for `source`, `grep`, `smali` and `icon` (optional: they otherwise use the bytes stored in the `.sqlite` file).
 
 ### Tools
 
@@ -47,7 +47,7 @@ Options:
 | `findings` | Review points with evidence |
 | `icon` | Launcher icon files, adaptive layers, best file |
 
-After `extract`, the other tools work on that app without paths; every tool also accepts an explicit `dir`. Errors come back as tool results with `isError: true` and a hint, so the agent can correct itself.
+After `extract`, the other tools work on that app without paths; every tool also accepts an explicit `dir` (code tools: `apk`). Errors come back as tool results with `isError: true` and a hint, so the agent can correct itself.
 
 Example prompts that work well:
 
@@ -71,4 +71,4 @@ The SQLite file itself is agent-friendly:
     sextant q unused-strings app.apk --json        # saved queries; `sextant q` lists them
     ```
 
-3. **Use `--json`** on `info`, `find`, `class`, `sql`, `callers`, `callees`, `reach`, `xref`, `insights`, `endpoints`, `findings`, `diff` and `icon` for machine-readable output on stdout. Progress and errors always go to stderr, so piping is safe.
+3. **Use `--json`** on every command that prints data (all except `extract`, `source`, `smali`, `deobf` and `mcp`) for machine-readable output on stdout. Progress and errors always go to stderr, so piping is safe.

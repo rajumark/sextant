@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Run `sextant extract` over the whole real-APK corpus and report time, result and warnings per APK.
 #   scripts/sweep.sh [--keep] [output-dir]      (default: build/sweep)
-# APKs are processed one at a time. After each one, the large outputs (code/, index.sqlite, native symbols,
-# resource values) are deleted and only the small files the cross-check scripts read are kept, so a full run needs
-# about one APK's worth of disk (≤ 2 GB) instead of tens of GB. --keep keeps everything.
+# APKs are processed one at a time into <out>/<name>.sqlite. After each one, the big file is replaced by a small
+# one holding only the tables the cross-check scripts read (meta, features, permissions), so a full run needs about
+# one large APK's worth of disk (≤ 2 GB) instead of tens of GB. --keep keeps the full files.
 # Stops early when free disk space drops below SEXTANT_MIN_FREE_GB (default 5).
 # Exit code is non-zero if any APK fails.
 set -uo pipefail
@@ -29,22 +29,26 @@ for apk in "$root"/fixtures/external/*.apk; do
     break
   fi
   start=$(perl -MTime::HiRes=time -e 'printf "%.3f", time')
-  "$bin" extract --quiet "$apk" -o "$out/$name" 2>"$out/$name.err"
+  db="$out/$name.sqlite"
+  "$bin" extract --quiet --force "$apk" -o "$db" 2>"$out/$name.err"
   rc=$?
   end=$(perl -MTime::HiRes=time -e 'printf "%.3f", time')
   secs=$(perl -e "printf '%.2f', $end - $start")
   if [[ $rc -eq 0 ]]; then
-    summary="$("$bin" info "$out/$name" | awk '/^(Package|Exported|Signing)/ {sub(/^[A-Za-z]+ +/, ""); printf "%s | ", $0}')"
+    summary="$("$bin" info "$db" | awk '/^(Package|Exported|Signing)/ {sub(/^[A-Za-z]+ +/, ""); printf "%s | ", $0}')"
   else
     summary="FAILED: $(head -3 "$out/$name.err" | tr '\n' ' ')"; failed=1
   fi
   printf "%-14s %4s %7s  %s\n" "$name" "$rc" "$secs" "$summary"
-  if ! $keep; then
-    # Keep only what compare-aapt2.sh / compare-dexdump.sh and the findings review read.
-    rm -rf "${out:?}/$name/code" "${out:?}/$name/index.sqlite" "${out:?}/$name/native/symbols.jsonl" "${out:?}/$name/resources"
-  fi
-  if [[ -f "$out/$name/meta.json" ]]; then
-    perl -0ne 'while (/"warnings": \[(.*?)\]/sg) { for (split /",\s*"/, $1) { s/^\s*"|"\s*$//g; print "               ! $_\n" if length } }' "$out/$name/meta.json"
+  if [[ -f "$db" ]]; then
+    sqlite3 "$db" "SELECT value FROM meta WHERE key = 'meta_json'" | jq -r '.warnings[]? | "               ! " + .'
+    if ! $keep; then
+      # Keep only what compare-aapt2.sh / compare-dexdump.sh read, in a small SQLite file.
+      small="$out/$name.small.sqlite"
+      rm -f "$small"
+      sqlite3 "$db" "ATTACH '$small' AS s; CREATE TABLE s.meta AS SELECT * FROM meta; CREATE TABLE s.features AS SELECT * FROM features; CREATE TABLE s.permissions AS SELECT * FROM permissions;"
+      mv "$small" "$db"
+    fi
   fi
 done
 exit $failed

@@ -20,14 +20,14 @@ Sextant is tested only against **real, downloaded APKs**: apps people actually s
 
 **Unit and integration tests** (`gradle test`) cover the manifest mapper, resource and icon resolution, code extraction, the index, search, call trees, reach, xref, insights, findings, diff, the CLI commands and the MCP server.
 
-**Golden tests** extract every corpus APK and compare `meta.json`, the manifest files, insights and a digest of every code file with checked-in expectations in `fixtures/golden/`. Output must be byte-identical between runs.
+**Golden tests** extract every corpus APK, render its records (meta, manifest, insights) as JSON, pin code and large tables by digest and every SQLite table by row count, and compare them with checked-in expectations in `fixtures/golden/`. Output must be byte-identical between runs.
 
 **Cross-checks against Android's own tools:**
 
 - `scripts/compare-aapt2.sh` compares package, versions, SDKs, label, permissions (including implied ones), launchable activity, features, libraries and icon files with `aapt2 dump badging`, on all 46 APKs.
 - `scripts/compare-dexdump.sh` compares class, method and field counts and call sites with `dexdump`, on all 46 APKs.
 
-**Sweep** (`scripts/sweep.sh`) runs the full CLI over the corpus one APK at a time, records time, result and warnings per APK, and fails if any APK fails. Outputs are trimmed after each APK so a full run fits in a few GB of disk (`SEXTANT_MIN_FREE_GB` stops it early when space runs low).
+**Sweep** (`scripts/sweep.sh`) runs the full CLI over the corpus one APK at a time, records time, result and warnings per APK, and fails if any APK fails. Each output is cut down to a small SQLite file with the tables the cross-checks read (meta, features, permissions), so a full run fits in a few GB of disk (`SEXTANT_MIN_FREE_GB` stops it early when space runs low).
 
 ## Running it yourself
 

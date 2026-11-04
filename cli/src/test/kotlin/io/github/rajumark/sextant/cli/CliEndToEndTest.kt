@@ -599,6 +599,17 @@ class CliEndToEndTest {
     }
 
     @Test
+    fun `archives inside the APK are listed entry by entry`() {
+        val file = extracted("minetest")
+        val entries = sextant("sql", file, "SELECT count(*) AS n FROM archive_entries WHERE archive = 'assets/assets.zip'")
+        entries.stdout
+            .lines()[2]
+            .trim()
+            .toInt() shouldBeGreaterThan 100
+        sextant("q", "hidden-code", file).exitCode shouldBe 0
+    }
+
+    @Test
     fun `extract stores insights and resources in the SQLite file`() {
         val file = extracted("binaryeye")
         for (table in listOf("libraries", "sdks", "endpoints", "resources", "string_resources", "layouts")) {

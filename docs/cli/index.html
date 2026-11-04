@@ -995,7 +995,7 @@
   <span class="md-ellipsis">
     
   
-    Output files
+    Output
   
 
     
@@ -1360,13 +1360,13 @@
 <li>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.5 15.5c0 1.11-.89 2-2 2s-2-.89-2-2 .9-2 2-2 2 .9 2 2m-9-2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.89 2-2-.89-2-2-2M23 15v3c0 .55-.45 1-1 1h-1v1c0 1.11-.89 2-2 2H5a2 2 0 0 1-2-2v-1H2c-.55 0-1-.45-1-1v-3c0-.55.45-1 1-1h1c0-3.87 3.13-7 7-7h1V5.73c-.6-.34-1-.99-1-1.73 0-1.1.9-2 2-2s2 .9 2 2c0 .74-.4 1.39-1 1.73V7h1c3.87 0 7 3.13 7 7h1c.55 0 1 .45 1 1m-2 1h-2v-2c0-2.76-2.24-5-5-5h-4c-2.76 0-5 2.24-5 5v2H3v1h2v3h14v-3h2z"/></svg></span> <strong>Built for AI agents</strong></p>
 <hr />
-<p><code>info</code> for a one-read overview, <code>--json</code> on every command, and <code>sextant mcp</code>, a Model Context Protocol server with 17 tools.</p>
+<p><code>info</code> for a one-read overview, <code>--json</code> on every command that prints data, and <code>sextant mcp</code>, a Model Context Protocol server with 17 tools.</p>
 <p><a href="guides/ai-agents/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"/></svg></span> AI agents and MCP</a></p>
 </li>
 <li>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 14H2v2h7v3l4-4-4-4zm6-1v-3h7V8h-7V5l-4 4z"/></svg></span> <strong>Compare releases</strong></p>
 <hr />
-<p><code>sextant diff old/ new/</code> shows what changed between two versions: permissions, components, SDKs, library versions, hosts, code packages, strings and resources.</p>
+<p><code>sextant diff old.apk new.apk</code> (or two <code>.sqlite</code> files) shows what changed between two versions: permissions, components, SDKs, library versions, hosts, code packages, strings and resources.</p>
 <p><a href="guides/diff/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"/></svg></span> Comparing versions</a></p>
 </li>
 <li>
@@ -1389,10 +1389,12 @@
 <a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>Exported     9 components · 2 with deep links
 <a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>Launcher     de.markusfisch.android.binaryeye.activity.SplashActivity
 <a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>DEX / ABIs   1 dex · arm64-v8a, armeabi-v7a, x86, x86_64
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>Icon         res/o-.png (192×192 xxxhdpi) · @mipmap/ic_launcher · adaptive res/BW.xml
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>Icon         res/o-.png (192×192 xxxhdpi) · @mipmap/ic_launcher · adaptive res/BW.xml fg res/Qr.xml bg #b6d46f
 <a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>Manifest     2 features · 2 libraries · 7 metadata · 2 queries
-<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>Insights     1 SDKs · 46 libraries · 24 URLs on 12 hosts · 12 native libs · 87 locales
-<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>Code         2936 classes · 16824 methods · 55703 call edges · 0 Kotlin classes
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>Frameworks   none detected
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>Insights     1 SDKs · 46 libraries · 24 URLs on 9 hosts · 12 native libs · 87 locales
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>Code         2936 classes · 16824 methods · 55703 call edges · 0 Kotlin classes
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>Obfuscation  heavy · 89% short class names · 2,606 in the default package · source files stripped (100%)
 </code></pre></div>
 <h2 id="principles">Principles<a class="headerlink" href="#principles" title="Permanent link">&para;</a></h2>
 <dl>

@@ -255,11 +255,11 @@
   </nav>
 <section id="tab-progress" class="tab" data-tab="progress">
   <div class="hero">
-    <div class="big">≈ 95%</div>
+    <div class="big">≈ 96%</div>
     <div class="hl">of an APK's data is in SQLite as rows and links<span>Estimate. 100% means everything inside the APK is stored as rows and linked. The bytes themselves are all there: <b>100% of every file</b>, checked byte for byte.</span></div>
   </div>
-  <div class="mbar"><div class="mfill" style="width:95%"></div></div>
-  <div class="mmeta"><b>Step 16 of 18 done</b><span>Index schema 20</span><span>CLI only</span></div>
+  <div class="mbar"><div class="mfill" style="width:96%"></div></div>
+  <div class="mmeta"><b>Step 17 of 18 done</b><span>Index schema 21</span><span>CLI only</span></div>
 
   <h2 class="ph">By area</h2>
   <div class="hbar small" id="areas"></div>
@@ -271,7 +271,7 @@
     <li class="db">App identity &amp; versions</li><li class="db">Signing</li><li class="db">Permissions</li><li class="db">Components &amp; verdicts</li><li class="db">Deep links</li><li class="db">Features, metadata, queries</li><li class="db">App icon</li>
     <li class="db">Strings (all locales)</li><li class="db">Resource IDs</li><li class="db">Styles &amp; themes</li><li class="db">Drawables</li><li class="db">Layouts</li><li class="db">Menus</li><li class="db">Navigation graphs</li><li class="db">XML configs</li><li class="db">Assets</li><li class="db">Resource references</li>
     <li class="db">Classes, methods, fields</li><li class="db">Call graph</li><li class="db">Field &amp; type references</li><li class="db">String constants</li><li class="db">Full-text search</li><li class="db">SQL queries</li>
-    <li class="db">SDKs &amp; libraries</li><li class="db">Frameworks</li><li class="db">Endpoints / URLs</li><li class="db">Native libraries &amp; JNI</li><li class="db">ELF sections, imports, strings</li><li class="db">Text files, properties, services</li><li class="db">Signing, every field</li><li class="db">Annotations, line tables, handlers</li><li class="db">Kotlin metadata</li><li class="db">Class → SDK, screen → layout, host → URL</li><li class="db">Images &amp; fonts</li><li class="db">Every instruction</li><li class="db">Security findings</li><li class="db">Every file + coverage</li><li class="db">APK index cache</li><li class="db">Code → resource links</li><li class="db">Every XML node &amp; attribute</li><li class="db">Resource values, every config</li><li class="db">Links across kinds</li><li class="db">Self-describing schema</li><li class="db">Saved queries</li>
+    <li class="db">SDKs &amp; libraries</li><li class="db">Frameworks</li><li class="db">Endpoints / URLs</li><li class="db">Native libraries &amp; JNI</li><li class="db">ELF sections, imports, strings</li><li class="db">Text files, properties, services</li><li class="db">Signing, every field</li><li class="db">Annotations, line tables, handlers</li><li class="db">Kotlin metadata</li><li class="db">Class → SDK, screen → layout, host → URL</li><li class="db">Images &amp; fonts</li><li class="db">Every instruction</li><li class="db">Archives &amp; hidden code</li><li class="db">Security findings</li><li class="db">Every file + coverage</li><li class="db">APK index cache</li><li class="db">Code → resource links</li><li class="db">Every XML node &amp; attribute</li><li class="db">Resource values, every config</li><li class="db">Links across kinds</li><li class="db">Self-describing schema</li><li class="db">Saved queries</li>
     <li class="db">Startup order</li><li class="db">Call paths (reach)</li><li class="db">Version diff</li><li class="db">Split bundles</li><li class="db">MCP for AI agents</li><li class="db">One-file output</li><li class="db">Decompiled Java</li><li class="db">Code search (grep)</li><li class="db">Smali</li><li class="db">ProGuard mappings</li><li class="db">Every byte of every file</li>
   </ul>
 
@@ -293,8 +293,8 @@
     <li class="done"><span>14</span>Remaining binary formats<em>Done</em></li>
     <li class="done"><span>15</span>Every instruction as rows<em>Done</em></li>
     <li class="done"><span>16</span>Instruction operands (registers)<em>Done</em></li>
-    <li class="next"><span>17</span>Archives inside the APK, entry by entry<em>Next</em></li>
-    <li><span>18</span>A smaller file</li>
+    <li class="done"><span>17</span>Archives inside the APK, entry by entry<em>Done</em></li>
+    <li class="next"><span>18</span>A smaller file<em>Next</em></li>
   </ul>
 </section>
 
@@ -311,7 +311,7 @@
   <ul class="tight">
     <li><b>Store:</b> SQLite. One file, every language reads it, agents already speak SQL, and full-text search plus recursive queries are built in. <a href="#store">Why not a graph database →</a></li>
     <li><b>Model:</b> four layers. <i>Files</i> (every ZIP entry), <i>raw</i> (every XML node and attribute, every resource table entry, every dex item), <i>entities</i> (components, strings, layouts, classes, …), and <i>links</i> (one edge table that ties everything together). <a href="#model">→</a></li>
-    <li><b>Join key:</b> the resource ID (<code>0x7f…</code>). Manifest, layouts, menus, styles <i>and code</i> all point at resources by that number. Today the code side is missing. <a href="#links">→</a></li>
+    <li><b>Join key:</b> the resource ID (<code>0x7f…</code>). Manifest, layouts, menus, styles <i>and code</i> all point at resources by that number. Until step 4 the code side was missing; it is now captured (<code>resource_refs</code>, <code>links</code>). <a href="#links">→</a></li>
     <li><b>Speed:</b> getting the app name takes 2.2 s from the APK and 7 ms from the database, about 320× faster. <a href="#instant">→</a></li>
     <li><b>“100%”</b> becomes a checkable promise: a coverage table that says, for every file in the APK, which decoder read it. <a href="#hundred">→</a></li>
   </ul>
@@ -337,7 +337,7 @@
         <text x="230" y="222" text-anchor="middle" class="mut" font-size="11">decoders run in parallel</text>
         <path d="M305 111 H352" class="ln" marker-end="url(#ar)"/>
         <rect x="356" y="62" width="150" height="100" rx="10" fill="var(--accent-bg)" stroke="var(--accent)" stroke-width="1.5"/>
-        <text x="431" y="96" text-anchor="middle" font-weight="700" font-size="15">&lt;sha256&gt;.db</text>
+        <text x="431" y="96" text-anchor="middle" font-weight="700" font-size="15">&lt;sha256&gt;.sqlite</text>
         <text x="431" y="115" text-anchor="middle" class="mut" font-size="11">files · raw · entities</text>
         <text x="431" y="130" text-anchor="middle" class="mut" font-size="11">links · derived</text>
         <text x="431" y="148" text-anchor="middle" class="mut" font-size="11">one SQLite file</text>
@@ -359,7 +359,7 @@
 
   <div class="stats">
     <div class="stat"><div class="v">3.5 s</div><div class="l">full extract of Binary Eye (8.3 MB APK, 2,936 classes)</div></div>
-    <div class="stat"><div class="v">0</div><div class="l">links from code to resources in an R8-built app like Binary Eye</div></div>
+    <div class="stat"><div class="v">0</div><div class="l">before step 4: links from code to resources in an R8-built app like Binary Eye</div></div>
   </div>
 
   <h3>What works well</h3>
@@ -422,7 +422,7 @@
 
   <!-- 4 -->
   <h2 id="model"><span class="n">4</span>The data model</h2>
-  <p>The model should be layered, so each layer has one job and one owner. The lower two layers are <b>facts read from the APK</b>; the upper two are <b>facts Sextant works out</b>. That split is Glean's lesson: when Sextant learns a new SDK signature, it rebuilds the derived layer from the database without opening the APK again.</p>
+  <p>The model should be layered, so each layer has one job and one owner. The lower two layers are <b>facts read from the APK</b>; the upper two are <b>facts Sextant works out</b>. That split is Glean's lesson: the derived facts always point back at the raw rows they come from.</p>
 
   <figure>
     <div class="frame">
@@ -431,11 +431,11 @@
           <rect x="20" y="10" width="660" height="50" rx="8" fill="var(--violet-bg)" stroke="var(--violet)"/>
           <text x="40" y="32" font-weight="700">5 · Derived</text>
           <text x="40" y="49" class="mut">sdks · libraries · frameworks · endpoints · findings · component verdicts · obfuscation score</text>
-          <text x="660" y="40" text-anchor="end" class="mut" font-size="11">rebuilt from the db</text>
+          <text x="660" y="40" text-anchor="end" class="mut" font-size="11">built from the rows below</text>
 
           <rect x="20" y="68" width="660" height="50" rx="8" fill="var(--accent-bg)" stroke="var(--accent)"/>
           <text x="40" y="90" font-weight="700">4 · Links</text>
-          <text x="40" y="107" class="mut">one edge table: uses · inflates · calls · reads · declares · themed_by · opens · shows_text</text>
+          <text x="40" y="107" class="mut">one edge table: declares · implemented_by · uses · instantiates · shows · needs · contains · signed_by · on_host</text>
 
           <rect x="20" y="126" width="660" height="50" rx="8" fill="var(--green-bg)" stroke="var(--green)"/>
           <text x="40" y="148" font-weight="700">3 · Entities</text>
@@ -464,7 +464,7 @@
     <li><b>Every fact says where it came from</b>: file, and offset or XML node. A finding is only as good as its evidence.</li>
   </ol>
 
-  <details><summary>Schema sketch of the new core tables</summary><div>
+  <details><summary>Schema sketch of the new core tables (original proposal; see "As built" below)</summary><div>
 <pre><code><span class="c">-- 1 · Files: every ZIP entry, so "100%" is checkable</span>
 <span class="k">CREATE TABLE</span> files (id INTEGER PRIMARY KEY, path TEXT UNIQUE, size INT, compressed INT,
   crc32 INT, sha256 TEXT, type TEXT, parsed_by TEXT);   <span class="c">-- parsed_by NULL = nobody read it</span>
@@ -485,6 +485,7 @@
 <span class="k">CREATE INDEX</span> links_src <span class="k">ON</span> links(src, rel);
 <span class="k">CREATE INDEX</span> links_dst <span class="k">ON</span> links(dst, rel);</code></pre>
     <p>The existing typed tables (<code>calls</code>, <code>field_refs</code>, <code>components</code>, …) stay for the hot paths. <code>links</code> is the one place that connects <i>kinds</i>, so a generic “what links here” works for everything.</p>
+    <p><b>As built:</b> <code>files.decoded_by</code>; <code>resource_values(id, type, name, config, value, parent)</code> and <code>resource_bag_items</code>; <code>xml_nodes</code> and <code>xml_attrs(node, name, value, ref)</code>; <code>links(src, rel, dst, via)</code> with text keys <code>component:…</code>, <code>class:L…;</code>, <code>method:…</code>, <code>@string/x</code>, <code>permission:…</code>, <code>url:…</code>, <code>sdk:…</code>, <code>host:…</code>; <code>entities</code> as a view. <code>SELECT * FROM schema_docs</code> in any file lists every table and column.</p>
   </div></details>
 
   <!-- 5 -->
@@ -537,24 +538,23 @@
   </figure>
 
   <h3>Closing the code → resource gap</h3>
-  <p>In a release build, R8 removes the <code>R</code> classes and puts the numbers straight into the bytecode (<code>const v0, 0x7f12003a</code>). Binary Eye has zero <code>R$</code> classes, so today Sextant can't tell which method shows which string. Nextcloud keeps its <code>R</code> fields, with 9,363 field reads, so it half works there. Both cases are easy to cover:</p>
+  <p>In a release build, R8 removes the <code>R</code> classes and puts the numbers straight into the bytecode (<code>const v0, 0x7f12003a</code>). Binary Eye has zero <code>R$</code> classes, so before step 4 Sextant couldn't tell which method shows which string. Nextcloud keeps its <code>R</code> fields, with 9,363 field reads, so it half works there. Both cases are easy to cover:</p>
   <ul class="tight">
     <li><b>Constants:</b> while reading dex, record every <code>const</code> literal whose value is a known resource ID from <code>resources.arsc</code>. Checking against the real ID table keeps false matches near zero.</li>
     <li><b>R fields:</b> map <code>R$string.app_name</code> reads to the same resource, using the field's constant value.</li>
-    <li><b>Call context:</b> keep the callee that receives it (<code>setContentView</code>, <code>getString</code>, <code>inflate</code>), so a link is labelled <code>inflates</code> or <code>shows_text</code>, not just “uses”.</li>
+    <li><b>Call context:</b> keep the callee that receives it (<code>setContentView</code>, <code>getString</code>, <code>inflate</code>), kept as the link's evidence (<code>via</code>); screens get <code>shows</code> links to the layouts they inflate.</li>
   </ul>
   <div class="callout g"><div class="i">✓</div><div><p><b>Step 4 result:</b> strings that looked unused dropped from 1,409 to 159 in Nextcloud (of 1,945) and from 313 to 58 in Binary Eye (of 497), once code counts as a referrer. Nextcloud has 6,943 code → resource links, Binary Eye 1,032.</p></div></div>
 
   <h3>The questions this answers</h3>
   <p>Your example, “which <code>strings.xml</code> key is used in which layout”, becomes one join. Joins can also chain across kinds:</p>
-<pre><code><span class="c">-- Which exported screens show text that mentions "password", and in which languages is it missing?</span>
-<span class="k">SELECT</span> c.key <span class="k">AS</span> screen, s.key <span class="k">AS</span> string, missing.locales
-<span class="k">FROM</span> entities c
-<span class="k">JOIN</span> links inf <span class="k">ON</span> inf.src = c.id <span class="k">AND</span> inf.rel = 'inflates'        <span class="c">-- screen → layout</span>
-<span class="k">JOIN</span> links txt <span class="k">ON</span> txt.src = inf.dst <span class="k">AND</span> txt.rel = 'shows_text'   <span class="c">-- layout → string</span>
-<span class="k">JOIN</span> entities s <span class="k">ON</span> s.id = txt.dst
-<span class="k">JOIN</span> missing_translations missing <span class="k">ON</span> missing.res = s.key
-<span class="k">WHERE</span> c.kind = 'component' <span class="k">AND</span> c.exported <span class="k">AND</span> s.label <span class="k">LIKE</span> '%password%';</code></pre>
+<pre><code><span class="c">-- Which exported screens show a string about scanning? (runs on Binary Eye: PickActivity → @string/scan_code)</span>
+<span class="k">SELECT DISTINCT</span> substr(sh.src, 11) <span class="k">AS</span> screen, u.dst <span class="k">AS</span> string, s.value
+<span class="k">FROM</span> links sh
+<span class="k">JOIN</span> components c <span class="k">ON</span> 'component:' || c.name = sh.src <span class="k">AND</span> c.exported = 1
+<span class="k">JOIN</span> links u <span class="k">ON</span> u.src = sh.dst <span class="k">AND</span> u.rel = 'uses' <span class="k">AND</span> u.dst <span class="k">LIKE</span> '@string/%'   <span class="c">-- layout → string</span>
+<span class="k">JOIN</span> string_resources s <span class="k">ON</span> '@string/' || s.name = u.dst <span class="k">AND</span> s.config = ''
+<span class="k">WHERE</span> sh.rel = 'shows' <span class="k">AND</span> s.value <span class="k">LIKE</span> '%scan%';                          <span class="c">-- screen → layout</span></code></pre>
   <div class="cards">
     <div class="card"><h4>Translation</h4><p>Which strings are missing in each locale, and which screens show them.</p></div>
     <div class="card"><h4>Dead resources</h4><p>Resources nothing points at, counting code too, so the list can be trusted.</p></div>
@@ -590,8 +590,8 @@
   <ul class="tight">
     <li><b>Write once, index last.</b> Bulk-insert into tables with no indexes inside one transaction, then build the indexes. This is the fastest way to load SQLite.</li>
     <li><b>Write to a temp file, then rename.</b> A crash or Ctrl-C never leaves a half-built database that looks complete.</li>
-    <li><b>Expensive layers on demand.</b> Decompiled Java takes seconds per class, so it isn't part of the single shot. When <code>source</code> decompiles a class, it saves the result in a <code>decompiled</code> table, so the second request is instant.</li>
-    <li><b>Version stamps.</b> <code>meta</code> stores the extractor version and the derive version separately. A new Sextant release that only improves SDK detection re-runs step 5 in seconds instead of a full extract.</li>
+    <li><b>Expensive layers on demand.</b> Decompiled Java takes seconds per class, so it isn't part of the single shot. <code>grep</code> keeps decompiled code in a local cache keyed by the APK's hash, so later searches only read text.</li>
+    <li><b>Version stamps.</b> <code>meta</code> stores the index schema version and the Sextant version; a cached index from another version is rebuilt on next use.</li>
   </ul>
 
   <!-- 7 -->
@@ -599,16 +599,16 @@
   <p>You said the app name should be ready-made, like a database entry. Here is what that's worth, measured on Binary Eye:</p>
   <figure>
     <div class="frame"><div class="hbar" id="speed"></div></div>
-    <figcaption>Figure 5. Time to get the app name of Binary Eye, measured with the step 2 cache. The 370 ms is mostly Java start-up; the lookup itself is 7 ms.</figcaption>
+    <figcaption>Figure 5. Time to get the app name of Binary Eye, measured with the step 2 cache. The rest of the 370 ms is Java start-up; the lookup itself is 7 ms.</figcaption>
   </figure>
   <p>The proposal is a <b>content-addressed cache</b>, the same trick Git and Nix use:</p>
   <ol class="tight">
     <li>Any command given an APK computes its SHA-256 (about 20 ms for 8 MB).</li>
-    <li>If <code>~/.cache/sextant/&lt;sha256&gt;.db</code> exists and its version matches, the command uses it. It's a lookup.</li>
+    <li>If <code>&lt;user cache&gt;/sextant/index/&lt;sha256&gt;.sqlite</code> exists (<code>~/Library/Caches</code> on macOS, <code>~/.cache</code> on Linux, <code>%LOCALAPPDATA%</code> on Windows, or <code>SEXTANT_CACHE</code>) and its version matches, the command uses it. It's a lookup.</li>
     <li>If not, Sextant runs the single-shot extract once, saves the file, and then answers.</li>
   </ol>
   <p>So <code>sextant info app.apk</code> is slow the first time and instant every time after, with no folder to manage. <code>sextant extract app.apk -o app.sqlite</code> writes the same file wherever you want it. Two different APKs can never share a database by mistake, because the key is their content, not their file name.</p>
-  <div class="callout a"><div class="i">!</div><div><p>The remaining 650 ms is JVM start-up. For true instant answers from the CLI, the options are a GraalVM native image, or keeping a small daemon running. The desktop app and the MCP server already stay running, so they get the 7 ms path for free.</p></div></div>
+  <div class="callout a"><div class="i">!</div><div><p>The remaining few hundred milliseconds are JVM start-up. For true instant answers from the CLI, the options are a GraalVM native image, or keeping a small daemon running. The desktop app and the MCP server already stay running, so they get the 7 ms path for free.</p></div></div>
 
   <!-- 8 -->
   <h2 id="hundred"><span class="n">8</span>What “100%” really means</h2>
@@ -624,8 +624,8 @@
     <tr><td><span class="tag g">L2</span> Linked</td><td>Rows are connected to other entities</td><td>that layout's <code>@string</code> and its activity</td></tr>
     <tr><td><span class="tag a">L3</span> Understood</td><td>Sextant draws conclusions from it</td><td>“this layout is a login form”</td></tr>
   </table></div>
-  <p><code>sextant coverage app.db</code> would print a short table: entries per type and the share at each level. “100%” then means <b>100% at L0, and L1 for every known format</b>. It's an honest number that can go in CI, and the existing corpus of 46 real APKs is exactly the test set to measure it on.</p>
-  <details><summary>Formats still to decode losslessly</summary><div>
+  <p><code>sextant coverage app.sqlite</code> prints a short table: entries and bytes per type, and how many were decoded. “100%” then means <b>100% at L0, and L1 for every known format</b>. It's an honest number that can go in CI, and the existing corpus of 46 real APKs is exactly the test set to measure it on.</p>
+  <details><summary>Formats to decode losslessly (as planned; since done: META-INF versions, properties, services, fonts, bundles)</summary><div>
     <ul class="tight">
       <li>Every binary XML attribute, including unknown ones and their typed values (dimension, color, enum, flags).</li>
       <li><code>META-INF/*.version</code>, <code>*.kotlin_module</code>, <code>*.properties</code>, service loader files (<code>META-INF/services/*</code>).</li>
@@ -639,20 +639,20 @@
   <h2 id="agents"><span class="n">9</span>From an AI agent's point of view</h2>
   <p>An agent has a small context window, pays for every token, and can't see a GUI. What helps it most is different from what helps a person:</p>
   <div class="cards">
-    <div class="card"><h4>One handle</h4><p>“Here's <code>app.db</code>” is all it needs. One file, nothing else to explore.</p></div>
+    <div class="card"><h4>One handle</h4><p>“Here's <code>app.sqlite</code>” is all it needs. One file, nothing else to explore.</p></div>
     <div class="card"><h4>Self-describing schema</h4><p>A <code>schema_docs</code> table inside the database explains every table and column, so the agent learns it with one query.</p></div>
     <div class="card"><h4>Search → show → links</h4><p>Three moves cover almost everything: find an entity, see it, follow its links. Each returns a stable key it can pass on.</p></div>
     <div class="card"><h4>Small answers</h4><p>Counts first, with <code>--limit</code> and pagination. Long values are cut with a note saying how to get the rest.</p></div>
     <div class="card"><h4>Evidence in every answer</h4><p>File and offset or XML node, so the agent can cite it and a person can verify it.</p></div>
     <div class="card"><h4>Read-only SQL</h4><p>The escape hatch for questions no tool anticipated. Already exists as <code>sextant sql</code>.</p></div>
   </div>
-  <div class="callout"><div class="i">→</div><div><p>The MCP server should get a generic <code>links(key, rel?, direction?)</code> tool. With it, an agent can walk from a string to a layout to an activity to a method without knowing any table names.</p></div></div>
+  <div class="callout"><div class="i">→</div><div><p>The MCP server has a generic <code>links</code> tool (since step 6). With it, an agent can walk from a string to a layout to an activity to a method without knowing any table names.</p></div></div>
 
   <!-- 10 -->
   <h2 id="power"><span class="n">10</span>From a power user's point of view</h2>
   <ul class="tight">
     <li><b>Many apps at once.</b> SQLite's <code>ATTACH</code> opens several app databases in one session: “which of my 46 apps ship OkHttp below 4.12” is one query.</li>
-    <li><b>Saved queries.</b> <code>sextant q unused-strings app.db</code> runs a named SQL file. Users can add their own, the way CodeQL query packs work.</li>
+    <li><b>Saved queries.</b> <code>sextant q unused-strings app.sqlite</code> runs a named SQL file bundled with Sextant; <code>sextant q &lt;name&gt;</code> prints its SQL to adapt.</li>
     <li><b>Familiar tools.</b> The <code>sqlite3</code> shell, Datasette (a web UI for any SQLite file), Python and pandas all work out of the box.</li>
     <li><b>Desktop app on the same file.</b> The desktop app, CLI and MCP all read one database, so they can never disagree.</li>
   </ul>
@@ -689,11 +689,11 @@
     <tr><td class="num">11</td><td>Signing as rows: every signer per scheme, every certificate field and its bytes, rotation lineage, verifier issues, MANIFEST.MF digests</td><td>Signing at 100%</td><td><span class="tag g">Done</span></td></tr>
     <tr><td class="num">12</td><td>Code details: annotations with their values, source line tables, exception handlers, Kotlin metadata</td><td>Code beyond structure: what a method throws and catches, where it is in the source, what Kotlin says it is</td><td><span class="tag g">Done</span></td></tr>
     <tr><td class="num">13</td><td>More cross-links: class → SDK, activity → the layouts it shows, and the other links SQL already proves</td><td>Cross-links near 100%</td><td><span class="tag g">Done</span></td></tr>
-    <tr><td class="num">14</td><td>Remaining binary formats: Kotlin builtins, baseline profiles, fonts, image sizes for every image</td><td>The last “bytes only” files as rows</td><td><span class="tag g">Done</span></td></tr>
+    <tr><td class="num">14</td><td>Remaining binary formats: fonts and image sizes for every image (Kotlin builtins and baseline profiles stay bytes only, on purpose)</td><td>The last “bytes only” files as rows</td><td><span class="tag g">Done</span></td></tr>
     <tr><td class="num">15</td><td>Every instruction of every method as rows: opcode, literal, branch target, what it references</td><td>Code at 95%; SQL over method bodies</td><td><span class="tag g">Done</span></td></tr>
     <tr><td class="num">16</td><td>Instruction operands: the registers of every instruction</td><td>Code at 100%</td><td><span class="tag g">Done</span></td></tr>
-    <tr><td class="num">17</td><td>Archives inside the APK (zip, jar, APK, dex in assets), entry by entry</td><td>Packed payloads visible without unpacking</td><td><span class="tag">Next</span></td></tr>
-    <tr><td class="num">18</td><td>A smaller file: compact encodings for the biggest tables</td><td>The same facts in less disk</td><td><span class="tag">Planned</span></td></tr>
+    <tr><td class="num">17</td><td>Archives inside the APK (zip, jar, APK, dex in assets), entry by entry</td><td>Packed payloads visible without unpacking</td><td><span class="tag g">Done</span></td></tr>
+    <tr><td class="num">18</td><td>A smaller file: compact encodings for the biggest tables</td><td>The same facts in less disk</td><td><span class="tag">Next</span></td></tr>
   </table></div>
   <h3>Step 1 result</h3>
   <p>Measured with <code>sextant coverage</code> on real apps. Every zip entry is listed; the share below is what a decoder turned into rows.</p>
@@ -792,7 +792,7 @@
     ['Code (dex)', 100, 'var(--green)'],
     ['Resource XML files', 90, 'var(--green)'],
     ['Native libraries', 85, 'var(--green)'],
-    ['Assets', 85, 'var(--green)'],
+    ['Assets', 95, 'var(--green)'],
     ['Cross-links', 95, 'var(--green)'],
     ['Other files', 85, 'var(--green)']
   ], 100, function (v) { return v + '%'; });

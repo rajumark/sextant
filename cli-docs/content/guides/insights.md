@@ -44,7 +44,7 @@ AndroidX and many other libraries ship `META-INF/<group>_<artifact>.version` fil
 
 Every URL from code strings (with the method that uses it), string resources, deep links, manifest meta-data, text assets (React Native/Hermes bundles, configs) and native libraries. See [`endpoints`](../reference/commands.md#endpoints).
 
-Host counts (`Top hosts`, `meta_json → insights.hosts`, the hosts section of `diff`) include only network URLs (`http`, `https`, `ws`, `wss`, `ftp`, `ftps`). A custom-scheme deep link such as `myapp://scan` names a screen in the app, not a server; it is still listed by `endpoints` and in `insights/endpoints.jsonl`.
+Host counts (`Top hosts`, `meta_json → insights.hosts`, the hosts section of `diff`) include only network URLs (`http`, `https`, `ws`, `wss`, `ftp`, `ftps`). A custom-scheme deep link such as `myapp://scan` names a screen in the app, not a server; it is still listed by `endpoints` and in the `endpoints` table.
 
 ## Native code
 
@@ -76,6 +76,7 @@ sextant icon app.apk -o icon.png     # save the best bitmap
 icon  @mipmap/ic_launcher
   anydpi-v26     xml   -               548 B  res/BW.xml
   hdpi           png   72×72          2567 B  res/yn.png
+  ldpi           png   36×36          1319 B  res/N3.png
   mdpi           png   48×48          1710 B  res/9w.png
   xhdpi          png   96×96          3363 B  res/FS.png
   xxhdpi         png   144×144        5145 B  res/RJ.png
@@ -89,4 +90,4 @@ adaptive icon  res/BW.xml
 - Icons are resolved from the manifest through `resources.arsc`, so they are found even when R8 resource shrinking renames files (`res/o-.png` above).
 - The best file is the largest bitmap by pixel area (PNG and WebP sizes are read from the file headers). When the icon is only a vector, the vector is reported and `-o` suggests `--layer foreground` instead, because vector drawables are compiled binary XML, not images.
 - Adaptive icons are split into background, foreground and monochrome layers, following `<inset>`/`<bitmap>` wrappers; solid-color layers report their color.
-- `icon` on an APK is fast (from the cache when the APK is indexed, else manifest and resources only). It also works on a `.sqlite` file; saving with `-o` needs the APK.
+- `icon` on an APK is fast (from the cache when the APK is indexed, else manifest and resources only). It also works on a `.sqlite` file, including `-o`, which saves the file from the stored bytes.

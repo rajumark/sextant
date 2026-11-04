@@ -92,4 +92,4 @@ for db in out/*.sqlite; do
 done
 ```
 
-For fast manifest-only sweeps, add `--no-code` (well under a second per APK).
+For faster sweeps that don't need code, add `--no-code` (and `--no-content` for smaller files).

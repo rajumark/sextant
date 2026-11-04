@@ -1017,7 +1017,7 @@
   <span class="md-ellipsis">
     
   
-    Output files
+    Output
   
 
     
@@ -1381,7 +1381,7 @@
 <p>Options:</p>
 <ul>
 <li><code>--dir &lt;app.sqlite&gt;</code> starts with an existing extraction (or an APK) as the current app.</li>
-<li><code>--apk &lt;app.apk&gt;</code> sets the APK used by <code>source</code>, <code>smali</code> and <code>icon</code>.</li>
+<li><code>--apk &lt;app.apk&gt;</code> sets the APK for <code>extract</code>, and for <code>source</code>, <code>grep</code>, <code>smali</code> and <code>icon</code> (optional: they otherwise use the bytes stored in the <code>.sqlite</code> file).</li>
 </ul>
 <h3 id="tools">Tools<a class="headerlink" href="#tools" title="Permanent link">&para;</a></h3>
 <table>
@@ -1454,7 +1454,7 @@
 </tr>
 </tbody>
 </table>
-<p>After <code>extract</code>, the other tools work on that app without paths; every tool also accepts an explicit <code>dir</code>. Errors come back as tool results with <code>isError: true</code> and a hint, so the agent can correct itself.</p>
+<p>After <code>extract</code>, the other tools work on that app without paths; every tool also accepts an explicit <code>dir</code> (code tools: <code>apk</code>). Errors come back as tool results with <code>isError: true</code> and a hint, so the agent can correct itself.</p>
 <p>Example prompts that work well:</p>
 <ul>
 <li>"Extract <code>~/Downloads/app.apk</code> and tell me which exported components reach network code."</li>
@@ -1476,7 +1476,7 @@
 </code></pre></div>
 </li>
 <li>
-<p><strong>Use <code>--json</code></strong> on <code>info</code>, <code>find</code>, <code>class</code>, <code>sql</code>, <code>callers</code>, <code>callees</code>, <code>reach</code>, <code>xref</code>, <code>insights</code>, <code>endpoints</code>, <code>findings</code>, <code>diff</code> and <code>icon</code> for machine-readable output on stdout. Progress and errors always go to stderr, so piping is safe.</p>
+<p><strong>Use <code>--json</code></strong> on every command that prints data (all except <code>extract</code>, <code>source</code>, <code>smali</code>, <code>deobf</code> and <code>mcp</code>) for machine-readable output on stdout. Progress and errors always go to stderr, so piping is safe.</p>
 </li>
 </ol>
 

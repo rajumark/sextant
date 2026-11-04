@@ -135,6 +135,7 @@ object Extractor {
                                 signing = signingDetail,
                                 images = MediaFiles.images(it, listed),
                                 fonts = MediaFiles.fonts(it, listed),
+                                nested = NestedArchives.read(it, listed, warnings),
                             )
                         }
                     val decoders = ApkFiles.decoders(codeStats, decoded.table.isNotEmpty(), signing, resources, insights)
@@ -143,6 +144,14 @@ object Extractor {
                     raw.text.forEach { decoders.putIfAbsent(it.path, "text") }
                     raw.images.forEach { decoders.putIfAbsent(it.path, "images") }
                     raw.fonts.forEach { decoders.putIfAbsent(it.path, "fonts") }
+                    raw.nested.entries
+                        .map { it.archive }
+                        .distinct()
+                        .forEach { decoders.putIfAbsent(it, "archives") }
+                    raw.nested.classes
+                        .map { it.container }
+                        .distinct()
+                        .forEach { decoders.putIfAbsent(it, "archives") }
                     ApkFiles.markDecoded(listed, decoders, signing)
                 } catch (e: Exception) {
                     warnings += "zip entries could not be listed (${e.javaClass.simpleName}: ${e.message})"

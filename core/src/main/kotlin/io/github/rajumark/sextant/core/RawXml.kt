@@ -27,6 +27,7 @@ class RawLayer(
     val signing: SigningDetail = SigningDetail(),
     val images: List<ImageFile> = emptyList(),
     val fonts: List<FontFile> = emptyList(),
+    val nested: NestedCode = NestedCode(),
 )
 
 /** Reads every file whose bytes are ELF (lib/ and anything hidden elsewhere) with [ElfDetail]. */

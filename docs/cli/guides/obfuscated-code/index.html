@@ -1011,7 +1011,7 @@
   <span class="md-ellipsis">
     
   
-    Output files
+    Output
   
 
     
@@ -1367,7 +1367,7 @@
 <p><code>info</code> shows how much of the code was renamed:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Obfuscation  heavy · 89% short class names · 2,606 in the default package · source files stripped (100%)
 </code></pre></div>
-<p><code>heavy</code> means more than 30% of classes have R8/ProGuard-style names (<code>a</code>, <code>yi0</code>); <code>light</code> means 5–30%. Signal keeps its names but strips source file names, which shows as <code>none · … · source files stripped</code>. The counts are in <code>meta.json</code> under <code>code.obfuscation</code>.</p>
+<p><code>heavy</code> means more than 30% of classes have R8/ProGuard-style names (<code>a</code>, <code>yi0</code>); <code>light</code> means 5–30%. Signal keeps its names but strips source file names, which shows as <code>none · … · source files stripped</code>. The counts are in <code>meta_json</code> (the <code>meta</code> table) under <code>code.obfuscation</code>.</p>
 <p>If you have the build's <code>mapping.txt</code> (your own release, or one shipped with a crash report), pass it to <code>source</code> and <code>grep</code>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="gp">$ </span>sextant<span class="w"> </span><span class="nb">source</span><span class="w"> </span>app.apk<span class="w"> </span>com.example.LoginManager<span class="w"> </span>--mapping<span class="w"> </span>mapping.txt
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="gp">$ </span>sextant<span class="w"> </span>grep<span class="w"> </span>app.apk<span class="w"> </span><span class="s2">"LoginManager"</span><span class="w"> </span>--mapping<span class="w"> </span>mapping.txt

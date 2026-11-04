@@ -2,6 +2,7 @@ package io.github.rajumark.sextant.core.index
 
 import io.github.rajumark.sextant.core.CodeSink
 import io.github.rajumark.sextant.core.Extraction
+import io.github.rajumark.sextant.core.NestedCode
 import io.github.rajumark.sextant.core.RawXml
 import io.github.rajumark.sextant.core.SextantException
 import io.github.rajumark.sextant.core.SigningDetail
@@ -581,6 +582,32 @@ class IndexWriter(
         }
     }
 
+    private fun insertNested(n: NestedCode) {
+        conn.prepareStatement("INSERT INTO archive_entries VALUES (?,?,?,?,?,?)").use { st ->
+            for (e in n.entries) {
+                st.setString(1, e.archive)
+                st.setString(2, e.path)
+                st.setLong(3, e.sizeBytes)
+                st.setString(4, e.crc32)
+                st.setString(5, e.sha256)
+                st.setString(6, e.magic)
+                st.addBatch()
+            }
+            st.executeBatch()
+        }
+        conn.prepareStatement("INSERT INTO hidden_classes VALUES (?,?,?,?,?)").use { st ->
+            for (c in n.classes) {
+                st.setString(1, c.container)
+                st.setString(2, c.entry)
+                st.setString(3, c.descriptor)
+                st.setString(4, c.superclass)
+                st.setInt(5, c.methods)
+                st.addBatch()
+            }
+            st.executeBatch()
+        }
+    }
+
     private fun insertMedia(extraction: Extraction) {
         val fileIds = extraction.files.withIndex().associate { (i, f) -> f.path to i + 1L }
 
@@ -842,6 +869,7 @@ class IndexWriter(
         insertText(extraction)
         insertSigning(extraction.raw.signing)
         insertMedia(extraction)
+        insertNested(extraction.raw.nested)
         conn.prepareStatement("INSERT INTO opcodes VALUES (?,?,?)").use { st ->
             for (op in com.android.tools.smali.dexlib2.Opcode.entries) {
                 st.setInt(1, op.ordinal)

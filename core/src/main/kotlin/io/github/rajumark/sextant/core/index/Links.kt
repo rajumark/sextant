@@ -75,6 +75,8 @@ internal object Links {
                 "JOIN calls e ON e.caller = m.id JOIN methods t ON t.id = e.callee AND t.class LIKE '%Binding;' " +
                 "JOIN methods bm ON bm.class = t.class " +
                 "JOIN resource_refs r ON r.from_kind = 'code' AND r.\"from\" = bm.descriptor AND r.ref LIKE '@layout/%'",
+            // A file inside the APK that carries dex code (a nested jar, zip or APK, or a loose dex) contains those classes.
+            "INSERT INTO links SELECT DISTINCT 'file:' || container, 'contains_code', 'class:' || descriptor, entry FROM hidden_classes",
             // Every URL is on a host.
             "INSERT INTO links SELECT 'url:' || url, 'on_host', 'host:' || host, scheme FROM endpoints WHERE host != ''",
             // Native libraries implement the Java classes their JNI symbols name.

@@ -1044,7 +1044,7 @@
   <span class="md-ellipsis">
     
   
-    Output files
+    Output
   
 
     
@@ -1423,13 +1423,13 @@
 <a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>✓ Components        18 (9 exported)
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>✓ Signing           v1, v2, v3
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>✓ Code              2936 classes · 16824 methods · 55703 call edges
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>✓ Files             930 in the APK, 619 decoded
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>✓ Wrote binaryeye.sqlite  31.8 MB in 2.9s
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>✓ Files             930 in the APK, 918 decoded
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>✓ Wrote binaryeye.sqlite  78.3 MB in 4.8s
 </code></pre></div>
-<p>Progress goes to <strong>stderr</strong>, so it never mixes with data on stdout. Typical apps take 1–5 seconds; the largest (60k+ classes) take 15–25 seconds, mostly to build the search index.</p>
+<p>Progress goes to <strong>stderr</strong>, so it never mixes with data on stdout. Typical apps take 2–8 seconds; the largest (50k+ classes) take 20–30 seconds.</p>
 <div class="admonition tip">
 <p class="admonition-title">Faster runs</p>
-<p><code>--no-code</code> skips code entirely and only reads the manifest, resources and signing, which takes well under a second.</p>
+<p><code>--no-code</code> skips the code tables (classes, methods, calls, instructions); every file is still decoded and stored. On Binary Eye it takes about 3 s instead of 5 s and writes 35 MB instead of 78 MB. Add <code>--no-content</code> to also leave out the stored file bytes.</p>
 </div>
 <h2 id="2-read-the-summary">2. Read the summary<a class="headerlink" href="#2-read-the-summary" title="Permanent link">&para;</a></h2>
 <p>Run:</p>
@@ -1439,13 +1439,13 @@
 <h2 id="3-search-anything">3. Search anything<a class="headerlink" href="#3-search-anything" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sextant<span class="w"> </span>find<span class="w"> </span>binaryeye.sqlite<span class="w"> </span><span class="s2">"markusfisch.de/BinaryEye"</span><span class="w"> </span>--limit<span class="w"> </span><span class="m">4</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>string     http://markusfisch.de/BinaryEye
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>           ← Lde/markusfisch/android/binaryeye/activity/CameraActivity;-&gt;onResume()V
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>string     https://markusfisch.de/BinaryEye
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>           ← Lde/markusfisch/android/binaryeye/activity/CameraActivity;-&gt;onResume()V
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>deep_link  http://markusfisch.de/BinaryEye*
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>           de.markusfisch.android.binaryeye.activity.CameraActivity
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>...
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>endpoint   http://markusfisch.de/BinaryEye
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>string     http://markusfisch.de/BinaryEye
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>           ← Lde/markusfisch/android/binaryeye/activity/CameraActivity;-&gt;onResume()V
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>deep_link  http://markusfisch.de/BinaryEye*
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>           de.markusfisch.android.binaryeye.activity.CameraActivity
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>endpoint   http://markusfisch.de/BinaryEye*
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>4 results (stopped at --limit 4)
 </code></pre></div>
 <p>The string hit tells you <strong>which method loads it</strong>; the deep-link hit tells you <strong>which activity opens it</strong>.</p>
 <h2 id="4-follow-the-code">4. Follow the code<a class="headerlink" href="#4-follow-the-code" title="Permanent link">&para;</a></h2>
@@ -1465,7 +1465,7 @@
 <h2 id="what-next">What next<a class="headerlink" href="#what-next" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../../guides/investigating/">Investigating an app</a>: <code>class</code>, <code>xref</code>, <code>callers</code>, <code>reach</code>, <code>smali</code>.</li>
-<li><a href="../../reference/output/">Output files</a>: every file and field.</li>
+<li><a href="../../reference/output/">Output</a>: every table in the SQLite file.</li>
 <li><a href="../../guides/ai-agents/">AI agents and MCP</a>: let an agent do the digging.</li>
 </ul>
 

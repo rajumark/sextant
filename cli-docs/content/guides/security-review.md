@@ -61,6 +61,15 @@ The full list of rules, with what each one means, is in [Review findings](../ref
     sextant sql app.sqlite "SELECT jni_class, jni_method, library FROM native_symbols WHERE jni_class IS NOT NULL"
     ```
 
+## Code outside classesN.dex
+
+Jars, zips, APKs and dex files in assets can hold code the app loads at run time (plugins, privileged helpers, packed payloads). Sextant lists them without unpacking anything:
+
+```bash
+sextant q hidden-code app.apk                          # each container, how many classes and methods
+sextant sql app.apk "SELECT archive, path, magic FROM archive_entries WHERE magic IN ('dex', 'elf', 'zip')"
+```
+
 ## Signing
 
 Every signer of every scheme, every certificate field and the verifier's own warnings are rows:

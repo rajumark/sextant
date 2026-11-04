@@ -27,7 +27,7 @@
     
     
       
-        <title>Output files - Sextant CLI</title>
+        <title>Output - Sextant CLI</title>
       
     
     
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Output files
+              Output
             
           </span>
         </div>
@@ -940,7 +940,7 @@
   <span class="md-ellipsis">
     
   
-    Output files
+    Output
   
 
     
@@ -958,7 +958,7 @@
   <span class="md-ellipsis">
     
   
-    Output files
+    Output
   
 
     
@@ -1448,6 +1448,10 @@
 <td>code details: every annotation with its values, each method's source line table, parameter names, exception handlers, and Kotlin metadata</td>
 </tr>
 <tr>
+<td><code>archive_entries</code>, <code>hidden_classes</code></td>
+<td>every entry of a zip, jar or APK inside the APK, and every class of dex code outside the app's own <code>classesN.dex</code>: code it can load at run time</td>
+</tr>
+<tr>
 <td><code>images</code>, <code>fonts</code></td>
 <td>every image (PNG, WebP, JPEG, GIF, anywhere) with its pixel size, and every font with its family, style and version</td>
 </tr>
@@ -1562,7 +1566,7 @@
 <a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">json</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">records</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'component'</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 </code></pre></div>
 <h2 id="size-and-speed">Size and speed<a class="headerlink" href="#size-and-speed" title="Permanent link">&para;</a></h2>
-<p>Typical apps extract in 1–5 seconds into 30–200 MB. The largest corpus apps (60k+ classes) take 15–25 seconds, mostly to build the full-text index. <code>--no-code</code> skips the code tables and takes well under a second.</p>
+<p>Typical apps extract in 1–5 seconds into 30–200 MB. The largest corpus apps (60k+ classes) take 15–25 seconds, mostly to build the full-text index. <code>--no-code</code> skips the code tables, saving about 40% of the time and over half the size; <code>--no-content</code> and <code>--no-instructions</code> shrink the file further.</p>
 <h2 id="the-apk-cache">The APK cache<a class="headerlink" href="#the-apk-cache" title="Permanent link">&para;</a></h2>
 <p>Given an APK instead of a <code>.sqlite</code> file, a command indexes it once into a cache keyed by the APK's SHA-256 (the platform's user cache folder, or <code>SEXTANT_CACHE</code>) and reads it from there on every later run. <code>sextant cache</code> lists the cached apps; <code>sextant cache --clear</code> deletes them. A new Sextant version rebuilds an index on next use.</p>
 

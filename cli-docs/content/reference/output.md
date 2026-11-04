@@ -27,6 +27,7 @@ The file holds everything Sextant reads from the APK, in two forms:
 | `native_libraries`, `native_symbols` | native code, with JNI symbols mapped to Java |
 | `instructions`, `opcodes`, `instruction_view` | every instruction of every method in code order: opcode, registers, literal, branch target and what it references (`--no-instructions` leaves them out) |
 | `annotations`, `annotation_values`, `method_lines`, `method_params`, `exception_handlers`, `kotlin_classes` | code details: every annotation with its values, each method's source line table, parameter names, exception handlers, and Kotlin metadata |
+| `archive_entries`, `hidden_classes` | every entry of a zip, jar or APK inside the APK, and every class of dex code outside the app's own `classesN.dex`: code it can load at run time |
 | `images`, `fonts` | every image (PNG, WebP, JPEG, GIF, anywhere) with its pixel size, and every font with its family, style and version |
 | `signing_signers`, `signing_certificates`, `signing_digests`, `signing_lineage`, `signing_issues`, `signing_manifest` | signing as rows: every signer per scheme (with v3 SDK ranges), every certificate field and its bytes, rotation lineage, verifier issues, MANIFEST.MF digests |
 | `file_text`, `file_properties`, `services` | the text of every text, JSON and textual XML file (assets, configs, licenses, …) with a full-text index; `.properties` files key by key; service-loader registrations |
@@ -92,7 +93,7 @@ SELECT json FROM records WHERE kind = 'component' LIMIT 1;
 
 ## Size and speed
 
-Typical apps extract in 1–5 seconds into 30–200 MB. The largest corpus apps (60k+ classes) take 15–25 seconds, mostly to build the full-text index. `--no-code` skips the code tables and takes well under a second.
+Typical apps extract in 1–5 seconds into 30–200 MB. The largest corpus apps (60k+ classes) take 15–25 seconds, mostly to build the full-text index. `--no-code` skips the code tables, saving about 40% of the time and over half the size; `--no-content` and `--no-instructions` shrink the file further.
 
 ## The APK cache
 

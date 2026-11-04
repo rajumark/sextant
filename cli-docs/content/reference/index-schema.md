@@ -7,7 +7,7 @@ or external) has one row in `methods`; edges point at integer ids, and the views
 and `search_items` give the readable, descriptor-based form. JSON arrays are stored as TEXT; use SQLite's
 `json_each` to expand them. Query it with `sextant sql <dir> "…"` (read-only) or any SQLite tool.
 
-Schema version: **20**
+Schema version: **21**
 (stored in `meta` as `index_schema_version`).
 
 ```sql
@@ -574,6 +574,24 @@ CREATE VIEW instruction_view AS
   LEFT JOIN methods rm ON rm.id = i.ref_method
   LEFT JOIN strings s ON s.id = i.ref_string;
 
+-- Archives inside the APK (index schema 21): every entry of a zip, jar or APK the app carries, one level deep.
+CREATE TABLE archive_entries (
+  archive    TEXT NOT NULL,       -- the archive inside the APK, e.g. assets/plugin.jar
+  path       TEXT NOT NULL,       -- the entry inside it
+  size_bytes INTEGER NOT NULL,
+  crc32      TEXT NOT NULL,
+  sha256     TEXT NOT NULL,
+  magic      TEXT                 -- content from the first bytes, as in files.magic
+);
+-- Classes of dex code outside the app's own classesN.dex: in nested archives or loose dex files. Code the app can load at run time.
+CREATE TABLE hidden_classes (
+  container  TEXT NOT NULL,       -- the file inside the APK
+  entry      TEXT,                -- the dex entry inside an archive (classes.dex); NULL for a loose dex file
+  descriptor TEXT NOT NULL,
+  superclass TEXT,
+  methods    INTEGER NOT NULL
+);
+
 -- Every image file in the APK (index schema 18), anywhere, not only drawables: format and pixel size from its header.
 CREATE TABLE images (
   path   TEXT PRIMARY KEY,
@@ -722,6 +740,8 @@ CREATE INDEX string_refs_string ON string_refs(string);
 CREATE INDEX string_refs_method ON string_refs(method);
 CREATE INDEX components_name ON components(name);
 CREATE INDEX files_type ON files(type);
+CREATE INDEX archive_entries_archive ON archive_entries(archive);
+CREATE INDEX hidden_classes_descriptor ON hidden_classes(descriptor);
 CREATE INDEX instructions_method ON instructions(method);
 CREATE INDEX instructions_op ON instructions(op);
 CREATE INDEX annotations_target ON annotations(target);

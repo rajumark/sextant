@@ -1033,7 +1033,7 @@
   <span class="md-ellipsis">
     
   
-    Output files
+    Output
   
 
     
@@ -1657,10 +1657,10 @@
 </code></pre></div>
 <p>A version is shown only when an artifact in the APK proves it: META-INF <code>*.version</code> files, Maven <code>pom.properties</code>, Play services and Firebase <code>.properties</code> files, or OkHttp's user agent string. Otherwise the version is <code>?</code>. Sextant never guesses one from class names.</p>
 <p>With several apps, <code>sdks</code> shows which SDKs appear where, and the filters select apps:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>sextant<span class="w"> </span>sdks<span class="w"> </span>apps/*/<span class="w">                                   </span><span class="c1"># SDK × app overview</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>sextant<span class="w"> </span>sdks<span class="w"> </span>apps/*/<span class="w"> </span>--category<span class="w"> </span>ads<span class="w">                    </span><span class="c1"># apps that contain an ads SDK</span>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>sextant<span class="w"> </span>sdks<span class="w"> </span>apps/*/<span class="w"> </span>--sdk<span class="w"> </span>okhttp<span class="w"> </span>--below<span class="w"> </span><span class="m">4</span>.9.0<span class="w">        </span><span class="c1"># apps with OkHttp older than 4.9.0</span>
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>sextant<span class="w"> </span>sdks<span class="w"> </span>apps/*/<span class="w"> </span>--sdk<span class="w"> </span>firebase<span class="w"> </span>--sdk<span class="w"> </span>sentry<span class="w"> </span>--json
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>sextant<span class="w"> </span>sdks<span class="w"> </span>apps/*.sqlite<span class="w">                                   </span><span class="c1"># SDK × app overview</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>sextant<span class="w"> </span>sdks<span class="w"> </span>apps/*.sqlite<span class="w"> </span>--category<span class="w"> </span>ads<span class="w">                    </span><span class="c1"># apps that contain an ads SDK</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>sextant<span class="w"> </span>sdks<span class="w"> </span>apps/*.sqlite<span class="w"> </span>--sdk<span class="w"> </span>okhttp<span class="w"> </span>--below<span class="w"> </span><span class="m">4</span>.9.0<span class="w">        </span><span class="c1"># apps with OkHttp older than 4.9.0</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>sextant<span class="w"> </span>sdks<span class="w"> </span>apps/*.sqlite<span class="w"> </span>--sdk<span class="w"> </span>firebase<span class="w"> </span>--sdk<span class="w"> </span>sentry<span class="w"> </span>--json
 </code></pre></div>
 <p><code>--category</code> and <code>--sdk</code> can be repeated; every one must match. <code>--below</code> needs exactly one <code>--sdk</code> and skips apps where that SDK's version is unknown.</p>
 

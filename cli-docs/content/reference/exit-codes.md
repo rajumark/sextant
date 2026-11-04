@@ -12,9 +12,9 @@
 Errors are printed to **stderr** with a hint when there is an obvious fix:
 
 ```text
-$ sextant extract app.apk -o busy/
-Error: output directory busy is not empty
-hint: pass --force to overwrite Sextant's files in it
+$ sextant extract app.apk
+Error: app.sqlite already exists
+hint: pass --force to overwrite it
 ```
 
 `--force` only replaces the output file; nothing else is touched or deleted. The file is built under a temporary name and moved into place at the end, so a failed run never leaves a half-written file.
@@ -22,9 +22,9 @@ hint: pass --force to overwrite Sextant's files in it
 For an internal error, set `SEXTANT_DEBUG=1` to print the stack trace:
 
 ```bash
-SEXTANT_DEBUG=1 sextant extract app.apk -o out/
+SEXTANT_DEBUG=1 sextant extract app.apk -o app.sqlite --force
 ```
 
 ## Hostile and broken input
 
-Sextant never executes anything from an APK and never writes anything but its output file and its own cache. Inflation is capped (manifest 32 MB, `resources.arsc` 512 MB, each dex 256 MB, each native library 256 MB) as a zip-bomb guard. Malformed parts become entries in `meta.json → warnings` instead of crashes: a dex that can't be read, methods with unreadable bytecode, an undecodable resource table, an unsigned or invalid signature.
+Sextant never executes anything from an APK and never writes anything but its output file and its own cache. Inflation is capped (manifest 32 MB, `resources.arsc` 512 MB, each dex 256 MB, each native library 256 MB) as a zip-bomb guard. Malformed parts become entries in `meta_json → warnings` (the `meta` table) instead of crashes: a dex that can't be read, methods with unreadable bytecode, an undecodable resource table, an unsigned or invalid signature.

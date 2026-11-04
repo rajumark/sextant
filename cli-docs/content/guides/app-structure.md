@@ -204,10 +204,10 @@ A version is shown only when an artifact in the APK proves it: META-INF `*.versi
 With several apps, `sdks` shows which SDKs appear where, and the filters select apps:
 
 ```bash
-sextant sdks apps/*/                                   # SDK × app overview
-sextant sdks apps/*/ --category ads                    # apps that contain an ads SDK
-sextant sdks apps/*/ --sdk okhttp --below 4.9.0        # apps with OkHttp older than 4.9.0
-sextant sdks apps/*/ --sdk firebase --sdk sentry --json
+sextant sdks apps/*.sqlite                                   # SDK × app overview
+sextant sdks apps/*.sqlite --category ads                    # apps that contain an ads SDK
+sextant sdks apps/*.sqlite --sdk okhttp --below 4.9.0        # apps with OkHttp older than 4.9.0
+sextant sdks apps/*.sqlite --sdk firebase --sdk sentry --json
 ```
 
 `--category` and `--sdk` can be repeated; every one must match. `--below` needs exactly one `--sdk` and skips apps where that SDK's version is unknown.

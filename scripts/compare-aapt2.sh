@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Cross-check sextant's output against Google's aapt2 for every corpus APK.
-#   scripts/compare-aapt2.sh [sweep-dir]   (run scripts/sweep.sh first; default build/sweep)
+#   scripts/compare-aapt2.sh [sweep-dir]   (run scripts/sweep.sh first; default build/sweep; reads <name>.sqlite)
 # Compares package, versionCode, versionName, minSdk, targetSdk, label, requested permission names, and that every
 # per-density icon file aapt2 picks (application-icon-*) is among the files Sextant resolved for android:icon,
 # optional features and required/optional libraries (exact), and that every required feature is listed by aapt2
@@ -15,8 +15,10 @@ aapt2="$(ls -d "${ANDROID_HOME:-$HOME/Library/Android/sdk}"/build-tools/*/aapt2 
 failed=0
 for apk in "$root"/fixtures/external/*.apk; do
   name="$(basename "$apk" .apk)"
-  meta="$out/$name/meta.json"
-  [[ -f "$meta" ]] || { echo "✕ $name: no sweep output"; failed=1; continue; }
+  db="$out/$name.sqlite"
+  [[ -f "$db" ]] || { echo "✕ $name: no sweep output"; failed=1; continue; }
+  meta="$(sqlite3 "$db" "SELECT value FROM meta WHERE key = 'meta_json'")"
+  q() { sqlite3 "$db" "$1" | sort -u; }
   badging="$("$aapt2" dump badging "$apk" 2>/dev/null)"
   a_pkg=$(sed -n "s/^package: name='\([^']*\)'.*/\1/p" <<<"$badging")
   a_vc=$(sed -n "s/^package: .* versionCode='\([^']*\)'.*/\1/p" <<<"$badging")
@@ -31,19 +33,18 @@ for apk in "$root"/fixtures/external/*.apk; do
   a_icons=$(sed -n "s/^application-icon-[0-9]*:'\(.*\)'$/\1/p" <<<"$badging" | sort -u)
   a_perms=$(sed -n "s/^uses-permission\(-sdk-23\)\{0,1\}: name='\([^']*\)'.*/\2/p" <<<"$badging" | sort -u)
 
-  s_pkg=$(jq -r '.package // ""' "$meta")
-  s_vc=$(jq -r '.version_code // ""' "$meta")
-  s_vn=$(jq -r '.version_name // ""' "$meta")
-  s_min=$(jq -r '.min_sdk // ""' "$meta")
-  s_target=$(jq -r '.target_sdk // ""' "$meta")
-  s_label=$(jq -r '.label // ""' "$meta")
-  feats="$out/$name/features.jsonl"
-  s_feat_opt=$(jq -r 'select(.kind=="feature" and .required==false and .name!="glEsVersion") | .name' "$feats" | sort -u)
-  s_feat_req=$(jq -r 'select(.kind=="feature" and .required!=false and .name!="glEsVersion") | .name' "$feats" | sort -u)
-  s_lib_req=$(jq -r 'select(.kind=="library" and .required!=false) | .name' "$feats" | sort -u)
-  s_lib_opt=$(jq -r 'select(.kind=="library" and .required==false) | .name' "$feats" | sort -u)
-  s_icons=$(jq -r '.icons.icon.files[]?.path' "$meta" | sort -u)
-  s_perms=$(jq -r 'select(.kind != "declared") | .name' "$out/$name/permissions.jsonl" | sort -u)
+  s_pkg=$(jq -r '.package // ""' <<<"$meta")
+  s_vc=$(jq -r '.version_code // ""' <<<"$meta")
+  s_vn=$(jq -r '.version_name // ""' <<<"$meta")
+  s_min=$(jq -r '.min_sdk // ""' <<<"$meta")
+  s_target=$(jq -r '.target_sdk // ""' <<<"$meta")
+  s_label=$(jq -r '.label // ""' <<<"$meta")
+  s_feat_opt=$(q "SELECT name FROM features WHERE kind = 'feature' AND required = 0 AND name != 'glEsVersion'")
+  s_feat_req=$(q "SELECT name FROM features WHERE kind = 'feature' AND (required IS NULL OR required != 0) AND name != 'glEsVersion'")
+  s_lib_req=$(q "SELECT name FROM features WHERE kind = 'library' AND (required IS NULL OR required != 0)")
+  s_lib_opt=$(q "SELECT name FROM features WHERE kind = 'library' AND required = 0")
+  s_icons=$(jq -r '.icons.icon.files[]?.path' <<<"$meta" | sort -u)
+  s_perms=$(q "SELECT name FROM permissions WHERE kind != 'declared'")
 
   diffs=()
   [[ "$a_pkg" == "$s_pkg" ]] || diffs+=("package aapt2=$a_pkg sextant=$s_pkg")

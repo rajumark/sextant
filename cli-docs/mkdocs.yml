@@ -83,7 +83,7 @@ nav:
       - Code search, obfuscated apps and bundles: guides/obfuscated-code.md
   - Reference:
       - Commands: reference/commands.md
-      - Output files: reference/output.md
+      - Output: reference/output.md
       - SQLite index schema: reference/index-schema.md
       - Review findings: reference/findings.md
       - Exit codes and errors: reference/exit-codes.md

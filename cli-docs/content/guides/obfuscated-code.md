@@ -30,7 +30,7 @@ The first search decompiles every class, in parallel, and keeps the code in a lo
 Obfuscation  heavy · 89% short class names · 2,606 in the default package · source files stripped (100%)
 ```
 
-`heavy` means more than 30% of classes have R8/ProGuard-style names (`a`, `yi0`); `light` means 5–30%. Signal keeps its names but strips source file names, which shows as `none · … · source files stripped`. The counts are in `meta.json` under `code.obfuscation`.
+`heavy` means more than 30% of classes have R8/ProGuard-style names (`a`, `yi0`); `light` means 5–30%. Signal keeps its names but strips source file names, which shows as `none · … · source files stripped`. The counts are in `meta_json` (the `meta` table) under `code.obfuscation`.
 
 If you have the build's `mapping.txt` (your own release, or one shipped with a crash report), pass it to `source` and `grep`:
 

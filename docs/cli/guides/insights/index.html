@@ -1044,7 +1044,7 @@
   <span class="md-ellipsis">
     
   
-    Output files
+    Output
   
 
     
@@ -1444,7 +1444,7 @@
 <p>AndroidX and many other libraries ship <code>META-INF/&lt;group&gt;_&lt;artifact&gt;.version</code> files. Sextant reads them for exact Maven coordinates (Signal: 141 libraries), plus the Android Gradle Plugin version from <code>app-metadata.properties</code>.</p>
 <h2 id="endpoints">Endpoints<a class="headerlink" href="#endpoints" title="Permanent link">&para;</a></h2>
 <p>Every URL from code strings (with the method that uses it), string resources, deep links, manifest meta-data, text assets (React Native/Hermes bundles, configs) and native libraries. See <a href="../../reference/commands/#endpoints"><code>endpoints</code></a>.</p>
-<p>Host counts (<code>Top hosts</code>, <code>meta_json → insights.hosts</code>, the hosts section of <code>diff</code>) include only network URLs (<code>http</code>, <code>https</code>, <code>ws</code>, <code>wss</code>, <code>ftp</code>, <code>ftps</code>). A custom-scheme deep link such as <code>myapp://scan</code> names a screen in the app, not a server; it is still listed by <code>endpoints</code> and in <code>insights/endpoints.jsonl</code>.</p>
+<p>Host counts (<code>Top hosts</code>, <code>meta_json → insights.hosts</code>, the hosts section of <code>diff</code>) include only network URLs (<code>http</code>, <code>https</code>, <code>ws</code>, <code>wss</code>, <code>ftp</code>, <code>ftps</code>). A custom-scheme deep link such as <code>myapp://scan</code> names a screen in the app, not a server; it is still listed by <code>endpoints</code> and in the <code>endpoints</code> table.</p>
 <h2 id="native-code">Native code<a class="headerlink" href="#native-code" title="Permanent link">&para;</a></h2>
 <p>ELF <code>.dynsym</code> tables are parsed for exported functions. JNI functions (<code>Java_…</code>) are decoded back to the Java class and method they implement, including <code>_1</code>, <code>_0xxxx</code> escapes and overload suffixes:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sextant<span class="w"> </span>sql<span class="w"> </span>app.sqlite<span class="w"> </span><span class="s2">"SELECT jni_class, jni_method, library FROM native_symbols WHERE jni_class IS NOT NULL LIMIT 5"</span>
@@ -1464,20 +1464,21 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>icon  @mipmap/ic_launcher
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  anydpi-v26     xml   -               548 B  res/BW.xml
 <a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>  hdpi           png   72×72          2567 B  res/yn.png
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>  mdpi           png   48×48          1710 B  res/9w.png
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>  xhdpi          png   96×96          3363 B  res/FS.png
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>  xxhdpi         png   144×144        5145 B  res/RJ.png
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>  xxxhdpi        png   192×192        6982 B  res/o-.png  ← best
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>adaptive icon  res/BW.xml
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>  background  @color/accent  #b6d46f
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>  foreground  @drawable/ic_launcher_foreground  res/Qr.xml
-<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>  monochrome  @drawable/ic_launcher_monochrome  res/Vy.xml
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>  ldpi           png   36×36          1319 B  res/N3.png
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>  mdpi           png   48×48          1710 B  res/9w.png
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>  xhdpi          png   96×96          3363 B  res/FS.png
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>  xxhdpi         png   144×144        5145 B  res/RJ.png
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>  xxxhdpi        png   192×192        6982 B  res/o-.png  ← best
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>adaptive icon  res/BW.xml
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>  background  @color/accent  #b6d46f
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>  foreground  @drawable/ic_launcher_foreground  res/Qr.xml
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>  monochrome  @drawable/ic_launcher_monochrome  res/Vy.xml
 </code></pre></div>
 <ul>
 <li>Icons are resolved from the manifest through <code>resources.arsc</code>, so they are found even when R8 resource shrinking renames files (<code>res/o-.png</code> above).</li>
 <li>The best file is the largest bitmap by pixel area (PNG and WebP sizes are read from the file headers). When the icon is only a vector, the vector is reported and <code>-o</code> suggests <code>--layer foreground</code> instead, because vector drawables are compiled binary XML, not images.</li>
 <li>Adaptive icons are split into background, foreground and monochrome layers, following <code>&lt;inset&gt;</code>/<code>&lt;bitmap&gt;</code> wrappers; solid-color layers report their color.</li>
-<li><code>icon</code> on an APK is fast (from the cache when the APK is indexed, else manifest and resources only). It also works on a <code>.sqlite</code> file; saving with <code>-o</code> needs the APK.</li>
+<li><code>icon</code> on an APK is fast (from the cache when the APK is indexed, else manifest and resources only). It also works on a <code>.sqlite</code> file, including <code>-o</code>, which saves the file from the stored bytes.</li>
 </ul>
 
 

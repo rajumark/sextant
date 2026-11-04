@@ -15,7 +15,7 @@ Sextant is a **static** analyzer. It reads what is in the APK; it never runs it.
 
 - **Split bundles** (`.apks`, `.xapk`, `.apkm`) are read: the base APK and its splits are merged into one APK in a local cache. Code, native libraries, assets and res/ files of every split are included, but only the base's `resources.arsc` is decoded, so values that exist only in a density or language split aren't resolved. The signature is checked on the base APK. Encrypted `.apkm` files and `.aab` (Play upload format; build APKs from it with `bundletool build-apks`) aren't read.
 - **Code search** (`grep`) decompiles every class once and keeps the code in the local cache (about 300 MB for Signal's 41,000 classes; the first search takes a few minutes on such an app). Classes jadx can't decompile are counted in the summary line and are not searched.
-- **Resources** use the default configuration for values (strings, bools, …). Icons are resolved for every configuration.
+- **Resources**: the `resources` table and resolved references use the default configuration; every configuration's value is in `resource_values` (strings in `string_resources`, every locale). Icons are resolved for every configuration.
 - Very large inputs are capped as a zip-bomb guard (manifest 32 MB, `resources.arsc` 512 MB, each dex 256 MB, each native library 256 MB).
 
 ## Findings

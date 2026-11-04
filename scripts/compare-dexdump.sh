@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Cross-check sextant's code counts against Google's dexdump for every corpus APK.
-#   scripts/compare-dexdump.sh [sweep-dir]   (run scripts/sweep.sh first; default build/sweep)
+#   scripts/compare-dexdump.sh [sweep-dir]   (run scripts/sweep.sh first; default build/sweep; reads <name>.sqlite)
 # Checks: classes (+ duplicates) == dexdump class_defs; methods + fields == dexdump member definitions.
 set -uo pipefail
 
@@ -13,8 +13,9 @@ work="$(mktemp -d)"; trap 'rm -rf "${work:?}"' EXIT
 failed=0
 for apk in "$root"/fixtures/external/*.apk; do
   name="$(basename "$apk" .apk)"
-  meta="$out/$name/meta.json"
-  [[ -f "$meta" ]] || { echo "✕ $name: no sweep output"; failed=1; continue; }
+  db="$out/$name.sqlite"
+  [[ -f "$db" ]] || { echo "✕ $name: no sweep output"; failed=1; continue; }
+  meta="$(sqlite3 "$db" "SELECT value FROM meta WHERE key = 'meta_json'")"
   rm -rf "${work:?}"/* && unzip -qo "$apk" 'classes*.dex' -d "$work" 2>/dev/null
   d_classes=0; d_members=0
   for dex in "$work"/classes*.dex; do
@@ -23,9 +24,9 @@ for apk in "$root"/fixtures/external/*.apk; do
     d_classes=$(( d_classes + $(grep -c '^Class #' <<<"$dump") ))
     d_members=$(( d_members + $(grep -cE '^ +#[0-9]+ +: \(in L' <<<"$dump") ))
   done
-  s_classes=$(jq '.code.classes + .code.duplicate_classes' "$meta")
-  dup=$(jq '.code.duplicate_classes' "$meta")
-  s_members=$(jq '.code.methods + .code.fields' "$meta")
+  s_classes=$(jq '.code.classes + .code.duplicate_classes' <<<"$meta")
+  dup=$(jq '.code.duplicate_classes' <<<"$meta")
+  s_members=$(jq '.code.methods + .code.fields' <<<"$meta")
   if [[ "$d_classes" == "$s_classes" && ( "$d_members" == "$s_members" || "$dup" != "0" ) ]]; then
     echo "✓ $name  classes $s_classes  members $s_members$( [[ $dup != 0 ]] && echo "  ($dup duplicate classes: member count not compared)")"
   else

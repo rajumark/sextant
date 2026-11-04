@@ -15,14 +15,14 @@ sextant extract binaryeye.apk
 ✓ Components        18 (9 exported)
 ✓ Signing           v1, v2, v3
 ✓ Code              2936 classes · 16824 methods · 55703 call edges
-✓ Files             930 in the APK, 619 decoded
-✓ Wrote binaryeye.sqlite  31.8 MB in 2.9s
+✓ Files             930 in the APK, 918 decoded
+✓ Wrote binaryeye.sqlite  78.3 MB in 4.8s
 ```
 
-Progress goes to **stderr**, so it never mixes with data on stdout. Typical apps take 1–5 seconds; the largest (60k+ classes) take 15–25 seconds, mostly to build the search index.
+Progress goes to **stderr**, so it never mixes with data on stdout. Typical apps take 2–8 seconds; the largest (50k+ classes) take 20–30 seconds.
 
 !!! tip "Faster runs"
-    `--no-code` skips code entirely and only reads the manifest, resources and signing, which takes well under a second.
+    `--no-code` skips the code tables (classes, methods, calls, instructions); every file is still decoded and stored. On Binary Eye it takes about 3 s instead of 5 s and writes 35 MB instead of 78 MB. Add `--no-content` to also leave out the stored file bytes.
 
 ## 2. Read the summary
 
@@ -41,13 +41,13 @@ sextant find binaryeye.sqlite "markusfisch.de/BinaryEye" --limit 4
 ```
 
 ```text
+endpoint   http://markusfisch.de/BinaryEye
 string     http://markusfisch.de/BinaryEye
-           ← Lde/markusfisch/android/binaryeye/activity/CameraActivity;->onResume()V
-string     https://markusfisch.de/BinaryEye
            ← Lde/markusfisch/android/binaryeye/activity/CameraActivity;->onResume()V
 deep_link  http://markusfisch.de/BinaryEye*
            de.markusfisch.android.binaryeye.activity.CameraActivity
-...
+endpoint   http://markusfisch.de/BinaryEye*
+4 results (stopped at --limit 4)
 ```
 
 The string hit tells you **which method loads it**; the deep-link hit tells you **which activity opens it**.
@@ -78,5 +78,5 @@ sextant findings binaryeye.sqlite
 ## What next
 
 - [Investigating an app](../guides/investigating.md): `class`, `xref`, `callers`, `reach`, `smali`.
-- [Output files](../reference/output.md): every file and field.
+- [Output](../reference/output.md): every table in the SQLite file.
 - [AI agents and MCP](../guides/ai-agents.md): let an agent do the digging.

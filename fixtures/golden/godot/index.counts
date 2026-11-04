@@ -1,5 +1,6 @@
 annotation_values 46602
 annotations 30630
+archive_entries 0
 assets 4
 calls 174057
 classes 9761
@@ -30,6 +31,7 @@ finding_evidence 13
 findings 5
 fonts 0
 frameworks 2
+hidden_classes 0
 icons 19
 images 275
 instructions 1070504
@@ -54,7 +56,7 @@ resource_ids 1887
 resource_refs 1048
 resource_values 4632
 resources 298
-schema_docs 459
+schema_docs 472
 sdks 2
 services 4
 signing_certificates 1
